@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+    cam page
+{% endblock title %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'css/cam.css' %}">
+    <link rel="stylesheet" href="{% static 'css/header.css' %}">
+    <link rel="stylesheet" href="{% static 'css/footer.css' %}">
+{% endblock stylesheet %}
+{% block content %}
+    <main class="main">
+        {% include "includes/header.html" %}
+        <section class="container">
+            <h1>Video stream s detekcí obličeje</h1>
+            <img src="{% url 'video_stream' %}"
+                 alt="Video stream"
+                 height="300"
+                 width="300">
+        </section>
+        {% include "includes/footer.html" %}
+    </main>
+{% endblock content %}
