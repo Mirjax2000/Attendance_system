@@ -14,17 +14,42 @@ from django.db.models import (
 
 
 class Employee(Model):
-    name = CharField(max_length=32, null=False, blank=False)
-    surname = CharField(max_length=32, null=False, blank=False)
-    street_number = CharField(max_length=50, null=False, blank=False)
-    city = CharField(max_length=32, null=False, blank=False)
-    postal_code = IntegerField(null=False, blank=False)
-    phone_number = CharField(
-        max_length=16, unique=True, null=False, blank=False
+    name = CharField(
+        max_length=32, null=False, blank=False, verbose_name="Jmeno: "
     )
-    email = CharField(max_length=100, unique=True, null=False, blank=False)
-    date_of_birth = DateField(null=False, blank=False)
-    is_valid = BooleanField(default=False)
+    surname = CharField(
+        max_length=32, null=False, blank=False, verbose_name="Prijmeni: "
+    )
+    street_number = CharField(
+        max_length=50, null=False, blank=False, verbose_name="Ulice/c.p.: "
+    )
+    city = CharField(
+        max_length=32, null=False, blank=False, verbose_name="Mesto: "
+    )
+    postal_code = IntegerField(null=False, blank=False, verbose_name="PSC: ")
+    phone_number = CharField(
+        max_length=16,
+        unique=True,
+        null=False,
+        blank=False,
+        verbose_name="Telefon: ",
+    )
+    email = CharField(
+        max_length=100,
+        unique=True,
+        null=False,
+        blank=False,
+        verbose_name="Email: ",
+    )
+    date_of_birth = DateField(
+        null=False,
+        blank=False,
+        verbose_name="Datum narozeni: ",
+    )
+    is_valid = BooleanField(
+        default=False,
+        verbose_name="Ucet v poradku?: ",
+    )
 
     def __str__(self):
         return f"{self.name} {self.surname}"
@@ -57,11 +82,20 @@ class UserPicture(Model):
     PATH_TO_IMG: str = "media.employe_img"
 
     employee = OneToOneField(
-        Employee, on_delete=CASCADE, related_name="pictures"
+        Employee,
+        on_delete=CASCADE,
+        related_name="pictures",
+        verbose_name="Zamestnanec: ",
     )
-    image1 = ImageField(upload_to=PATH_TO_IMG, null=False, blank=False)
-    image2 = ImageField(upload_to=PATH_TO_IMG, null=False, blank=False)
-    image3 = ImageField(upload_to=PATH_TO_IMG, null=False, blank=False)
+    image1 = ImageField(
+        upload_to=PATH_TO_IMG, null=False, blank=False, verbose_name="img 1: "
+    )
+    image2 = ImageField(
+        upload_to=PATH_TO_IMG, null=False, blank=False, verbose_name="img 2:"
+    )
+    image3 = ImageField(
+        upload_to=PATH_TO_IMG, null=False, blank=False, verbose_name="img 3:"
+    )
 
     def __str__(self):
         return f"Photos of {self.employee.name} {self.employee.surname}"
