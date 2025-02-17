@@ -1,5 +1,7 @@
 from datetime import datetime, date
 
+from django.db import transaction
+
 from django.db.models import Model, CharField, DateField, IntegerField, \
     BooleanField, OneToOneField, ImageField, CASCADE
 
@@ -52,6 +54,7 @@ class UserPicture(Model):
         return f"Photos of {self.employee.name} {self.employee.surname}"
 
     def save_photos(self):
-        self.employee.is_valid = True
-        self.employee.save()
-        super().save()
+        with transaction.atomic():
+            self.employee.is_valid = True
+            self.employee.save()
+            super().save()
