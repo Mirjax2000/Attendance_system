@@ -25,6 +25,10 @@ def custom_404(request, exception):
     return HttpResponseNotFound(html)
 
 
+def cam(request):
+    return render(request=request, template_name="cam.html")
+
+
 def video_stream(request):
     cap = cv2.VideoCapture(0)
     if not cap.isOpened():
@@ -57,7 +61,7 @@ def video_stream(request):
             )
 
             # 🌙 Pauza 0.5 sekundy mezi snímky (2 FPS místo plného výkonu)
-            time.sleep(0.1)
+            time.sleep(0.05)
 
     return StreamingHttpResponse(
         generate(), content_type="multipart/x-mixed-replace; boundary=frame"
