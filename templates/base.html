@@ -13,14 +13,10 @@
         <meta content="" name="keywords" />
         <meta content="" name="author" />
         <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-        <link as="font"
-              crossorigin="anonymous"
-              href="./assets/webfonts/Font-face/static/SpaceGrotesk-Medium.woff2"
-              rel="preload"
-              type="font/woff2" />
+        {% comment %} <link as="font" crossorigin="anonymous" href="./assets/webfonts/Font-face/static/SpaceGrotesk-Medium.woff2" rel="preload" type="font/woff2" />
         <link href="./assets/img/favicon-32x32.png"
               rel="shortcut icon"
-              type="image/x-icon" />
+              type="image/x-icon" /> {% endcomment %}
         <style>
     {% comment %} @font-face {
       font-family: Grotesk;
@@ -31,18 +27,16 @@
       font-style: normal;
       font-display: swap;
 } {% endcomment %}
-    body.base {
+    body {
       opacity: 0;
       transition: opacity 1s ease-in;
     }
         </style>
-        <link rel="preload"
-              href="{% static 'css/base.css' %}"
-              as="style"
-              onload="this.onload=null;this.rel='stylesheet'">
+        {% comment %} <link rel="preload" href="{% static 'css/base.css' %}" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript>
             <link rel="stylesheet" href="{% static 'css/base.css' %}">
-        </noscript>
+        </noscript> {% endcomment %}
+        <link rel="stylesheet" href="{% static 'css/base.css' %}">
     </head>
     <!--body-->
     <body class="base">

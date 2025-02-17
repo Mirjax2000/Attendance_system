@@ -49,7 +49,7 @@ python manage.py loaddatautf8 .\files\fixtures.json
 
 ## Render to string
 hlavne na HttpResponseNotFound
-tento kdo do views
+tento kod do views
 ```python
 from django.template.loader import render_to_string
 
