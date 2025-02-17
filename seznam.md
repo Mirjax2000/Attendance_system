@@ -3,6 +3,18 @@
  django-admin startproject <jmeno projektu> . 
  python manage.py startapp <jmeno applikace>
  ```
+## SECRET KEY
+1. priprav .env soubor a vytvor promennou SECRET_KEY
+2. bez uvozovek prekopiruj hodnotu ze settings
+3. ```python
+    load_dotenv(override=True)
+    SECRET_KEY = os.getenv("SECRET_KEY", default="")
+    ```
+4. pokud je potreba vygenerovat SECRET_KEY pro jineho developera / terminal
+    ```shell
+    python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+    ```
+
 ## migrace DB
 ```shell
 python manage.py makemigrations
