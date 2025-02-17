@@ -1,22 +1,55 @@
 <!DOCTYPE html>
 {% load static %}
-<html lang="cs">
+<html lang="cs" data-font-size="desktop">
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="">
-        <meta name="keywords" content="">
+        <meta charset="UTF-8" />
         <title>
             {% block title %}
-                zadej jmeno dokumentu
+                jmeno stranky
             {% endblock title %}
         </title>
-        {% block stylesheet %}
+        <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+        <meta content="" name="description" />
+        <meta content="" name="keywords" />
+        <meta content="" name="author" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <link as="font"
+              crossorigin="anonymous"
+              href="./assets/webfonts/Font-face/static/SpaceGrotesk-Medium.woff2"
+              rel="preload"
+              type="font/woff2" />
+        <link href="./assets/img/favicon-32x32.png"
+              rel="shortcut icon"
+              type="image/x-icon" />
+        <style>
+    {% comment %} @font-face {
+      font-family: Grotesk;
+      src:
+        url("./assets/webfonts/Font-face/static/SpaceGrotesk-Medium.woff2") format("woff2"),
+        url("./assets/webfonts/Font-face/static/SpaceGrotesk-Medium.ttf") format("truetype");
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+} {% endcomment %}
+    body.base {
+      opacity: 0;
+      transition: opacity 1s ease-in;
+    }
+        </style>
+        <link rel="preload"
+              href="{% static 'css/base.css' %}"
+              as="style"
+              onload="this.onload=null;this.rel='stylesheet'">
+        <noscript>
             <link rel="stylesheet" href="{% static 'css/base.css' %}">
-        {% endblock stylesheet %}
+        </noscript>
     </head>
+    <!--body-->
     <body class="base">
         {% block content %}
         {% endblock content %}
+        {% block script %}
+            <script src="{%static 'js/base.js'%}"></script>
+        {% endblock script %}
     </body>
 </html>
