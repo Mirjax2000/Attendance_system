@@ -11,6 +11,7 @@ dependencies = [
     "icecream>=2.1.4",
     "mypy>=1.15.0",
     "opencv-python>=4.11.0.86",
+    "pillow>=11.1.0",
     "pylint>=3.3.4",
     "pylint-django>=2.6.1",
     "python-dotenv>=1.0.1",
