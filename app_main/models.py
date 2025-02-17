@@ -1,9 +1,16 @@
-from datetime import datetime, date
+from datetime import date, datetime
 
 from django.db import transaction
-
-from django.db.models import Model, CharField, DateField, IntegerField, \
-    BooleanField, OneToOneField, ImageField, CASCADE
+from django.db.models import (
+    CASCADE,
+    BooleanField,
+    CharField,
+    DateField,
+    ImageField,
+    IntegerField,
+    Model,
+    OneToOneField,
+)
 
 
 class Employee(Model):
@@ -12,7 +19,9 @@ class Employee(Model):
     street_number = CharField(max_length=50, null=False, blank=False)
     city = CharField(max_length=32, null=False, blank=False)
     postal_code = IntegerField(null=False, blank=False)
-    phone_number = CharField(max_length=16, unique=True, null=False, blank=False)
+    phone_number = CharField(
+        max_length=16, unique=True, null=False, blank=False
+    )
     email = CharField(max_length=100, unique=True, null=False, blank=False)
     date_of_birth = DateField(null=False, blank=False)
     is_valid = BooleanField(default=False)
@@ -41,14 +50,18 @@ class Employee(Model):
         return None
 
     class Meta:
-        ordering = ['surname']
+        ordering = ["surname"]
 
 
 class UserPicture(Model):
-    employee = OneToOneField(Employee, on_delete=CASCADE, related_name="pictures")
-    image1 = ImageField(upload_to='media/', null=False, blank=False)
-    image2 = ImageField(upload_to='media/', null=False, blank=False)
-    image3 = ImageField(upload_to='media/', null=False, blank=False)
+    PATH_TO_IMG: str = "media.employe_img"
+
+    employee = OneToOneField(
+        Employee, on_delete=CASCADE, related_name="pictures"
+    )
+    image1 = ImageField(upload_to=PATH_TO_IMG, null=False, blank=False)
+    image2 = ImageField(upload_to=PATH_TO_IMG, null=False, blank=False)
+    image3 = ImageField(upload_to=PATH_TO_IMG, null=False, blank=False)
 
     def __str__(self):
         return f"Photos of {self.employee.name} {self.employee.surname}"
