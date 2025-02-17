@@ -14,10 +14,18 @@
         {% include "includes/header.html" %}
         <section class="container">
             <h1>Video stream s detekcí obličeje</h1>
-            <img src="{% url 'video_stream' %}"
-                 alt="Video stream"
-                 height="300"
-                 width="300">
+            <div class="wrapper">
+                <p>
+                    speed: <span>{{ speed }}</span>/24fps
+                </p>
+                <hr>
+                {% with speed_value=speed %}
+                    <img src="{% url 'video_stream' speed_value %}"
+                         alt="Video stream"
+                         height="300"
+                         width="300">
+                {% endwith %}
+            </div>
         </section>
         {% include "includes/footer.html" %}
     </main>

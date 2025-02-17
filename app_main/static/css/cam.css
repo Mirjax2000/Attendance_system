@@ -1,0 +1,12 @@
+img {
+  margin-block: 1rem;
+  border-radius: 5px;
+  border: 1px solid rgba(83, 163, 255, 0.489);
+  box-shadow: 1px 3px 30px rgba(83, 163, 255, 0.297);
+}
+p {
+  padding: 1rem 0rem;
+}
+span {
+  color: rgb(70, 172, 255);
+}
