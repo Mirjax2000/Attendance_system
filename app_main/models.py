@@ -46,9 +46,9 @@ class Employee(Model):
 
 class UserPicture(Model):
     employee = OneToOneField(Employee, on_delete=CASCADE, related_name="pictures")
-    image1 = ImageField(upload_to='user_pictures/', null=False, blank=False)
-    image2 = ImageField(upload_to='user_pictures/', null=False, blank=False)
-    image3 = ImageField(upload_to='user_pictures/', null=False, blank=False)
+    image1 = ImageField(upload_to='media/', null=False, blank=False)
+    image2 = ImageField(upload_to='media/', null=False, blank=False)
+    image3 = ImageField(upload_to='media/', null=False, blank=False)
 
     def __str__(self):
         return f"Photos of {self.employee.name} {self.employee.surname}"
