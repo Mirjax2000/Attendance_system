@@ -14,6 +14,8 @@ from django.db.models import (
 
 
 class Employee(Model):
+    """Employee"""
+
     name = CharField(
         max_length=32, null=False, blank=False, verbose_name="Jmeno: "
     )
@@ -75,11 +77,15 @@ class Employee(Model):
         return None
 
     class Meta:
+        """Alphabetical"""
+
         ordering = ["surname"]
 
 
 class UserPicture(Model):
-    PATH_TO_IMG: str = "media.employe_img"
+    """Users picture table"""
+
+    PATH_TO_IMG: str = "media.employee_img"  # cesta k obrazkum pro DB
 
     employee = OneToOneField(
         Employee,
