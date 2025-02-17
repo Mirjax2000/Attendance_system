@@ -27,16 +27,20 @@
       font-style: normal;
       font-display: swap;
 } {% endcomment %}
-    body {
+    body.base {
       opacity: 0;
-      transition: opacity 1s ease-in;
+      transition: opacity .2s ease-in;
     }
         </style>
-        {% comment %} <link rel="preload" href="{% static 'css/base.css' %}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <link rel="preload"
+              href="{% static 'css/base.css' %}"
+              as="style"
+              onload="this.onload=null;this.rel='stylesheet'">
         <noscript>
             <link rel="stylesheet" href="{% static 'css/base.css' %}">
-        </noscript> {% endcomment %}
-        <link rel="stylesheet" href="{% static 'css/base.css' %}">
+        </noscript>
+        {% block stylesheet %}
+        {% endblock stylesheet %}
     </head>
     <!--body-->
     <body class="base">

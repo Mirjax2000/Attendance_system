@@ -1,7 +1,12 @@
 :root {
   color-scheme: dark light;
 }
-
+body.base,
 body {
   opacity: 1;
+}
+
+* {
+  margin: 0;
+  padding: 0;
 }
