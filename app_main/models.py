@@ -2,7 +2,11 @@
 
 from datetime import date, datetime
 
-from django.core.validators import EmailValidator
+from django.core.validators import (
+    EmailValidator,
+    MaxLengthValidator,
+    MinLengthValidator,
+)
 from django.db import transaction
 from django.db.models import (
     CASCADE,
@@ -31,13 +35,21 @@ class Employee(Model):
     city = CharField(
         max_length=32, null=False, blank=False, verbose_name="Mesto: "
     )
-    postal_code = IntegerField(null=False, blank=False, verbose_name="PSC: ")
+    postal_code = CharField(
+        max_length=5,
+        null=False,
+        blank=False,
+        verbose_name="PSC: ",
+        validators=[MinLengthValidator(5)],
+    )
+
     phone_number = CharField(
         max_length=16,
         unique=True,
         null=False,
         blank=False,
         verbose_name="Telefon: ",
+        validators=[MinLengthValidator(5)],
     )
     email = CharField(
         max_length=100,
@@ -57,18 +69,17 @@ class Employee(Model):
         verbose_name="Ucet v poradku?: ",
     )
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.name} {self.surname}"
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"Employee: {self.name} {self.surname} {self.status()}"
 
-    def status(self):
+    def status(self) -> str:
         """Status"""
         if self.is_valid:
             return "is valid"
-        else:
-            return "is invalid"
+        return "is invalid"
 
     def date_of_birth_format(self):
         """Datum narozeni formatovani"""
@@ -118,4 +129,4 @@ class UserPicture(Model):
         with transaction.atomic():
             self.employee.is_valid = True
             self.employee.save()
-            super().save()
+            self.save()
