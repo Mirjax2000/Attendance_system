@@ -1,6 +1,8 @@
+from pathlib import Path
 from time import sleep
 
 import cv2
+from django.conf import settings
 from django.http.response import HttpResponse, StreamingHttpResponse
 
 face_cascade = cv2.CascadeClassifier(
@@ -9,13 +11,19 @@ face_cascade = cv2.CascadeClassifier(
 
 
 def video_stream(request, speed: int = 10):
-    cap = cv2.VideoCapture(0)
-    if not cap.isOpened():
+    """video stream"""
+    # cap = cv2.VideoCapture(0)
+    directory = Path(settings.MEDIA_ROOT)
+    current_movie = str(directory.joinpath("sample.mp4"))
+    print(current_movie)
+    movie = cv2.VideoCapture(current_movie)
+
+    if not movie.isOpened():
         return HttpResponse("Kamera není dostupná", status=500)
 
     def generate():
         while True:
-            ret, frame = cap.read()
+            ret, frame = movie.read()
             if not ret:
                 break
 

@@ -2,6 +2,7 @@
 
 from datetime import date, datetime
 
+from django.core.validators import EmailValidator
 from django.db import transaction
 from django.db.models import (
     CASCADE,
@@ -44,6 +45,7 @@ class Employee(Model):
         null=False,
         blank=False,
         verbose_name="Email: ",
+        validators=[EmailValidator()],
     )
     date_of_birth = DateField(
         null=False,

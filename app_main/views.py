@@ -7,7 +7,7 @@ from django.template.loader import render_to_string
 
 def index(request):
     """Home page"""
-    return render(request=request, template_name="index.html")
+    return render(request=request, template_name="app_main/index.html")
 
 
 def custom_404(request, exception):
@@ -17,4 +17,5 @@ def custom_404(request, exception):
 
 
 def cam(request, speed: int = 10):
-    return render(request, "cam.html", {"speed": speed})
+    """camera endpoint"""
+    return render(request, "app_main/cam.html", {"speed": speed})

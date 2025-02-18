@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 
-from app_main import views
+from app_main import cam, views
 
 handler404 = "app_main.views.custom_404"
 
