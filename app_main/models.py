@@ -4,38 +4,27 @@ from datetime import date, datetime
 
 from django.core.validators import (
     EmailValidator,
-    MaxLengthValidator,
     MinLengthValidator,
 )
-from django.db import transaction
-from django.db.models import (
-    CASCADE,
-    BooleanField,
-    CharField,
-    DateField,
-    ImageField,
-    IntegerField,
-    Model,
-    OneToOneField,
-)
+from django.db import models, transaction
 
 
-class Employee(Model):
+class Employee(models.Model):
     """Employee"""
 
-    name = CharField(
+    name = models.CharField(
         max_length=32, null=False, blank=False, verbose_name="Jmeno: "
     )
-    surname = CharField(
+    surname = models.CharField(
         max_length=32, null=False, blank=False, verbose_name="Prijmeni: "
     )
-    street_number = CharField(
+    street_number = models.CharField(
         max_length=50, null=False, blank=False, verbose_name="Ulice/c.p.: "
     )
-    city = CharField(
+    city = models.CharField(
         max_length=32, null=False, blank=False, verbose_name="Mesto: "
     )
-    postal_code = CharField(
+    postal_code = models.CharField(
         max_length=5,
         null=False,
         blank=False,
@@ -43,7 +32,7 @@ class Employee(Model):
         validators=[MinLengthValidator(5)],
     )
 
-    phone_number = CharField(
+    phone_number = models.CharField(
         max_length=16,
         unique=True,
         null=False,
@@ -51,7 +40,7 @@ class Employee(Model):
         verbose_name="Telefon: ",
         validators=[MinLengthValidator(5)],
     )
-    email = CharField(
+    email = models.CharField(
         max_length=100,
         unique=True,
         null=False,
@@ -59,12 +48,12 @@ class Employee(Model):
         verbose_name="Email: ",
         validators=[EmailValidator()],
     )
-    date_of_birth = DateField(
+    date_of_birth = models.DateField(
         null=False,
         blank=False,
         verbose_name="Datum narozeni: ",
     )
-    is_valid = BooleanField(
+    is_valid = models.BooleanField(
         default=False,
         verbose_name="Ucet v poradku?: ",
     )
@@ -100,24 +89,24 @@ class Employee(Model):
         ordering = ["surname"]
 
 
-class UserPicture(Model):
+class UserPicture(models.Model):
     """Users picture table"""
 
     PATH_TO_IMG: str = "media.employee_img"  # cesta k obrazkum pro DB
 
-    employee = OneToOneField(
+    employee = models.OneToOneField(
         Employee,
-        on_delete=CASCADE,
+        on_delete=models.CASCADE,
         related_name="pictures",
         verbose_name="Zamestnanec: ",
     )
-    image1 = ImageField(
-        upload_to=PATH_TO_IMG, null=False, blank=False, verbose_name="img 1: "
+    image1 = models.ImageField(
+        upload_to=PATH_TO_IMG, null=False, blank=False, verbose_name="img 1:"
     )
-    image2 = ImageField(
+    image2 = models.ImageField(
         upload_to=PATH_TO_IMG, null=False, blank=False, verbose_name="img 2:"
     )
-    image3 = ImageField(
+    image3 = models.ImageField(
         upload_to=PATH_TO_IMG, null=False, blank=False, verbose_name="img 3:"
     )
 
