@@ -1,4 +1,4 @@
-"""Models DB"""
+"""Models"""
 
 from datetime import date, datetime
 
