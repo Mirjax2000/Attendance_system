@@ -18,3 +18,5 @@ dependencies = [
     "rich>=13.9.4",
     "ruff>=0.9.6",
 ]
+[tool.pylint."MESSAGES CONTROL"]
+disable = ["E1101"]

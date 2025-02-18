@@ -64,9 +64,9 @@ class Employee(Model):
     def status(self):
         """Status"""
         if self.is_valid:
-            return f"is valid"
+            return "is valid"
         else:
-            return f"is invalid"
+            return "is invalid"
 
     def date_of_birth_format(self):
         """Datum narozeni formatovani"""
