@@ -101,13 +101,13 @@ class UserPicture(models.Model):
         verbose_name="Zamestnanec: ",
     )
     image1 = models.ImageField(
-        upload_to=PATH_TO_IMG, null=False, blank=False, verbose_name="img 1:"
+        upload_to=PATH_TO_IMG, null=True, blank=False, verbose_name="img 1:"
     )
     image2 = models.ImageField(
-        upload_to=PATH_TO_IMG, null=False, blank=False, verbose_name="img 2:"
+        upload_to=PATH_TO_IMG, null=True, blank=False, verbose_name="img 2:"
     )
     image3 = models.ImageField(
-        upload_to=PATH_TO_IMG, null=False, blank=False, verbose_name="img 3:"
+        upload_to=PATH_TO_IMG, null=True, blank=False, verbose_name="img 3:"
     )
 
     def __str__(self):
