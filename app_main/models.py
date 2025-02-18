@@ -1,3 +1,5 @@
+"""Models"""
+
 from datetime import date, datetime
 
 from django.db import transaction
@@ -60,17 +62,20 @@ class Employee(Model):
         return f"Employee: {self.name} {self.surname} {self.status()}"
 
     def status(self):
+        """Status"""
         if self.is_valid:
-            return f"is valid"
+            return "is valid"
         else:
-            return f"is invalid"
+            return "is invalid"
 
     def date_of_birth_format(self):
+        """Datum narozeni formatovani"""
         if self.date_of_birth:
             return datetime.strftime(self.date_of_birth, "%d. %m. %Y")
         return None
 
     def age(self):
+        """Vypocet veku"""
         if self.date_of_birth:
             end_date = date.today()
             return (end_date - self.date_of_birth).days // 365
@@ -107,6 +112,7 @@ class UserPicture(Model):
         return f"Photos of {self.employee.name} {self.employee.surname}"
 
     def save_photos(self):
+        """Ukladani souboru"""
         with transaction.atomic():
             self.employee.is_valid = True
             self.employee.save()
