@@ -66,8 +66,7 @@ class Employee(models.Model):
         return f"Employee: {self.name} {self.surname} {self.status()}"
 
     def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(f"{self.name}-{self.surname}")
+        self.slug = slugify(f"{self.name}-{self.surname}")
         super().save(*args, **kwargs)
 
     def status(self) -> str:
