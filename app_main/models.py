@@ -2,11 +2,10 @@
 
 from datetime import date, datetime
 
-from django.core.validators import (
-    EmailValidator,
-    MinLengthValidator,
-)
-from django.db import models, transaction
+from django.core import validators as val
+from django.db import models
+from django.db import transaction as tran
+from django.utils.text import slugify
 
 
 class Employee(models.Model):
@@ -29,7 +28,7 @@ class Employee(models.Model):
         null=False,
         blank=False,
         verbose_name="PSC: ",
-        validators=[MinLengthValidator(5)],
+        validators=[val.MinLengthValidator(5)],
     )
 
     phone_number = models.CharField(
@@ -38,7 +37,7 @@ class Employee(models.Model):
         null=False,
         blank=False,
         verbose_name="Telefon: ",
-        validators=[MinLengthValidator(5)],
+        validators=[val.MinLengthValidator(5)],
     )
     email = models.CharField(
         max_length=100,
@@ -46,7 +45,7 @@ class Employee(models.Model):
         null=False,
         blank=False,
         verbose_name="Email: ",
-        validators=[EmailValidator()],
+        validators=[val.EmailValidator()],
     )
     date_of_birth = models.DateField(
         null=False,
@@ -55,14 +54,21 @@ class Employee(models.Model):
     )
     is_valid = models.BooleanField(
         default=False,
+        blank=True,
         verbose_name="Ucet v poradku?: ",
     )
+    slug = models.SlugField(unique=True, blank=True)
 
     def __str__(self) -> str:
         return f"{self.name} {self.surname}"
 
     def __repr__(self) -> str:
         return f"Employee: {self.name} {self.surname} {self.status()}"
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(f"{self.name}-{self.surname}")
+        super().save(*args, **kwargs)
 
     def status(self) -> str:
         """Status"""
@@ -113,9 +119,9 @@ class UserPicture(models.Model):
     def __str__(self):
         return f"Photos of {self.employee.name} {self.employee.surname}"
 
-    def save_photos(self):
+    def save_photos(self, *args, **kwargs):
         """Ukladani souboru"""
-        with transaction.atomic():
+        with tran.atomic():
             self.employee.is_valid = True
             self.employee.save()
-            self.save()
+            super().save(*args, **kwargs)
