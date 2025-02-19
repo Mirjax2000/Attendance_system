@@ -5,7 +5,9 @@ from datetime import date, datetime
 from django.core import validators as val
 from django.db import models
 from django.db import transaction as tran
+from django.db.models.functions import ExtractYear
 from django.utils.text import slugify
+from django.utils.timezone import now
 
 
 class Employee(models.Model):
@@ -78,7 +80,7 @@ class Employee(models.Model):
     def date_of_birth_format(self):
         """Datum narozeni formatovani"""
         if self.date_of_birth:
-            return datetime.strftime(self.date_of_birth, "%d. %m. %Y")
+            return self.date_of_birth.strftime("%d. %m. %Y")
         return None
 
     def age(self):
