@@ -118,7 +118,7 @@ class Employee(models.Model):
 class UserPicture(models.Model):
     """Users picture table"""
 
-    PATH_TO_IMG: str = "media.employee_img"  # cesta k obrazkum pro DB
+    PATH_TO_IMG: str = "employee_img/"  # cesta k obrazkum pro DB
 
     employee = models.OneToOneField(
         Employee,
