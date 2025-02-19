@@ -2,6 +2,7 @@
 
 from datetime import date, datetime
 
+from django.conf import settings
 from django.db import transaction
 from django.db.models import (
     CASCADE,
@@ -90,7 +91,7 @@ class Employee(Model):
 class UserPicture(Model):
     """Users picture table"""
 
-    PATH_TO_IMG: str = "media.employee_img"  # cesta k obrazkum pro DB
+    PATH_TO_IMG = str(settings.MEDIA_ROOT)  # cesta k obrazkum pro DB
 
     employee = OneToOneField(
         Employee,
