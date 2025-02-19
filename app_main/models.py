@@ -2,6 +2,7 @@
 
 from datetime import date
 
+from django.conf import settings
 from django.core import validators as val
 from django.db import models
 from django.db import transaction as tran
@@ -118,7 +119,8 @@ class Employee(models.Model):
 class UserPicture(models.Model):
     """Users picture table"""
 
-    PATH_TO_IMG: str = "employee_img/"  # cesta k obrazkum pro DB
+    PATH_TO_IMG = str(settings.MEDIA_ROOT)
+    # cesta k obrazkum pro DB
 
     employee = models.OneToOneField(
         Employee,
