@@ -1,13 +1,11 @@
 """Models"""
 
-from datetime import date, datetime
+from datetime import date
 
 from django.core import validators as val
 from django.db import models
 from django.db import transaction as tran
-from django.db.models.functions import ExtractYear
 from django.utils.text import slugify
-from django.utils.timezone import now
 
 
 class Employee(models.Model):
@@ -25,12 +23,18 @@ class Employee(models.Model):
     city = models.CharField(
         max_length=32, null=False, blank=False, verbose_name="Mesto: "
     )
+
     postal_code = models.CharField(
         max_length=5,
         null=False,
         blank=False,
         verbose_name="PSC: ",
-        validators=[val.MinLengthValidator(5)],
+        validators=[
+            val.MinLengthValidator(5),
+            val.RegexValidator(
+                regex=r"^\d{5}$", message="PSC musí obsahovat 5 číslic."
+            ),
+        ],
     )
 
     phone_number = models.CharField(
@@ -39,15 +43,21 @@ class Employee(models.Model):
         null=False,
         blank=False,
         verbose_name="Telefon: ",
-        validators=[val.MinLengthValidator(5)],
+        validators=[
+            val.MinLengthValidator(5),
+            val.RegexValidator(
+                regex=r"^\+?[0-9\s\-()]{5,16}$",
+                message="Telefon musí být ve správném formátu.",
+            ),
+        ],
     )
-    email = models.CharField(
+
+    email = models.EmailField(
         max_length=100,
         unique=True,
         null=False,
         blank=False,
         verbose_name="Email: ",
-        validators=[val.EmailValidator()],
     )
     date_of_birth = models.DateField(
         null=False,
@@ -59,7 +69,11 @@ class Employee(models.Model):
         blank=True,
         verbose_name="Ucet v poradku?: ",
     )
-    slug = models.SlugField(unique=True, blank=True)
+    slug = models.SlugField(
+        blank=True,
+        unique=True,
+        verbose_name="slug: ",
+    )
 
     def __str__(self) -> str:
         return f"{self.name} {self.surname}"
@@ -67,9 +81,10 @@ class Employee(models.Model):
     def __repr__(self) -> str:
         return f"Employee: {self.name} {self.surname} {self.status()}"
 
-    def save(self, *args, **kwargs):
-        self.slug = slugify(f"{self.name}-{self.surname}")
-        super().save(*args, **kwargs)
+    def set_slug(self):
+        """Vytvor slug"""
+        if not self.slug:
+            self.slug = slugify(f"{self.name}-{self.surname}")
 
     def status(self) -> str:
         """Status"""
@@ -89,6 +104,10 @@ class Employee(models.Model):
             end_date = date.today()
             return (end_date - self.date_of_birth).days // 365
         return None
+
+    def save(self, *args, **kwargs):
+        self.set_slug()
+        super().save(*args, **kwargs)
 
     class Meta:
         """Alphabetical"""
@@ -120,7 +139,7 @@ class UserPicture(models.Model):
     def __str__(self):
         return f"Photos of {self.employee.name} {self.employee.surname}"
 
-    def save_photos(self, *args, **kwargs):
+    def save(self, *args, **kwargs):
         """Ukladani souboru"""
         with tran.atomic():
             self.employee.is_valid = True
