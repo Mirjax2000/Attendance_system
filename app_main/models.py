@@ -116,7 +116,7 @@ class Employee(models.Model):
         ordering = ["surname"]
 
 
-class UserPicture(models.Model):
+class UserVector(models.Model):
     """Users picture table"""
 
     PATH_TO_IMG = str(settings.MEDIA_ROOT)
@@ -128,15 +128,7 @@ class UserPicture(models.Model):
         related_name="pictures",
         verbose_name="Zamestnanec: ",
     )
-    image1 = models.ImageField(
-        upload_to=PATH_TO_IMG, null=True, blank=False, verbose_name="img 1:"
-    )
-    image2 = models.ImageField(
-        upload_to=PATH_TO_IMG, null=True, blank=False, verbose_name="img 2:"
-    )
-    image3 = models.ImageField(
-        upload_to=PATH_TO_IMG, null=True, blank=False, verbose_name="img 3:"
-    )
+    vector = models.
 
     def __str__(self):
         return f"Photos of {self.employee.name} {self.employee.surname}"
