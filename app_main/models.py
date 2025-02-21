@@ -167,10 +167,10 @@ class FaceVector(models.Model):
     )
 
     face_vector = models.JSONField(
-        unique=True, blank=False, null=False, verbose_name="Face vector: "
+        unique=False, blank=False, null=False, verbose_name="Face vector: "
     )
-    
-    face_vector_fernet = models.JSONField(
+
+    face_vector_fernet = models.TextField(
         unique=False, blank=True, null=False, verbose_name="vector fernet:"
     )
 
@@ -180,7 +180,8 @@ class FaceVector(models.Model):
     def fernet_vector(self):
         """sifruj vector"""
         if self.face_vector:
-            self.face_vector_fernet = self.face_vector
+            to_fernet = dumps(self.face_vector).encode("utf-8")
+            self.face_vector_fernet = fernet.encrypt(to_fernet)
             self.face_vector = []
 
     def save(self, *args, **kwargs):
