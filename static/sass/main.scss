@@ -3,9 +3,7 @@
 @use "./utils/" as *;
 @use "./base/" as *;
 @use "./layout/" as *;
-@use "./components/" as *;
-@use "./pages/" as *;
+@use "./components/index_for_main" as *;
+@use "./pages/index" as *;
 @use "./themes/" as *;
 @use "./vendors/" as *;
-
-
