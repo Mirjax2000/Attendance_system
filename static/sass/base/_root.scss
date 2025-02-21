@@ -2,7 +2,6 @@
 @use "../utils/mixins" as *;
 @use "../themes/light" as *;
 @use "../utils/variables" as *;
-
 @include export-to-root($light-theme, "");
 
 [data-font-size="desktop"] {

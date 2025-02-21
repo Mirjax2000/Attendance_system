@@ -3,12 +3,23 @@
 {% block title %}
     home page
 {% endblock title %}
+<!-- css stylesheet -->
+<link rel="preload"
+      href="{% static 'css/home.css' %}"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'">
+<!-- no js -->
+<noscript>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</noscript>
+<!-- end -->
+<!-- content -->
 {% block content %}
     <main class="main">
-        {% include "includes/header.html" %}
+        {% include "app_main/includes/header.html" %}
         <section class="container">
             <h1>Homepage</h1>
         </section>
-        {% include "includes/footer.html" %}
     </main>
+    {% include "app_main/includes/footer.html" %}
 {% endblock content %}
