@@ -1,12 +1,24 @@
 """Models"""
 
+import os
 from datetime import date
+from json import dumps, loads
 
-from django.conf import settings
+from cryptography.fernet import Fernet
+from django.contrib.auth.hashers import make_password
 from django.core import validators as val
 from django.db import models
 from django.db import transaction as tran
+from django.forms import ValidationError
 from django.utils.text import slugify
+from dotenv import load_dotenv
+from rich.console import Console
+
+load_dotenv()
+key: str = os.getenv("FERNET_KEY", default="")
+fernet = Fernet(key)
+
+con: Console = Console()
 
 
 class Employee(models.Model):
@@ -70,6 +82,23 @@ class Employee(models.Model):
         blank=True,
         verbose_name="Ucet v poradku?: ",
     )
+    pin_code = models.CharField(
+        max_length=4,
+        blank=True,
+        null=False,
+        verbose_name="PIN kod: ",
+        validators=[
+            val.RegexValidator(
+                regex=r"^\d{4}$",
+                message="PIN kód musí obsahovat přesně 4 číslice.",
+                code="invalid_pin",
+            )
+        ],
+    )
+    pin_code_hash = models.CharField(
+        max_length=255, blank=True, null=False, verbose_name="Pin Hash:"
+    )
+
     slug = models.SlugField(
         blank=True,
         unique=True,
@@ -106,9 +135,20 @@ class Employee(models.Model):
             return (end_date - self.date_of_birth).days // 365
         return None
 
+    def set_pin_hash(self):
+        """nastav hash na pin_hash a smaz pin"""
+        if self.pin_code != "":
+            self.pin_code_hash = make_password(self.pin_code)
+            self.pin_code = ""
+        else:
+            con.log("update formulare s prazdnym hashem")
+
     def save(self, *args, **kwargs):
         self.set_slug()
-        super().save(*args, **kwargs)
+        self.set_pin_hash()
+
+        with tran.atomic():
+            super().save(*args, **kwargs)
 
     class Meta:
         """Alphabetical"""
@@ -116,26 +156,42 @@ class Employee(models.Model):
         ordering = ["surname"]
 
 
-class UserVector(models.Model):
+class FaceVector(models.Model):
     """Users picture table"""
-
-    PATH_TO_IMG = str(settings.MEDIA_ROOT)
-    # cesta k obrazkum pro DB
 
     employee = models.OneToOneField(
         Employee,
         on_delete=models.CASCADE,
-        related_name="pictures",
+        related_name="vector",
         verbose_name="Zamestnanec: ",
     )
-    vector = models.
+
+    face_vector = models.JSONField(
+        unique=True, blank=False, null=False, verbose_name="Face vector: "
+    )
+    
+    face_vector_fernet = models.JSONField(
+        unique=False, blank=True, null=False, verbose_name="vector fernet:"
+    )
 
     def __str__(self):
-        return f"Photos of {self.employee.name} {self.employee.surname}"
+        return f"Face vector for {self.employee.name} {self.employee.surname}"
+
+    def fernet_vector(self):
+        """sifruj vector"""
+        if self.face_vector:
+            self.face_vector_fernet = self.face_vector
+            self.face_vector = []
 
     def save(self, *args, **kwargs):
         """Ukladani souboru"""
-        with tran.atomic():
+        self.fernet_vector()
+
+        if self.face_vector_fernet and self.employee.pin_code_hash:
             self.employee.is_valid = True
+        else:
+            self.employee.is_valid = False
+            raise ValidationError("Face vector nebo pin hash neni v poradku")
+        with tran.atomic():
             self.employee.save()
             super().save(*args, **kwargs)

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from app_main.models import Employee, UserPicture
+from app_main.models import Employee, FaceVector
 
 admin.site.register(Employee)
-admin.site.register(UserPicture)
+admin.site.register(FaceVector)
