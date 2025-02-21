@@ -1,0 +1,59 @@
+@use "./functions" as *;
+
+@mixin export-to-root($map, $prefix: "") {
+  #{":root"} {
+    @each $key, $value in map-to-css-vars($map, $prefix) {
+      #{$key}: #{$value};
+    }
+  }
+}
+@mixin export-to-dataset($map, $prefix: "") {
+    @each $key, $value in map-to-css-vars($map, $prefix) {
+      #{$key}: #{$value};
+  }
+}
+
+@mixin container($min, $max, $padding) {
+  width: clamp($min, 100%, $max);
+  padding: $padding;
+}
+
+// @mixin selection($clr-bg-selection: black, $clr-selection: white) {
+//   ::selection {
+//     background-color: $clr-bg-selection;
+//     color: $clr-selection;
+//   }
+// }
+
+// flex
+@mixin flex($justify: center, $align: center) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+}
+
+// --- visually-hidden ---
+@mixin black-hole {
+  position: absolute;
+  clip-path: inset(50%);
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  left: -9999px;
+  white-space: nowrap;
+}
+
+// mediaqueries max-width
+@mixin mq-default-max-width($width) {
+  @media only screen and (max-width: $width) {
+    @content;
+  }
+}
+
+// mediaqueries min-width
+@mixin mq-default-min-width($width) {
+  @media only screen and (min-width: $width) {
+    @content;
+  }
+}
+

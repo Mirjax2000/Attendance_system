@@ -1,0 +1,25 @@
+/* --- typography --- */
+@font-face {
+  font-family: grotesk;
+  src: url("../assets/webfonts/Font-face/static/SpaceGrotesk-Medium.woff2") format("woff2"),
+      url("../assets/webfonts/Font-face/static/SpaceGrotesk-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+html {
+  font-size: 100%;
+}
+
+body {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+h1{
+  font-size: var(--primary);
+}
+

@@ -1,0 +1,30 @@
+@use "sass:map";
+
+$font-size: (
+  "desktop": (
+    "primary": 4rem,
+    "secondary": 2.1875rem,
+    "tertiary": 1rem,
+    "paragraph": 1rem,
+    "button": 1rem,
+  ),
+  "tablet": (
+    "primary": 3,
+    "secondary": 2.1875rem,
+    "tertiary": 1rem,
+    "paragraph": 1rem,
+    "button": 1rem,
+  ),
+  "mobile": (
+    "primary": 2,
+    "secondary": 2.1875rem,
+    "tertiary": 1rem,
+    "paragraph": 1rem,
+    "button": 0.5rem,
+  ),
+);
+
+// for root mixin
+$desktop: map.get($font-size, "desktop");
+$tablet: map.get($font-size, "tablet");
+$mobile: map.get($font-size, "mobile");
