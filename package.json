@@ -1,0 +1,30 @@
+{
+  "name": "attendance_system",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:autoprefix": "postcss ./static/css/*.css --dir static/css",
+    "watch:sass": "sass static/sass/:static/css/ -w",
+    "build:ts": "tsc",
+    "watch:ts": "tsc --watch"
+  },
+  "author": "Miroslav Viktorin",
+  "license": "ISC",
+  "description": "template",
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "eslint": "^9.17.0",
+    "postcss": "^8.4.49",
+    "postcss-cli": "^11.0.0",
+    "postcss-nested": "^7.0.2",
+    "prettier": "^3.4.2",
+    "sass": "^1.83.1",
+    "stylelint": "^16.13.0",
+    "stylelint-config-standard": "^37.0.0",
+    "stylelint-config-standard-scss": "^14.0.0",
+    "typescript": "^5.7.3",
+    "autoprefixer": "^10.4.20"
+  }
+
+}
