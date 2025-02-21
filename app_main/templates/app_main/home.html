@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "main_layout.html" %}
 {% load static %}
 {% block title %}
     home page
@@ -13,13 +13,7 @@
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
 </noscript>
 <!-- end -->
-<!-- content -->
-{% block content %}
-    <main class="main">
-        {% include "app_main/includes/header.html" %}
-        <section class="container">
-            <h1>Homepage</h1>
-        </section>
-    </main>
-    {% include "app_main/includes/footer.html" %}
-{% endblock content %}
+<!-- main content -->
+{% block main_content %}
+    <h1>ahoj ja jsem franta</h1>
+{% endblock main_content %}

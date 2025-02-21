@@ -7,7 +7,7 @@ from django.template.loader import render_to_string
 
 def index(request):
     """Home page"""
-    return render(request=request, template_name="app_main/index.html")
+    return render(request=request, template_name="app_main/home.html")
 
 
 def custom_404(request, exception):

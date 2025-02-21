@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+    Main Layout
+{% endblock title %}
+{% block content %}
+    {% include "includes/header.html" %}
+    <main class="main">
+        <nav class="navigation">
+            <ul>
+                <li>
+                    <a href="#">item</a>
+                </li>
+                <li>
+                    <a href="#">item</a>
+                </li>
+                <li>
+                    <a href="#">item</a>
+                </li>
+                <li>
+                    <a href="#">admin panel</a>
+                </li>
+                <li>
+                    <a href="#">camera stream</a>
+                </li>
+            </ul>
+        </nav>
+        {% block main_content %}
+        {% endblock main_content %}
+    </main>
+    {% include "includes/footer.html" %}
+{% endblock content %}
