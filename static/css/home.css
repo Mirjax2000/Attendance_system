@@ -263,8 +263,20 @@ h1 {
 }
 
 /* --- home --- */
+/* --- grid --- */
+.container {
+  background-color: #041a64;
+  padding-inline: 1rem;
+  width: clamp(40rem, 100%, 120rem);
+  height: 100svh;
+}
+
 /* --- header --- */
 /* --- navigation --- */
+.nav__list__item {
+  background-color: aquamarine;
+}
+
 /* --- footer --- */
 /* --- buttons component --- */
 /* --- modal component --- */

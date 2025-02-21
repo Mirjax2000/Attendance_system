@@ -265,6 +265,10 @@ h1 {
 /* --- cam --- */
 /* --- header --- */
 /* --- navigation --- */
+.nav__list__item {
+  background-color: aquamarine;
+}
+
 /* --- footer --- */
 /* --- buttons component --- */
 /* --- modal component --- */

@@ -1,1 +1,8 @@
 /* --- navigation --- */
+.nav {
+    &__list{
+        &__item{
+            background-color: aquamarine;
+        }
+    }
+}
