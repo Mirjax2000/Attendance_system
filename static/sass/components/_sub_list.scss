@@ -3,10 +3,19 @@
 @use '../utils/' as *;
 @use '../base/placeholders' as *;
 
+// [data-show="true"].c-sublist{
+//     display: block;displaydisplay
+    
+// }
+
+[data-show="false"].c-sublist{
+    display: none;
+}
+
 .c-sublist{
     color: var(--text-clr-default);
     margin-left: em(16,16);
-    padding: em(16,16) 0 ;
+    padding: em(8,16) 0 ;
 
     &__item{
         @include flex(flex-start);
@@ -15,14 +24,15 @@
         padding: em(8,16) em(16,16);
         border-radius: em(5,16);
         box-shadow: 1px 3px 10px transparent;
+        user-select: none;
         transition: all ease-in-out .1s;
 
         &:not(:last-child){
-            margin-bottom: em(8,16); 
+            margin-bottom: em(4,16); 
         }
 
         &__text{
-            padding-bottom: 2px;
+            padding-bottom: 4px;
         }
         
         &__circle{
@@ -30,8 +40,14 @@
             margin-right: em(6,16);
         }
         
-        &:hover{
-            @extend %hover-nav;
+        &:hover,&:focus{
+            background-color:var(--ternary-clr-ternary-1);
+            box-shadow: 1px 3px 10px black;
+        }
+
+        &:active{
+            box-shadow: 1px 1px 4px black;
+            transform: translateY(-1px);
         }
     }
 }

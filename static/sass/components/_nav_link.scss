@@ -1,6 +1,5 @@
 /* --- navlink componenta --- */
 @use '../utils/' as *;
-@use '../base/placeholders' as *;
 
 .c-nav-link{
     @include flex(flex-start);
@@ -9,9 +8,16 @@
     padding-block: em(8,16);
     border-radius: em(5,16);
     transition: all ease-in-out .1s;
+    user-select: none;
 
-    &:hover{
-        @extend %hover-nav;
+    &:hover,&:focus{
+        background-color:var(--ternary-clr-ternary-1);
+        box-shadow: 1px 3px 10px black;
+    }
+
+    &:active{
+        box-shadow: 1px 1px 4px black;
+        transform: translateY(-1px);
     }
 
     &__ico,&__next{

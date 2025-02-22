@@ -316,6 +316,19 @@ body {
   top: 0;
   right: 1em;
   transform: translateY(50%);
+  transition: all 0.1s ease-in-out;
+}
+
+[data-pointer=left].l-nav__list__item__zam::after {
+  transform: translateY(50%);
+}
+
+[data-pointer=down].l-nav__list__item__zam {
+  background-color: #2a324e;
+  outline: 1px solid rgb(255, 255, 255);
+}
+[data-pointer=down].l-nav__list__item__zam::after {
+  transform: translateY(50%) rotate(90deg);
 }
 
 /* --- footer --- */
