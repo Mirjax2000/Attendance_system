@@ -1,8 +1,9 @@
 {% load static %}
 <nav class="l-nav">
     <ul class="l-nav__list">
+        <!-- Main panel -->
         <li class="l-nav__list__item">
-            <a class="c-nav-link" href="#">
+            <a class="c-nav-link" href="#" data-url="">
                 <img class="c-nav-link__ico"
                      src=" {% static "images/icons8-control-panel.png" %} "
                      alt="dashboard icon"
@@ -11,11 +12,13 @@
                 <p class="c-nav-link__text">Main panel</p>
             </a>
         </li>
+        <!-- zamestnanci -->
         <li class="l-nav__list__item">
             <a class="c-nav-link l-nav__list__item__zam"
                href="#"
                id="employee"
-               data-pointer="left">
+               data-pointer="left"
+               data-url="">
                 <img class="c-nav-link__ico"
                      src=" {% static "images/icons8-employees.png" %} "
                      alt="employees icon"
@@ -25,8 +28,9 @@
             </a>
             {% include "includes/zamestnanci.html" %}
         </li>
+        <!-- admin panel  -->
         <li class="l-nav__list__item">
-            <a class="c-nav-link" href=" {% url 'admin:index' %} ">
+            <a class="c-nav-link" href="#" data-url="">
                 <img class="c-nav-link__ico"
                      src=" {% static "images/icons8-admin.png" %} "
                      alt="admin icon"
@@ -35,8 +39,9 @@
                 <p class="c-nav-link__text">admin panel</p>
             </a>
         </li>
+        <!--  -->
         <li class="l-nav__list__item">
-            <a class="c-nav-link" href=" {% url "cam" 12 %}">
+            <a class="c-nav-link" href="#" data-url="">
                 <img class="c-nav-link__ico"
                      src=" {% static "images/icons8-add-camera.png" %} "
                      alt="admin icon"
