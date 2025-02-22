@@ -1,6 +1,6 @@
 
+$(function () {
 
-$(document).ready(function () {
     const employeeLink = $("#employee");
     const employeeSublist = $("#employeeSublist");
 
@@ -11,4 +11,5 @@ $(document).ready(function () {
 
         employeeSublist.slideToggle(500);
     });
-});
+})
+
