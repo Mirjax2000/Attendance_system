@@ -1,0 +1,17 @@
+/* --- sublist --- */
+
+@use '../utils/' as *;
+
+.c-sublist{
+    color: var(--text-clr-default);
+    margin-left: em(8,16);
+    padding: em(16,16);
+
+    &__item{
+        list-style-type: circle;
+
+        &:not(:last-child){
+            margin-bottom: em(8,16); 
+        }
+    }
+}

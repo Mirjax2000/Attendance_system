@@ -1,6 +1,6 @@
 /* --- grid --- */
 
-@use '../utils/mixins' as *;
+@use '../utils/' as *;
 
 .l-grid-container{
     @include container(40rem,120rem, 1rem);

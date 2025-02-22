@@ -4,7 +4,7 @@
   --primary-clr-default: #7ed56f;
   --primary-clr-light: #55c57a;
   --primary-clr-dark: #28b485;
-  --text-clr-default: #fff;
+  --text-clr-default: #d2d2d2;
   --text-clr-dark: #111;
   --text-clr-btn: #777;
   --text-clr-learn-more-btn: #7ed56f;
@@ -242,8 +242,36 @@ body, body.home {
 /* --- typography --- */
 @font-face {
   font-family: grotesk;
-  src: url("../assets/webfonts/Font-face/static/SpaceGrotesk-Medium.woff2") format("woff2"), url("../assets/webfonts/Font-face/static/SpaceGrotesk-Medium.ttf") format("truetype");
-  font-weight: 500;
+  src: url("../fonts/webfonts/Font-face/SpaceGrotesk-VariableFont_wght.woff2") format("woff2-variations"), url("../fonts/webfonts/Font-face/SpaceGrotesk-VariableFont_wght.ttf") format("truetype-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: lato;
+  src: url("../fonts/webfonts/Font-face/static/Lato-Regular.woff2") format("woff2"), url("../fonts/webfonts/Font-face/static/Lato-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: lato;
+  src: url("../fonts/webfonts/Font-face/static/Lato-Bold.woff2") format("woff2"), url("../fonts/webfonts/Font-face/static/Lato-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: lato;
+  src: url("../fonts/webfonts/Font-face/static/Lato-Light.woff2") format("woff2"), url("../fonts/webfonts/Font-face/static/Lato-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: lato;
+  src: url("../fonts/webfonts/Font-face/static/Lato-Thin.woff2") format("woff2"), url("../fonts/webfonts/Font-face/static/Lato-Thin.ttf") format("truetype");
+  font-weight: 100;
   font-style: normal;
   font-display: swap;
 }
@@ -252,14 +280,10 @@ html {
 }
 
 body {
-  font-family: "Lato", sans-serif;
+  font-family: lato, serif;
   font-weight: 400;
   font-size: 1rem;
   line-height: 1.7;
-}
-
-h1 {
-  font-size: var(--primary);
 }
 
 /* --- cam --- */
@@ -277,10 +301,6 @@ h1 {
   border-radius: 0.25rem;
   margin-bottom: 0.3rem;
   transition: all, ease-in-out, 0.2s;
-}
-.l-nav__list__item:hover {
-  background-color: #7369ff;
-  box-shadow: 1px 3px 10px black;
 }
 
 /* --- footer --- */
