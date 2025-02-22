@@ -5,7 +5,7 @@ $(function () {
     const employeeSublist = $("#employeeSublist");
     const content = $("#content");
     const navMenu = $(".l-nav");
-    const navlinks = navMenu.find('a')
+    const navlinks = navMenu.find(".ajax-link");
 
 
     employeeLink.on("click", function (event) {
@@ -13,11 +13,13 @@ $(function () {
         this.dataset.pointer = this.dataset.pointer === "left" ? "down" : "left";
         this.dataset.show = this.dataset.pointer === "down" ? "true" : "false";
 
+
         employeeSublist.slideToggle(500);
     });
 
     navlinks.on('click', function (e) {
         e.preventDefault();
+
         const url = $(this).data('url');
 
         $.ajax({

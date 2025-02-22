@@ -1,27 +1,39 @@
 {% load static %}
 <ul class="c-sublist" data-show="false" id="employeeSublist">
     <li class="c-sublist__item">
-        <img class="c-sublist__item__circle"
-             src="{% static "images/icons8-circle.png" %} "
-             alt="circle icon"
-             width="10"
-             height="10">
-        <p class="c-sublist__item__text">v praci</p>
+        <a class="ajax-link c-sublist__item__link"
+           href="#"
+           data-url="{% url "working" %}">
+            <img class="c-sublist__item__circle"
+                 src="{% static "images/icons8-circle.png" %} "
+                 alt="circle icon"
+                 width="10"
+                 height="10">
+            <p class="c-sublist__item__text">v praci</p>
+        </a>
     </li>
     <li class="c-sublist__item">
-        <img class="c-sublist__item__circle"
-             src="{% static "images/icons8-circle.png" %} "
-             alt="circle icon"
-             width="10"
-             height="10">
-        <p class="c-sublist__item__text">na dovolene</p>
+        <a class="ajax-link c-sublist__item__link"
+           href="#"
+           data-url="{% url "vacation" %}">
+            <img class="c-sublist__item__circle"
+                 src="{% static "images/icons8-circle.png" %} "
+                 alt="circle icon"
+                 width="10"
+                 height="10">
+            <p class="c-sublist__item__text">na dovolene</p>
+        </a>
     </li>
     <li class="c-sublist__item">
-        <img class="c-sublist__item__circle"
-             src="{% static "images/icons8-circle.png" %} "
-             alt="circle icon"
-             width="10"
-             height="10">
-        <p class="c-sublist__item__text">neschopnost</p>
+        <a class="ajax-link c-sublist__item__link"
+           href="#"
+           data-url="{% url "sick" %}">
+            <img class="c-sublist__item__circle"
+                 src="{% static "images/icons8-circle.png" %} "
+                 alt="circle icon"
+                 width="10"
+                 height="10">
+            <p class="c-sublist__item__text">neschopnost</p>
+        </a>
     </li>
 </ul>

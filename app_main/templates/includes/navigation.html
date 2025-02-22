@@ -4,7 +4,7 @@
         <!-- Main panel -->
         <li class="l-nav__list__item">
             <a class="c-nav-link" href="#" data-url="">
-                <img class="c-nav-link__ico"
+                <img class="c-nav-link__ico ajax-link"
                      src=" {% static "images/icons8-control-panel.png" %} "
                      alt="dashboard icon"
                      width="24"
@@ -14,11 +14,11 @@
         </li>
         <!-- zamestnanci -->
         <li class="l-nav__list__item">
-            <a class="c-nav-link l-nav__list__item__zam"
+            <a class="c-nav-link l-nav__list__item__zam ajax-link"
                href="#"
                id="employee"
                data-pointer="left"
-               data-url="">
+               data-url="{% url "all_employees" %}">
                 <img class="c-nav-link__ico"
                      src=" {% static "images/icons8-employees.png" %} "
                      alt="employees icon"
@@ -30,7 +30,7 @@
         </li>
         <!-- admin panel  -->
         <li class="l-nav__list__item">
-            <a class="c-nav-link" href="#" data-url="">
+            <a class="c-nav-link" href=" {% url "admin:index" %} ">
                 <img class="c-nav-link__ico"
                      src=" {% static "images/icons8-admin.png" %} "
                      alt="admin icon"
@@ -40,8 +40,8 @@
             </a>
         </li>
         <!--  -->
-        <li class="l-nav__list__item">
-            <a class="c-nav-link" href="#" data-url="">
+        <li class="l-nav__list__item ajax-link">
+            <a class="c-nav-link" href="#" data-url="{% url "cam" 10 %}">
                 <img class="c-nav-link__ico"
                      src=" {% static "images/icons8-add-camera.png" %} "
                      alt="admin icon"

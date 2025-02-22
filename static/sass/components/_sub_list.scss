@@ -4,7 +4,7 @@
 @use '../base/placeholders' as *;
 
 // [data-show="true"].c-sublist{
-//     display: block;displaydisplay
+//     display: block;displaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplay
     
 // }
 
@@ -13,22 +13,28 @@
 }
 
 .c-sublist{
-    color: var(--text-clr-default);
     margin-left: em(16,16);
     padding: em(8,16) 0 ;
 
     &__item{
-        @include flex(flex-start);
-
-        cursor: pointer;
-        padding: em(8,16) em(16,16);
-        border-radius: em(5,16);
-        box-shadow: 1px 3px 10px transparent;
         user-select: none;
-        transition: all ease-in-out .1s;
-
+        
         &:not(:last-child){
             margin-bottom: em(4,16); 
+        }
+        
+        &__link{
+            @include flex(flex-start);
+            
+            color: var(--text-clr-default);
+            border-radius: em(5,16);
+            padding: em(8,16);
+            transition: all ease-in-out .1s;
+            
+            &:hover,&:focus{
+                background-color:var(--ternary-clr-ternary-1);
+                box-shadow: 1px 3px 10px black;
+            }
         }
 
         &__text{
@@ -40,10 +46,6 @@
             margin-right: em(6,16);
         }
         
-        &:hover,&:focus{
-            background-color:var(--ternary-clr-ternary-1);
-            box-shadow: 1px 3px 10px black;
-        }
 
         &:active{
             box-shadow: 1px 1px 4px black;

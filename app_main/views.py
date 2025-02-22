@@ -1,21 +1,53 @@
+"""app_main views"""
+
 from django.http import HttpResponseNotFound
-from django.shortcuts import render
-from django.template.loader import render_to_string
+from django.views.generic import (
+    DeleteView,
+    DetailView,
+    ListView,
+    TemplateView,
+    UpdateView,
+)
 
 # Create your views here.
 
 
-def index(request):
-    """Home page"""
-    return render(request=request, template_name="app_main/home.html")
+class HomeView(TemplateView):
+    """homepage"""
+
+    template_name = "app_main/home.html"
 
 
-def custom_404(request, exception):
-    """Chybova stranka jen kdyz DEBUG=False"""
-    html = render_to_string("404.html", {"message": str(exception)})
-    return HttpResponseNotFound(html)
+class AllEmployeesView(TemplateView):
+    """Seznam vsech zamestnancu"""
+
+    template_name = "app_main/employees.html"
 
 
-def cam(request, speed: int = 10):
-    """camera endpoint"""
-    return render(request, "app_main/cam.html", {"speed": speed})
+class VacationView(TemplateView):
+    """Seznam vsech zamestnancu"""
+
+    template_name = "app_main/vacation.html"
+
+
+class WorkingView(TemplateView):
+    """Seznam vsech zamestnancu"""
+
+    template_name = "app_main/working.html"
+
+
+class SickView(TemplateView):
+    """Seznam vsech zamestnancu"""
+
+    template_name = "app_main/sick.html"
+
+
+class CamView(TemplateView):
+    """Seznam vsech zamestnancu"""
+
+    template_name = "app_main/cam.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["speed"] = self.kwargs.get("speed", 10)
+        return context

@@ -7,13 +7,19 @@ from django.urls import path
 
 from app_main import cam, views
 
-handler404 = "app_main.views.custom_404"
-
 urlpatterns = [
-    path("", views.index, name="index"),
-    path("admin/", admin.site.urls),
-    path("cam/<int:speed>", views.cam, name="cam"),
+    path("", views.HomeView.as_view(), name="home"),
+    # home end points
+    path(
+        "home/employees", views.AllEmployeesView.as_view(), name="all_employees"
+    ),
+    path("home/vacation", views.VacationView.as_view(), name="vacation"),
+    path("home/working", views.WorkingView.as_view(), name="working"),
+    path("home/sick", views.SickView.as_view(), name="sick"),
+    # others
+    path("cam/<int:speed>", views.CamView.as_view(), name="cam"),
     path("cam/video_stream/<int:speed>", cam.video_stream, name="video_stream"),
+    path("admin/", admin.site.urls),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
