@@ -1,11 +1,18 @@
 /* --- navlink componenta --- */
 @use '../utils/' as *;
+@use '../base/placeholders' as *;
 
 .c-nav-link{
     @include flex(flex-start);
 
     color: var(--text-clr-default);
     padding-block: em(8,16);
+    border-radius: em(5,16);
+    transition: all ease-in-out .1s;
+
+    &:hover{
+        @extend %hover-nav;
+    }
 
     &__ico,&__next{
         background-color: transparent;
@@ -17,6 +24,4 @@
         margin-inline: .3rem;
         text-align: left;
     }
-
-
 }

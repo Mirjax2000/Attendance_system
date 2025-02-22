@@ -2,23 +2,32 @@
 $light-theme: (
   "primary-clr": (
     "default": #7ed56f,
-    "light": #55c57a,
-    "dark": #28b485,
+    "primary":white,
+  ),
+  "secondary-clr":("secondary": gray,),
+  "ternary-clr":(
+    "ternary-1": #7369ff,
+    "ternary-2": #6158d8,
+    "ternary-3": #5049b2,
   ),
   "text-clr": (
     "default": #d2d2d2,
     "dark": #111,
     "btn": #777,
-    "learn-more-btn": #7ed56f,
   ),
   "background-clr": (
     "default": #fff,
-    "about": #f7f7f7,
-    "light": #f9f9f9,
+    "content":#161c32,
+    "header": #f7f7f7,
     "dark": #000,
-    "gradient":
-      linear-gradient(to right bottom, rgba(#55c57a, 0.8), rgba(#28b485, 0.8)),
+    "gradient-primary":
+      linear-gradient(to right bottom,#161c32 , #2a324e,),
+    "gradient-secondary":
+      linear-gradient(to right bottom, #1f2537, #2b2b2b),
+    "gradient-ternary":
+      linear-gradient(to right bottom, #7369ff, #5049b2),
   ),
+
   "shadow-clr": (
     "default": rgba(black, 0.3),
     "higher": rgba(black, 0.5),

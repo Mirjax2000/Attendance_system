@@ -19,15 +19,15 @@
         <!-- font preload -->
         <link as="font"
               crossorigin="anonymous"
-              href="{% static 'fonts/webfonts/Font-face/SpaceGrotesk-VariableFont_wght.ttf' %}"
+              href="{% static 'fonts/webfonts/Font-face/static/Lato-Regular.woff2' %}"
               rel="preload"
               type="font/woff2" />
         <style>
         @font-face {
-            font-family: grotesk;
-            src: url("{% static 'fonts/webfonts/Font-face/SpaceGrotesk-VariableFont_wght.woff2' %}") format("woff2-variations"),
-            url("{% static 'fonts/webfonts/Font-face/SpaceGrotesk-VariableFont_wght.ttf' %}") format("truetype-variations");
-            font-weight: 100 900;
+            font-family: lato;
+            src: url("{% static 'fonts/webfonts/Font-face/static/Lato-Regular.woff2' %}") format("woff2"),
+            url("{% static 'fonts/webfonts/Font-face/static/Lato-Regular.ttf' %}") format("truetype");
+            font-weight: 400;
             font-style: normal;
             font-display: swap;
         }

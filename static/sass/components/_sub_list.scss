@@ -1,17 +1,37 @@
 /* --- sublist --- */
 
 @use '../utils/' as *;
+@use '../base/placeholders' as *;
 
 .c-sublist{
     color: var(--text-clr-default);
-    margin-left: em(8,16);
-    padding: em(16,16);
+    margin-left: em(16,16);
+    padding: em(16,16) 0 ;
 
     &__item{
-        list-style-type: circle;
+        @include flex(flex-start);
+
+        cursor: pointer;
+        padding: em(8,16) em(16,16);
+        border-radius: em(5,16);
+        box-shadow: 1px 3px 10px transparent;
+        transition: all ease-in-out .1s;
 
         &:not(:last-child){
             margin-bottom: em(8,16); 
+        }
+
+        &__text{
+            padding-bottom: 2px;
+        }
+        
+        &__circle{
+            background-color: transparent;
+            margin-right: em(6,16);
+        }
+        
+        &:hover{
+            @extend %hover-nav;
         }
     }
 }
