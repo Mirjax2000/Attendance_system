@@ -1,0 +1,45 @@
+{% load static %}
+<nav class="l-nav">
+    <ul class="l-nav__list">
+        <li class="l-nav__list__item">
+            <a class="c-nav-link" href="#">
+                <img class="c-nav-link__ico"
+                     src=" {% static "images/icons8-control-panel.png" %} "
+                     alt="dashboard icon"
+                     width="24"
+                     height="24">
+                <p class="c-nav-link__text">Main panel</p>
+            </a>
+        </li>
+        <li class="l-nav__list__item">
+            <a class="c-nav-link" href="#">
+                <img class="c-nav-link__ico"
+                     src=" {% static "images/icons8-employees.png" %} "
+                     alt="employees icon"
+                     width="24"
+                     height="24">
+                <p class="c-nav-link__text">zamestanci</p>
+            </a>
+        </li>
+        <li class="l-nav__list__item">
+            <a class="c-nav-link" href=" {% url 'admin:index' %} ">
+                <img class="c-nav-link__ico"
+                     src=" {% static "images/icons8-admin.png" %} "
+                     alt="admin icon"
+                     width="24"
+                     height="24">
+                <p class="c-nav-link__text">admin panel</p>
+            </a>
+        </li>
+        <li class="l-nav__list__item">
+            <a class="c-nav-link" href=" {% url "cam" 12 %}">
+                <img class="c-nav-link__ico"
+                     src=" {% static "images/icons8-add-camera.png" %} "
+                     alt="admin icon"
+                     width="24"
+                     height="24">
+                <p class="c-nav-link__text">camera stream</p>
+            </a>
+        </li>
+    </ul>
+</nav>

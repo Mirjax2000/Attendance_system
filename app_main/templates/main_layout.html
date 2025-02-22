@@ -4,31 +4,11 @@
     Main Layout
 {% endblock title %}
 {% block content %}
-    <div class="container">
-        {% include "includes/header.html" %}
-        <main class="main">
-            <nav class="nav">
-                <ul class="nav__list">
-                    <li class="nav__list__item">
-                        <a href="#">item</a>
-                    </li>
-                    <li class="nav__list__item">
-                        <a href="#">item</a>
-                    </li>
-                    <li class="nav__list__item">
-                        <a href="#">item</a>
-                    </li>
-                    <li class="nav__list__item">
-                        <a href="#">admin panel</a>
-                    </li>
-                    <li class="nav__list__item">
-                        <a href="#">camera stream</a>
-                    </li>
-                </ul>
-            </nav>
+    <div class="l-grid-container">
+        <main class="l-grid-main">
+            {% include "includes/navigation.html" %}
             {% block main_content %}
             {% endblock main_content %}
         </main>
-        {% include "includes/footer.html" %}
     </div>
 {% endblock content %}

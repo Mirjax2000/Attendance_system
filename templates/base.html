@@ -34,13 +34,17 @@
         }
         </style>
         <!-- css  -->
-        <link rel="preload"
-              href="{% static 'css/base.css' %}"
-              as="style"
-              onload="this.onload=null;this.rel='stylesheet'">
+        {% block css %}
+            <link rel="preload"
+                  href="{% static 'css/base.css' %}"
+                  as="style"
+                  onload="this.onload=null;this.rel='stylesheet'">
+        {% endblock css %}
         <!-- no js -->
         <noscript>
-            <link rel="stylesheet" href="{% static 'css/base.css' %}">
+            {% block nojs %}
+                <link rel="stylesheet" href="{% static 'css/base.css' %}">
+            {% endblock nojs %}
         </noscript>
         <!-- end -->
     </head>

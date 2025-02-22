@@ -1,0 +1,16 @@
+/* --- navlink componenta --- */
+@use '../utils/mixins' as *;
+
+.c-nav-link{
+    @include flex(flex-start);
+
+    padding-block: .3rem;
+    color: #d2d2d2;
+
+    &__ico{
+        background-color: transparent;
+        margin-inline: .5rem;
+    }
+
+
+}

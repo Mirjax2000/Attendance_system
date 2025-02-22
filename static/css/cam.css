@@ -265,8 +265,22 @@ h1 {
 /* --- cam --- */
 /* --- header --- */
 /* --- navigation --- */
-.nav__list__item {
-  background-color: aquamarine;
+.l-nav {
+  background-image: linear-gradient(to bottom, #1f2537, #2b2b2b);
+  width: 12rem;
+  padding: 1rem;
+}
+.l-nav__list {
+  margin-top: 4rem;
+}
+.l-nav__list__item {
+  border-radius: 0.25rem;
+  margin-bottom: 0.3rem;
+  transition: all, ease-in-out, 0.2s;
+}
+.l-nav__list__item:hover {
+  background-color: #7369ff;
+  box-shadow: 1px 3px 10px black;
 }
 
 /* --- footer --- */

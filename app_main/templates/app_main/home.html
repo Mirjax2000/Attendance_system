@@ -4,16 +4,22 @@
     home page
 {% endblock title %}
 <!-- css stylesheet -->
-<link rel="preload"
-      href="{% static 'css/home.css' %}"
-      as="style"
-      onload="this.onload=null;this.rel='stylesheet'">
+{% block css %}
+    <link rel="preload"
+          href="{% static 'css/home.css' %}"
+          as="style"
+          onload="this.onload=null;this.rel='stylesheet'">
+{% endblock css %}
 <!-- no js -->
 <noscript>
-    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    {% block nojs %}
+        <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    {% endblock nojs %}
 </noscript>
 <!-- end -->
 <!-- main content -->
 {% block main_content %}
-    <h1>ahoj ja jsem franta</h1>
+    <section class="p-home-section">
+        <h1>Content</h1>
+    </section>
 {% endblock main_content %}

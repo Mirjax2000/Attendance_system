@@ -1,10 +1,16 @@
 /* --- grid --- */
 
+@use '../utils/mixins' as *;
 
+.l-grid-container{
+    @include container(40rem,120rem, 1rem);
+    @include flex-full-height-column;
 
-.container{
-    background-color: #041a64;
-    padding-inline: 1rem;
-    width: clamp(40rem, 100%, 120rem);
-    height: 100svh;
+}
+
+.l-grid-main{
+    display: flex;
+    gap: 1rem;
+    flex-grow: 1;
+    background-color: #161c32;
 }

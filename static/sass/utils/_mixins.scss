@@ -7,6 +7,7 @@
     }
   }
 }
+
 @mixin export-to-dataset($map, $prefix: "") {
     @each $key, $value in map-to-css-vars($map, $prefix) {
       #{$key}: #{$value};
@@ -15,21 +16,31 @@
 
 @mixin container($min, $max, $padding) {
   width: clamp($min, 100%, $max);
-  padding: $padding;
+  padding-inline: $padding;
+  margin-inline: auto ;
+}
+
+@mixin flex-full-height-column($height:100dvh){
+  height: $height;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
 }
 
 // @mixin selection($clr-bg-selection: black, $clr-selection: white) {
 //   ::selection {
-//     background-color: $clr-bg-selection;
-//     color: $clr-selection;
+//     background-color: $clr-bg-selection;background-colorbackground-colorbackground-colorbackground-colorbackground-colorbackground-colorbackground-colorbackground-colorbackground-colorbackground-colorbackground-colorbackground-colorbackground-colorbackground-colorbackground-colorbackground-color
+//     color: $clr-selection;colorcolorcolorcolorcolorcolorcolorcolorcolorcolorcolorcolorcolorcolorcolorcolor
 //   }
 // }
 
 // flex
-@mixin flex($justify: center, $align: center) {
+@mixin flex($justify: center, $align: center,$gap:0) {
   display: flex;
   justify-content: $justify;
   align-items: $align;
+  gap: $gap;
 }
 
 // --- visually-hidden ---
