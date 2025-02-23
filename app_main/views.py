@@ -42,6 +42,12 @@ class SickView(TemplateView):
     template_name = "app_main/sick.html"
 
 
+class OtherView(TemplateView):
+    """Seznam vsech zamestnancu"""
+
+    template_name = "app_main/other.html"
+
+
 class CamView(TemplateView):
     """Seznam vsech zamestnancu"""
 

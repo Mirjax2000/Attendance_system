@@ -16,6 +16,7 @@ urlpatterns = [
     path("home/vacation", views.VacationView.as_view(), name="vacation"),
     path("home/working", views.WorkingView.as_view(), name="working"),
     path("home/sick", views.SickView.as_view(), name="sick"),
+    path("home/other", views.OtherView.as_view(), name="other"),
     # others
     path("cam/<int:speed>", views.CamView.as_view(), name="cam"),
     path("cam/video_stream/<int:speed>", cam.video_stream, name="video_stream"),

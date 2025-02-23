@@ -362,6 +362,9 @@ body {
   margin-inline: 0.3rem;
   text-align: left;
 }
+.c-nav-link.sublink:hover, .c-nav-link.sublink:focus {
+  background-color: var(--ternary-clr-ternary-3);
+}
 
 .c-pointer {
   --pointer-size: 1rem;
