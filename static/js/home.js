@@ -8,13 +8,15 @@ $(function () {
     const navlinks = navMenu.find(".ajax-link");
 
 
-    employeeLink.on("click", function (event) {
-        event.preventDefault();
+    employeeLink.on("click", function (e) {
+        e.preventDefault();
         this.dataset.pointer = this.dataset.pointer === "left" ? "down" : "left";
-        this.dataset.show = this.dataset.pointer === "down" ? "true" : "false";
 
-
-        employeeSublist.slideToggle(500);
+        if (this.dataset.pointer === "down") {
+            employeeSublist.stop().slideDown(500);
+        } else {
+            employeeSublist.stop().slideUp(500);
+        }
     });
 
     navlinks.on('click', function (e) {

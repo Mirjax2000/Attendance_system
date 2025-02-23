@@ -1,18 +1,27 @@
 /* --- navigation --- */
 
-@use '../utils/' as *;
-
+@use "../utils/" as *;
 
 .l-nav {
-    background-image: var(--background-clr-gradient-secondary);
-    width: em(200,16);
-    padding: em(16,16);
+  background-image: var(--background-clr-gradient-secondary);
+  width: em(200, 16);
+  padding: em(16, 16);
 
-    &__list{
-        &__item{
-            &:not(:last-child){
-                margin-bottom: .3rem;
-            }
-        }
-    }  
+  &__list {
+    &__item {
+      &:not(:last-child) {
+        margin-bottom: 0.3rem;
+      }
+    }
+  }
+
+  &__list.mainlist {
+    margin-top: 2rem;
+  }
+
+  &__list.sublist {
+    margin-left: em(16, 16);
+    padding: em(16, 16) 0;
+    display: none;
+  }
 }

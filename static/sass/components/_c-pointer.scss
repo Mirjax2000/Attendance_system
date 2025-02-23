@@ -19,10 +19,11 @@
 }
 
 [data-pointer="down"].c-pointer {
+  background-color: var(--background-clr-nav-pointer);
   outline: 1px solid #fff;
 
   &::after {
-    letter-spacing: -10px;
-    transform: translate(0, -50%) rotate(90deg);
+    letter-spacing: -14px;
+    transform: translate(0%, -50%) rotate(90deg);
   }
 }

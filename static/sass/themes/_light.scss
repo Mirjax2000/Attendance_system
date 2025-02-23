@@ -2,10 +2,12 @@
 $light-theme: (
   "primary-clr": (
     "default": #7ed56f,
-    "primary":white,
+    "primary": white,
   ),
-  "secondary-clr":("secondary": gray,),
-  "ternary-clr":(
+  "secondary-clr": (
+    "secondary": gray,
+  ),
+  "ternary-clr": (
     "ternary-1": #7369ff,
     "ternary-2": #6158d8,
     "ternary-3": #5049b2,
@@ -17,15 +19,14 @@ $light-theme: (
   ),
   "background-clr": (
     "default": #fff,
-    "content":#161c32,
+    "nav": #1f2537,
+    "nav-pointer": #2a324e,
+    "content": #161c32,
     "header": #f7f7f7,
     "dark": #000,
-    "gradient-primary":
-      linear-gradient(to right bottom,#161c32 , #2a324e,),
-    "gradient-secondary":
-      linear-gradient(to right bottom, #1f2537, #2b2b2b),
-    "gradient-ternary":
-      linear-gradient(to right bottom, #7369ff, #5049b2),
+    "gradient-primary": linear-gradient(to right bottom, #161c32, #2a324e),
+    "gradient-secondary": linear-gradient(to right bottom, #1f2537, #2b2b2b),
+    "gradient-ternary": linear-gradient(to right bottom, #7369ff, #5049b2),
   ),
 
   "shadow-clr": (

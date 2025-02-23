@@ -11,6 +11,8 @@
   --text-clr-dark: #111;
   --text-clr-btn: #777;
   --background-clr-default: #fff;
+  --background-clr-nav: #1f2537;
+  --background-clr-nav-pointer: #2a324e;
   --background-clr-content: #161c32;
   --background-clr-header: #f7f7f7;
   --background-clr-dark: #000;
@@ -310,7 +312,6 @@ body {
   background-image: var(--background-clr-gradient-primary);
 }
 
-/* --- header --- */
 /* --- navigation --- */
 .l-nav {
   background-image: var(--background-clr-gradient-secondary);
@@ -320,10 +321,17 @@ body {
 .l-nav__list__item:not(:last-child) {
   margin-bottom: 0.3rem;
 }
+.l-nav__list.mainlist {
+  margin-top: 2rem;
+}
+.l-nav__list.sublist {
+  margin-left: 1em;
+  padding: 1em 0;
+  display: none;
+}
 
+/* --- header --- */
 /* --- footer --- */
-/* --- buttons component --- */
-/* --- modal component --- */
 /* --- navlink componenta --- */
 .c-nav-link {
   display: flex;
@@ -355,16 +363,6 @@ body {
   text-align: left;
 }
 
-/* --- sublist --- */
-[data-show=false].c-sublist {
-  display: none;
-}
-
-.c-sublist {
-  margin-left: 1em;
-  padding: 0.5em 0;
-}
-
 .c-pointer {
   --pointer-size: 1rem;
   position: relative;
@@ -382,11 +380,12 @@ body {
 }
 
 [data-pointer=down].c-pointer {
+  background-color: var(--background-clr-nav-pointer);
   outline: 1px solid #fff;
 }
 [data-pointer=down].c-pointer::after {
-  letter-spacing: -10px;
-  transform: translate(0, -50%) rotate(90deg);
+  letter-spacing: -14px;
+  transform: translate(0%, -50%) rotate(90deg);
 }
 
 /*# sourceMappingURL=home.css.map */
