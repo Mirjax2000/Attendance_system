@@ -336,7 +336,6 @@ body {
 /* --- footer --- */
 /* --- navlink componenta --- */
 .c-nav-link {
-  --trans-time: 0.2s;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -345,7 +344,7 @@ body {
   padding-block: 0.5em;
   border-radius: 0.3125em;
   user-select: none;
-  transition: all ease-in-out var(--trans-time);
+  transition: all ease-in-out var(0.2s);
   overflow: hidden;
   position: relative;
   isolation: isolate;
@@ -356,7 +355,7 @@ body {
   inset: 0;
   background-image: radial-gradient(circle, rgba(255, 255, 255, 0.0862745098) 0%, rgba(0, 0, 0, 0.031372549) 100%), var(--background-clr-gradient-ternary);
   filter: blur(1px);
-  transition: opacity ease-in-out var(--trans-time);
+  transition: opacity ease-in-out var(0.2s);
   opacity: 0;
   z-index: -1;
 }

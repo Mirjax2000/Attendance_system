@@ -2,17 +2,16 @@
 @use "../utils/" as *;
 
 $font-context: 16;
+$trans-time: 0.2s;
 
 .c-nav-link {
-  --trans-time: 0.2s;
-
   @include flex(flex-start);
 
   color: var(--text-clr-default);
   padding-block: em(8, $font-context);
   border-radius: em(5, $font-context);
   user-select: none;
-  transition: all ease-in-out var(--trans-time);
+  transition: all ease-in-out var($trans-time);
   overflow: hidden;
   position: relative;
   isolation: isolate;
@@ -24,7 +23,7 @@ $font-context: 16;
     background-image: radial-gradient(circle, #ffffff16 0%, #00000008 100%),
       var(--background-clr-gradient-ternary);
     filter: blur(1px);
-    transition: opacity ease-in-out var(--trans-time);
+    transition: opacity ease-in-out var($trans-time);
     opacity: 0;
     z-index: -1;
   }
