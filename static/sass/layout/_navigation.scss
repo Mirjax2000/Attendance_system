@@ -9,45 +9,10 @@
     padding: em(16,16);
 
     &__list{
-        margin-top: 4rem;
-
         &__item{
-            border-radius: .25rem;
-            transition: all,ease-in-out, .2s;
-
             &:not(:last-child){
                 margin-bottom: .3rem;
             }
-
-            &__zam{
-                position: relative;
-
-                &::after{
-                    content: ">";
-                    font-size: 1rem;
-                    font-weight: bold;
-                    position: absolute;
-                    top: 0;
-                    right: em(16,16);
-                    transform: translateY(50%);
-                    transition:all .1s ease-in-out;
-                }
-            }
         }
     }  
-}
-
-[data-pointer="left"].l-nav__list__item__zam{
-    &::after{
-        transform: translateY(50%);
-    }
-}
-
-[data-pointer="down"].l-nav__list__item__zam{
-    background-color: #2a324e;
-    outline: 1px solid rgb(255, 255, 255);
-
-    &::after{
-        transform: translateY(50%) rotate(90deg);
-    }
 }

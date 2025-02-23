@@ -1,39 +1,33 @@
 {% load static %}
-<ul class="c-sublist" data-show="false" id="employeeSublist">
-    <li class="c-sublist__item">
-        <a class="ajax-link c-sublist__item__link"
-           href="#"
-           data-url="{% url "working" %}">
-            <img class="c-sublist__item__circle"
+<ul class="l-nav__list sublist" data-show="false" id="employeeSublist">
+    <li class="l-nav__list__item ">
+        <a class="ajax-link c-nav-link" href="#" data-url="{% url "working" %}">
+            <img class="c-nav-link__ico"
                  src="{% static "images/icons8-circle.png" %} "
                  alt="circle icon"
                  width="10"
                  height="10">
-            <p class="c-sublist__item__text">v praci</p>
+            <p class="c-nav-link__text">v praci</p>
         </a>
     </li>
-    <li class="c-sublist__item">
-        <a class="ajax-link c-sublist__item__link"
-           href="#"
-           data-url="{% url "vacation" %}">
-            <img class="c-sublist__item__circle"
+    <li class="l-nav__list__item">
+        <a class="ajax-link c-nav-link" href="#" data-url="{% url "vacation" %}">
+            <img class="c-nav-link__ico"
                  src="{% static "images/icons8-circle.png" %} "
                  alt="circle icon"
                  width="10"
                  height="10">
-            <p class="c-sublist__item__text">na dovolene</p>
+            <p class="c-nav-link__text">na dovolene</p>
         </a>
     </li>
-    <li class="c-sublist__item">
-        <a class="ajax-link c-sublist__item__link"
-           href="#"
-           data-url="{% url "sick" %}">
-            <img class="c-sublist__item__circle"
+    <li class="l-nav__list__item">
+        <a class="ajax-link c-nav-link" href="#" data-url="{% url "sick" %}">
+            <img class="c-nav-link__ico"
                  src="{% static "images/icons8-circle.png" %} "
                  alt="circle icon"
                  width="10"
                  height="10">
-            <p class="c-sublist__item__text">neschopnost</p>
+            <p class="c-nav-link__text">neschopnost</p>
         </a>
     </li>
 </ul>

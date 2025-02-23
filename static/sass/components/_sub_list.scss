@@ -1,52 +1,12 @@
 /* --- sublist --- */
 
-@use '../utils/' as *;
+@use "../utils/" as *;
 
-
-
-[data-show="false"].c-sublist{
-    display: none;
+[data-show="false"].c-sublist {
+  display: none;
 }
 
-.c-sublist{
-    margin-left: em(16,16);
-    padding: em(8,16) 0 ;
-
-    &__item{
-        user-select: none;
-        
-        &:not(:last-child){
-            margin-bottom: em(4,16); 
-        }
-        
-        &__link{
-            @include flex(flex-start);
-            
-            color: var(--text-clr-default);
-            border-radius: em(5,16);
-            padding: em(8,16);
-            transition: all ease-in-out .1s;
-            
-            &:hover,&:focus{
-                background-color:var(--ternary-clr-ternary-3);
-                color: white;
-                box-shadow: 1px 3px 10px black;
-            }
-        }
-
-        &__text{
-            padding-bottom: 4px;
-        }
-        
-        &__circle{
-            background-color: transparent;
-            margin-right: em(6,16);
-        }
-        
-
-        &:active{
-            box-shadow: 1px 1px 4px black;
-            transform: translateY(-1px);
-        }
-    }
+.c-sublist {
+  margin-left: em(16, 16);
+  padding: em(8, 16) 0;
 }

@@ -317,40 +317,8 @@ body {
   width: 12.5em;
   padding: 1em;
 }
-.l-nav__list {
-  margin-top: 4rem;
-}
-.l-nav__list__item {
-  border-radius: 0.25rem;
-  transition: all, ease-in-out, 0.2s;
-}
 .l-nav__list__item:not(:last-child) {
   margin-bottom: 0.3rem;
-}
-.l-nav__list__item__zam {
-  position: relative;
-}
-.l-nav__list__item__zam::after {
-  content: ">";
-  font-size: 1rem;
-  font-weight: bold;
-  position: absolute;
-  top: 0;
-  right: 1em;
-  transform: translateY(50%);
-  transition: all 0.1s ease-in-out;
-}
-
-[data-pointer=left].l-nav__list__item__zam::after {
-  transform: translateY(50%);
-}
-
-[data-pointer=down].l-nav__list__item__zam {
-  background-color: #2a324e;
-  outline: 1px solid rgb(255, 255, 255);
-}
-[data-pointer=down].l-nav__list__item__zam::after {
-  transform: translateY(50%) rotate(90deg);
 }
 
 /* --- footer --- */
@@ -396,37 +364,29 @@ body {
   margin-left: 1em;
   padding: 0.5em 0;
 }
-.c-sublist__item {
-  user-select: none;
+
+.c-pointer {
+  --pointer-size: 1rem;
+  position: relative;
 }
-.c-sublist__item:not(:last-child) {
-  margin-bottom: 0.25em;
+.c-pointer::after {
+  content: ">>";
+  position: absolute;
+  letter-spacing: -4px;
+  font-size: var(--pointer-size);
+  font-weight: 900;
+  top: 50%;
+  transform: translate(0, -50%);
+  right: 1em;
+  transition: all 0.3s ease-in-out;
 }
-.c-sublist__item__link {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 0;
-  color: var(--text-clr-default);
-  border-radius: 0.3125em;
-  padding: 0.5em;
-  transition: all ease-in-out 0.1s;
+
+[data-pointer=down].c-pointer {
+  outline: 1px solid #fff;
 }
-.c-sublist__item__link:hover, .c-sublist__item__link:focus {
-  background-color: var(--ternary-clr-ternary-3);
-  color: white;
-  box-shadow: 1px 3px 10px black;
-}
-.c-sublist__item__text {
-  padding-bottom: 4px;
-}
-.c-sublist__item__circle {
-  background-color: transparent;
-  margin-right: 0.375em;
-}
-.c-sublist__item:active {
-  box-shadow: 1px 1px 4px black;
-  transform: translateY(-1px);
+[data-pointer=down].c-pointer::after {
+  letter-spacing: -10px;
+  transform: translate(0, -50%) rotate(90deg);
 }
 
 /*# sourceMappingURL=home.css.map */
