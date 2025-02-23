@@ -4,7 +4,7 @@
 @use '../base/placeholders' as *;
 
 // [data-show="true"].c-sublist{
-//     display: block;displaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplay
+//     display: block;displaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplay
     
 // }
 
@@ -32,7 +32,8 @@
             transition: all ease-in-out .1s;
             
             &:hover,&:focus{
-                background-color:var(--ternary-clr-ternary-1);
+                background-color:var(--ternary-clr-ternary-3);
+                color: white;
                 box-shadow: 1px 3px 10px black;
             }
         }

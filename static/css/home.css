@@ -295,7 +295,7 @@ body {
 /* --- grid --- */
 .l-grid-container {
   width: clamp(40rem, 100%, 120rem);
-  padding-inline: 1rem;
+  padding-inline: 0;
   margin-inline: auto;
   height: 100dvh;
   display: flex;
@@ -370,6 +370,7 @@ body {
 }
 .c-nav-link:hover, .c-nav-link:focus {
   background-color: var(--ternary-clr-ternary-1);
+  color: white;
   box-shadow: 1px 3px 10px black;
 }
 .c-nav-link:active {
@@ -412,7 +413,8 @@ body {
   transition: all ease-in-out 0.1s;
 }
 .c-sublist__item__link:hover, .c-sublist__item__link:focus {
-  background-color: var(--ternary-clr-ternary-1);
+  background-color: var(--ternary-clr-ternary-3);
+  color: white;
   box-shadow: 1px 3px 10px black;
 }
 .c-sublist__item__text {

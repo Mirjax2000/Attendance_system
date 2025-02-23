@@ -3,7 +3,7 @@
 @use '../utils/' as *;
 
 .l-grid-container{
-    @include container(40rem,120rem, 1rem);
+    @include container(40rem,120rem, 0);
 
     height: 100dvh;
     display: flex;
