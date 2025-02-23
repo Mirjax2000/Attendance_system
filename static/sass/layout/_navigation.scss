@@ -6,6 +6,7 @@
   background-image: var(--background-clr-gradient-secondary);
   width: em(200, 16);
   padding: em(16, 16);
+  overflow: hidden;
 
   &__list {
     &__item {

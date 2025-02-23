@@ -19,7 +19,8 @@
   --background-clr-dark: #000;
   --background-clr-gradient-primary: linear-gradient(to right bottom, #161c32, #2a324e);
   --background-clr-gradient-secondary: linear-gradient(to right bottom, #1f2537, #2b2b2b);
-  --background-clr-gradient-ternary: linear-gradient(to right bottom, #7369ff, #5049b2);
+  --background-clr-gradient-ternary: linear-gradient(to right bottom, #7369ff, #4a44a5);
+  --background-clr-gradient-quartery: linear-gradient(to right bottom, #5049b2, #3c3785);
   --shadow-clr-default: rgba(0, 0, 0, 0.3);
   --shadow-clr-higher: rgba(0, 0, 0, 0.5);
 }

@@ -7,6 +7,7 @@
 
   &::after {
     content: ">>";
+    z-index: 100;
     position: absolute;
     letter-spacing: -4px;
     font-size: var(--pointer-size);
@@ -14,13 +15,15 @@
     top: 50%;
     transform: translate(0, -50%);
     right: em(16, 16);
-    transition: all 0.3s ease-in-out;
+    transition: all 0.2s ease-in-out;
   }
 }
 
 [data-pointer="down"].c-pointer {
-  background-color: var(--background-clr-nav-pointer);
-  outline: 1px solid #fff;
+  &:not(.active_link) {
+    outline: 1px solid #fff;
+    background-color: var(--background-clr-nav-pointer);
+  }
 
   &::after {
     letter-spacing: -14px;

@@ -10,19 +10,25 @@ $(function () {
 
     employeeLink.on("click", function (e) {
         e.preventDefault();
+        const animationTime = 200
         this.dataset.pointer = this.dataset.pointer === "left" ? "down" : "left";
 
         if (this.dataset.pointer === "down") {
-            employeeSublist.stop().slideDown(500);
+            employeeSublist.stop(true, true).slideDown(animationTime);
         } else {
-            employeeSublist.stop().slideUp(500);
+            employeeSublist.stop(true, true).slideUp(animationTime);
         }
     });
 
     navlinks.on('click', function (e) {
         e.preventDefault();
+        let $this = $(this);
 
-        const url = $(this).data('url');
+        navlinks.removeClass('active_link');
+        $this.addClass('active_link')
+
+        const url = $this.data('url');
+
 
         $.ajax({
             url: url,
