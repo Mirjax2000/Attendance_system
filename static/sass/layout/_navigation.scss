@@ -2,27 +2,29 @@
 
 @use "../utils/" as *;
 
+$font-context: 16;
+
 .l-nav {
   background-image: var(--background-clr-gradient-secondary);
-  width: em(200, 16);
-  padding: em(16, 16);
+  width: em(200, $font-context);
+  padding: em(16, $font-context);
   overflow: hidden;
 
   &__list {
     &__item {
       &:not(:last-child) {
-        margin-bottom: 0.3rem;
+        margin-bottom: em(5, $font-context);
       }
     }
   }
 
   &__list.mainlist {
-    margin-top: 2rem;
+    margin-top: em(80, $font-context);
   }
 
   &__list.sublist {
-    margin-left: em(16, 16);
-    padding: em(16, 16) 0;
+    margin-left: em(16, $font-context);
+    padding: em(16, $font-context) 0;
     display: none;
   }
 }

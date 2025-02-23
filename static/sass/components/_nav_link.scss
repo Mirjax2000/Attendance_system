@@ -1,28 +1,24 @@
 /* --- navlink componenta --- */
 @use "../utils/" as *;
 
+$font-context: 16;
+
 .c-nav-link {
   --trans-time: 0.2s;
 
   @include flex(flex-start);
 
   color: var(--text-clr-default);
-  padding-block: em(8, 16);
-  border-radius: em(5, 16);
+  padding-block: em(8, $font-context);
+  border-radius: em(5, $font-context);
   user-select: none;
   transition: all ease-in-out var(--trans-time);
   overflow: hidden;
   position: relative;
   isolation: isolate;
 
-  &,
-  & > * {
-    z-index: 100;
-  }
-
   &::before {
     content: "";
-    border-radius: em(5, 16);
     position: absolute;
     inset: 0;
     background-image: radial-gradient(circle, #ffffff16 0%, #00000008 100%),
@@ -30,7 +26,7 @@
     filter: blur(1px);
     transition: opacity ease-in-out var(--trans-time);
     opacity: 0;
-    z-index: 1;
+    z-index: -1;
   }
 
   &:hover,
@@ -49,27 +45,31 @@
     transform: translateY(-1px);
   }
 
-  &__ico,
-  &__next {
+  &__ico {
     background-color: transparent;
-    margin-inline: 0.3rem;
+    margin-inline: em(5, $font-context);
   }
 
   &__text {
     flex: 1;
-    margin-inline: 0.3rem;
+    margin-inline: em(5, $font-context);
     text-align: left;
   }
 
   &.sublink {
+    &__text {
+      margin-top: em(16, $font-context);
+    }
+
     &::before {
-      background-image: var(--background-clr-gradient-quartery);
+      background-image: radial-gradient(circle, #ffffff16 0%, #00000008 100%),
+        var(--background-clr-gradient-quartery);
     }
   }
 
   &.sublink:hover,
   &.sublink:focus,
   &.sublink.active_link {
-    opacity: 0.9;
+    opacity: 1;
   }
 }
