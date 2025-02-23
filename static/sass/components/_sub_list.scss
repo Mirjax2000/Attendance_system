@@ -1,12 +1,8 @@
 /* --- sublist --- */
 
 @use '../utils/' as *;
-@use '../base/placeholders' as *;
 
-// [data-show="true"].c-sublist{
-//     display: block;displaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplaydisplay
-    
-// }
+
 
 [data-show="false"].c-sublist{
     display: none;
