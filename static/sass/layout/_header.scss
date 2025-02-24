@@ -7,7 +7,7 @@ $l-header-context: 16;
 .l-header {
   width: 100%;
   margin-inline: auto;
-  padding: em(8, $l-header-context);
+  padding: em(10, $l-header-context) em(8, $l-header-context);
   background-image: var(--background-clr-gradient-secondary);
   border-bottom-right-radius: $l-header-btm-radius;
   border-bottom-left-radius: $l-header-btm-radius;
@@ -43,7 +43,7 @@ $l-header-context: 16;
         text-align: left;
         background-color: var(--background-clr-login);
         box-shadow: 1px 3px 5px #00000071;
-        width: 50%;
+        width: em(150, $l-header-context);
         height: 100px;
         top: em(38, $l-header-context);
         right: em(-9, $l-header-context);
@@ -58,6 +58,7 @@ $l-header-context: 16;
             &:hover {
               background-color: var(--background-clr-login-link);
               box-shadow: 1px 1px 3px #000000a2;
+              cursor: pointer;
             }
 
             &__text {

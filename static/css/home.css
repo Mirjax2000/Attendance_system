@@ -8,6 +8,7 @@
   --ternary-clr-ternary-2: #6158d8;
   --ternary-clr-ternary-3: #5049b2;
   --text-clr-default: #d2d2d2;
+  --text-clr-logo: #339af0;
   --text-clr-dark: #111;
   --text-clr-btn: #777;
   --background-clr-default: #fff;
@@ -338,7 +339,7 @@ body {
 .l-header {
   width: 100%;
   margin-inline: auto;
-  padding: 0.5em;
+  padding: 0.625em 0.5em;
   background-image: var(--background-clr-gradient-secondary);
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
@@ -372,7 +373,7 @@ body {
   text-align: left;
   background-color: var(--background-clr-login);
   box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.4431372549);
-  width: 50%;
+  width: 9.375em;
   height: 100px;
   top: 2.375em;
   right: -0.5625em;
@@ -386,6 +387,7 @@ body {
 .l-header__list__item.user .c-login-panel__list__item:hover {
   background-color: var(--background-clr-login-link);
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6352941176);
+  cursor: pointer;
 }
 .l-header__list__item.user .c-login-panel__list__item__text {
   color: var(--text-clr-default);
@@ -471,6 +473,26 @@ body {
 [data-pointer=down].c-pointer::after {
   letter-spacing: -14px;
   transform: translate(0%, -50%) rotate(90deg);
+}
+
+.c-logo {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0;
+  user-select: none;
+}
+.c-logo__text {
+  color: var(--text-clr-logo);
+  font-size: 1rem;
+  text-shadow: 1px 1px 2px black;
+  margin-left: 0.5em;
+}
+.c-logo__text small {
+  color: grey;
+}
+.c-logo__img {
+  background-color: transparent;
 }
 
 /*# sourceMappingURL=home.css.map */

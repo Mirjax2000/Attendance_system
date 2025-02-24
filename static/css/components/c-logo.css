@@ -1,0 +1,21 @@
+.c-logo {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0;
+  user-select: none;
+}
+.c-logo__text {
+  color: var(--text-clr-logo);
+  font-size: 1rem;
+  text-shadow: 1px 1px 2px black;
+  margin-left: 0.5em;
+}
+.c-logo__text small {
+  color: grey;
+}
+.c-logo__img {
+  background-color: transparent;
+}
+
+/*# sourceMappingURL=c-logo.css.map */
