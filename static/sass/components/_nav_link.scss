@@ -1,17 +1,21 @@
 /* --- navlink component --- */
 @use "../utils/" as *;
 
-$font-context: 16;
-$trans-time: 0.2s;
+$nav-lin-transtime: 0.2s;
 
 .c-nav-link {
+  $nav-link-context: 16;
+
   @include flex(flex-start);
 
   color: var(--text-clr-default);
-  padding-block: em(8, $font-context);
-  border-radius: em(5, $font-context);
+  padding-block: em(8, $nav-link-context);
+  border-radius: em(5, $nav-link-context);
   user-select: none;
-  transition: color ease-in-out $trans-time, box-shadow ease-in-out $trans-time, transform ease-in-out $trans-time;
+  transition:
+    color ease-in-out $nav-lin-transtime,
+    box-shadow ease-in-out $nav-lin-transtime,
+    transform ease-in-out $nav-lin-transtime;
   overflow: hidden;
   position: relative;
   isolation: isolate;
@@ -27,7 +31,7 @@ $trans-time: 0.2s;
       ),
       var(--background-clr-gradient-ternary);
     filter: blur(1px);
-    transition: opacity ease-in-out $trans-time;
+    transition: opacity ease-in-out $nav-lin-transtime;
     opacity: 0;
     z-index: -1;
   }
@@ -50,17 +54,17 @@ $trans-time: 0.2s;
 
   &__ico {
     background-color: transparent;
-    margin-inline: em(5, $font-context);
+    margin-inline: em(5, $nav-link-context);
   }
 
   &__text {
     flex: 1;
-    margin-inline: em(5, $font-context);
+    margin-inline: em(5, $nav-link-context);
     text-align: left;
   }
 
   &.sublink &__text {
-    margin-bottom: em(3, $font-context);
+    margin-bottom: em(3, $nav-link-context);
   }
 
   &.sublink {

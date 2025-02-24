@@ -1,3 +1,20 @@
-<header class="header">
-    <h6>ja jsem header</h6>
+{% load static %}
+<header class="l-header">
+    <ul class="l-header__list">
+        <li class="l-header__list__item user">
+            <img class="l-header__list__item__ico"
+                 src="{% static "images/icons8-login-blue.png" %}"
+                 alt="login icon"
+                 width="24"
+                 height="24">
+            <p class="l-header__list__item__text">Super user</p>
+            <div class="c-login-panel">
+                <ul class="c-login-panel__list">
+                    <li class="c-login-panel__list__item">
+                        <a href="#" class="c-login-panel__list__item__text" id="disconnect">Odhlasit</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    </ul>
 </header>

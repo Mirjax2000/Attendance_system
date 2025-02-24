@@ -1,3 +1,72 @@
 /* --- header --- */
+@use "../utils/" as *;
 
+$l-header-btm-radius: 5px;
+$l-header-context: 16;
 
+.l-header {
+  width: 100%;
+  margin-inline: auto;
+  padding: em(8, $l-header-context);
+  background-image: var(--background-clr-gradient-secondary);
+  border-bottom-right-radius: $l-header-btm-radius;
+  border-bottom-left-radius: $l-header-btm-radius;
+  box-shadow: 1px 1px 2px #00000071;
+  margin-bottom: em(16, $l-header-context);
+
+  &__list {
+    &__item {
+      @include flex(flex-end);
+
+      width: 40%;
+      padding-right: em(16, $l-header-context);
+      margin-left: auto;
+      cursor: pointer;
+
+      &__ico {
+        background-color: transparent;
+        margin-right: em(8, $l-header-context);
+      }
+
+      &__text {
+        color: var(--text-clr-default);
+      }
+    }
+
+    &__item.user {
+      position: relative;
+      isolation: isolate;
+
+      .c-login-panel {
+        position: absolute;
+        padding-block: em(8, $l-header-context);
+        text-align: left;
+        background-color: var(--background-clr-login);
+        box-shadow: 1px 3px 5px #00000071;
+        width: 50%;
+        height: 100px;
+        top: em(38, $l-header-context);
+        right: em(-9, $l-header-context);
+        border-radius: 5px;
+        z-index: 10;
+        cursor: default;
+
+        &__list {
+          &__item {
+            border-radius: 5px;
+
+            &:hover {
+              background-color: var(--background-clr-login-link);
+              box-shadow: 1px 1px 3px #000000a2;
+            }
+
+            &__text {
+              color: var(--text-clr-default);
+              padding: em(8, $l-header-context);
+            }
+          }
+        }
+      }
+    }
+  }
+}

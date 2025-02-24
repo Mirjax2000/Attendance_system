@@ -13,6 +13,8 @@
   --background-clr-default: #fff;
   --background-clr-nav: #1f2537;
   --background-clr-nav-pointer: #2a324e;
+  --background-clr-login: #292e3d;
+  --background-clr-login-link: #363d53;
   --background-clr-content: #161c32;
   --background-clr-header: #f7f7f7;
   --background-clr-dark: #000;
@@ -291,8 +293,9 @@ body {
 }
 
 /* --- home --- */
-.p-home-section {
+.p-application {
   flex: 1;
+  padding-inline: 1em;
 }
 
 /* --- grid --- */
@@ -308,7 +311,6 @@ body {
 
 .l-grid-main {
   display: flex;
-  gap: 1rem;
   flex-grow: 1;
   background-image: var(--background-clr-gradient-primary);
 }
@@ -333,6 +335,63 @@ body {
 }
 
 /* --- header --- */
+.l-header {
+  width: 100%;
+  margin-inline: auto;
+  padding: 0.5em;
+  background-image: var(--background-clr-gradient-secondary);
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4431372549);
+  margin-bottom: 1em;
+}
+.l-header__list__item {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0;
+  width: 40%;
+  padding-right: 1em;
+  margin-left: auto;
+  cursor: pointer;
+}
+.l-header__list__item__ico {
+  background-color: transparent;
+  margin-right: 0.5em;
+}
+.l-header__list__item__text {
+  color: var(--text-clr-default);
+}
+.l-header__list__item.user {
+  position: relative;
+  isolation: isolate;
+}
+.l-header__list__item.user .c-login-panel {
+  position: absolute;
+  padding-block: 0.5em;
+  text-align: left;
+  background-color: var(--background-clr-login);
+  box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.4431372549);
+  width: 50%;
+  height: 100px;
+  top: 2.375em;
+  right: -0.5625em;
+  border-radius: 5px;
+  z-index: 10;
+  cursor: default;
+}
+.l-header__list__item.user .c-login-panel__list__item {
+  border-radius: 5px;
+}
+.l-header__list__item.user .c-login-panel__list__item:hover {
+  background-color: var(--background-clr-login-link);
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6352941176);
+}
+.l-header__list__item.user .c-login-panel__list__item__text {
+  color: var(--text-clr-default);
+  padding: 0.5em;
+}
+
 /* --- footer --- */
 /* --- navlink component --- */
 .c-nav-link {
@@ -390,15 +449,14 @@ body {
 }
 
 .c-pointer {
-  --pointer-size: 1rem;
   position: relative;
 }
 .c-pointer::after {
   content: ">>";
+  font-size: 1rem;
   z-index: 100;
   position: absolute;
   letter-spacing: -4px;
-  font-size: var(--pointer-size);
   font-weight: 900;
   top: 50%;
   transform: translate(0, -50%);

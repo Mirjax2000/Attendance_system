@@ -1,20 +1,20 @@
 /* --- grid --- */
 
-@use '../utils/' as *;
+@use "../utils/" as *;
 
-.l-grid-container{
-    @include container(40rem,120rem, 0);
+$l-grid-container-context: 16;
 
-    height: 100dvh;
-    display: flex;
-    justify-content: flex-start;
-    align-items: stretch;
+.l-grid-container {
+  @include container(40rem, 120rem, 0);
 
+  height: 100dvh;
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
 }
 
-.l-grid-main{
-    display: flex;
-    gap: 1rem;
-    flex-grow: 1;
-    background-image:var(--background-clr-gradient-primary);
+.l-grid-main {
+  display: flex;
+  flex-grow: 1;
+  background-image: var(--background-clr-gradient-primary);
 }
