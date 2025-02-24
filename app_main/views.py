@@ -18,6 +18,12 @@ class HomeView(TemplateView):
     template_name = "app_main/home.html"
 
 
+class MainPanelView(TemplateView):
+    """homepage"""
+
+    template_name = "app_main/main_panel.html"
+
+
 class AllEmployeesView(TemplateView):
     """Seznam vsech zamestnancu"""
 
@@ -46,6 +52,12 @@ class OtherView(TemplateView):
     """Seznam vsech zamestnancu"""
 
     template_name = "app_main/other.html"
+
+
+class EmailView(TemplateView):
+    """rozesilani emialu"""
+
+    template_name = "app_main/emails.html"
 
 
 class CamView(TemplateView):

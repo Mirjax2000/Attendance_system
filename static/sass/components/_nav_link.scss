@@ -1,4 +1,4 @@
-/* --- navlink componenta --- */
+/* --- navlink component --- */
 @use "../utils/" as *;
 
 $font-context: 16;
@@ -11,7 +11,7 @@ $trans-time: 0.2s;
   padding-block: em(8, $font-context);
   border-radius: em(5, $font-context);
   user-select: none;
-  transition: all ease-in-out var($trans-time);
+  transition: color ease-in-out $trans-time, box-shadow ease-in-out $trans-time, transform ease-in-out $trans-time;
   overflow: hidden;
   position: relative;
   isolation: isolate;
@@ -20,10 +20,14 @@ $trans-time: 0.2s;
     content: "";
     position: absolute;
     inset: 0;
-    background-image: radial-gradient(circle, #ffffff16 0%, #00000008 100%),
+    background-image: radial-gradient(
+        circle at 30%,
+        #ffffff0a 10%,
+        #00000008 50%
+      ),
       var(--background-clr-gradient-ternary);
     filter: blur(1px);
-    transition: opacity ease-in-out var($trans-time);
+    transition: opacity ease-in-out $trans-time;
     opacity: 0;
     z-index: -1;
   }
@@ -55,13 +59,17 @@ $trans-time: 0.2s;
     text-align: left;
   }
 
-  &.sublink {
-    &__text {
-      margin-top: em(16, $font-context);
-    }
+  &.sublink &__text {
+    margin-bottom: em(3, $font-context);
+  }
 
+  &.sublink {
     &::before {
-      background-image: radial-gradient(circle, #ffffff16 0%, #00000008 100%),
+      background-image: radial-gradient(
+          circle at 30%,
+          #ffffff0a 10%,
+          #00000008 50%
+        ),
         var(--background-clr-gradient-quartery);
     }
   }

@@ -334,7 +334,7 @@ body {
 
 /* --- header --- */
 /* --- footer --- */
-/* --- navlink componenta --- */
+/* --- navlink component --- */
 .c-nav-link {
   display: flex;
   justify-content: flex-start;
@@ -344,7 +344,7 @@ body {
   padding-block: 0.5em;
   border-radius: 0.3125em;
   user-select: none;
-  transition: all ease-in-out var(0.2s);
+  transition: color ease-in-out 0.2s, box-shadow ease-in-out 0.2s, transform ease-in-out 0.2s;
   overflow: hidden;
   position: relative;
   isolation: isolate;
@@ -353,9 +353,9 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.0862745098) 0%, rgba(0, 0, 0, 0.031372549) 100%), var(--background-clr-gradient-ternary);
+  background-image: radial-gradient(circle at 30%, rgba(255, 255, 255, 0.0392156863) 10%, rgba(0, 0, 0, 0.031372549) 50%), var(--background-clr-gradient-ternary);
   filter: blur(1px);
-  transition: opacity ease-in-out var(0.2s);
+  transition: opacity ease-in-out 0.2s;
   opacity: 0;
   z-index: -1;
 }
@@ -379,11 +379,11 @@ body {
   margin-inline: 0.3125em;
   text-align: left;
 }
-.c-nav-link.sublink__text {
-  margin-top: 1em;
+.c-nav-link.sublink .c-nav-link__text {
+  margin-bottom: 0.1875em;
 }
 .c-nav-link.sublink::before {
-  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.0862745098) 0%, rgba(0, 0, 0, 0.031372549) 100%), var(--background-clr-gradient-quartery);
+  background-image: radial-gradient(circle at 30%, rgba(255, 255, 255, 0.0392156863) 10%, rgba(0, 0, 0, 0.031372549) 50%), var(--background-clr-gradient-quartery);
 }
 .c-nav-link.sublink:hover, .c-nav-link.sublink:focus, .c-nav-link.sublink.active_link {
   opacity: 1;
