@@ -1,4 +1,4 @@
-
+// IIFE - izolace promennych GlobeScope pouze v teto noname funkci
 (() => {
     const employeesBtn = document.getElementById("employeesBtn");
     const content = document.getElementById("content");
@@ -27,7 +27,7 @@
                 console.error("Chyba:", error);
             });
     }
-
+    // prace s fetchlinkama - jako Nodelist
     fetchLinks.forEach(function (element) {
         // hlavni nacitaci stranka
         if (element.classList.contains("active_link")) {
