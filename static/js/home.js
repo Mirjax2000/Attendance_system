@@ -3,8 +3,7 @@
     const employeesBtn = document.getElementById("employeesBtn");
     const content = document.getElementById("content");
     const navMenu = document.getElementById("navigationPanel");
-    const employeeSublist = document.getElementById("employeesSublist");
-    const employeeSublistJQ = $("#employeesSublist");
+    const employeeSublistJQ = $("#employeesSublist"); /* pro JQ slide */
     // Nodelists
     const fetchLinks = navMenu.querySelectorAll(".fetch-url");
     // Arrays
@@ -30,27 +29,11 @@
     }
 
     fetchLinks.forEach(function (element) {
-        const url = element.dataset.url;
-
+        // hlavni nacitaci stranka
         if (element.classList.contains("active_link")) {
-            loadContent(url);
+            loadContent(element.dataset.url);
         }
-    })
-    // rozbaleni sublistu employeesBtn
-    employeesBtn.addEventListener("click", function (e) {
-        e.preventDefault()
-        let datasetValue = this.dataset.pointer
-        // dataset toggler
-        if (datasetValue === "down") {
-            this.dataset.pointer = "left";
-            employeeSublistJQ.stop(true, true).slideUp(animationTime);
-        } else {
-            this.dataset.pointer = "down";
-            employeeSublistJQ.stop(true, true).slideDown(animationTime);
-        }
-    })
 
-    fetchLinks.forEach(function (element) {
         element.addEventListener('click', function (e) {
             e.preventDefault()
             // remove active_link Class
@@ -66,9 +49,19 @@
                 employeeSublistJQ.stop(true, true).slideUp(animationTime);
                 employeesBtn.dataset.pointer = "left";
             }
-
-
         })
     })
-
+    // rozbaleni sublistu employeesBtn
+    employeesBtn.addEventListener("click", function (e) {
+        e.preventDefault()
+        let datasetValue = this.dataset.pointer
+        // dataset toggler
+        if (datasetValue === "down") {
+            this.dataset.pointer = "left";
+            employeeSublistJQ.stop(true, true).slideUp(animationTime);
+        } else {
+            this.dataset.pointer = "down";
+            employeeSublistJQ.stop(true, true).slideDown(animationTime);
+        }
+    })
 })();
