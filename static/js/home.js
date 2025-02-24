@@ -3,13 +3,14 @@
     const employeesBtn = document.getElementById("employeesBtn");
     const content = document.getElementById("content");
     const navMenu = document.getElementById("navigationPanel");
+    const employeeSublist = document.getElementById("employeesSublist");
     const employeeSublistJQ = $("#employeesSublist");
-    // arrays
+    // Nodelists
     const fetchLinks = navMenu.querySelectorAll(".fetch-url");
-    const SublistLinks = navMenu.querySelectorAll(".sublink");
+    // Arrays
+    const sublistLinksArray = Array.from(navMenu.querySelectorAll(".sublink"));
     // settings
     const animationTime = 200;
-
     // 
     // --- Fetch function ---
     function loadContent(url) {
@@ -60,15 +61,14 @@
             this.classList.add("active_link")
             // spust fetch funkci s dataset url parametrem
             loadContent(this.dataset.url);
+
+            if (this !== employeesBtn && !sublistLinksArray.includes(this)) {
+                employeeSublistJQ.stop(true, true).slideUp(animationTime);
+                employeesBtn.dataset.pointer = "left";
+            }
+
+
         })
     })
-
-
-
-
-    // if (!$this.is(employeeLink) && !$this.is(SublistLinks)) {
-    //     Sublist.stop(true, true).slideUp(animationTime);
-    //     employeeLink.data("pointer", "left").attr("data-pointer", "left");
-    // }
 
 })();
