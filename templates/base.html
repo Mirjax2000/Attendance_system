@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
-<html lang="cs" data-font-size="desktop">
+<html lang="cs" data-font-size="desktop" data-theme='light'>
     <head>
         <meta charset="UTF-8" />
         <title>
@@ -54,9 +54,11 @@
     </head>
     <!--body-->
     <body class="base">
-        {% block content %}
-        {% endblock content %}
+        {% block body %}
+            <!-- html obsah -->
+        {% endblock body %}
         {% block js %}
+            <!-- javascript block -->
         {% endblock js %}
     </body>
 </html>

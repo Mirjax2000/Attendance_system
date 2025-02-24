@@ -1,7 +1,7 @@
-{% extends "main_layout.html" %}
+{% extends "base.html" %}
 {% load static %}
 {% block title %}
-    home page
+    application
 {% endblock title %}
 <!-- css stylesheet -->
 {% block css %}
@@ -18,11 +18,22 @@
 </noscript>
 <!-- end -->
 <!-- main content -->
-{% block main_content %}
-    <section class="p-home-section" id="content">
-        
-    </section>
-{% endblock main_content %}
+{% block body %}
+    <div class="l-grid-container">
+        <main class="l-grid-main">
+            <!--left side  navigation Menu -->
+            {% include "includes/navigation.html" %}
+            <!-- right side main content -->
+            <section class="p-home-section">
+                {% include "includes/header.html" %}
+                <hr>
+                <main class"content" id="content">
+                </main>
+            </section>
+        </main>
+    </div>
+{% endblock body %}
+<!-- javascript block-->
 {% block js %}
     <script src="https://code.jquery.com/jquery-3.7.1.js"
             integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
