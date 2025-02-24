@@ -1,0 +1,63 @@
+/* --- typography --- */
+
+$font-path-variables: "../fonts/webfonts/Font-face/";
+$font-path-static: "../fonts/webfonts/Font-face/static/";
+
+@font-face {
+  font-family: grotesk;
+  src: url("#{$font-path-variables}SpaceGrotesk-VariableFont_wght.woff2") format("woff2-variations"),
+       url("#{$font-path-variables}SpaceGrotesk-VariableFont_wght.ttf") format("truetype-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: lato;
+  src: url("#{$font-path-static}Lato-Regular.woff2") format("woff2"),
+       url("#{$font-path-static}Lato-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: lato;
+  src: url("#{$font-path-static}Lato-Bold.woff2") format("woff2"),
+       url("#{$font-path-static}Lato-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: lato;
+  src: url("#{$font-path-static}Lato-Light.woff2") format("woff2"),
+       url("#{$font-path-static}Lato-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: lato;
+  src: url("#{$font-path-static}Lato-Thin.woff2") format("woff2"),
+       url("#{$font-path-static}Lato-Thin.ttf") format("truetype");
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+
+html {
+  font-size: 100%;
+}
+
+body {
+  font-family: lato, serif;
+}
+
+
+
+

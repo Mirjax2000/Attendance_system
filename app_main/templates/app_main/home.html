@@ -1,0 +1,31 @@
+{% extends "main_layout.html" %}
+{% load static %}
+{% block title %}
+    home page
+{% endblock title %}
+<!-- css stylesheet -->
+{% block css %}
+    <link rel="preload"
+          href="{% static 'css/home.css' %}"
+          as="style"
+          onload="this.onload=null;this.rel='stylesheet'">
+{% endblock css %}
+<!-- no js -->
+<noscript>
+    {% block nojs %}
+        <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    {% endblock nojs %}
+</noscript>
+<!-- end -->
+<!-- main content -->
+{% block main_content %}
+    <section class="p-home-section" id="content">
+        
+    </section>
+{% endblock main_content %}
+{% block js %}
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+            integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+            crossorigin="anonymous"></script>
+    <script src="{% static 'js/home.js'%}"></script>
+{% endblock js %}

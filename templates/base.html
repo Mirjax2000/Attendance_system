@@ -13,41 +13,50 @@
         <meta content="" name="keywords" />
         <meta content="" name="author" />
         <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-        {% comment %} <link as="font" crossorigin="anonymous" href="./assets/webfonts/Font-face/static/SpaceGrotesk-Medium.woff2" rel="preload" type="font/woff2" />
         <link href="./assets/img/favicon-32x32.png"
               rel="shortcut icon"
-              type="image/x-icon" /> {% endcomment %}
+              type="image/x-icon" />
+        <!-- font preload -->
+        <link as="font"
+              crossorigin="anonymous"
+              href="{% static 'fonts/webfonts/Font-face/static/Lato-Regular.woff2' %}"
+              rel="preload"
+              type="font/woff2" />
         <style>
-    {% comment %} @font-face {
-      font-family: Grotesk;
-      src:
-        url("./assets/webfonts/Font-face/static/SpaceGrotesk-Medium.woff2") format("woff2"),
-        url("./assets/webfonts/Font-face/static/SpaceGrotesk-Medium.ttf") format("truetype");
-      font-weight: 500;
-      font-style: normal;
-      font-display: swap;
-} {% endcomment %}
-    body.base {
-      opacity: 0;
-      transition: opacity .2s ease-in;
-    }
+        @font-face {
+            font-family: lato;
+            src: url("{% static 'fonts/webfonts/Font-face/static/Lato-Regular.woff2' %}") format("woff2"),
+            url("{% static 'fonts/webfonts/Font-face/static/Lato-Regular.ttf' %}") format("truetype");
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        body {
+            opacity: 0;
+            transition: opacity .1s ease-in;
+        }
         </style>
-        <link rel="preload"
-              href="{% static 'css/base.css' %}"
-              as="style"
-              onload="this.onload=null;this.rel='stylesheet'">
+        <!-- css  -->
+        {% block css %}
+            <link rel="preload"
+                  href="{% static 'css/base.css' %}"
+                  as="style"
+                  onload="this.onload=null;this.rel='stylesheet'">
+        {% endblock css %}
+        <!-- no js -->
         <noscript>
-            <link rel="stylesheet" href="{% static 'css/base.css' %}">
+            {% block nojs %}
+                <link rel="stylesheet" href="{% static 'css/base.css' %}">
+            {% endblock nojs %}
         </noscript>
-        {% block stylesheet %}
-        {% endblock stylesheet %}
+        <!-- end -->
     </head>
     <!--body-->
     <body class="base">
         {% block content %}
         {% endblock content %}
-        {% block script %}
-            <script src="{%static 'js/base.js'%}"></script>
-        {% endblock script %}
+        {% block js %}
+        {% endblock js %}
     </body>
 </html>

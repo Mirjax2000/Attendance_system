@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+    Main Layout
+{% endblock title %}
+{% block content %}
+    <div class="l-grid-container">
+        <main class="l-grid-main">
+            {% include "includes/navigation.html" %}
+            {% block main_content %}
+            {% endblock main_content %}
+        </main>
+    </div>
+{% endblock content %}
