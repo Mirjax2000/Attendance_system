@@ -7,20 +7,13 @@
                  alt="login icon"
                  width="24"
                  height="24">
-            <p class="l-header__list__item__text">Super user</p>
-            <div class="c-login-panel">
-                <ul class="c-login-panel__list">
-                    <li class="c-login-panel__list__item">
-                        <a href="#"
-                           class="c-login-panel__list__item__text"
-                           id="disconnect"
-                           data-disconnect="false">Odhlasit</a>
-                    </li>
-                    <li class="c-login-panel__list__item">
-                        <a href="#" class="c-login-panel__list__item__text" id="settings">Nastaveni</a>
-                    </li>
-                </ul>
-            </div>
+            <p class="l-header__list__item__text">{{ user_name }}</p>
+            
+            {% if user_exist == "True" %}
+                {% include "app_main/login_logged.html" %}
+            {% else %}
+                {% include "app_main/login_default.html" %}
+            {% endif %}
         </li>
     </ul>
 </header>

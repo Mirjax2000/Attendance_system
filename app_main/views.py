@@ -13,9 +13,23 @@ from django.views.generic import (
 
 
 class HomeView(TemplateView):
-    """homepage"""
+    """Homepage"""
+
+    vystupDB = 0
+    user_name = "Vigo"
 
     template_name = "app_main/home.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.vystupDB == 1:
+            context["user_exist"] = "True"
+            context["user_name"] = self.user_name
+        else:
+            context["user_exist"] = "False"
+            context["user_name"] = "Neprihlasen"
+
+        return context
 
 
 class MainPanelView(TemplateView):
