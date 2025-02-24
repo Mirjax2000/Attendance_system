@@ -1,14 +1,15 @@
+
 (() => {
     const employeesBtn = document.getElementById("employeesBtn");
-    const employeesSublist = document.getElementById("employeesSublist");
-    // const employeeSublistJQ = $("#employeeSublist");
-    // const SublistLinks = navMenu.querySelectorAll(".sublink");
-
     const content = document.getElementById("content");
     const navMenu = document.getElementById("navigationPanel");
+    const employeeSublistJQ = $("#employeesSublist");
+    // arrays
     const fetchLinks = navMenu.querySelectorAll(".fetch-url");
+    const SublistLinks = navMenu.querySelectorAll(".sublink");
     // settings
     const animationTime = 200;
+
     // 
     // --- Fetch function ---
     function loadContent(url) {
@@ -34,36 +35,40 @@
             loadContent(url);
         }
     })
+    // rozbaleni sublistu employeesBtn
+    employeesBtn.addEventListener("click", function (e) {
+        e.preventDefault()
+        let datasetValue = this.dataset.pointer
+        // dataset toggler
+        if (datasetValue === "down") {
+            this.dataset.pointer = "left";
+            employeeSublistJQ.stop(true, true).slideUp(animationTime);
+        } else {
+            this.dataset.pointer = "down";
+            employeeSublistJQ.stop(true, true).slideDown(animationTime);
+        }
+    })
 
-    // employeesBtn.addEventListener("click", function (e) {
-    //     e.preventDefault()
-    // })
+    fetchLinks.forEach(function (element) {
+        element.addEventListener('click', function (e) {
+            e.preventDefault()
+            // remove active_link Class
+            fetchLinks.forEach(function (link) {
+                link.classList.remove("active_link")
+            })
+            // pridej classu activ_link na link
+            this.classList.add("active_link")
+            // spust fetch funkci s dataset url parametrem
+            loadContent(this.dataset.url);
+        })
+    })
 
-    // employeeLink.on("click", function (e) {
-    //     e.preventDefault();
-    //     let $this = $(this);
-    //     // Toggler datasetu
-    //     if ($this.attr("data-pointer") === "down") {
-    //         $this.attr("data-pointer", "left");
-    //         Sublist.stop(true, true).slideUp(200)
-    //     } else {
-    //         $this.attr("data-pointer", "down");
-    //         Sublist.stop(true, true).slideDown(200)
-    //     }
-    // });
 
-    // navLinks.on("click", function (e) {
-    //     e.preventDefault();
-    //     let $this = $(this);
 
-    //     navLinks.removeClass("active_link");
-    //     $this.addClass("active_link");
 
-    //     if (!$this.is(employeeLink) && !$this.is(SublistLinks)) {
-    //         Sublist.stop(true, true).slideUp(animationTime);
-    //         employeeLink.data("pointer", "left").attr("data-pointer", "left");
-    //     }
+    // if (!$this.is(employeeLink) && !$this.is(SublistLinks)) {
+    //     Sublist.stop(true, true).slideUp(animationTime);
+    //     employeeLink.data("pointer", "left").attr("data-pointer", "left");
+    // }
 
-    //     loadContent(this.dataset.url);
-    // });
 })();
