@@ -23,7 +23,6 @@ $l-header-context: 16;
     }
 
     &__item.login-item {
-        outline: red 1px dotted;
         cursor: pointer;
         position: relative;
         isolation: isolate;
@@ -43,6 +42,11 @@ $l-header-context: 16;
 
         .user-link[data-logged="logged"] {
             color: var(--text-clr-default);
+        }
+
+        &:hover .c-login-roleta {
+            pointer-events: all;
+            display: block;
         }
     }
 }

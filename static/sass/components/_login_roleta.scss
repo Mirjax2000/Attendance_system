@@ -8,6 +8,8 @@ $login-roleta-context: 16;
     position: absolute;
     top: 0;
     left: 0;
+    pointer-events: none;
+    display: none;
 
     &__list {
         margin-top: 35px;
@@ -15,11 +17,6 @@ $login-roleta-context: 16;
         border: 1px solid black;
         border-radius: 5px;
         padding: 1em 0;
-        opacity: 0.5;
-    }
-
-    &:hover .c-login-roleta__list {
-        opacity: 1;
     }
 
     &__item {

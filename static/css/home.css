@@ -359,7 +359,6 @@ body {
   text-align: left;
 }
 .l-header__item.login-item {
-  outline: red 1px dotted;
   cursor: pointer;
   position: relative;
   isolation: isolate;
@@ -379,6 +378,10 @@ body {
 }
 .l-header__item.login-item .user-link[data-logged=logged] {
   color: var(--text-clr-default);
+}
+.l-header__item.login-item:hover .c-login-roleta {
+  pointer-events: all;
+  display: block;
 }
 
 /* --- footer --- */
@@ -511,6 +514,8 @@ body {
   position: absolute;
   top: 0;
   left: 0;
+  pointer-events: none;
+  display: none;
 }
 .c-login-roleta__list {
   margin-top: 35px;
@@ -518,10 +523,6 @@ body {
   border: 1px solid black;
   border-radius: 5px;
   padding: 1em 0;
-  opacity: 0.5;
-}
-.c-login-roleta:hover .c-login-roleta__list {
-  opacity: 1;
 }
 .c-login-roleta__item {
   margin-bottom: 0.25em;
