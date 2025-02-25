@@ -18,16 +18,31 @@ $l-header-context: 16;
     }
 
     &__item {
-        text-align: center;
+        flex-basis: em(150, $l-header-context);
+        text-align: left;
     }
 
     &__item.login-item {
-        .user-link[data-logged="false"] {
-            color: var(--text-clr-good);
+        outline: red 1px dotted;
+        cursor: pointer;
+        position: relative;
+        isolation: isolate;
+
+        .user-link {
+            @include flex(flex-start, $gap: 0.5em);
+
+            &__ico {
+                background-color: transparent;
+                animation: logo-rotation 2s ease-in-out infinite;
+            }
         }
 
-        .user-link[data-logged="true"] {
+        .user-link[data-logged="default"] {
             color: var(--text-clr-warning);
+        }
+
+        .user-link[data-logged="logged"] {
+            color: var(--text-clr-default);
         }
     }
 }
