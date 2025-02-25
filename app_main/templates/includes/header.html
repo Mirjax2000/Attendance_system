@@ -1,19 +1,10 @@
 {% load static %}
 <header class="l-header">
-    <ul class="l-header__list">
-        <li class="l-header__list__item user">
-            <img class="l-header__list__item__ico"
-                 src="{% static "images/icons8-login-blue.png" %}"
-                 alt="login icon"
-                 width="24"
-                 height="24">
-            <p class="l-header__list__item__text">{{ user_name }}</p>
-            
-            {% if user_exist == "True" %}
-                {% include "app_main/login_logged.html" %}
-            {% else %}
-                {% include "app_main/login_default.html" %}
-            {% endif %}
-        </li>
-    </ul>
+    {% if user_exist == "True" %}
+        {% include "app_main/login_logged.html" %}
+    {% else %}
+        {% if user_exist == "False" %}
+            {% include "app_main/login_default.html" %}
+        {% endif %}
+    {% endif %}
 </header>
