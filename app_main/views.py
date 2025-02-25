@@ -15,7 +15,7 @@ from django.views.generic import (
 class HomeView(TemplateView):
     """Homepage"""
 
-    vystupDB = 0
+    vystupDB = 1
     user_name = "Vigo"
 
     template_name = "app_main/home.html"

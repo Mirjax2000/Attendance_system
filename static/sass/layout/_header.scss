@@ -14,11 +14,20 @@ $l-header-context: 16;
     margin-bottom: em(16, $l-header-context);
 
     &__list {
+        @include flex(flex-end);
     }
 
     &__item {
+        text-align: center;
     }
-    
-    &__user-link {
+
+    &__item.login-item {
+        .user-link[data-logged="false"] {
+            color: var(--text-clr-warning);
+        }
+
+        .user-link[data-logged="true"] {
+            color: var(--text-clr-good);
+        }
     }
 }

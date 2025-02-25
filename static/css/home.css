@@ -9,6 +9,9 @@
   --ternary-clr-ternary-3: #5049b2;
   --text-clr-default: #d2d2d2;
   --text-clr-logo: #339af0;
+  --text-clr-good: #339af0;
+  --text-clr-warning: red;
+  --text-clr-info: #0f0;
   --text-clr-dark: #111;
   --text-clr-btn: #777;
   --background-clr-default: #fff;
@@ -345,6 +348,22 @@ body {
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4431372549);
   margin-bottom: 1em;
 }
+.l-header__list {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0;
+}
+.l-header__item {
+  text-align: center;
+}
+.l-header__item.login-item .user-link[data-logged=false] {
+  color: var(--text-clr-warning);
+}
+.l-header__item.login-item .user-link[data-logged=true] {
+  color: var(--text-clr-good);
+}
+
 /* --- footer --- */
 /* --- navlink component --- */
 .c-nav-link {
