@@ -32,7 +32,6 @@ $l-header-context: 16;
 
             &__ico {
                 background-color: transparent;
-                animation: logo-rotation 2s ease-in-out infinite;
             }
         }
 
@@ -40,8 +39,16 @@ $l-header-context: 16;
             color: var(--text-clr-warning);
         }
 
+        .user-link[data-logged="default"] .user-link__ico {
+            animation: logo-rotation 2s ease-in-out infinite;
+        }
+
         .user-link[data-logged="logged"] {
             color: var(--text-clr-default);
+        }
+
+        .user-link[data-logged="logged"] .user-link__ico {
+            animation: logo-rotation 2s ease-in-out;
         }
 
         &:hover .c-login-roleta {

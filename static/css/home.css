@@ -371,13 +371,18 @@ body {
 }
 .l-header__item.login-item .user-link__ico {
   background-color: transparent;
-  animation: logo-rotation 2s ease-in-out infinite;
 }
 .l-header__item.login-item .user-link[data-logged=default] {
   color: var(--text-clr-warning);
 }
+.l-header__item.login-item .user-link[data-logged=default] .user-link__ico {
+  animation: logo-rotation 2s ease-in-out infinite;
+}
 .l-header__item.login-item .user-link[data-logged=logged] {
   color: var(--text-clr-default);
+}
+.l-header__item.login-item .user-link[data-logged=logged] .user-link__ico {
+  animation: logo-rotation 2s ease-in-out;
 }
 .l-header__item.login-item:hover .c-login-roleta {
   pointer-events: all;
