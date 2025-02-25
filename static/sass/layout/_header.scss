@@ -23,11 +23,11 @@ $l-header-context: 16;
 
     &__item.login-item {
         .user-link[data-logged="false"] {
-            color: var(--text-clr-warning);
+            color: var(--text-clr-good);
         }
 
         .user-link[data-logged="true"] {
-            color: var(--text-clr-good);
+            color: var(--text-clr-warning);
         }
     }
 }

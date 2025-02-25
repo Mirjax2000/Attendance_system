@@ -358,10 +358,10 @@ body {
   text-align: center;
 }
 .l-header__item.login-item .user-link[data-logged=false] {
-  color: var(--text-clr-warning);
+  color: var(--text-clr-good);
 }
 .l-header__item.login-item .user-link[data-logged=true] {
-  color: var(--text-clr-good);
+  color: var(--text-clr-warning);
 }
 
 /* --- footer --- */
