@@ -5,16 +5,18 @@
 $l-grid-container-context: 16;
 
 .l-grid-container {
-  @include container(40rem, 120rem, 0);
+    @include container(40rem, 120rem, 0);
 
-  height: 100dvh;
-  display: flex;
-  justify-content: flex-start;
-  align-items: stretch;
+    height: 100dvh;
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+    position: relative;
+    isolation: isolate;
 }
 
 .l-grid-main {
-  display: flex;
-  flex-grow: 1;
-  background-image: var(--background-clr-gradient-primary);
+    display: flex;
+    flex-grow: 1;
+    background-image: var(--background-clr-gradient-primary);
 }

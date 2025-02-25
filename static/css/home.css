@@ -311,6 +311,8 @@ body {
   display: flex;
   justify-content: flex-start;
   align-items: stretch;
+  position: relative;
+  isolation: isolate;
 }
 
 .l-grid-main {
@@ -545,6 +547,37 @@ body {
 }
 .c-login-roleta__link:active {
   transform: translateY(1px);
+}
+
+/* --- login form --- */
+.c-login-form {
+  inset: 0;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.5529411765);
+  z-index: 100;
+}
+.c-login-form__container {
+  width: 400px;
+  height: 400px;
+  margin: 100px auto;
+  background-color: rgba(26, 26, 26, 0.9137254902);
+  display: flex;
+  justify-content: space-around;
+  align-items: self-start;
+}
+.c-login-form__container h2 {
+  cursor: pointer;
+  background-color: black;
+  padding: 0.5em;
+}
+.c-login-form[data-show=hide] {
+  position: absolute;
+  clip-path: inset(50%);
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  left: -9999px;
+  white-space: nowrap;
 }
 
 /*# sourceMappingURL=home.css.map */
