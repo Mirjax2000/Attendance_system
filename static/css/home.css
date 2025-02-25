@@ -355,7 +355,7 @@ body {
   gap: 0;
 }
 .l-header__item {
-  flex-basis: 9.375em;
+  flex-basis: 10em;
   text-align: left;
 }
 .l-header__item.login-item {
