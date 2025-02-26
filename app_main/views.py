@@ -74,6 +74,12 @@ class EmailView(TemplateView):
     template_name = "app_main/emails.html"
 
 
+class ChartsView(TemplateView):
+    """rozesilani emialu"""
+
+    template_name = "app_main/charts.html"
+
+
 class CamView(TemplateView):
     """Seznam vsech zamestnancu"""
 

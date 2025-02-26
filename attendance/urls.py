@@ -16,6 +16,7 @@ urlpatterns = [
     path("home/main_panel", views.MainPanelView.as_view(), name="main_panel"),
     path("home/vacation", views.VacationView.as_view(), name="vacation"),
     path("home/working", views.WorkingView.as_view(), name="working"),
+    path("home/charts", views.ChartsView.as_view(), name="charts"),
     path("home/emails", views.EmailView.as_view(), name="emails"),
     path("home/other", views.OtherView.as_view(), name="other"),
     path("home/sick", views.SickView.as_view(), name="sick"),

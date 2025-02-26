@@ -35,10 +35,10 @@
             </section>
         </main>
         {% if user_exist == "False" %}
-            {% include "app_main/login_form.html" %}
+            {% include "includes/login_form.html" %}
             {% comment %} {% include "app_main/registr_form.html" %} {% endcomment %}
         {% else %}
-            {% include "app_main/relog_form.html" %}
+            {% include "includes/relog_form.html" %}
         {% endif %}
     </div>
 {% endblock body %}
