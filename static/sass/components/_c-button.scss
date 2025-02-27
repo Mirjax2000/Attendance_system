@@ -1,0 +1,21 @@
+@use "../utils/" as *;
+
+.c-button {
+    color: var(--text-clr-default);
+    text-align: center;
+    border-radius: 5px;
+    background-color: var(--background-clr-login-btn);
+    box-shadow: 1px 3px 5px #000000c6;
+    padding: 0.5em 1em;
+    transition: all ease-in-out 0.1s;
+
+    &:hover {
+        background-color: var(--background-clr-login-btn-hover);
+        color: white;
+    }
+
+    &:active {
+        box-shadow: 1px 1px 2px black;
+        transform: translateY(1px);
+    }
+}

@@ -3,6 +3,7 @@ $light-theme-main: (
     "primary-clr": (
         "default": #7ed56f,
         "primary": white,
+        "secondary": #339af0,
     ),
     "secondary-clr": (
         "secondary": gray,
@@ -17,6 +18,9 @@ $light-theme-main: (
     ),
     "background-clr": (
         "default": #fff,
+        "login-btn": #1881d6,
+        "login-btn-hover": #339af0,
+        "message": #2a324e,
         "gradient-primary": linear-gradient(to right bottom, #161c32, #2a324e),
         "gradient-secondary": linear-gradient(to right bottom, #1f2537, #2b2b2b),
         "gradient-ternary": linear-gradient(to right bottom, #7369ff, #4a44a5),

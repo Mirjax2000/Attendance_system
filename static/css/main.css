@@ -3,12 +3,16 @@
 :root {
   --primary-clr-default: #7ed56f;
   --primary-clr-primary: white;
+  --primary-clr-secondary: #339af0;
   --secondary-clr-secondary: gray;
   --ternary-clr-ternary-1: #7369ff;
   --ternary-clr-ternary-2: #6158d8;
   --ternary-clr-ternary-3: #5049b2;
   --text-clr-default: #d2d2d2;
   --background-clr-default: #fff;
+  --background-clr-login-btn: #1881d6;
+  --background-clr-login-btn-hover: #339af0;
+  --background-clr-message: #2a324e;
   --background-clr-gradient-primary: linear-gradient(to right bottom, #161c32, #2a324e);
   --background-clr-gradient-secondary: linear-gradient(to right bottom, #1f2537, #2b2b2b);
   --background-clr-gradient-ternary: linear-gradient(to right bottom, #7369ff, #4a44a5);
@@ -280,83 +284,40 @@ body {
   background-image: var(--background-clr-gradient-primary);
 }
 
-.c-nav-link {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 0;
-  color: var(--text-clr-default);
-  padding-block: 0.5em;
-  border-radius: 0.3125em;
-  user-select: none;
-  transition: color ease-in-out 0.2s, box-shadow ease-in-out 0.2s, transform ease-in-out 0.2s;
-  overflow: hidden;
-  position: relative;
-  isolation: isolate;
+.l-message {
+  border-radius: 5px;
+  padding: 0.5em;
+  background-color: var(--background-clr-message);
+  box-shadow: 1px 3px 5px black;
 }
-.c-nav-link::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: radial-gradient(circle at 30%, rgba(255, 255, 255, 0.0392156863) 10%, rgba(0, 0, 0, 0.031372549) 50%), var(--background-clr-gradient-ternary);
-  filter: blur(1px);
-  transition: opacity ease-in-out 0.2s;
-  opacity: 0;
-  z-index: -1;
-}
-.c-nav-link:hover, .c-nav-link:focus, .c-nav-link.active_link {
+.l-message__header {
   color: white;
-  box-shadow: 1px 3px 10px black;
+  margin-bottom: 1em;
+  border-bottom: 1px solid #545454;
 }
-.c-nav-link:hover::before, .c-nav-link:focus::before, .c-nav-link.active_link::before {
-  opacity: 1;
+.l-message__item {
+  margin-bottom: 1em;
+  padding-block: 0.5em;
+  border-bottom: 1px solid #545454;
 }
-.c-nav-link:active {
-  box-shadow: 1px 1px 4px black;
-  transform: translateY(-1px);
+.l-message__text {
+  font-size: 0.9rem;
+  color: var(--text-clr-default);
+  line-height: 1.5;
 }
-.c-nav-link__ico {
-  background-color: transparent;
-  margin-inline: 0.3125em;
+.l-message__link {
+  padding-inline: 0.5em;
+  color: var(--primary-clr-secondary);
+  transition: all 0.1s ease-in-out;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3568627451);
+  margin-left: 3px;
 }
-.c-nav-link__text {
-  flex: 1;
-  margin-inline: 0.3125em;
-  text-align: left;
+.l-message__link:hover {
+  color: white;
 }
-.c-nav-link.sublink .c-nav-link__text {
-  margin-bottom: 0.1875em;
-}
-.c-nav-link.sublink::before {
-  background-image: radial-gradient(circle at 30%, rgba(255, 255, 255, 0.0392156863) 10%, rgba(0, 0, 0, 0.031372549) 50%), var(--background-clr-gradient-quartery);
-}
-.c-nav-link.sublink:hover, .c-nav-link.sublink:focus, .c-nav-link.sublink.active_link {
-  opacity: 1;
-}
-
-.c-pointer {
-  position: relative;
-}
-.c-pointer::after {
-  content: ">>";
-  font-size: 1rem;
-  z-index: 100;
-  position: absolute;
-  letter-spacing: -4px;
-  font-weight: 900;
-  top: 50%;
-  transform: translate(0, -50%);
-  right: 1em;
-  transition: all 0.2s ease-in-out;
-}
-
-[data-pointer=down].c-pointer:not(.active_link) {
-  outline: 1px solid #fff;
-  background-color: var(--background-clr-nav-pointer);
-}
-[data-pointer=down].c-pointer::after {
-  letter-spacing: -14px;
-  transform: translate(0%, -50%) rotate(90deg);
+.l-message__link:active {
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4666666667);
+  transform: translateY(1px);
 }
 
 .c-logo {
@@ -379,99 +340,37 @@ body {
   background-color: transparent;
 }
 
-@keyframes logo-rotation {
-  0% {
-    transform: rotate(0deg);
-  }
-  10% {
-    transform: rotate(10deg);
-  }
-  20% {
-    transform: rotate(-10deg);
-  }
-  30% {
-    transform: rotate(10deg);
-  }
-  40% {
-    transform: rotate(-10deg);
-  }
-  50% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(0deg); /* Pauza na konci */
-  }
-}
-.c-login-roleta {
-  width: 100%;
-  position: absolute;
-  top: 0.3125em;
-  left: 0;
-  pointer-events: none;
-  display: none;
-}
-.c-login-roleta__list {
-  margin-top: 35px;
-  background-color: #2e2e2e;
-  border: 1px solid black;
-  border-radius: 5px;
-  padding: 1em 0;
-}
-.c-login-roleta__item {
-  margin-bottom: 0.25em;
-}
-.c-login-roleta__link {
-  display: block;
+.c-button {
   color: var(--text-clr-default);
-  padding-block: 0.25em;
-  text-indent: 1ch;
-  transition: all 0.1s ease-in-out;
+  text-align: center;
+  border-radius: 5px;
+  background-color: var(--background-clr-login-btn);
+  box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.7764705882);
+  padding: 0.5em 1em;
+  transition: all ease-in-out 0.1s;
 }
-.c-login-roleta__link:hover, .c-login-roleta__link:focus {
-  background-color: var(--background-clr-login-link);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5215686275);
+.c-button:hover {
+  background-color: var(--background-clr-login-btn-hover);
+  color: white;
 }
-.c-login-roleta__link:active {
+.c-button:active {
+  box-shadow: 1px 1px 2px black;
   transform: translateY(1px);
-}
-
-.c-login-form {
-  inset: 0;
-  position: absolute;
-  background-color: rgba(0, 0, 0, 0.5529411765);
-  z-index: 100;
-}
-.c-login-form__container {
-  width: 400px;
-  height: 400px;
-  margin: 100px auto;
-  background-color: rgba(26, 26, 26, 0.9137254902);
-  display: flex;
-  justify-content: space-around;
-  align-items: self-start;
-}
-.c-login-form__container h2 {
-  cursor: pointer;
-  background-color: black;
-  padding: 0.5em;
-}
-.c-login-form[data-show=hide] {
-  position: absolute;
-  clip-path: inset(50%);
-  width: 0;
-  height: 0;
-  overflow: hidden;
-  left: -9999px;
-  white-space: nowrap;
 }
 
 /* --- main --- */
 .p-check-in {
-  flex-basis: 80%;
+  flex-basis: 50%;
+  padding: 1em;
 }
 
 .p-login {
-  flex-basis: 20%;
+  flex-basis: 50%;
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 /*# sourceMappingURL=main.css.map */
