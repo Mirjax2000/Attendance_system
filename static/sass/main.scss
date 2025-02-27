@@ -1,11 +1,8 @@
 /* --- main --- */
 
-/*
 @use "./utils/" as *;
 @use "./base/" as *;
-@use "./layout/" as *;
+@use "./layout/for_main" as *;
 @use "./components/for_main" as *;
-@use "./pages/" as *;
+@use "./pages/main" as *;
 @use "./themes/" as *;
-@use "./vendors/" as *;
-*/

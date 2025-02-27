@@ -13,19 +13,17 @@ from django.views.generic import (
     UpdateView,
 )
 
-from app_main.forms import LoginForm
-
 # Create your views here.
 
 
-class LoginView(FormView):
-    template_name = "app_main/login.html"
-    form_class = LoginForm
-    success_url = reverse_lazy("home")  # Přesměrování po úspěšném přihlášení
+# class LoginView(FormView):
+#     template_name = "app_main/login.html"
+#     form_class = LoginForm
+#     success_url = reverse_lazy("home")  # Přesměrování po úspěšném přihlášení
 
-    def form_valid(self, form):
-        login(self.request, form.get_user())
-        return super().form_valid(form)
+#     def form_valid(self, form):
+#         login(self.request, form.get_user())
+#         return super().form_valid(form)
 
 
 class HomeView(LoginRequiredMixin,TemplateView):
@@ -41,63 +39,4 @@ class HomeView(LoginRequiredMixin,TemplateView):
         else:
             context["user_exist"] = "False"
             context["user_name"] = "Neprihlasen"
-        return context
-
-
-class MainPanelView(TemplateView):
-    """homepage"""
-
-    template_name = "app_main/main_panel.html"
-
-
-class AllEmployeesView(TemplateView):
-    """Seznam vsech zamestnancu"""
-
-    template_name = "app_main/employees.html"
-
-
-class VacationView(TemplateView):
-    """Seznam vsech zamestnancu"""
-
-    template_name = "app_main/vacation.html"
-
-
-class WorkingView(TemplateView):
-    """Seznam vsech zamestnancu"""
-
-    template_name = "app_main/working.html"
-
-
-class SickView(TemplateView):
-    """Seznam vsech zamestnancu"""
-
-    template_name = "app_main/sick.html"
-
-
-class OtherView(TemplateView):
-    """Seznam vsech zamestnancu"""
-
-    template_name = "app_main/other.html"
-
-
-class EmailView(TemplateView):
-    """rozesilani emialu"""
-
-    template_name = "app_main/emails.html"
-
-
-class ChartsView(TemplateView):
-    """rozesilani emialu"""
-
-    template_name = "app_main/charts.html"
-
-
-class CamView(TemplateView):
-    """Seznam vsech zamestnancu"""
-
-    template_name = "app_main/cam.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["speed"] = self.kwargs.get("speed", 10)
         return context

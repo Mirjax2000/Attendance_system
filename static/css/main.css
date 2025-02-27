@@ -1,12 +1,302 @@
 /* --- main --- */
-/*
-@use "./utils/" as *;
-@use "./base/" as *;
-@use "./layout/" as *;
-@use "./components/for_main" as *;
-@use "./pages/" as *;
-@use "./themes/" as *;
-@use "./vendors/" as *;
-*/
+/* --- root --- */
+/* --- light theme--- */
+:root {
+  --primary-clr-default: #7ed56f;
+  --primary-clr-primary: white;
+  --secondary-clr-secondary: gray;
+  --ternary-clr-ternary-1: #7369ff;
+  --ternary-clr-ternary-2: #6158d8;
+  --ternary-clr-ternary-3: #5049b2;
+  --text-clr-default: #d2d2d2;
+  --text-clr-logo: #339af0;
+  --text-clr-good: #339af0;
+  --text-clr-warning: #ff8400;
+  --text-clr-info: #0f0;
+  --text-clr-dark: #111;
+  --text-clr-btn: #777;
+  --background-clr-default: #fff;
+  --background-clr-nav: #1f2537;
+  --background-clr-nav-pointer: #313a5e;
+  --background-clr-login: #262930;
+  --background-clr-login-link: #303d5b;
+  --background-clr-content: #161c32;
+  --background-clr-header: #f7f7f7;
+  --background-clr-dark: #000;
+  --background-clr-gradient-primary: linear-gradient(to right bottom, #161c32, #2a324e);
+  --background-clr-gradient-secondary: linear-gradient(to right bottom, #1f2537, #2b2b2b);
+  --background-clr-gradient-ternary: linear-gradient(to right bottom, #7369ff, #4a44a5);
+  --background-clr-gradient-quartery: linear-gradient(to right bottom, #5049b2, #3c3785);
+  --shadow-clr-default: rgba(0, 0, 0, 0.3);
+  --shadow-clr-higher: rgba(0, 0, 0, 0.5);
+}
+
+[data-font-size=desktop] {
+  --primary: 4rem;
+  --secondary: 2.1875rem;
+  --tertiary: 1rem;
+  --paragraph: 1rem;
+  --button: 1rem;
+}
+
+[data-font-size=tablet] {
+  --primary: 3;
+  --secondary: 2.1875rem;
+  --tertiary: 1rem;
+  --paragraph: 1rem;
+  --button: 1rem;
+}
+
+[data-font-size=mobile] {
+  --primary: 2;
+  --secondary: 2.1875rem;
+  --tertiary: 1rem;
+  --paragraph: 1rem;
+  --button: 0.5rem;
+}
+
+/* --- normalize --- */
+html {
+  tab-size: 4;
+  text-size-adjust: 100%;
+  font-optical-sizing: auto;
+  scroll-behavior: smooth;
+  box-sizing: border-box;
+  color-scheme: dark light;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: inherit;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+  background-color: gray;
+}
+
+hr {
+  height: 0;
+  color: inherit;
+}
+
+abbr[title] {
+  text-decoration: underline dotted;
+}
+
+b,
+strong {
+  font-weight: bolder;
+}
+
+code,
+kbd,
+samp,
+pre {
+  font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 1em;
+}
+
+small {
+  font-size: 80%;
+}
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
+table {
+  text-indent: 0;
+  border-color: inherit;
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
+}
+
+button,
+select {
+  text-transform: none;
+}
+
+button,
+[type=button],
+[type=reset],
+[type=submit] {
+  appearance: "button";
+}
+
+::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+
+:-moz-focusring {
+  outline: 1px dotted ButtonText;
+}
+
+:-moz-ui-invalid {
+  box-shadow: none;
+}
+
+legend {
+  padding: 0;
+}
+
+progress {
+  vertical-align: baseline;
+}
+
+::-webkit-inner-spin-button,
+::-webkit-outer-spin-button {
+  height: auto;
+}
+
+[type=search] {
+  appearance: textfield;
+  outline-offset: -2px;
+}
+
+::-webkit-search-decoration {
+  appearance: none;
+}
+
+::-webkit-file-upload-button {
+  appearance: "button";
+  font: inherit;
+}
+
+summary {
+  display: list-item;
+}
+
+/* --- reset --- */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+li,
+nav,
+body,
+form,
+aside,
+input,
+header,
+section,
+article {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  display: inline-block;
+  text-decoration: none;
+}
+
+li {
+  list-style-type: none;
+}
+
+input {
+  outline: none;
+  border: none;
+}
+
+/* --- base --- */
+body, body.home {
+  opacity: 1;
+  background-color: #333;
+}
+
+/* --- placeholders --- */
+/* --- utils --- */
+.u-center-text {
+  text-align: center;
+}
+
+.u-mb-small {
+  margin-bottom: 1rem;
+}
+
+.u-mb-medium {
+  margin-bottom: 2.5rem;
+}
+
+.u-mb-big {
+  margin-bottom: 5rem;
+}
+
+/* --- typography --- */
+@font-face {
+  font-family: grotesk;
+  src: url("../fonts/webfonts/Font-face/SpaceGrotesk-VariableFont_wght.woff2") format("woff2-variations"), url("../fonts/webfonts/Font-face/SpaceGrotesk-VariableFont_wght.ttf") format("truetype-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: lato;
+  src: url("../fonts/webfonts/Font-face/static/Lato-Regular.woff2") format("woff2"), url("../fonts/webfonts/Font-face/static/Lato-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: lato;
+  src: url("../fonts/webfonts/Font-face/static/Lato-Bold.woff2") format("woff2"), url("../fonts/webfonts/Font-face/static/Lato-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: lato;
+  src: url("../fonts/webfonts/Font-face/static/Lato-Light.woff2") format("woff2"), url("../fonts/webfonts/Font-face/static/Lato-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: lato;
+  src: url("../fonts/webfonts/Font-face/static/Lato-Thin.woff2") format("woff2"), url("../fonts/webfonts/Font-face/static/Lato-Thin.ttf") format("truetype");
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+html {
+  font-size: 100%;
+}
+
+body {
+  font-family: lato, serif;
+}
+
+/* --- footer --- */
 
 /*# sourceMappingURL=main.css.map */
