@@ -318,4 +318,14 @@ body {
   background-image: var(--background-clr-gradient-primary);
 }
 
+.p-check-in {
+  background-color: aqua;
+  flex-basis: 80%;
+}
+
+.p-login {
+  background-color: black;
+  flex-basis: 20%;
+}
+
 /*# sourceMappingURL=main.css.map */

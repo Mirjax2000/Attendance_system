@@ -1,1 +1,11 @@
 @use "../utils/" as *;
+
+.p-check-in {
+    background-color: aqua;
+    flex-basis: 80%;
+}
+
+.p-login {
+    background-color: black;
+    flex-basis: 20%;
+}
