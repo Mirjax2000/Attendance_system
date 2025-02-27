@@ -1,7 +1,10 @@
 .c-time {
     &__text {
+        width: 23.75rem;
         font-family: orbitron, monospace;
         font-size: 4rem;
         letter-spacing: 2px;
+        line-height: 1;
+        text-shadow: 1px 1px 1px black;
     }
 }

@@ -285,7 +285,22 @@ body {
 
 .l-header {
   display: flex;
+  justify-content: flex-start;
   align-items: flex-start;
+  margin-bottom: 5em;
+}
+.l-header .c-time {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.l-camera-container {
+  width: 80%;
+  margin: 0 auto;
+  border-radius: 5px;
+  border: 1px solid black;
 }
 
 .l-message {
@@ -365,9 +380,39 @@ body {
 }
 
 .c-time__text {
+  width: 23.75rem;
   font-family: orbitron, monospace;
   font-size: 4rem;
   letter-spacing: 2px;
+  line-height: 1;
+  text-shadow: 1px 1px 1px black;
+}
+
+.c-camera-frame {
+  width: 80%;
+  height: 20dvh;
+  margin: 0 auto;
+  padding: 1em;
+  background-color: rgba(107, 107, 107, 0.352);
+  text-align: center;
+}
+
+.c-numpad {
+  width: 80%;
+  height: 20dvh;
+  margin: 0 auto;
+  padding: 1em;
+  background-color: rgb(43, 109, 142);
+  text-align: center;
+}
+
+.c-info {
+  width: 80%;
+  height: 20dvh;
+  margin: 0 auto;
+  padding: 1em;
+  background-color: rgb(76, 76, 76);
+  text-align: center;
 }
 
 /* --- main --- */

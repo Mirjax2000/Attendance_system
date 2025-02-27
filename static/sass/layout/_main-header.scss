@@ -1,4 +1,13 @@
 .l-header {
     display: flex;
+    justify-content: flex-start;
     align-items: flex-start;
+    margin-bottom: 5em;
+
+    .c-time {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }
