@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description"
+              content="Login page for the Attendance System - Track and manage attendance records">
+        <meta name="keywords"
+              content="attendance system, login, attendance tracking, attendance management">
+        <title>Login - Attendance System</title>
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <h1>Attendance System</h1>
+            </header>
+            <main>
+                <h2>Přihlášení</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit">Přihlásit se</button>
+                </form>
+            </main>
+        </div>
+    </body>
+</html>

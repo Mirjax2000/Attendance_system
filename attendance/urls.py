@@ -20,6 +20,7 @@ urlpatterns = [
     path("home/emails", views.EmailView.as_view(), name="emails"),
     path("home/other", views.OtherView.as_view(), name="other"),
     path("home/sick", views.SickView.as_view(), name="sick"),
+    path("login/", views.LoginView.as_view(), name="login"),
     # others
     path("cam/<int:speed>", views.CamView.as_view(), name="cam"),
     path("cam/video_stream/<int:speed>", cam.video_stream, name="video_stream"),
