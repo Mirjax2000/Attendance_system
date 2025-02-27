@@ -12,60 +12,76 @@ from django.views.generic import (
 )
 
 
+class DashboardView(LoginRequiredMixin, TemplateView):
+    """Homepage"""
+
+    template_name = "app_dashboard/app_dashboard.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            context["user_exist"] = "True"
+            context["user_name"] = self.request.user.username
+        else:
+            context["user_exist"] = "False"
+            context["user_name"] = "Neprihlasen"
+        return context
+
+
 class MainPanelView(LoginRequiredMixin, TemplateView):
     """homepage"""
 
-    template_name = "app_main/main_panel.html"
+    template_name = "app_dashboard/main_panel.html"
 
 
-class AllEmployeesView(LoginRequiredMixin, TemplateView):
+class EmployeesView(LoginRequiredMixin, TemplateView):
     """Seznam vsech zamestnancu"""
 
-    template_name = "app_main/employees.html"
+    template_name = "app_dashboard/employees.html"
 
 
 class VacationView(LoginRequiredMixin, TemplateView):
     """Seznam vsech zamestnancu"""
 
-    template_name = "app_main/vacation.html"
+    template_name = "app_dashboard/vacation.html"
 
 
 class WorkingView(LoginRequiredMixin, TemplateView):
     """Seznam vsech zamestnancu"""
 
-    template_name = "app_main/working.html"
+    template_name = "app_dashboard/working.html"
 
 
 class SickView(LoginRequiredMixin, TemplateView):
     """Seznam vsech zamestnancu"""
 
-    template_name = "app_main/sick.html"
+    template_name = "app_dashboard/sick.html"
 
 
 class OtherView(LoginRequiredMixin, TemplateView):
     """Seznam vsech zamestnancu"""
 
-    template_name = "app_main/other.html"
+    template_name = "app_dashboard/other.html"
 
 
 class EmailView(LoginRequiredMixin, TemplateView):
     """rozesilani emialu"""
 
-    template_name = "app_main/emails.html"
+    template_name = "app_dashboard/emails.html"
 
 
 class ChartsView(LoginRequiredMixin, TemplateView):
     """rozesilani emialu"""
 
-    template_name = "app_main/charts.html"
+    template_name = "app_dashboard/charts.html"
 
 
-class CamView(LoginRequiredMixin, TemplateView):
-    """Seznam vsech zamestnancu"""
+# class CamView(LoginRequiredMixin, TemplateView):
+#     """Seznam vsech zamestnancu"""
 
-    template_name = "app_main/cam.html"
+#     template_name = "app_dashboard/cam.html"
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["speed"] = self.kwargs.get("speed", 10)
-        return context
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context["speed"] = self.kwargs.get("speed", 10)
+#         return context

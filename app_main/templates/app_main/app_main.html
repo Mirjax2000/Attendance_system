@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+    Application
+{% endblock title %}
+<!-- css stylesheet -->
+{% block css %}
+    <link rel="preload"
+          href="{% static 'css/main.css' %}"
+          as="style"
+          onload="this.onload=null;this.rel='stylesheet'">
+{% endblock css %}
+<!-- no js -->
+{% block nojs %}
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+{% endblock nojs %}
+<!-- end -->
+<!-- main content -->
+{% block body %}
+    <h1>main page</h1>
+{% endblock body %}
+<!-- javascript block-->
+{% block js %}
+    <script src="{% static 'js/main.js'%}"></script>
+{% endblock js %}

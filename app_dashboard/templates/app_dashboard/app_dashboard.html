@@ -1,21 +1,19 @@
 {% extends "base.html" %}
 {% load static %}
 {% block title %}
-    application
+    Dashboard
 {% endblock title %}
 <!-- css stylesheet -->
 {% block css %}
     <link rel="preload"
-          href="{% static 'css/home.css' %}"
+          href="{% static 'css/dashboard.css' %}"
           as="style"
           onload="this.onload=null;this.rel='stylesheet'">
 {% endblock css %}
 <!-- no js -->
-<noscript>
-    {% block nojs %}
-        <link rel="stylesheet" href="{% static 'css/home.css' %}">
-    {% endblock nojs %}
-</noscript>
+{% block nojs %}
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+{% endblock nojs %}
 <!-- end -->
 <!-- main content -->
 {% block body %}
@@ -44,8 +42,5 @@
 {% endblock body %}
 <!-- javascript block-->
 {% block js %}
-    <script src="https://code.jquery.com/jquery-3.7.1.js"
-            integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-            crossorigin="anonymous"></script>
-    <script src="{% static 'js/home.js'%}"></script>
+    <script src="{% static 'js/dashboard.js'%}"></script>
 {% endblock js %}

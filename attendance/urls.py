@@ -5,26 +5,39 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 
-from app_main import cam, views
+from app_dashboard.views import (
+    ChartsView,
+    DashboardView,
+    EmailView,
+    EmployeesView,
+    MainPanelView,
+    OtherView,
+    SickView,
+    VacationView,
+    WorkingView,
+)
+from app_main.views import MainPageView
 
 urlpatterns = [
-    path("", views.HomeView.as_view(), name="home"),
-    # home end points
-    path(
-        "home/employees", views.AllEmployeesView.as_view(), name="all_employees"
-    ),
-    path("home/main_panel", views.MainPanelView.as_view(), name="main_panel"),
-    path("home/vacation", views.VacationView.as_view(), name="vacation"),
-    path("home/working", views.WorkingView.as_view(), name="working"),
-    path("home/charts", views.ChartsView.as_view(), name="charts"),
-    path("home/emails", views.EmailView.as_view(), name="emails"),
-    path("home/other", views.OtherView.as_view(), name="other"),
-    path("home/sick", views.SickView.as_view(), name="sick"),
-    path("login/", views.LoginView.as_view(), name="login"),
-    # others
-    path("cam/<int:speed>", views.CamView.as_view(), name="cam"),
-    path("cam/video_stream/<int:speed>", cam.video_stream, name="video_stream"),
     path("admin/", admin.site.urls),
 ]
 
+app_main_urls: list = [
+    path("", MainPageView.as_view(), name="main"),
+]
+
+app_dashboard_urls: list = [
+    path("dashboard/", DashboardView.as_view(), name="dashboard"),
+    path("dashboard/employees", EmployeesView.as_view(), name="employees"),
+    path("dashboard/main_panel", MainPanelView.as_view(), name="main_panel"),
+    path("dashboard/vacation", VacationView.as_view(), name="vacation"),
+    path("dashboard/working", WorkingView.as_view(), name="working"),
+    path("dashboard/charts", ChartsView.as_view(), name="charts"),
+    path("dashboard/emails", EmailView.as_view(), name="emails"),
+    path("dashboard/other", OtherView.as_view(), name="other"),
+    path("dashboard/sick", SickView.as_view(), name="sick"),
+]
+
+urlpatterns += app_main_urls
+urlpatterns += app_dashboard_urls
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

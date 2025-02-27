@@ -31,7 +31,7 @@
                href="#"
                id="employeesBtn"
                data-pointer="left"
-               data-url="{% url "all_employees" %}">
+               data-url="{% url "employees" %}">
                 <img class="c-nav-link__ico"
                      src="{% static "images/icons8-employees.png" %}"
                      alt="employees icon"
@@ -54,10 +54,9 @@
         </li>
         <!-- camera -->
         <li class="l-nav__list__item">
-            <a class="c-nav-link fetch-url"
-               id="cameraBtn"
-               href="#"
-               data-url="{% url "cam" 10 %}">
+            <a class="c-nav-link fetch-url" id="cameraBtn" href="#">
+                {% comment %}
+                data-url="{% url "cam" 10 %}"> {% endcomment %}
                 <img class="c-nav-link__ico"
                      src="{% static "images/icons8-add-camera.png" %}"
                      alt="camera icon"

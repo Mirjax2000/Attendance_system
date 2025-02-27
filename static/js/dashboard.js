@@ -1,5 +1,7 @@
 // IIFE - izolace promennych GlobeScope pouze v teto noname funkci
 (() => {
+    console.log('welcome');
+    console.log('dashboard.js');
     // by ID
     const employeesBtn = document.getElementById("employeesBtn");
     const content = document.getElementById("content");
@@ -7,7 +9,6 @@
     const employeeSublistJQ = $("#employeesSublist"); /* pro JQ slide */
 
     const loginBtn = document.getElementById("loginBtn");
-    // const registrBtn = document.getElementById("registBtn");
     const loginForm = document.getElementById("loginForm");
     const loginClose = document.getElementById("loginClose");
     // Nodelists
