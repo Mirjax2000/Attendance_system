@@ -6,7 +6,7 @@ $l-header-context: 16;
 
 .l-header {
     width: 100%;
-    padding: em(10, $l-header-context) em(8, $l-header-context);
+    padding: em(10, $l-header-context) 0;
     background-image: var(--background-clr-gradient-secondary);
     border-bottom-right-radius: $l-header-btm-radius;
     border-bottom-left-radius: $l-header-btm-radius;

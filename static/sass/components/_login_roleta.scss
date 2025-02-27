@@ -6,7 +6,7 @@ $login-roleta-context: 16;
 .c-login-roleta {
     width: 100%;
     position: absolute;
-    top: 0;
+    top: em(5, $login-roleta-context);
     left: 0;
     pointer-events: none;
     display: none;

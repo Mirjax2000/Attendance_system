@@ -304,13 +304,14 @@ body {
 
 /* --- grid --- */
 .l-grid-container {
-  width: clamp(40rem, 100%, 120rem);
+  width: clamp(40rem, 100%, 64rem);
   padding-inline: 0;
   margin-inline: auto;
   height: 100dvh;
   display: flex;
   justify-content: flex-start;
   align-items: stretch;
+  box-shadow: 1px 3px 5px black;
   position: relative;
   isolation: isolate;
 }
@@ -343,7 +344,7 @@ body {
 /* --- header --- */
 .l-header {
   width: 100%;
-  padding: 0.625em 0.5em;
+  padding: 0.625em 0;
   background-image: var(--background-clr-gradient-secondary);
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
@@ -519,7 +520,7 @@ body {
 .c-login-roleta {
   width: 100%;
   position: absolute;
-  top: 0;
+  top: 0.3125em;
   left: 0;
   pointer-events: none;
   display: none;

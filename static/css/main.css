@@ -298,5 +298,24 @@ body {
 }
 
 /* --- footer --- */
+/* --- grid --- */
+.l-grid-container {
+  width: clamp(40rem, 100%, 64rem);
+  padding-inline: 0;
+  margin-inline: auto;
+  height: 100dvh;
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
+  box-shadow: 1px 3px 5px black;
+  position: relative;
+  isolation: isolate;
+}
+
+.l-grid-main {
+  display: flex;
+  flex-grow: 1;
+  background-image: var(--background-clr-gradient-primary);
+}
 
 /*# sourceMappingURL=main.css.map */

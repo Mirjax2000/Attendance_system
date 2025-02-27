@@ -3,7 +3,6 @@
 @use "../utils/" as *;
 
 .p-application {
-  flex: 1;
-  padding-inline: em(16, 16);
+    flex: 1;
+    padding-inline: em(16, 16);
 }
-
