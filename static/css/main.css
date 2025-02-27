@@ -266,7 +266,7 @@ body {
 /* --- footer --- */
 /* --- grid --- */
 .l-grid-container {
-  width: clamp(40rem, 100%, 64rem);
+  width: clamp(40rem, 100%, 71.25rem);
   padding-inline: 0;
   margin-inline: auto;
   height: 100dvh;
@@ -289,6 +289,7 @@ body {
   padding: 0.5em;
   background-color: var(--background-clr-message);
   box-shadow: 1px 3px 5px black;
+  overflow: auto;
 }
 .l-message__header {
   color: white;
@@ -360,17 +361,18 @@ body {
 
 /* --- main --- */
 .p-check-in {
-  flex-basis: 50%;
+  flex-basis: 70%;
   padding: 1em;
 }
 
 .p-login {
-  flex-basis: 50%;
+  flex-basis: 30%;
   padding: 1em;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  border-left: 1px solid black;
 }
 
 /*# sourceMappingURL=main.css.map */

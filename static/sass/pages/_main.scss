@@ -5,15 +5,16 @@
 $p-login-context: 16;
 
 .p-check-in {
-    flex-basis: 50%;
+    flex-basis: 70%;
     padding: 1em;
 }
 
 .p-login {
-    flex-basis: 50%;
+    flex-basis: 30%;
     padding: 1em;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    border-left: 1px solid black;
 }

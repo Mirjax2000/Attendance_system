@@ -7,6 +7,7 @@ $l-message-border-bottom: #545454;
     padding: 0.5em;
     background-color: var(--background-clr-message);
     box-shadow: 1px 3px 5px black;
+    overflow: auto;
 
     &__header {
         color: white;

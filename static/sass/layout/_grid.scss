@@ -2,10 +2,8 @@
 
 @use "../utils/" as *;
 
-$l-grid-container-context: 16;
-
 .l-grid-container {
-    @include container(40rem, 64rem, 0);
+    @include container(40rem, 71.25rem, 0);
 
     height: 100dvh;
     display: flex;

@@ -275,7 +275,7 @@ body {
 
 /* --- grid --- */
 .l-grid-container {
-  width: clamp(40rem, 100%, 64rem);
+  width: clamp(40rem, 100%, 71.25rem);
   padding-inline: 0;
   margin-inline: auto;
   height: 100dvh;
