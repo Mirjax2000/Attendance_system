@@ -1,5 +1,5 @@
-/* --- light theme--- */
-$light-theme: (
+// --- light theme dashboard---
+$light-theme-dashboard: (
     "primary-clr": (
         "default": #7ed56f,
         "primary": white,
@@ -19,7 +19,6 @@ $light-theme: (
         "warning": #ff8400,
         "info": #0f0,
         "dark": #111,
-        "btn": #777,
     ),
     "background-clr": (
         "default": #fff,
@@ -29,15 +28,9 @@ $light-theme: (
         "login-link": #303d5b,
         "content": #161c32,
         "header": #f7f7f7,
-        "dark": #000,
         "gradient-primary": linear-gradient(to right bottom, #161c32, #2a324e),
         "gradient-secondary": linear-gradient(to right bottom, #1f2537, #2b2b2b),
         "gradient-ternary": linear-gradient(to right bottom, #7369ff, #4a44a5),
         "gradient-quartery": linear-gradient(to right bottom, #5049b2, #3c3785),
-    ),
-
-    "shadow-clr": (
-        "default": rgba(black, 0.3),
-        "higher": rgba(black, 0.5),
     ),
 );

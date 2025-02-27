@@ -1,17 +1,1 @@
 /* --- root --- */
-@use "../utils/mixins" as *;
-@use "../themes/light" as *;
-@use "../utils/variables" as *;
-@include export-to-root($light-theme, "");
-
-[data-font-size="desktop"] {
-  @include export-to-dataset($desktop, "");
-}
-
-[data-font-size="tablet"] {
-  @include export-to-dataset($tablet, "");
-}
-
-[data-font-size="mobile"] {
-  @include export-to-dataset($mobile, "");
-}

@@ -1,6 +1,5 @@
 @use "./utils/" as *;
-@use "./base/" as *;
+@use "./base/for_dashboard" as *;
 @use "./pages/dashboard" as *;
 @use "./layout/for_dashboard" as *;
 @use "./components/for_dashboard" as *;
-@use "./themes/" as *;

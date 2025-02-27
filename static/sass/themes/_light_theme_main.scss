@@ -1,0 +1,30 @@
+// --- light theme main---
+$light-theme-main: (
+    "primary-clr": (
+        "default": #7ed56f,
+        "primary": white,
+    ),
+    "secondary-clr": (
+        "secondary": gray,
+    ),
+    "ternary-clr": (
+        "ternary-1": #7369ff,
+        "ternary-2": #6158d8,
+        "ternary-3": #5049b2,
+    ),
+    "text-clr": (
+        "default": #d2d2d2,
+    ),
+    "background-clr": (
+        "default": #fff,
+        "gradient-primary": linear-gradient(to right bottom, #161c32, #2a324e),
+        "gradient-secondary": linear-gradient(to right bottom, #1f2537, #2b2b2b),
+        "gradient-ternary": linear-gradient(to right bottom, #7369ff, #4a44a5),
+        "gradient-quartery": linear-gradient(to right bottom, #5049b2, #3c3785),
+    ),
+
+    "shadow-clr": (
+        "default": rgba(black, 0.3),
+        "higher": rgba(black, 0.5),
+    ),
+);

@@ -1,5 +1,4 @@
-/* --- root --- */
-/* --- light theme--- */
+/* --- root for dashboard --- */
 :root {
   --primary-clr-default: #7ed56f;
   --primary-clr-primary: white;
@@ -13,7 +12,6 @@
   --text-clr-warning: #ff8400;
   --text-clr-info: #0f0;
   --text-clr-dark: #111;
-  --text-clr-btn: #777;
   --background-clr-default: #fff;
   --background-clr-nav: #1f2537;
   --background-clr-nav-pointer: #313a5e;
@@ -21,37 +19,10 @@
   --background-clr-login-link: #303d5b;
   --background-clr-content: #161c32;
   --background-clr-header: #f7f7f7;
-  --background-clr-dark: #000;
   --background-clr-gradient-primary: linear-gradient(to right bottom, #161c32, #2a324e);
   --background-clr-gradient-secondary: linear-gradient(to right bottom, #1f2537, #2b2b2b);
   --background-clr-gradient-ternary: linear-gradient(to right bottom, #7369ff, #4a44a5);
   --background-clr-gradient-quartery: linear-gradient(to right bottom, #5049b2, #3c3785);
-  --shadow-clr-default: rgba(0, 0, 0, 0.3);
-  --shadow-clr-higher: rgba(0, 0, 0, 0.5);
-}
-
-[data-font-size=desktop] {
-  --primary: 4rem;
-  --secondary: 2.1875rem;
-  --tertiary: 1rem;
-  --paragraph: 1rem;
-  --button: 1rem;
-}
-
-[data-font-size=tablet] {
-  --primary: 3;
-  --secondary: 2.1875rem;
-  --tertiary: 1rem;
-  --paragraph: 1rem;
-  --button: 1rem;
-}
-
-[data-font-size=mobile] {
-  --primary: 2;
-  --secondary: 2.1875rem;
-  --tertiary: 1rem;
-  --paragraph: 1rem;
-  --button: 0.5rem;
 }
 
 /* --- normalize --- */
@@ -393,7 +364,6 @@ body {
 }
 
 /* --- footer --- */
-/* --- navlink component --- */
 .c-nav-link {
   display: flex;
   justify-content: flex-start;
@@ -516,7 +486,6 @@ body {
     transform: rotate(0deg); /* Pauza na konci */
   }
 }
-/* --- login rolleta --- */
 .c-login-roleta {
   width: 100%;
   position: absolute;
@@ -550,7 +519,6 @@ body {
   transform: translateY(1px);
 }
 
-/* --- login form --- */
 .c-login-form {
   inset: 0;
   position: absolute;
