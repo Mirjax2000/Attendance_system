@@ -1,5 +1,15 @@
 {% load static %}
 <nav class="l-nav" id="navigationPanel">
+    <div class="c-logo">
+        <img class="c-logo__img"
+             src="{% static "images/icons8-logo.png" %}"
+             width="20"
+             height="20"
+             alt="Project logo">
+        <h2 class="c-logo__text">
+            Project X <small>&nbsp;v0.5</small>
+        </h2>
+    </div>
     <ul class="l-nav__list mainlist">
         <!-- Main panel -->
         <li class="l-nav__list__item">
@@ -27,7 +37,7 @@
                      alt="employees icon"
                      width="24"
                      height="24">
-                <p class="c-nav-link__text ">zamestanci</p>
+                <p class="c-nav-link__text ">Zaměstanci</p>
             </a>
             {% include "includes/zamestnanci.html" %}
         </li>
@@ -42,7 +52,7 @@
                 <p class="c-nav-link__text">admin panel</p>
             </a>
         </li>
-        <!--  -->
+        <!-- camera -->
         <li class="l-nav__list__item">
             <a class="c-nav-link fetch-url"
                id="cameraBtn"
@@ -56,6 +66,7 @@
                 <p class="c-nav-link__text">camera stream</p>
             </a>
         </li>
+        <!-- emails -->
         <li class="l-nav__list__item">
             <a class="c-nav-link fetch-url"
                id="emailsBtn"
@@ -67,6 +78,20 @@
                      width="24"
                      height="24">
                 <p class="c-nav-link__text">Emails</p>
+            </a>
+        </li>
+        <!-- prehledy -->
+        <li class="l-nav__list__item">
+            <a class="c-nav-link fetch-url"
+               id="emailsBtn"
+               href="#"
+               data-url="{% url "charts" %}">
+                <img class="c-nav-link__ico"
+                     src="{% static "images/icons8-chart.png" %}"
+                     alt="chart icon"
+                     width="24"
+                     height="24">
+                <p class="c-nav-link__text">Přehledy</p>
             </a>
         </li>
     </ul>

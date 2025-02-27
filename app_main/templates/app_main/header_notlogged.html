@@ -1,0 +1,29 @@
+{% load static %}
+<ul class="l-header__list">
+    <!-- login -->
+    <li class="l-header__item login-item">
+        <a href="#" class="user-link" data-logged="default">
+            <img class="user-link__ico"
+                 src=" {% static "images/icons8-login-red.png" %} "
+                 alt="login"
+                 width="25"
+                 height="25">
+            <p>{{ user_name }}</p>
+        </a>
+        <!-- login roleta -->
+        <div class="c-login-roleta">
+            <ul class="c-login-roleta__list">
+                <li class="c-login-roleta__item">
+                    <a href="#" class="c-login-roleta__link" id="loginBtn">Přihlášení</a>
+                </li>
+                <li class="c-login-roleta__item">
+                    <a href="#" class="c-login-roleta__link" id="registrBtn">Registrace</a>
+                </li>
+                <li class="c-login-roleta__item">
+                    <a href="#" class="c-login-roleta__link" id="settingsBtn">Nastavení</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <!--  -->
+</ul>

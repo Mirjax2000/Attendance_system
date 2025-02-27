@@ -1,3 +1,59 @@
 /* --- header --- */
+@use "../utils/" as *;
 
+$l-header-btm-radius: 5px;
+$l-header-context: 16;
 
+.l-header {
+    width: 100%;
+    padding: em(10, $l-header-context) em(8, $l-header-context);
+    background-image: var(--background-clr-gradient-secondary);
+    border-bottom-right-radius: $l-header-btm-radius;
+    border-bottom-left-radius: $l-header-btm-radius;
+    box-shadow: 1px 1px 2px #00000071;
+    margin-bottom: em(16, $l-header-context);
+
+    &__list {
+        @include flex(flex-end);
+    }
+
+    &__item {
+        flex-basis: em(160, $l-header-context);
+        text-align: left;
+    }
+
+    &__item.login-item {
+        cursor: pointer;
+        position: relative;
+        isolation: isolate;
+
+        .user-link {
+            @include flex(flex-start, $gap: 0.5em);
+
+            &__ico {
+                background-color: transparent;
+            }
+        }
+
+        .user-link[data-logged="default"] {
+            color: var(--text-clr-warning);
+        }
+
+        .user-link[data-logged="default"] .user-link__ico {
+            animation: logo-rotation 2s ease-in-out infinite;
+        }
+
+        .user-link[data-logged="logged"] {
+            color: var(--text-clr-default);
+        }
+
+        .user-link[data-logged="logged"] .user-link__ico {
+            animation: logo-rotation 2s ease-in-out;
+        }
+
+        &:hover .c-login-roleta {
+            pointer-events: all;
+            display: block;
+        }
+    }
+}

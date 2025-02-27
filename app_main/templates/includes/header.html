@@ -1,3 +1,10 @@
-<header class="header">
-    <h6>ja jsem header</h6>
+{% load static %}
+<header class="l-header">
+    {% if user_exist == "True" %}
+        {% include "app_main/header_logged.html" %}
+    {% else %}
+        {% if user_exist == "False" %}
+            {% include "app_main/header_notlogged.html" %}
+        {% endif %}
+    {% endif %}
 </header>

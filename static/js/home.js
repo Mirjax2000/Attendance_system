@@ -1,9 +1,15 @@
 // IIFE - izolace promennych GlobeScope pouze v teto noname funkci
 (() => {
+    // by ID
     const employeesBtn = document.getElementById("employeesBtn");
     const content = document.getElementById("content");
     const navMenu = document.getElementById("navigationPanel");
     const employeeSublistJQ = $("#employeesSublist"); /* pro JQ slide */
+
+    const loginBtn = document.getElementById("loginBtn");
+    // const registrBtn = document.getElementById("registBtn");
+    const loginForm = document.getElementById("loginForm");
+    const loginClose = document.getElementById("loginClose");
     // Nodelists
     const fetchLinks = navMenu.querySelectorAll(".fetch-url");
     // Arrays
@@ -64,4 +70,18 @@
             employeeSublistJQ.stop(true, true).slideDown(animationTime);
         }
     })
+
+    // logovani z loging rollety 
+    loginBtn.addEventListener("click", function (e) {
+        loginForm.dataset.show = "show"
+    })
+
+    // registrBtn.addEventListener("click", function (e) {
+    //     registrForm.dataset.show = "show"
+    // })
+
+    loginClose.addEventListener("click", function (e) {
+        loginForm.dataset.show = "hide"
+    })
+    // 
 })();

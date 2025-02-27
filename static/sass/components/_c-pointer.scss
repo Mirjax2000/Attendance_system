@@ -1,20 +1,21 @@
 @use "../utils/" as *;
 
 .c-pointer {
-  --pointer-size: 1rem;
+  $c-pointer-context: 16;
+  $c-pointer-size: 1rem;
 
   position: relative;
 
   &::after {
     content: ">>";
+    font-size: $c-pointer-size;
     z-index: 100;
     position: absolute;
     letter-spacing: -4px;
-    font-size: var(--pointer-size);
     font-weight: 900;
     top: 50%;
     transform: translate(0, -50%);
-    right: em(16, 16);
+    right: em(16, $c-pointer-context);
     transition: all 0.2s ease-in-out;
   }
 }

@@ -9,11 +9,17 @@
   --ternary-clr-ternary-2: #6158d8;
   --ternary-clr-ternary-3: #5049b2;
   --text-clr-default: #d2d2d2;
+  --text-clr-logo: #339af0;
+  --text-clr-good: #339af0;
+  --text-clr-warning: #ff8400;
+  --text-clr-info: #0f0;
   --text-clr-dark: #111;
   --text-clr-btn: #777;
   --background-clr-default: #fff;
   --background-clr-nav: #1f2537;
-  --background-clr-nav-pointer: #2a324e;
+  --background-clr-nav-pointer: #313a5e;
+  --background-clr-login: #262930;
+  --background-clr-login-link: #303d5b;
   --background-clr-content: #161c32;
   --background-clr-header: #f7f7f7;
   --background-clr-dark: #000;

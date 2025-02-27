@@ -24,13 +24,22 @@
             <!--left side  navigation Menu -->
             {% include "includes/navigation.html" %}
             <!-- right side main content -->
-            <section class="p-home-section">
+            <section class="p-application">
+                <!-- Header -->
                 {% include "includes/header.html" %}
-                <hr>
-                <main class"content" id="content">
+                <main class="p-content" id="content">
+                    <!-- here comms content  -->
+                    <!-- here comms content -->
+                    <!-- here comms content -->
                 </main>
             </section>
         </main>
+        {% if user_exist == "False" %}
+            {% include "includes/login_form.html" %}
+            {% comment %} {% include "app_main/registr_form.html" %} {% endcomment %}
+        {% else %}
+            {% include "includes/relog_form.html" %}
+        {% endif %}
     </div>
 {% endblock body %}
 <!-- javascript block-->
