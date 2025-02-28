@@ -1,13 +1,11 @@
 .l-header {
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    margin-bottom: 5em;
+    position: relative;
+    isolation: isolate;
 
-    .c-time {
-        flex: 1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    .c-logo {
+        position: absolute;
+        z-index: 100;
+        top: 0;
+        left: 0;
     }
 }
