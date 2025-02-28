@@ -1,11 +1,12 @@
 .c-time {
+    text-align: center;
+
     &__text {
-        width: 23.75rem;
-        margin: 0 auto;
-        font-family: orbitron, monospace;
+        font-family: "jet brains", monospace;
         font-size: 4rem;
+        font-weight: bold;
         letter-spacing: 2px;
         line-height: 1;
-        text-shadow: 1px 1px 1px black;
+        text-shadow: 1px 1px 3px black;
     }
 }

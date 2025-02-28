@@ -16,10 +16,12 @@ from app_dashboard.views import (
     VacationView,
     WorkingView,
 )
+from app_main.cam import cam_stream
 from app_main.views import MainPageView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("camstream/<int:speed>", cam_stream, name="camstream"),
 ]
 
 app_main_urls: list = [

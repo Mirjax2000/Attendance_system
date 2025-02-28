@@ -10,12 +10,11 @@ face_cascade = cv2.CascadeClassifier(
 )
 
 
-def video_stream(request, speed: int = 10):
+def cam_stream(request, speed: int = 10):
     """video stream"""
     # cap = cv2.VideoCapture(0)
     directory = Path(settings.MEDIA_ROOT)
     current_movie = str(directory.joinpath("sample.mp4"))
-    print(current_movie)
     movie = cv2.VideoCapture(current_movie)
 
     if not movie.isOpened():

@@ -198,12 +198,30 @@ body, body.home {
   margin-bottom: 5rem;
 }
 
+.u-mt-medium {
+  margin-top: 2.5rem;
+}
+
 /* --- typography --- */
 @font-face {
   font-family: orbitron;
   src: url("../fonts/webfonts/Font-face/Orbitron-VariableFont_wght.ttf") format("truetype-variations");
   font-weight: 100 900;
   font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "jet brains";
+  src: url("../fonts/webfonts/Font-face/JetBrainsMono.ttf") format("truetype-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "jet brains";
+  src: url("../fonts/webfonts/Font-face/JetBrainsMono-Italic.ttf") format("truetype-variations");
+  font-weight: 100 900;
+  font-style: italic;
   font-display: swap;
 }
 @font-face {

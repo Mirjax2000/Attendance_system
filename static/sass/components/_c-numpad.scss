@@ -1,8 +1,44 @@
 .c-numpad {
     width: 80%;
-    height: 20dvh;
-    margin: 0 auto;
-    padding: 1em;
-    background-color: rgb(43, 109, 142);
-    text-align: center;
+    margin-inline: auto;
+    background-image: var(--background-clr-gradient-primary);
+    box-shadow: 1px 1px 5px #0000008d;
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 2em;
+
+    &__list {
+        width: 70%;
+        padding: 1em;
+        border-radius: 4px;
+        margin-inline: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        border: 1px solid rgb(72, 72, 72);
+    }
+
+    &__item {
+        flex-basis: 33%;
+        text-align: center;
+        padding: 0.25em;
+    }
+
+    &__text {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 2rem;
+        margin-inline: auto;
+        aspect-ratio: 1;
+        border-radius: 5px;
+        box-shadow: 1px 3px 5px #0000004e;
+        background-image: radial-gradient(
+                circle at 10%,
+                #ffffff0a 10%,
+                #00000008 50%
+            ),
+            var(--background-clr-gradient-ternary);
+    }
 }

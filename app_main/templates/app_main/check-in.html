@@ -1,10 +1,51 @@
 {% include "includes/app_main_header.html" %}
-<main class="l-camera-container">
-    <section class="c-camera-frame">
-        <h2>camera stream</h2>
+<main class="l-check-in-container u-mt-medium">
+    <section class="c-camera-frame u-mb-small">
+        <img src="{% url "camstream" 12 %}"
+             class="c-camera-frame__video"
+             alt="camstream"
+             width="700"
+             height="700">
     </section>
-    <section class="c-numpad">
-        <h2>numpad pro pin</h2>
+    <section class="c-numpad u-mb-small">
+        <ul class="c-numpad__list">
+            <li class="c-numpad__item">
+                <p class="c-numpad__text">1</p>
+            </li>
+            <li class="c-numpad__item">
+                <p class="c-numpad__text">2</p>
+            </li>
+            <li class="c-numpad__item">
+                <p class="c-numpad__text">3</p>
+            </li>
+            <li class="c-numpad__item">
+                <p class="c-numpad__text">4</p>
+            </li>
+            <li class="c-numpad__item">
+                <p class="c-numpad__text">5</p>
+            </li>
+            <li class="c-numpad__item">
+                <p class="c-numpad__text">6</p>
+            </li>
+            <li class="c-numpad__item">
+                <p class="c-numpad__text">7</p>
+            </li>
+            <li class="c-numpad__item">
+                <p class="c-numpad__text">8</p>
+            </li>
+            <li class="c-numpad__item">
+                <p class="c-numpad__text">9</p>
+            </li>
+            <li class="c-numpad__item">
+                <p class="c-numpad__text">Del</p>
+            </li>
+            <li class="c-numpad__item">
+                <p class="c-numpad__text">.</p>
+            </li>
+            <li class="c-numpad__item">
+                <p class="c-numpad__text">Enter</p>
+            </li>
+        </ul>
     </section>
     <section class="c-info">
         <h2>infopanel</h2>

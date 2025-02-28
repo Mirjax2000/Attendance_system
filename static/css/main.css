@@ -13,9 +13,10 @@
   --background-clr-login-btn: #1881d6;
   --background-clr-login-btn-hover: #339af0;
   --background-clr-message: #2a324e;
+  --background-clr-numpad: #2c364e;
   --background-clr-gradient-primary: linear-gradient(to right bottom, #161c32, #2a324e);
   --background-clr-gradient-secondary: linear-gradient(to right bottom, #1f2537, #2b2b2b);
-  --background-clr-gradient-ternary: linear-gradient(to right bottom, #7369ff, #4a44a5);
+  --background-clr-gradient-ternary: linear-gradient(to right bottom, #4f4f4f, #363636);
   --background-clr-gradient-quartery: linear-gradient(to right bottom, #5049b2, #3c3785);
   --shadow-clr-default: rgba(0, 0, 0, 0.3);
   --shadow-clr-higher: rgba(0, 0, 0, 0.5);
@@ -219,12 +220,30 @@ body, body.home {
   margin-bottom: 5rem;
 }
 
+.u-mt-medium {
+  margin-top: 2.5rem;
+}
+
 /* --- typography --- */
 @font-face {
   font-family: orbitron;
   src: url("../fonts/webfonts/Font-face/Orbitron-VariableFont_wght.ttf") format("truetype-variations");
   font-weight: 100 900;
   font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "jet brains";
+  src: url("../fonts/webfonts/Font-face/JetBrainsMono.ttf") format("truetype-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "jet brains";
+  src: url("../fonts/webfonts/Font-face/JetBrainsMono-Italic.ttf") format("truetype-variations");
+  font-weight: 100 900;
+  font-style: italic;
   font-display: swap;
 }
 @font-face {
@@ -294,11 +313,12 @@ body {
   left: 0;
 }
 
-.l-camera-container {
-  width: 80%;
-  margin: 0 auto;
+.l-check-in-container {
+  width: 100%;
   border-radius: 5px;
   border: 1px solid black;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5019607843);
+  padding: 0.5em;
 }
 
 .l-message {
@@ -377,32 +397,58 @@ body {
   transform: translateY(1px);
 }
 
+.c-time {
+  text-align: center;
+}
 .c-time__text {
-  width: 23.75rem;
-  margin: 0 auto;
-  font-family: orbitron, monospace;
+  font-family: "jet brains", monospace;
   font-size: 4rem;
+  font-weight: bold;
   letter-spacing: 2px;
   line-height: 1;
-  text-shadow: 1px 1px 1px black;
+  text-shadow: 1px 1px 3px black;
 }
 
 .c-camera-frame {
   width: 80%;
-  height: 20dvh;
-  margin: 0 auto;
-  padding: 1em;
-  background-color: rgba(107, 107, 107, 0.352);
-  text-align: center;
+  margin-inline: auto;
 }
 
 .c-numpad {
   width: 80%;
-  height: 20dvh;
-  margin: 0 auto;
+  margin-inline: auto;
+  background-image: var(--background-clr-gradient-primary);
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5529411765);
+  border: 1px solid black;
+  border-radius: 4px;
+  padding: 2em;
+}
+.c-numpad__list {
+  width: 70%;
   padding: 1em;
-  background-color: rgb(43, 109, 142);
+  border-radius: 4px;
+  margin-inline: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  border: 1px solid rgb(72, 72, 72);
+}
+.c-numpad__item {
+  flex-basis: 33%;
   text-align: center;
+  padding: 0.25em;
+}
+.c-numpad__text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  margin-inline: auto;
+  aspect-ratio: 1;
+  border-radius: 5px;
+  box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.3058823529);
+  background-image: radial-gradient(circle at 10%, rgba(255, 255, 255, 0.0392156863) 10%, rgba(0, 0, 0, 0.031372549) 50%), var(--background-clr-gradient-ternary);
 }
 
 .c-info {
