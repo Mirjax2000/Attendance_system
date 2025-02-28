@@ -5,18 +5,18 @@
     box-shadow: 1px 1px 5px #0000008d;
     border: 1px solid black;
     border-radius: 4px;
-    padding: 2em;
+    padding: 0.5em;
 
     &__list {
         width: 70%;
-        padding: 1em;
+        padding: 0.5em;
         border-radius: 4px;
         margin-inline: auto;
         display: flex;
         justify-content: center;
         align-items: center;
         flex-wrap: wrap;
-        border: 1px solid rgb(72, 72, 72);
+        border: 1px solid #48484887;
     }
 
     &__item {

@@ -402,15 +402,22 @@ body {
 }
 .c-time__text {
   font-family: "jet brains", monospace;
-  font-size: 4rem;
+  font-size: 3rem;
   font-weight: bold;
   letter-spacing: 2px;
   line-height: 1;
   text-shadow: 1px 1px 3px black;
+  margin-bottom: 0.3em;
 }
 
 .c-camera-frame {
-  width: 80%;
+  width: 100%;
+  text-align: center;
+}
+.c-camera-frame__video {
+  width: 30%;
+  aspect-ratio: 1;
+  display: inline-block;
   margin-inline: auto;
 }
 
@@ -421,18 +428,18 @@ body {
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5529411765);
   border: 1px solid black;
   border-radius: 4px;
-  padding: 2em;
+  padding: 0.5em;
 }
 .c-numpad__list {
   width: 70%;
-  padding: 1em;
+  padding: 0.5em;
   border-radius: 4px;
   margin-inline: auto;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  border: 1px solid rgb(72, 72, 72);
+  border: 1px solid rgba(72, 72, 72, 0.5294117647);
 }
 .c-numpad__item {
   flex-basis: 33%;

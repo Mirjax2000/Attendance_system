@@ -1,4 +1,11 @@
 .c-camera-frame {
-    width: 80%;
-    margin-inline: auto;
+    width: 100%;
+    text-align: center;
+
+    &__video {
+        width: 30%;
+        aspect-ratio: 1;
+        display: inline-block;
+        margin-inline: auto;
+    }
 }

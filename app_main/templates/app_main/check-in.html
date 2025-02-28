@@ -1,11 +1,12 @@
+{% load static %}
 {% include "includes/app_main_header.html" %}
-<main class="l-check-in-container u-mt-medium">
+<main class="l-check-in-container">
     <section class="c-camera-frame u-mb-small">
-        <img src="{% url "camstream" 12 %}"
+        <img src="{% static "images/avatar_01.webp" %}"
              class="c-camera-frame__video"
              alt="camstream"
-             width="700"
-             height="700">
+             width="200"
+             height="200">
     </section>
     <section class="c-numpad u-mb-small">
         <ul class="c-numpad__list">
