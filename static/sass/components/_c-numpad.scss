@@ -17,6 +17,7 @@
         align-items: center;
         flex-wrap: wrap;
         border: 1px solid #48484887;
+        user-select: none;
     }
 
     &__item {
@@ -30,15 +31,35 @@
         justify-content: center;
         align-items: center;
         font-size: 2rem;
+        font-weight: bold;
+        text-shadow: 1px 1px 1px black;
         margin-inline: auto;
         aspect-ratio: 1;
         border-radius: 5px;
-        box-shadow: 1px 3px 5px #0000004e;
+        box-shadow:
+            1px 3px 5px #0000004e,
+            0 0 2px 1px rgba(0, 136, 255, 0.491);
         background-image: radial-gradient(
                 circle at 10%,
                 #ffffff0a 10%,
                 #00000008 50%
             ),
             var(--background-clr-gradient-ternary);
+        cursor: pointer;
+        opacity: 0.9;
+        transition: all 0.1s ease-in-out;
+
+        &:hover {
+            opacity: 1;
+        }
+
+        &:active {
+            backface-visibility: hidden;
+            transform: translateY(1px) scale(0.98);
+            box-shadow:
+                1px 1px 1px #0000004e,
+                0 0 2px 1px #00ff117d;
+            color: greenyellow;
+        }
     }
 }

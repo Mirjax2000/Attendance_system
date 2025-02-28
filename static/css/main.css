@@ -440,6 +440,7 @@ body {
   align-items: center;
   flex-wrap: wrap;
   border: 1px solid rgba(72, 72, 72, 0.5294117647);
+  user-select: none;
 }
 .c-numpad__item {
   flex-basis: 33%;
@@ -451,19 +452,32 @@ body {
   justify-content: center;
   align-items: center;
   font-size: 2rem;
+  font-weight: bold;
+  text-shadow: 1px 1px 1px black;
   margin-inline: auto;
   aspect-ratio: 1;
   border-radius: 5px;
-  box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.3058823529);
+  box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.3058823529), 0 0 2px 1px rgba(0, 136, 255, 0.491);
   background-image: radial-gradient(circle at 10%, rgba(255, 255, 255, 0.0392156863) 10%, rgba(0, 0, 0, 0.031372549) 50%), var(--background-clr-gradient-ternary);
+  cursor: pointer;
+  opacity: 0.9;
+  transition: all 0.1s ease-in-out;
+}
+.c-numpad__text:hover {
+  opacity: 1;
+}
+.c-numpad__text:active {
+  backface-visibility: hidden;
+  transform: translateY(1px) scale(0.98);
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3058823529), 0 0 2px 1px rgba(0, 255, 17, 0.4901960784);
+  color: greenyellow;
 }
 
 .c-info {
   width: 80%;
-  height: 20dvh;
   margin: 0 auto;
   padding: 1em;
-  background-color: rgb(76, 76, 76);
+  background-color: rgba(48, 48, 48, 0.379);
   text-align: center;
 }
 
