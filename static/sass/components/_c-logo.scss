@@ -4,8 +4,7 @@ $c-logo-context: 16;
 
 .c-logo {
     @include flex(flex-start);
-
-    user-select: none;
+    @extend %select-none;
 
     &__text {
         color: var(--text-clr-logo);

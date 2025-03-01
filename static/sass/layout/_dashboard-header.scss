@@ -12,7 +12,8 @@ $l-header-context: 16;
     border-bottom-left-radius: $l-header-btm-radius;
     box-shadow: 1px 1px 2px #00000071;
     margin-bottom: em(16, $l-header-context);
-    user-select: none;
+
+    @extend %select-none;
 
     &__list {
         @include flex(flex-end);

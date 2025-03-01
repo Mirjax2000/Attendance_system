@@ -4,13 +4,14 @@
     {% if form.errors %}
         <p class="login__erorr u-mb-small">Vaše uživatelské jméno a heslo se neshodují. Zkuste to prosím znovu.</p>
     {% else %}
-        <p class="login__text u-mb-small">Pro přihlášení prosím použijte následující formulář.</p>
+        <p class="login__text u-mb-medium">Pro přihlášení prosím použijte následující formulář.</p>
     {% endif %}
     <form action="{% url 'login' %}" method="post" class="login__form">
         {% csrf_token %}
-        <label for="{{ form.username.id_for_label }} " class="login__text">Uživatelské jméno:</label>
+        <label for="{{ form.username.id_for_label }} "
+               class="login__text u-mb-small">Uživatelské jméno:</label>
         {{ form.username }}
-        <label for="{{ form.password.id_for_label }}" class="login__text">Heslo:</label>
+        <label for="{{ form.password.id_for_label }}" class="login__text u-mb-small">Heslo:</label>
         {{ form.password }}
         <input type="submit" value="Přihlásit se" class="login__btn">
     </form>

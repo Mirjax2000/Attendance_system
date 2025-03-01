@@ -3,17 +3,31 @@
 
 .login-container {
     @extend %margin-in;
+    @extend %select-none;
 
     width: 50%;
     color: var(--text-clr-default);
-    padding: 1em;
+    padding: 2em;
     background-image: var(--background-clr-gradient-secondary);
+    border: 1px solid black;
+    box-shadow: 1px 1px 2px #0000005a;
 
     .login__header {
         border-bottom: 1px solid gray;
     }
+
     .login__text {
         display: block;
+    }
+
+    .login__form {
+        input {
+            display: block;
+            width: 100%;
+            padding: 0.5em 1em;
+            border-radius: 5px;
+            margin-bottom: 0.5em;
+        }
     }
 
     .login__btn {
@@ -31,7 +45,7 @@
             var(--background-clr-gradient-ternary);
         margin-block: 1em;
         margin-left: auto;
-
         transition: all ease-in-out 0.1s;
+        cursor: pointer;
     }
 }

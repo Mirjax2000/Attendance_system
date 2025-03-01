@@ -21,7 +21,8 @@
         align-items: center;
         flex-wrap: wrap;
         border: 1px solid #48484887;
-        user-select: none;
+
+        @extend %select-none;
     }
 
     &__item {
