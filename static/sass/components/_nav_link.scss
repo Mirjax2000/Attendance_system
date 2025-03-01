@@ -1,5 +1,6 @@
 // / --- navlink component ---
 @use "../utils/" as *;
+@use "../base/placeholders" as *;
 
 $nav-lin-transtime: 0.2s;
 
@@ -7,6 +8,7 @@ $nav-lin-transtime: 0.2s;
     $nav-link-context: 16;
 
     @include flex(flex-start);
+    @extend %pos-rel;
 
     color: var(--text-clr-default);
     padding-block: em(8, $nav-link-context);
@@ -17,8 +19,6 @@ $nav-lin-transtime: 0.2s;
         box-shadow ease-in-out $nav-lin-transtime,
         transform ease-in-out $nav-lin-transtime;
     overflow: hidden;
-    position: relative;
-    isolation: isolate;
 
     &::before {
         content: "";

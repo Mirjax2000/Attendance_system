@@ -1,14 +1,15 @@
 /* --- main --- */
 /* --- root for main --- */
 :root {
-  --primary-clr-default: #7ed56f;
-  --primary-clr-primary: white;
-  --primary-clr-secondary: #339af0;
-  --secondary-clr-secondary: gray;
+  --primary-clr-primary-1: white;
+  --secondary-clr-secondary-1: #339af0;
+  --secondary-clr-secondary-2: #2d88d6;
+  --secondary-clr-secondary-3: #2879bd;
   --ternary-clr-ternary-1: #7369ff;
   --ternary-clr-ternary-2: #6158d8;
   --ternary-clr-ternary-3: #5049b2;
   --text-clr-default: #d2d2d2;
+  --text-clr-secondary: #339af0;
   --background-clr-default: #fff;
   --background-clr-login-btn: #1881d6;
   --background-clr-login-btn-hover: #339af0;
@@ -203,6 +204,15 @@ body, body.home {
 }
 
 /* --- placeholders --- */
+.c-info__pin {
+  position: relative;
+  isolation: isolate;
+}
+
+.c-info, .c-numpad, .c-camera-frame__video {
+  margin-inline: auto;
+}
+
 /* --- utils --- */
 .u-center-text {
   text-align: center;
@@ -418,12 +428,10 @@ body {
   width: 30%;
   aspect-ratio: 1;
   display: inline-block;
-  margin-inline: auto;
 }
 
 .c-numpad {
-  width: 80%;
-  margin-inline: auto;
+  width: 70%;
   background-image: var(--background-clr-gradient-primary);
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5529411765);
   border: 1px solid black;
@@ -451,7 +459,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 2rem;
+  font-size: 1.7rem;
   font-weight: bold;
   text-shadow: 1px 1px 1px black;
   margin-inline: auto;
@@ -469,16 +477,22 @@ body {
 .c-numpad__text:active {
   backface-visibility: hidden;
   transform: translateY(1px) scale(0.98);
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3058823529), 0 0 2px 1px rgba(0, 255, 17, 0.4901960784);
-  color: greenyellow;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3058823529), 0 0 2px 1px var(--secondary-clr-secondary-2);
+  color: var(--text-clr-secondary);
 }
 
 .c-info {
-  width: 80%;
-  margin: 0 auto;
+  width: 70%;
   padding: 1em;
-  background-color: rgba(48, 48, 48, 0.379);
+  background-color: rgba(48, 48, 48, 0.3803921569);
   text-align: center;
+}
+.c-info__pin::after {
+  content: "ahoj";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
 }
 
 /* --- main --- */

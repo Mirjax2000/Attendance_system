@@ -76,12 +76,12 @@ class ChartsView(LoginRequiredMixin, TemplateView):
     template_name = "app_dashboard/charts.html"
 
 
-# class CamView(LoginRequiredMixin, TemplateView):
-#     """Seznam vsech zamestnancu"""
+class CamView(LoginRequiredMixin, TemplateView):
+    """Seznam vsech zamestnancu"""
 
-#     template_name = "app_dashboard/cam.html"
+    template_name = "app_dashboard/cam.html"
 
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context["speed"] = self.kwargs.get("speed", 10)
-#         return context
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["speed"] = self.kwargs.get("speed", 10)
+        return context

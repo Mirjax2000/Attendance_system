@@ -1,2 +1,10 @@
 /* --- placeholders --- */
 
+%pos-rel {
+    position: relative;
+    isolation: isolate;
+}
+
+%margin-in {
+    margin-inline: auto;
+}

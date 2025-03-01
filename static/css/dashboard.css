@@ -206,6 +206,11 @@ body, body.home {
 }
 
 /* --- placeholders --- */
+.c-nav-link {
+  position: relative;
+  isolation: isolate;
+}
+
 /* --- utils --- */
 .u-center-text {
   text-align: center;
@@ -393,8 +398,6 @@ body {
   user-select: none;
   transition: color ease-in-out 0.2s, box-shadow ease-in-out 0.2s, transform ease-in-out 0.2s;
   overflow: hidden;
-  position: relative;
-  isolation: isolate;
 }
 .c-nav-link::before {
   content: "";

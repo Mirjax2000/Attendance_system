@@ -1,3 +1,5 @@
+@use "../base/placeholders" as *;
+
 .c-camera-frame {
     width: 100%;
     text-align: center;
@@ -6,6 +8,7 @@
         width: 30%;
         aspect-ratio: 1;
         display: inline-block;
-        margin-inline: auto;
+
+        @extend %margin-in;
     }
 }

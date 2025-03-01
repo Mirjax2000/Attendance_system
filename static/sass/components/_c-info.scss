@@ -1,7 +1,23 @@
+@use "../base/placeholders" as *;
+
 .c-info {
-    width: 80%;
-    margin: 0 auto;
+    width: 70%;
+
+    @extend %margin-in;
+
     padding: 1em;
-    background-color: rgba(48, 48, 48, 0.379);
+    background-color: #30303061;
     text-align: center;
+
+    &__pin {
+        @extend %pos-rel;
+
+        &::after {
+            content: "ahoj";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+        }
+    }
 }

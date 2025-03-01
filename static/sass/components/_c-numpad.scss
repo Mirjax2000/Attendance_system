@@ -1,6 +1,10 @@
+@use "../base/placeholders" as *;
+
 .c-numpad {
-    width: 80%;
-    margin-inline: auto;
+    width: 70%;
+
+    @extend %margin-in;
+
     background-image: var(--background-clr-gradient-primary);
     box-shadow: 1px 1px 5px #0000008d;
     border: 1px solid black;
@@ -30,7 +34,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        font-size: 2rem;
+        font-size: 1.7rem;
         font-weight: bold;
         text-shadow: 1px 1px 1px black;
         margin-inline: auto;
@@ -38,7 +42,7 @@
         border-radius: 5px;
         box-shadow:
             1px 3px 5px #0000004e,
-            0 0 2px 1px rgba(0, 136, 255, 0.491);
+            0 0 2px 1px rgba(0 136 255 / 49.1%);
         background-image: radial-gradient(
                 circle at 10%,
                 #ffffff0a 10%,
@@ -58,8 +62,8 @@
             transform: translateY(1px) scale(0.98);
             box-shadow:
                 1px 1px 1px #0000004e,
-                0 0 2px 1px #00ff117d;
-            color: greenyellow;
+                0 0 2px 1px var(--secondary-clr-secondary-2);
+            color: var(--text-clr-secondary);
         }
     }
 }
