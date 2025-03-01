@@ -260,30 +260,9 @@ body, body.home {
   font-display: swap;
 }
 @font-face {
-  font-family: lato;
-  src: url("../fonts/webfonts/Font-face/static/Lato-Regular.woff2") format("woff2"), url("../fonts/webfonts/Font-face/static/Lato-Regular.ttf") format("truetype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: lato;
-  src: url("../fonts/webfonts/Font-face/static/Lato-Bold.woff2") format("woff2"), url("../fonts/webfonts/Font-face/static/Lato-Bold.ttf") format("truetype");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: lato;
-  src: url("../fonts/webfonts/Font-face/static/Lato-Light.woff2") format("woff2"), url("../fonts/webfonts/Font-face/static/Lato-Light.ttf") format("truetype");
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: lato;
-  src: url("../fonts/webfonts/Font-face/static/Lato-Thin.woff2") format("woff2"), url("../fonts/webfonts/Font-face/static/Lato-Thin.ttf") format("truetype");
-  font-weight: 100;
+  font-family: roboto;
+  src: url("../fonts/webfonts/Font-face/roboto.ttf") format("truetype-variations");
+  font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
@@ -292,7 +271,7 @@ html {
 }
 
 body {
-  font-family: lato, serif;
+  font-family: roboto, serif;
 }
 
 /* --- home --- */
