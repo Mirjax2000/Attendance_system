@@ -7,6 +7,7 @@ from django.urls import path
 from django.urls.conf import include
 
 from accounts import views
+from accounts.views import CustomLoginView
 from app_dashboard.views import (
     AttendanceView,
     ChartsView,
@@ -43,8 +44,9 @@ app_dashboard_urls: list = [
 ]
 
 app_accounts_urls: list = [
-    path("accounts/logout/", views.user_logout, name="logout"),
-    path("accounts/", include("django.contrib.auth.urls")),
+    path('accounts/login/', CustomLoginView.as_view(), name='login'),
+    path('accounts/logout/', views.user_logout, name='logout'),
+    path('accounts/', include('django.contrib.auth.urls')),
 ]
 
 urlpatterns += app_dashboard_urls
