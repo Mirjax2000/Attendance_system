@@ -79,7 +79,7 @@ class ChartsView(LoginRequiredMixin, TemplateView):
 class AttendanceView(LoginRequiredMixin, TemplateView):
     """detail o zamestanci"""
 
-    template_name = "app_dashboard/attendace.html"
+    template_name = "app_dashboard/attendance.html"
 
 
 class CamView(LoginRequiredMixin, TemplateView):
