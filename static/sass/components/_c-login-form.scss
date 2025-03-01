@@ -7,7 +7,7 @@
 
     width: 50%;
     color: var(--text-clr-default);
-    padding: 2em;
+    padding: 3em;
     background-image: var(--background-clr-gradient-secondary);
     border: 1px solid black;
     box-shadow: 1px 1px 2px #0000005a;
@@ -26,7 +26,12 @@
             width: 100%;
             padding: 0.5em 1em;
             border-radius: 5px;
-            margin-bottom: 0.5em;
+            margin-bottom: 1em;
+            box-shadow: 1px 2px 2px #00000068;
+
+            &:not(.login__btn) {
+                background-color: #00000056;
+            }
         }
     }
 
@@ -45,7 +50,26 @@
             var(--background-clr-gradient-ternary);
         margin-block: 1em;
         margin-left: auto;
-        transition: all ease-in-out 0.1s;
         cursor: pointer;
+
+        &:hover {
+            background-image: var(--background-clr-gradient-quartery);
+        }
+
+        &:active {
+            box-shadow: 1px 1px 3px #000000c6;
+            transform: translateY(1px);
+        }
+    }
+
+    .login__reset {
+        display: inline-block;
+        color: #339af0;
+        text-decoration: underline;
+        padding: 0.3em;
+        transition: 0.1s ease-in-out color;
+        &:hover {
+            color: white;
+        }
     }
 }

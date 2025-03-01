@@ -4,15 +4,6 @@ $font-path-variables: "../fonts/webfonts/Font-face/";
 $font-path-static: "../fonts/webfonts/Font-face/static/";
 
 @font-face {
-    font-family: orbitron;
-    src: url("#{$font-path-variables}Orbitron-VariableFont_wght.ttf")
-        format("truetype-variations");
-    font-weight: 100 900;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
     font-family: "jet brains";
     src: url("#{$font-path-variables}JetBrainsMono.ttf")
         format("truetype-variations");

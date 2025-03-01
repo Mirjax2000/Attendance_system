@@ -30,7 +30,7 @@ class DashboardView(TemplateView):
             context["user_name"] = self.request.user.username
         else:
             context["user_exist"] = "False"
-            context["user_name"] = "Neprihlasen"
+            context["user_name"] = "Nepřihlášen"
         return context
 
 
