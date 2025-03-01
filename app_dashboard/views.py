@@ -12,7 +12,7 @@ from django.views.generic import (
 )
 
 
-class DashboardView(LoginRequiredMixin, TemplateView):
+class DashboardView(TemplateView):
     """Homepage"""
 
     template_name = "app_dashboard/app_dashboard.html"
