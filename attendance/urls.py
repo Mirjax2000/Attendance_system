@@ -42,6 +42,11 @@ app_dashboard_urls: list = [
     path("dashboard/sick", SickView.as_view(), name="sick"),
 ]
 
+app_accounts_urls: list = [
+    
+]
+
 urlpatterns += app_main_urls
 urlpatterns += app_dashboard_urls
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += app_accounts_urls
