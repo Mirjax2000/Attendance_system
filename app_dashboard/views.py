@@ -12,7 +12,7 @@ from django.views.generic import (
 )
 
 
-class DashboardView(TemplateView):
+class DashboardView(LoginRequiredMixin, TemplateView):
     """Homepage"""
 
     template_name = "app_dashboard/app_dashboard.html"
@@ -74,6 +74,12 @@ class ChartsView(LoginRequiredMixin, TemplateView):
     """rozesilani emialu"""
 
     template_name = "app_dashboard/charts.html"
+
+
+class AttendanceView(LoginRequiredMixin, TemplateView):
+    """detail o zamestanci"""
+
+    template_name = "app_dashboard/attendace.html"
 
 
 class CamView(LoginRequiredMixin, TemplateView):

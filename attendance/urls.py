@@ -6,6 +6,7 @@ from django.contrib import admin
 from django.urls import path
 
 from app_dashboard.views import (
+    AttendanceView,
     ChartsView,
     DashboardView,
     EmailView,
@@ -32,6 +33,7 @@ app_dashboard_urls: list = [
     path("dashboard/", DashboardView.as_view(), name="dashboard"),
     path("dashboard/employees", EmployeesView.as_view(), name="employees"),
     path("dashboard/main_panel", MainPanelView.as_view(), name="main_panel"),
+    path("dashboard/attendance", AttendanceView.as_view(), name="attendance"),
     path("dashboard/vacation", VacationView.as_view(), name="vacation"),
     path("dashboard/working", WorkingView.as_view(), name="working"),
     path("dashboard/charts", ChartsView.as_view(), name="charts"),
