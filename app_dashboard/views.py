@@ -7,9 +7,16 @@ from django.views.generic import (
     DetailView,
     FormView,
     ListView,
+    RedirectView,
     TemplateView,
     UpdateView,
 )
+
+
+class RedirectDashboard(RedirectView):
+    """Redirect na /dashboard"""
+
+    url = "dashboard"
 
 
 class DashboardView(TemplateView):

@@ -15,6 +15,7 @@ from app_dashboard.views import (
     EmployeesView,
     MainPanelView,
     OtherView,
+    RedirectDashboard,
     SickView,
     VacationView,
     WorkingView,
@@ -23,12 +24,9 @@ from app_main.cam import cam_stream
 from app_main.views import MainPageView
 
 urlpatterns = [
+    path("", RedirectDashboard.as_view(), name="dashboard"),
     path("admin/", admin.site.urls),
     path("camstream/<int:speed>", cam_stream, name="camstream"),
-]
-
-app_main_urls: list = [
-    path("", MainPageView.as_view(), name="main"),
 ]
 
 app_dashboard_urls: list = [
@@ -45,11 +43,10 @@ app_dashboard_urls: list = [
 ]
 
 app_accounts_urls: list = [
-    path('accounts/logout/', views.user_logout, name='logout'),
-    path('accounts/', include('django.contrib.auth.urls')),
+    path("accounts/logout/", views.user_logout, name="logout"),
+    path("accounts/", include("django.contrib.auth.urls")),
 ]
 
-urlpatterns += app_main_urls
 urlpatterns += app_dashboard_urls
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += app_accounts_urls
