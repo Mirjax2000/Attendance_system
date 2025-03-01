@@ -211,6 +211,10 @@ body, body.home {
   isolation: isolate;
 }
 
+.login-container {
+  margin-inline: auto;
+}
+
 /* --- utils --- */
 .u-center-text {
   text-align: center;
@@ -344,6 +348,7 @@ body {
   border-bottom-left-radius: 5px;
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4431372549);
   margin-bottom: 1em;
+  user-select: none;
 }
 .l-header__list {
   display: flex;
@@ -540,34 +545,29 @@ body {
   transform: translateY(1px);
 }
 
-.c-login-form {
-  inset: 0;
-  position: absolute;
-  background-color: rgba(0, 0, 0, 0.5529411765);
-  z-index: 100;
+.login-container {
+  width: 50%;
+  color: var(--text-clr-default);
+  padding: 1em;
+  background-image: var(--background-clr-gradient-secondary);
 }
-.c-login-form__container {
-  width: 400px;
-  height: 400px;
-  margin: 100px auto;
-  background-color: rgba(26, 26, 26, 0.9137254902);
-  display: flex;
-  justify-content: space-around;
-  align-items: self-start;
+.login-container .login__header {
+  border-bottom: 1px solid gray;
 }
-.c-login-form__container h2 {
-  cursor: pointer;
-  background-color: black;
-  padding: 0.5em;
+.login-container .login__text {
+  display: block;
 }
-.c-login-form[data-show=hide] {
-  position: absolute;
-  clip-path: inset(50%);
-  width: 0;
-  height: 0;
-  overflow: hidden;
-  left: -9999px;
-  white-space: nowrap;
+.login-container .login__btn {
+  display: block;
+  color: var(--text-clr-default);
+  text-align: center;
+  border-radius: 5px;
+  box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.7764705882);
+  padding: 0.5em 1em;
+  background-image: radial-gradient(circle at 30%, rgba(255, 255, 255, 0.0392156863) 10%, rgba(0, 0, 0, 0.031372549) 50%), var(--background-clr-gradient-ternary);
+  margin-block: 1em;
+  margin-left: auto;
+  transition: all ease-in-out 0.1s;
 }
 
 /*# sourceMappingURL=dashboard.css.map */

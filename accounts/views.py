@@ -3,5 +3,6 @@ from django.shortcuts import redirect
 
 
 def user_logout(request):
+    """Logout a redirect"""
     logout(request)
-    return redirect('main')
+    return redirect("dashboard")

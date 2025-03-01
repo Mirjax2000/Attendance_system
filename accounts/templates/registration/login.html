@@ -1,26 +1,18 @@
 {% load static %}
-
-<h1>Log-in</h1>
-
-{% if form.errors %}
-    <p>Vaše uživatelské jméno a heslo se neshodují. Zkuste to prosím znovu.</p>
-{% else %}
-    <p>Pro přihlášení prosím použijte následující formulář.</p>
-{% endif %}
-
-<div class="login-form">
-    <form action="{% url 'login' %}" method="post">
+<div class="login-container">
+    <h1 class="login__header u-mb-small">Log-in</h1>
+    {% if form.errors %}
+        <p class="login__erorr u-mb-small">Vaše uživatelské jméno a heslo se neshodují. Zkuste to prosím znovu.</p>
+    {% else %}
+        <p class="login__text u-mb-small">Pro přihlášení prosím použijte následující formulář.</p>
+    {% endif %}
+    <form action="{% url 'login' %}" method="post" class="login__form">
         {% csrf_token %}
-        <p>
-            <label for="{{ form.username.id_for_label }}">Uživatelské jméno:</label><br>
-            {{ form.username }}
-        </p>
-        <p>
-            <label for="{{ form.password.id_for_label }}">Heslo:</label><br>
-            {{ form.password }}
-        </p>
-        <input type="hidden" name="next" value="{{ next }}" />
-        <p><input type="submit" value="Přihlásit se"></p>
+        <label for="{{ form.username.id_for_label }} " class="login__text">Uživatelské jméno:</label>
+        {{ form.username }}
+        <label for="{{ form.password.id_for_label }}" class="login__text">Heslo:</label>
+        {{ form.password }}
+        <input type="submit" value="Přihlásit se" class="login__btn">
     </form>
     <p>
         <a href="{% url "password_reset" %}">Zapomenuté heslo?</a>

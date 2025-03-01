@@ -24,16 +24,16 @@ from app_main.cam import cam_stream
 from app_main.views import MainPageView
 
 urlpatterns = [
-    path("", RedirectDashboard.as_view(), name="dashboard"),
+    path("", RedirectDashboard.as_view()),
     path("admin/", admin.site.urls),
     path("camstream/<int:speed>", cam_stream, name="camstream"),
 ]
 
 app_dashboard_urls: list = [
     path("dashboard/", DashboardView.as_view(), name="dashboard"),
-    path("dashboard/employees", EmployeesView.as_view(), name="employees"),
-    path("dashboard/main_panel", MainPanelView.as_view(), name="main_panel"),
     path("dashboard/attendance", AttendanceView.as_view(), name="attendance"),
+    path("dashboard/main_panel", MainPanelView.as_view(), name="main_panel"),
+    path("dashboard/employees", EmployeesView.as_view(), name="employees"),
     path("dashboard/vacation", VacationView.as_view(), name="vacation"),
     path("dashboard/working", WorkingView.as_view(), name="working"),
     path("dashboard/charts", ChartsView.as_view(), name="charts"),
@@ -48,5 +48,5 @@ app_accounts_urls: list = [
 ]
 
 urlpatterns += app_dashboard_urls
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += app_accounts_urls
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
