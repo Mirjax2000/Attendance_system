@@ -4,6 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
+from django.urls.conf import include
 
 from app_dashboard.views import (
     AttendanceView,
@@ -43,7 +44,7 @@ app_dashboard_urls: list = [
 ]
 
 app_accounts_urls: list = [
-    
+    path('accounts/', include('django.contrib.auth.urls')),
 ]
 
 urlpatterns += app_main_urls

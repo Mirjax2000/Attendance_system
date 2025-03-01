@@ -1,0 +1,28 @@
+{% load static %}
+
+<h1>Log-in</h1>
+
+{% if form.errors %}
+    <p>Vaše uživatelské jméno a heslo se neshodují. Zkuste to prosím znovu.</p>
+{% else %}
+    <p>Pro přihlášení prosím použijte následující formulář.</p>
+{% endif %}
+
+<div class="login-form">
+    <form action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+        <p>
+            <label for="{{ form.username.id_for_label }}">Uživatelské jméno:</label><br>
+            {{ form.username }}
+        </p>
+        <p>
+            <label for="{{ form.password.id_for_label }}">Heslo:</label><br>
+            {{ form.password }}
+        </p>
+        <input type="hidden" name="next" value="{{ next }}" />
+        <p><input type="submit" value="Přihlásit se"></p>
+    </form>
+    <p>
+        <a href="{% url "password_reset" %}">Zapomenuté heslo?</a>
+    </p>
+</div>
