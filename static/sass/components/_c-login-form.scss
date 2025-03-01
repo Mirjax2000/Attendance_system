@@ -68,8 +68,12 @@
         text-decoration: underline;
         padding: 0.3em;
         transition: 0.1s ease-in-out color;
+
         &:hover {
             color: white;
         }
+    }
+    .alert {
+        color: red;
     }
 }

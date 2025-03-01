@@ -576,5 +576,8 @@ body {
 .login-container .login__reset:hover {
   color: white;
 }
+.login-container .alert {
+  color: red;
+}
 
 /*# sourceMappingURL=dashboard.css.map */

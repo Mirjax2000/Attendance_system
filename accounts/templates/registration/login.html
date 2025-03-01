@@ -4,38 +4,18 @@
     {% if form.errors %}
         <p class="login__erorr u-mb-small">Vaše uživatelské jméno a heslo se neshodují. Zkuste to prosím znovu.</p>
     {% else %}
-        <p class="login__text u-mb-medium">Pro přihlášení prosím použijte následující formulář.</p>
+        <p class="login__text u-mb-medium">Nejdříve se přihlaste.</p>
+    {% endif %}
+    {% if messages %}
+        {% for message in messages %}<div class="alert">{{ message }}</div>{% endfor %}
     {% endif %}
     <form action="{% url 'login' %}" method="post" class="login__form">
-
-<h1>Log-in</h1>
-
-{% if form.errors %}
-    <p>Vaše uživatelské jméno a heslo se neshodují. Zkuste to prosím znovu.</p>
-{% else %}
-    <p>Pro přihlášení prosím použijte následující formulář.</p>
-{% endif %}
-
-{% if messages %}
-    {% for message in messages %}
-        <div class="alert">
-        {{ message }}
-        </div>
-    {% endfor %}
-{% endif %}
-
-<div class="login-form">
-    <form action="{% url 'login' %}" method="post">
         {% csrf_token %}
-        <p>
-            <label for="{{ form.username.id_for_label }}">Uživatelské jméno:</label><br>
-            {{ form.username }}
-        </p>
-        <p>
-            <label for="{{ form.password.id_for_label }}">Heslo:</label><br>
-            {{ form.password }}
-        </p>
-        <p><input type="submit" value="Přihlásit se"></p>
+        <label for="{{ form.username.id_for_label }} " class="login__text ">Uživatelské jméno:</label>
+        {{ form.username }}
+        <label for="{{ form.password.id_for_label }}" class="login__text">Heslo:</label>
+        {{ form.password }}
+        <input type="submit" value="Přihlásit se" class="login__btn">
     </form>
     <p class="u-text-right">
         <a href="{% url "password_reset" %}" class="login__reset">Zapomenuté heslo?</a>
