@@ -2,6 +2,12 @@
 
 <h1>Log-in</h1>
 
+{% if form.errors %}
+    <p>Vaše uživatelské jméno a heslo se neshodují. Zkuste to prosím znovu.</p>
+{% else %}
+    <p>Pro přihlášení prosím použijte následující formulář.</p>
+{% endif %}
+
 {% if messages %}
     {% for message in messages %}
         <div class="alert">
