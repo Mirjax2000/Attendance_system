@@ -44,7 +44,7 @@ app_dashboard_urls: list = [
 ]
 
 app_accounts_urls: list = [
-    path('accounts/', include('django.contrib.auth.urls')),
+    path("accounts/", include("django.contrib.auth.urls")),
 ]
 
 urlpatterns += app_main_urls
