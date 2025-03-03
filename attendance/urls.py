@@ -6,8 +6,7 @@ from django.contrib import admin
 from django.urls import path
 from django.urls.conf import include
 
-from accounts import views
-from accounts.views import CustomLoginView
+from accounts.views import CustomLoginView, user_logout
 from app_dashboard.views import (
     AttendanceView,
     CamView,
@@ -38,19 +37,24 @@ app_dashboard_urls: list = [
     path("dashboard/employees", EmployeesView.as_view(), name="employees"),
     path("dashboard/vacation", VacationView.as_view(), name="vacation"),
     path("dashboard/working", WorkingView.as_view(), name="working"),
+    path("dashboard/cam<int:speed>", CamView.as_view(), name="cam"),
     path("dashboard/charts", ChartsView.as_view(), name="charts"),
     path("dashboard/emails", EmailView.as_view(), name="emails"),
     path("dashboard/other", OtherView.as_view(), name="other"),
     path("dashboard/sick", SickView.as_view(), name="sick"),
-    path("dashboard/cam<int:speed>", CamView.as_view(), name="cam"),
+]
+
+app_main_urls: list = [
+    path("app_main/", MainPageView.as_view(), name="logout"),
 ]
 
 app_accounts_urls: list = [
     path("accounts/login/", CustomLoginView.as_view(), name="login"),
-    path("accounts/logout/", views.user_logout, name="logout"),
+    path("accounts/logout/", user_logout, name="logout"),
     path("accounts/", include("django.contrib.auth.urls")),
 ]
 
 urlpatterns += app_dashboard_urls
+urlpatterns += app_main_urls
 urlpatterns += app_accounts_urls
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

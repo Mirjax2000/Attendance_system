@@ -474,12 +474,12 @@ body {
 }
 
 /* --- main --- */
-.p-check-in {
+.p-check-in__container {
   flex-basis: 70%;
   padding: 1em;
 }
 
-.p-login {
+.p-message__container {
   flex-basis: 30%;
   padding: 1em;
   display: flex;
