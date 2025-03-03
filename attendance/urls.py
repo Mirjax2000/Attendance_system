@@ -39,14 +39,14 @@ app_dashboard_urls: list = [
     path("dashboard/working", WorkingView.as_view(), name="working"),
     path("dashboard/charts", ChartsView.as_view(), name="charts"),
     path("dashboard/emails", EmailView.as_view(), name="emails"),
-    path("dashboard/other", OtherView.as_view(), name="other"),
     path("dashboard/sick", SickView.as_view(), name="sick"),
+    path("dashboard/other", OtherView.as_view(), name="other"),
 ]
 
 app_accounts_urls: list = [
-    path('accounts/login/', CustomLoginView.as_view(), name='login'),
-    path('accounts/logout/', views.user_logout, name='logout'),
-    path('accounts/', include('django.contrib.auth.urls')),
+    path("accounts/login/", CustomLoginView.as_view(), name="login"),
+    path("accounts/logout/", views.user_logout, name="logout"),
+    path("accounts/", include("django.contrib.auth.urls")),
 ]
 
 urlpatterns += app_dashboard_urls
