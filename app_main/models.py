@@ -184,7 +184,11 @@ class FaceVector(models.Model):
             self.face_vector_fernet = fernet.encrypt(to_fernet)
             self.face_vector = []
 
-    def save(self, *args, **kwargs,):
+    def save(
+        self,
+        *args,
+        **kwargs,
+    ):
         """Ukladani souboru"""
         self.fernet_vector()
 

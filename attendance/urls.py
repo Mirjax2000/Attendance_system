@@ -10,6 +10,7 @@ from accounts import views
 from accounts.views import CustomLoginView
 from app_dashboard.views import (
     AttendanceView,
+    CamView,
     ChartsView,
     DashboardView,
     EmailView,
@@ -41,6 +42,7 @@ app_dashboard_urls: list = [
     path("dashboard/emails", EmailView.as_view(), name="emails"),
     path("dashboard/other", OtherView.as_view(), name="other"),
     path("dashboard/sick", SickView.as_view(), name="sick"),
+    path("dashboard/cam<int:speed>", CamView.as_view(), name="cam"),
 ]
 
 app_accounts_urls: list = [
