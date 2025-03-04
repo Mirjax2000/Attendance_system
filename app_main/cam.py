@@ -2,20 +2,60 @@ from pathlib import Path
 from time import sleep
 
 import cv2
+import numpy as np
 from django.conf import settings
 from django.http import JsonResponse
 from django.http.response import HttpResponse, StreamingHttpResponse
 from django.utils.timezone import now
 from rich.console import Console
 
+from .models import Employee, FaceVector
+
 cons = Console()
+
+face_vectors_db = FaceVector.objects.select_related("employee").all()
+
+face_vectors = {}
+for face_vector_instance in face_vectors_db:
+    face_vectors[face_vector_instance.employee.slug] = np.array(
+        face_vector_instance.face_vector
+    )
+cons.log(face_vectors)
+
 
 face_cascade = cv2.CascadeClassifier(
     cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
 )
 
 capture_frame: bool = False
-current_capture_img: None = None
+
+
+def porovnani(vektor1, vektor2):
+    """Porovnávací algoritmus"""
+
+    return np.linalg.norm(vektor1 - vektor2)
+
+
+def face_recon(vektor1, vectors_from_db):
+    """Porovnání nového vektoru se všemi uloženými"""
+    vektors = vectors_from_db
+    best_match = ""
+    min_distance = float("inf")
+    threshold = 0.0  # Experimentálně nastavit, podle přesnosti modelu
+
+    for name, stored_vector in vektors.items():
+        distance = porovnani(vektor1, stored_vector)
+        print(f"{name}: {distance:.4f}")
+
+        if distance < min_distance:
+            min_distance = distance
+            best_match = name
+
+    # Vyhodnocení výsledku
+    if min_distance < threshold:
+        print(f"Rozpoznán: {best_match} (Vzdálenost: {min_distance:.4f})")
+    else:
+        print("Neznámý obličej!")
 
 
 def capture_photo(request):
@@ -28,20 +68,20 @@ def capture_photo(request):
     return JsonResponse({"error": "Špatná metoda"}, status=400)
 
 
-def cam_stream(request, speed: int = 10):
+def cam_stream(request, speed: int = 12):
     """video stream"""
-    # cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(0)
     directory = Path(settings.MEDIA_ROOT)
-    current_movie = str(directory.joinpath("sample.mp4"))
+    current_movie = str(directory.joinpath("fire.mp4"))
     movie = cv2.VideoCapture(current_movie)
     global capture_frame
-    if not movie.isOpened():
+    if not cap.isOpened():
         return HttpResponse("Kamera není dostupná", status=500)
 
     def generate():
         global capture_frame
         while True:
-            ret, frame = movie.read()
+            ret, frame = cap.read()
             if not ret:
                 break
 
@@ -53,19 +93,48 @@ def cam_stream(request, speed: int = 10):
 
             # Kreslení rámečků kolem obličejů
             for x, y, w, h in faces:
-                cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                cv2.rectangle(gray, (x, y), (x + w, y + h), (255, 0, 0), 2)
 
+            # sejmuti obrazku a vytvoreni vektoru
             if capture_frame:
-                timestamp = now().strftime("%Y%m%d_%H%M%S")
-                image_name = f"snapshot_{timestamp}.jpg"
-                image_path = directory / image_name
+                new_face_vector: list = []
+                for x, y, w, h in faces:
+                    # vyber oblasti obliceje
+                    face_roi = gray[y : y + h, x : x + w]
+                    # resize na 200x200 -> standart resolution pro face recon
+                    face_resized = cv2.resize(face_roi, (200, 200))
+                    # sejmuti face vektoru a ulozeni do variable
+                    new_face_vector = np.array(face_resized, dtype=np.uint8)
+                    # try:
+                    #     employee = Employee.objects.get(
+                    #         slug="kerel-smachka"
+                    #     )  # Najde zaměstnance podle slug
+                    #     face_vector_entry, created = (
+                    #         FaceVector.objects.update_or_create(
+                    #             employee=employee,  # Odkaz na zaměstnance
+                    #             defaults={
+                    #                 "face_vector": new_face_vector
+                    #             },  # Aktualizace sloupce face_vector
+                    #         )
+                    #     )
+                    #     if created:
+                    #         cons.log(
+                    #             "Nový FaceVector vytvořen pro 'kerel-smachka'"
+                    #         )
+                    #     else:
+                    #         cons.log(
+                    #             "FaceVector aktualizován pro 'kerel-smachka'"
+                    #         )
 
-                # Uložíme snímek
-                cv2.imwrite(str(image_path), frame)
-                capture_frame = False  # Reset flagu
+                    # except Employee.DoesNotExist:
+                    #     cons.log("Zaměstnanec 'kerel-smachka' nebyl nalezen.")
+                    #     cons.log(f"face vektor: sejmuto")
+
+                    capture_frame = False  # Reset flagu
+                    face_recon(new_face_vector, face_vectors)
 
             # Převod snímku na JPEG
-            _, jpeg_frame = cv2.imencode(".jpg", frame)
+            _, jpeg_frame = cv2.imencode(".jpg", gray)
             jpeg_bytes = jpeg_frame.tobytes()
 
             # Odeslání snímku jako část MJPEG streamu

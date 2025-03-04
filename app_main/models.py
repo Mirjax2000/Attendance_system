@@ -170,9 +170,9 @@ class FaceVector(models.Model):
         unique=False, blank=False, null=False, verbose_name="Face vector: "
     )
 
-    face_vector_fernet = models.TextField(
-        unique=False, blank=True, null=False, verbose_name="vector fernet:"
-    )
+    # face_vector_fernet = models.TextField(
+    #     unique=False, blank=True, null=False, verbose_name="vector fernet:"
+    # )
 
     def __str__(self):
         return f"Face vector for {self.employee.name} {self.employee.surname}"
@@ -190,13 +190,13 @@ class FaceVector(models.Model):
         **kwargs,
     ):
         """Ukladani souboru"""
-        self.fernet_vector()
+        # self.fernet_vector()
 
-        if self.face_vector_fernet and self.employee.pin_code_hash:
-            self.employee.is_valid = True
-        else:
-            self.employee.is_valid = False
-            raise ValidationError("Face vector nebo pin hash neni v poradku")
+        # if self.face_vector_fernet and self.employee.pin_code_hash:
+        #     self.employee.is_valid = True
+        # else:
+        #     self.employee.is_valid = False
+        #     raise ValidationError("Face vector nebo pin hash neni v poradku")
         with tran.atomic():
             self.employee.save()
             super().save(*args, **kwargs)
