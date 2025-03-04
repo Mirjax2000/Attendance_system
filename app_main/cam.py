@@ -13,13 +13,11 @@ from .models import Employee, FaceVector
 
 cons = Console()
 
-face_vectors_db = FaceVector.objects.select_related("employee").all()
+face_vectors_from_db = FaceVector.objects.all()
 
 face_vectors = {}
-for face_vector_instance in face_vectors_db:
-    face_vectors[face_vector_instance.employee.slug] = np.array(
-        face_vector_instance.face_vector
-    )
+for face_vector in face_vectors_from_db:
+    face_vectors[face_vector.employee.slug] = np.array(face_vector.face_vector)
 cons.log(face_vectors)
 
 
@@ -72,8 +70,6 @@ def cam_stream(request, speed: int = 12):
     """video stream"""
     cap = cv2.VideoCapture(0)
     directory = Path(settings.MEDIA_ROOT)
-    current_movie = str(directory.joinpath("fire.mp4"))
-    movie = cv2.VideoCapture(current_movie)
     global capture_frame
     if not cap.isOpened():
         return HttpResponse("Kamera není dostupná", status=500)
@@ -131,7 +127,7 @@ def cam_stream(request, speed: int = 12):
                     #     cons.log(f"face vektor: sejmuto")
 
                     capture_frame = False  # Reset flagu
-                    face_recon(new_face_vector, face_vectors)
+                    # face_recon(new_face_vector, face_vectors)
 
             # Převod snímku na JPEG
             _, jpeg_frame = cv2.imencode(".jpg", gray)
