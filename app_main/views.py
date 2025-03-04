@@ -2,7 +2,7 @@
 
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseNotFound
+from django.http import HttpResponseNotFound, JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic import (
     DeleteView,
@@ -20,3 +20,5 @@ class MainPageView(TemplateView):
     """main page view"""
 
     template_name = "app_main/app_main.html"
+
+

@@ -204,12 +204,16 @@ body, body.home {
 }
 
 /* --- placeholders --- */
-.c-info__pin {
+.c-info__pin, .c-camera-frame {
   position: relative;
   isolation: isolate;
 }
 
-.c-info, .c-numpad, .c-camera-frame__video {
+.c-camera-frame .side {
+  position: absolute;
+}
+
+.c-info, .c-numpad, .c-camera-frame__video, .c-camera-frame .front-side .btn {
   margin-inline: auto;
 }
 
@@ -305,9 +309,7 @@ body {
 
 .l-check-in-container {
   width: 100%;
-  border-radius: 5px;
-  border: 1px solid black;
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5019607843);
+  height: 80%;
   padding: 0.5em;
 }
 
@@ -375,6 +377,7 @@ body {
   background-color: var(--background-clr-login-btn);
   box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.7764705882);
   padding: 0.5em 1em;
+  border: none;
   transition: all ease-in-out 0.1s;
 }
 .c-button:hover {
@@ -400,22 +403,52 @@ body {
 }
 
 .c-camera-frame {
+  --height: 100%;
+  --perspective: 93.75rem;
+  --transition-time: 0.7s;
   width: 100%;
+  height: var(--height);
+  perspective: var(--perspective);
+  transition: all var(--transition-time) ease-in-out;
   text-align: center;
 }
 .c-camera-frame__video {
-  width: 30%;
+  display: block;
+  width: 70%;
   aspect-ratio: 1;
-  display: inline-block;
+}
+.c-camera-frame .side {
+  border-radius: 0.3125rem;
+  box-shadow: 1px 1rem 1.25rem var(--shadow-clr-default);
+  inset: 0;
+  transition: all var(--transition-time) ease-in-out;
+  backface-visibility: hidden;
+  overflow: hidden;
+}
+.c-camera-frame .front-side {
+  z-index: 10;
+}
+.c-camera-frame .front-side .btn {
+  width: 40%;
+  margin-top: 3rem;
+  display: block;
+  font-size: 3rem;
+  padding: 0.5em;
+  letter-spacing: 2px;
+}
+.c-camera-frame .back-side {
+  transform: rotateY(180deg);
+  z-index: 1;
 }
 
 .c-numpad {
-  width: 70%;
+  width: 100%;
   background-image: var(--background-clr-gradient-primary);
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5529411765);
   border: 1px solid black;
   border-radius: 4px;
   padding: 0.5em;
+  transform: rotateY(180deg);
 }
 .c-numpad__list {
   width: 70%;
@@ -460,9 +493,9 @@ body {
 }
 
 .c-info {
-  width: 70%;
+  width: 100%;
   padding: 1em;
-  background-color: rgba(48, 48, 48, 0.3803921569);
+  background-color: #303030;
   text-align: center;
 }
 .c-info__pin::after {

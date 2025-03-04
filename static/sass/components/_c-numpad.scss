@@ -1,7 +1,7 @@
 @use "../base/placeholders" as *;
 
 .c-numpad {
-    width: 70%;
+    width: 100%;
 
     @extend %margin-in;
 
@@ -10,6 +10,7 @@
     border: 1px solid black;
     border-radius: 4px;
     padding: 0.5em;
+    transform: rotateY(180deg);
 
     &__list {
         width: 70%;

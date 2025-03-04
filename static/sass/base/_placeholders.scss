@@ -4,6 +4,9 @@
     position: relative;
     isolation: isolate;
 }
+%pos-abs {
+    position: absolute;
+}
 
 %margin-in {
     margin-inline: auto;

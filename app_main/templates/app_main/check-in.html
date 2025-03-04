@@ -2,34 +2,32 @@
 {% include "includes/app_main_header.html" %}
 <main class="l-check-in-container">
     <section class="c-camera-frame">
-        <div class="front-side">
+        <div class="front-side side">
             <img src="{% url "camstream" 12 %}"
                  class="c-camera-frame__video"
-                 alt="camstream"
-                 width="200"
-                 height="200">
+                 alt="camstream">
+            <button class="c-button btn" id="captureBtn">SCAN</button>
+            <script>
+                document.getElementById("captureBtn").addEventListener("click", function () {
+                    fetch("{% url 'capture' %}", {
+                        method: "POST",
+                        headers: {
+                            "X-CSRFToken": "{{ csrf_token }}"
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => console.log(data.message))
+                    .catch(error => console.error("Chyba při zachycení snímku:", error));
+                });
+            </script>
         </div>
-        <button id="capture-btn">📸 Pořídit snímek</button>
-        {% comment %} <script>
-document.getElementById("capture-btn").addEventListener("click", function () {
-    fetch("{% url 'cesta-k-capture-photo' %}", {
-        method: "POST",
-        headers: {
-            "X-CSRFToken": "{{ csrf_token }}"
-        }
-    })
-    .then(response => response.json())
-    .then(data => console.log(data.message))
-    .catch(error => console.error("Chyba při zachycení snímku:", error));
-});
-        </script> {% endcomment %}
-        <div class="back_side">
-            <section class="c-info">
-                <h3 class="c-info__heading">
-                    PIN: <span class="c-info__digits" id="pin">****</span>
-                </h3>
-            </section>
+        <div class="back-side side">
             <section class="c-numpad">
+                <div class="c-info">
+                    <h3 class="c-info__heading">
+                        PIN: <span class="c-info__digits" id="pin">****</span>
+                    </h3>
+                </div>
                 <ul class="c-numpad__list">
                     <li class="c-numpad__item">
                         <p class="c-numpad__text">1</p>
