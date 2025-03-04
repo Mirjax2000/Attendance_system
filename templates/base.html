@@ -24,13 +24,14 @@
               type="font/woff2" />
         <link as="font"
               crossorigin="anonymous"
-              href="{% static 'fonts/webfonts/Font-face/JetBrainsMono.ttf' %}"
+              href="{% static 'fonts/webfonts/Font-face/JetBrainsMono.woff2' %}"
               rel="preload"
               type="font/woff2" />
         <style>
             @font-face {
-                font-family: roboto;
-                src: url("{% static 'fonts/webfonts/Font-face/roboto.ttf' %}") format("truetype-variations");
+                font-family: 'Roboto';
+                src: url("{% static 'fonts/webfonts/Font-face/roboto.woff2' %}") format("woff2"), 
+                     url("{% static 'fonts/webfonts/Font-face/roboto.ttf' %}") format("truetype");
                 font-weight: 100 900;
                 font-style: normal;
                 font-display: swap;

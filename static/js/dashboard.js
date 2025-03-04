@@ -1,6 +1,5 @@
 // IIFE - izolace promennych GlobeScope pouze v teto noname funkci
 (() => {
-    console.log('welcome');
     console.log('dashboard.js');
     // by ID
     const employeesBtn = document.getElementById("employeesBtn");
@@ -76,10 +75,6 @@
     loginBtn.addEventListener("click", function (e) {
         loginForm.dataset.show = "show"
     })
-
-    // registrBtn.addEventListener("click", function (e) {
-    //     registrForm.dataset.show = "show"
-    // })
 
     loginClose.addEventListener("click", function (e) {
         loginForm.dataset.show = "hide"
