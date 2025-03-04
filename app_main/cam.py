@@ -127,7 +127,7 @@ def cam_stream(request, speed: int = 12):
                     #     cons.log(f"face vektor: sejmuto")
 
                     capture_frame = False  # Reset flagu
-                    # face_recon(new_face_vector, face_vectors)
+                    face_recon(new_face_vector, face_vectors)
 
             # Převod snímku na JPEG
             _, jpeg_frame = cv2.imencode(".jpg", gray)
