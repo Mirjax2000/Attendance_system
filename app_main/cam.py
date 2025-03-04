@@ -16,9 +16,15 @@ cons = Console()
 face_vectors_from_db = FaceVector.objects.all()
 
 face_vectors = {}
-for face_vector in face_vectors_from_db:
-    face_vectors[face_vector.employee.slug] = np.array(face_vector.face_vector)
-cons.log(face_vectors)
+if face_vectors_from_db.exists():
+    for face_vector in face_vectors_from_db:
+        face_vectors[face_vector.employee.slug] = np.array(
+            face_vector.face_vector
+        )
+    cons.log(face_vectors)
+else:
+    cons.log("Tabulka FaceVector je prazdna")
+    face_vectors = {}
 
 
 face_cascade = cv2.CascadeClassifier(
@@ -82,7 +88,9 @@ def cam_stream(request, speed: int = 12):
                 break
 
             # Detekce obličejů
-            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            flip = cv2.flip(frame, 1)
+            gray = cv2.cvtColor(flip, cv2.COLOR_BGR2GRAY)
+
             faces = face_cascade.detectMultiScale(
                 gray, scaleFactor=1.3, minNeighbors=5, minSize=(30, 30)
             )
@@ -93,7 +101,6 @@ def cam_stream(request, speed: int = 12):
 
             # sejmuti obrazku a vytvoreni vektoru
             if capture_frame:
-                new_face_vector: list = []
                 for x, y, w, h in faces:
                     # vyber oblasti obliceje
                     face_roi = gray[y : y + h, x : x + w]
