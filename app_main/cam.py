@@ -86,7 +86,9 @@ def cam_stream(request, speed: int = 12):
         files_directory.joinpath("face_detection_yunet_2023mar.onnx")
     )
     # Yunet
-    face_detector = cv2.FaceDetectorYN.create(yunet, "", (width, height))
+    face_detector = cv2.FaceDetectorYN.create(
+        yunet, "", (width, height), 0.9, 0.3, 1
+    )
 
     def generate():
         global capture_frame
@@ -97,9 +99,9 @@ def cam_stream(request, speed: int = 12):
                 break
 
             # Detekce obličejů
-            flip = cv2.flip(frame, 1)
+            # flip = cv2.flip(frame, 1)
             # Detekce obličejů pomocí Yunet
-            _, faces = face_detector.detect(flip)
+            _, faces = face_detector.detect(frame)
 
             # Pokud jsou detekovány obličeje
             if faces is not None:
@@ -111,12 +113,23 @@ def cam_stream(request, speed: int = 12):
                         int(face_array[1]),
                         int(face_array[2]),
                         int(face_array[3]),
-                    )
+                                )
+                    # Výřez obličeje - oblast zajmu
+                    face_roi = frame[y:y+h, x:x+w]
+                    # Převod na RGB pro face_recognition
+                    face_rgb = cv2.cvtColor(face_roi, cv2.COLOR_BGR2RGB)
+
+        
                     # Nakreslíme obdélník kolem obličeje
-                    cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 1)
+                    cv2.rectangle(
+                        frame, (x, y), (x + w, y + h), (108, 255, 2), 2
+                    )
+
 
             # sejmuti obrazku a vytvoreni vektoru
             if capture_frame:
+                # Získání 128-dim vektoru obličeje
+                face_encoding = face_recognition.face_encodings(face_rgb)
                 # try:
                 #     employee = Employee.objects.get(
                 #         slug="kerel-smachka"
@@ -146,7 +159,7 @@ def cam_stream(request, speed: int = 12):
                 # face_recon(new_face_vector, face_vectors)
 
             # Převod snímku na JPEG
-            _, jpeg_frame = cv2.imencode(".jpg", flip)
+            _, jpeg_frame = cv2.imencode(".jpg", frame)
             jpeg_bytes = jpeg_frame.tobytes()
 
             # Odeslání snímku jako část MJPEG streamu
