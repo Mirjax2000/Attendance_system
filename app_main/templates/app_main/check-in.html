@@ -2,13 +2,14 @@
 {% include "includes/app_main_header.html" %}
 <main class="l-check-in-container">
     <section class="c-camera-frame">
-        <div class="front-side side">
-            <img src="{% url "camstream" 12 %}"
+        <div class="front-side side" id="frontSide" data-visible="show">
+            <img src="{% static "images/avatar_02.webp" %}"
                  class="c-camera-frame__video"
                  alt="camstream">
-            <button class="c-button btn" id="captureBtn">SCAN</button>
+            <p class="c-button btn" id="captureBtn">SCAN</p>
+            <p class="front-side__info" id="frontSideInfo">info</p>
         </div>
-        <div class="back-side side show-side">
+        <div class="back-side side" id="backSide" data-visible="hide">
             <section class="c-numpad">
                 <div class="c-info">
                     <h3 class="c-info__heading">

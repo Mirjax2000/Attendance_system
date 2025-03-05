@@ -10,11 +10,12 @@
     border: 1px solid black;
     border-radius: 4px;
     padding: 0.5em;
-    transform: rotateY(180deg);
 
     &__list {
         width: 70%;
         padding: 0.5em;
+        margin-top: 1em;
+        margin-bottom: 1em;
         border-radius: 4px;
         margin-inline: auto;
         display: flex;

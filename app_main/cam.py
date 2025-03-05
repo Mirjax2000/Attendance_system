@@ -143,34 +143,34 @@ def cam_stream(request, speed: int = 12):
                     # Výřez obličeje - oblast zajmu
                     face_roi = frame[y : y + h, x : x + w]
                     # Převod na RGB pro face_recognition
-                    if not face_roi.size == 0:
+                    if face_roi.size != 0:
                         face_rgb = cv2.cvtColor(face_roi, cv2.COLOR_BGR2RGB)
                         cv2.rectangle(
                             frame, (x, y), (x + w, y + h), (108, 255, 2), 2
                         )
 
-                    # sejmuti obrazku a vytvoreni vektoru
-                    if capture_frame is True:
-                        global recon_result
-                        # Získání 128-dim vektoru obličeje
-                        face_encoding = face_recognition.face_encodings(
-                            face_rgb, num_jitters=2, model="large"
-                        )
-                        if face_encoding:
-                            new_face_vector = face_encoding[0]
-                            cons.log("Vektor sejmut!")
-                            recon_result = face_recon(
-                                new_face_vector, face_vectors
+                        # sejmuti obrazku a vytvoreni vektoru
+                        if capture_frame:
+                            global recon_result
+                            # Získání 128-dim vektoru obličeje
+                            face_encoding = face_recognition.face_encodings(
+                                face_rgb, num_jitters=2, model="large"
                             )
+                            if face_encoding:
+                                new_face_vector = face_encoding[0]
+                                cons.log("Vektor sejmut!")
+                                recon_result = face_recon(
+                                    new_face_vector, face_vectors
+                                )
 
-                        else:
-                            recon_result = {
-                                "message": "error",
-                                "name": "vektor nesejmuto",
-                            }
-                            cons.log("Face vektor nesejmut")
+                            else:
+                                recon_result = {
+                                    "message": "error",
+                                    "name": "vektor nesejmuto",
+                                }
+                                cons.log("Face vektor nesejmut")
 
-                        capture_frame = False  # Reset flagu
+                            capture_frame = False  # Reset flagu
 
             # Převod snímku na JPEG
             _, jpeg_frame = cv2.imencode(".jpg", frame)

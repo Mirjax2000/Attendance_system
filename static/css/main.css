@@ -403,12 +403,9 @@ body {
 }
 
 .c-camera-frame {
-  --height: 100%;
-  --perspective: 93.75rem;
   --transition-time: 0.7s;
   width: 100%;
-  height: var(--height);
-  perspective: var(--perspective);
+  height: 100%;
   transition: all var(--transition-time) ease-in-out;
   text-align: center;
 }
@@ -423,7 +420,6 @@ body {
   inset: 0;
   transition: all var(--transition-time) ease-in-out;
   backface-visibility: hidden;
-  overflow: hidden;
 }
 .c-camera-frame .front-side {
   z-index: 10;
@@ -436,13 +432,18 @@ body {
   padding: 0.5em;
   letter-spacing: 2px;
 }
-.c-camera-frame .back-side {
-  transform: rotateY(180deg);
-  z-index: 1;
+.c-camera-frame .front-side__info {
+  color: red;
+  padding: 0.5em;
 }
-.c-camera-frame .show-side {
-  z-index: 100;
-  transform: rotateY(180deg);
+.c-camera-frame .back-side {
+  z-index: 10;
+}
+.c-camera-frame [data-visible=show] {
+  display: block;
+}
+.c-camera-frame [data-visible=hide] {
+  display: none;
 }
 
 .c-numpad {
@@ -452,11 +453,12 @@ body {
   border: 1px solid black;
   border-radius: 4px;
   padding: 0.5em;
-  transform: rotateY(180deg);
 }
 .c-numpad__list {
   width: 70%;
   padding: 0.5em;
+  margin-top: 1em;
+  margin-bottom: 1em;
   border-radius: 4px;
   margin-inline: auto;
   display: flex;
