@@ -51,4 +51,9 @@
         transform: rotateY(180deg);
         z-index: 1;
     }
+
+    .show-side {
+        z-index: 100;
+        transform: rotateY(180deg);
+    }
 }

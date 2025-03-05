@@ -19,17 +19,61 @@
     // spusteni casove funkce
     updateTime();
     // funkce na prepnuti flagu na True u capture img
-    function captureImage() {
-        fetch("/app_main/capture", {
-            method: "POST",
-            headers: {
-                "X-CSRFToken": getCookie("csrftoken")
-            }
-        })
-            .then(response => response.json())
-            .then(data => console.log(data.message))
-            .catch(error => console.error("Chyba při zachycení snímku:", error));
+    async function captureImage() {
+        try {
+            const response = await fetch("/app_main/capture", {
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": getCookie("csrftoken")
+                }
+            });
+            const data = await response.json();
+            console.log(data.message);
+            return data;
+        } catch (error) {
+            console.error("Chyba při zachycení snímku:", error);
+            throw error;
+        }
     }
+    // get result
+    let delay = 1000; // Počáteční delay
+    let captureResultTimeoutId = null; // Proměnná pro uložení ID timeoutu
+    async function captureResult() {
+        try {
+            const response = await fetch("/app_main/result", {
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": getCookie("csrftoken")
+                }
+            });
+
+            const data = await response.json();
+            console.log(data.message, data.name);
+
+            if (data.message === "fail") {
+                if (delay >= 5000) {
+                    console.log("Stopuji další pokusy, maximální delay dosažen.");
+                    delay = 1000;
+                    captureResultTimeoutId = null; // Reset timeout ID
+                    return;
+                }
+                console.log(`Opakuji request za ${delay / 1000} sekund...`);
+                captureResultTimeoutId = setTimeout(captureResult, delay); // Uložíme ID timeoutu
+                delay = Math.min(delay * 2, 5000); // Zastaví se na max. 5000 ms
+            } else {
+                captureResultTimeoutId = null; // Reset timeout ID, pokud je úspěch
+            }
+
+            return data;
+        } catch (error) {
+            console.error("Žádný result:", error);
+            captureResultTimeoutId = null; // Reset timeout ID v případě chyby
+        }
+    }
+
+
+
+
     // Funkce na ziskani hodnoty cookie z prohlizece
     function getCookie(name) {
         let cookieValue = null;
@@ -46,39 +90,30 @@
         }
         return cookieValue;
     }
-    // funkce na cekani vysledku z captureFace funkce
-    function captureFace() {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 10000); // Timeout po 10s
-
-        fetch('app_main/face_recon', {
-            method: 'POST',
-            signal: controller.signal // Napojení na abort signal
-        })
-            .then(response => response.json())
-            .then(data => {
-                clearTimeout(timeoutId); // Pokud odpověď přišla včas, zruší timeout
-
-                if (data.status === 'success') {
-                    console.log(`Rozpoznán: ${data.message}`);
-                } else {
-                    console.log('nerozpoznan');
-                }
-            })
-            .catch(error => {
-                if (error.name === 'AbortError') {
-                    console.error('Požadavek byl zrušen kvůli timeoutu.');
-                } else {
-                    console.error('Chyba při komunikaci se serverem:', error);
-                }
-            });
-    }
     // 
     // CSRF fetch na aktivaci snimku
     // endpoint zapina FLAG na TRUE a tim zapne funkci na Capture img
     // zaroven ceka na vysledek porovnani obliceje
+
     captureBtn.addEventListener("click", function (e) {
-        e.preventDefault()
-        captureImage();
+        e.preventDefault();
+
+        // Zrušíme timeout, pokud existuje
+        if (captureResultTimeoutId !== null) {
+            clearTimeout(captureResultTimeoutId);
+            console.log("captureResult zastaveno.");
+            captureResultTimeoutId = null; // Reset timeout ID
+            delay = 1000; // Reset delay
+        }
+
+        captureImage()
+            .then(function (data) {
+                if (data.message === "success") {
+                    captureResult();
+                }
+            })
+            .catch(function (error) {
+                console.error("Chyba při zachytávání obrázku:", error);
+            });
     });
 })();

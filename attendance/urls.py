@@ -21,7 +21,7 @@ from app_dashboard.views import (
     VacationView,
     WorkingView,
 )
-from app_main.cam import cam_stream, capture_photo, face_recon
+from app_main.cam import cam_stream, capture_photo, get_result
 from app_main.views import MainPageView
 
 urlpatterns = [
@@ -46,8 +46,8 @@ app_dashboard_urls: list = [
 
 app_main_urls: list = [
     path("app_main/", MainPageView.as_view(), name="logout"),
-    path("app_main/capture", capture_photo, name="capture"),
-    path("app_main/face_recon", face_recon, name="face_recon"),
+    path("app_main/capture", capture_photo, name="capture_photo"),
+    path("app_main/result", get_result, name="get_result"),
 ]
 
 app_accounts_urls: list = [
