@@ -82,7 +82,7 @@ def capture_photo(request):
     if request.method == "POST":
         capture_frame = True
 
-        return JsonResponse({"message": "capture_frame = True"})
+        return JsonResponse({"message": "prepnuto na True"})
     return JsonResponse({"error": "Špatná metoda"}, status=400)
 
 

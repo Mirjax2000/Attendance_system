@@ -7,19 +7,6 @@
                  class="c-camera-frame__video"
                  alt="camstream">
             <button class="c-button btn" id="captureBtn">SCAN</button>
-            <script>
-                document.getElementById("captureBtn").addEventListener("click", function () {
-                    fetch("{% url 'capture' %}", {
-                        method: "POST",
-                        headers: {
-                            "X-CSRFToken": "{{ csrf_token }}"
-                        }
-                    })
-                    .then(response => response.json())
-                    .then(data => console.log(data.message))
-                    .catch(error => console.error("Chyba při zachycení snímku:", error));
-                });
-            </script>
         </div>
         <div class="back-side side">
             <section class="c-numpad">

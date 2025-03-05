@@ -77,8 +77,8 @@
     // CSRF fetch na aktivaci snimku
     // endpoint zapina FLAG na TRUE a tim zapne funkci na Capture img
     // zaroven ceka na vysledek porovnani obliceje
-    captureBtn.addEventListener("click", function () {
+    captureBtn.addEventListener("click", function (e) {
+        e.preventDefault()
         captureImage();
-        captureFace();
     });
 })();
