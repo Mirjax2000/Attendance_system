@@ -6,10 +6,12 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "bcrypt>=4.2.1",
+    "cmake>=3.31.6",
     "cryptography>=44.0.1",
     "django>=5.1.6",
     "django-dump-load-utf8>=0.0.4",
     "djlint>=1.36.4",
+    "dlib>=19.24.6",
     "icecream>=2.1.4",
     "mypy>=1.15.0",
     "opencv-python>=4.11.0.86",
@@ -19,4 +21,5 @@ dependencies = [
     "python-dotenv>=1.0.1",
     "rich>=13.9.4",
     "ruff>=0.9.6",
+    "setuptools>=75.8.2",
 ]
