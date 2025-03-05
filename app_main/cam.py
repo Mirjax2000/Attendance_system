@@ -12,22 +12,36 @@ from rich.console import Console
 from .models import Employee, FaceVector
 
 cons = Console()
-
-face_vectors_from_db = FaceVector.objects.all()
-
-face_vectors = {}
-if face_vectors_from_db.exists():
-    for face_vector in face_vectors_from_db:
-        face_vectors[face_vector.employee.slug] = np.array(
-            face_vector.face_vector
-        )
-    cons.log(face_vectors)
-else:
-    cons.log("Tabulka FaceVector je prazdna")
-    face_vectors = {}
-
-
+media_directory = Path(settings.MEDIA_ROOT)
+files_directory = Path(settings.BASE_DIR / "files")
+yunet: str = str(files_directory.joinpath("face_detection_yunet_2023mar.onnx"))
+# flag z fetche z tlacitka SCAN
 capture_frame: bool = False
+
+
+def get_vectors_from_db() -> dict:
+    """get vectors form db"""
+    face_vectors_from_db = FaceVector.objects.values(
+        "employee__slug", "face_vector"
+    )
+
+    face_vectors_ = {}
+    if face_vectors_from_db:
+        for face_vector in face_vectors_from_db:
+            face_vectors_[face_vector["employee__slug"]] = np.array(
+                face_vector["face_vector"]
+            )
+
+        cons.log(
+            f"Loaded face vectors for employees: {list(face_vectors_.keys())}"
+        )
+        return face_vectors_
+
+    cons.log("Tabulka FaceVector je prazdna")
+    return face_vectors_
+
+
+face_vectors = get_vectors_from_db()
 
 
 def porovnani(vektor1, vektor2):
@@ -36,14 +50,14 @@ def porovnani(vektor1, vektor2):
     return np.linalg.norm(vektor1 - vektor2)
 
 
-def face_recon(vektor1, vectors_from_db):
+def face_recon(vektor1, vectors_from_db) -> JsonResponse:
     """Porovnání nového vektoru se všemi uloženými"""
-    vektors = vectors_from_db
-    best_match = ""
+    vectors: dict = vectors_from_db
+    best_match = None
     min_distance = float("inf")
-    threshold = 0.0  # Experimentálně nastavit, podle přesnosti modelu
+    threshold = 0.6  # Experimentálně nastavit, podle přesnosti modelu
 
-    for name, stored_vector in vektors.items():
+    for name, stored_vector in vectors.items():
         distance = porovnani(vektor1, stored_vector)
         print(f"{name}: {distance:.4f}")
 
@@ -53,9 +67,9 @@ def face_recon(vektor1, vectors_from_db):
 
     # Vyhodnocení výsledku
     if min_distance < threshold:
-        print(f"Rozpoznán: {best_match} (Vzdálenost: {min_distance:.4f})")
+        cons.log(f"Rozpoznán: {best_match} (Vzdálenost: {min_distance:.4f})")
     else:
-        print("Neznámý obličej!")
+        cons.log("Neznámý obličej!")
 
 
 def capture_photo(request):
@@ -64,7 +78,7 @@ def capture_photo(request):
     if request.method == "POST":
         capture_frame = True
 
-        return JsonResponse({"message": "Snímek bude zachycen"})
+        return JsonResponse({"message": "capture_frame = True"})
     return JsonResponse({"error": "Špatná metoda"}, status=400)
 
 
@@ -72,19 +86,11 @@ def cam_stream(request, speed: int = 12):
     """video stream"""
     # na flag z fetche
     global capture_frame
-    # dir init
-    media_directory = Path(settings.MEDIA_ROOT)
-    files_directory = Path(settings.BASE_DIR / "files")
     # video init
     cap = cv2.VideoCapture(0)
-    width = int(cap.get(3))
-    height = int(cap.get(4))
+    width, height = int(cap.get(3)), int(cap.get(4))
     if not cap.isOpened():
         return HttpResponse("Kamera není dostupná", status=500)
-    # Yunet path
-    yunet: str = str(
-        files_directory.joinpath("face_detection_yunet_2023mar.onnx")
-    )
     # Yunet
     face_detector = cv2.FaceDetectorYN.create(
         yunet, "", (width, height), 0.9, 0.3, 1
@@ -98,7 +104,6 @@ def cam_stream(request, speed: int = 12):
                 cons.log("neni video feed")
                 break
 
-            # Detekce obličejů
             # flip = cv2.flip(frame, 1)
             # Detekce obličejů pomocí Yunet
             _, faces = face_detector.detect(frame)
@@ -113,50 +118,58 @@ def cam_stream(request, speed: int = 12):
                         int(face_array[1]),
                         int(face_array[2]),
                         int(face_array[3]),
-                                )
+                    )
                     # Výřez obličeje - oblast zajmu
-                    face_roi = frame[y:y+h, x:x+w]
+                    face_roi = frame[y : y + h, x : x + w]
                     # Převod na RGB pro face_recognition
                     face_rgb = cv2.cvtColor(face_roi, cv2.COLOR_BGR2RGB)
-
-        
                     # Nakreslíme obdélník kolem obličeje
                     cv2.rectangle(
                         frame, (x, y), (x + w, y + h), (108, 255, 2), 2
                     )
 
+                    # sejmuti obrazku a vytvoreni vektoru
+                    if capture_frame:
+                        cons.log(capture_frame)
+                        # Získání 128-dim vektoru obličeje
+                        face_encoding = face_recognition.face_encodings(
+                            face_rgb, num_jitters=2, model="large"
+                        )
+                        cons.log(face_encoding)
+                        if face_encoding:
+                            new_face_vector = face_encoding[0]
+                            cons.log("Vektor sejmut!")
 
-            # sejmuti obrazku a vytvoreni vektoru
-            if capture_frame:
-                # Získání 128-dim vektoru obličeje
-                face_encoding = face_recognition.face_encodings(face_rgb)
-                # try:
-                #     employee = Employee.objects.get(
-                #         slug="kerel-smachka"
-                #     )  # Najde zaměstnance podle slug
-                #     face_vector_entry, created = (
-                #         FaceVector.objects.update_or_create(
-                #             employee=employee,  # Odkaz na zaměstnance
-                #             defaults={
-                #                 "face_vector": new_face_vector
-                #             },  # Aktualizace sloupce face_vector
-                #         )
-                #     )
-                #     if created:
-                #         cons.log(
-                #             "Nový FaceVector vytvořen pro 'kerel-smachka'"
-                #         )
-                #     else:
-                #         cons.log(
-                #             "FaceVector aktualizován pro 'kerel-smachka'"
-                #         )
+                            #     try:
+                            #         employee = Employee.objects.get(
+                            #             slug="bohous-josef"
+                            #         )  # Najde zaměstnance podle slug
+                            #         face_vector_entry, created = (
+                            #             FaceVector.objects.update_or_create(
+                            #                 employee=employee,  # Odkaz na zaměstnance
+                            #                 defaults={
+                            #                     "face_vector": new_face_vector
+                            #                 },  # Aktualizace sloupce face_vector
+                            #             )
+                            #         )
+                            #         if created:
+                            #             cons.log(
+                            #                 "Nový FaceVector vytvořen pro 'bohous-josef'"
+                            #             )
+                            #         else:
+                            #             cons.log(
+                            #                 "FaceVector aktualizován pro 'bohous-josef'"
+                            #             )
 
-                # except Employee.DoesNotExist:
-                #     cons.log("Zaměstnanec 'kerel-smachka' nebyl nalezen.")
-                #     cons.log(f"face vektor: sejmuto")
+                            #     except Employee.DoesNotExist:
+                            #         cons.log(
+                            #             "Zaměstnanec 'bohous-josef' nebyl nalezen."
+                            #         )
 
-                capture_frame = False  # Reset flagu
-                # face_recon(new_face_vector, face_vectors)
+                            face_recon(new_face_vector, face_vectors)
+                        else:
+                            cons.log("Face vektor nesejmut")
+                        capture_frame = False  # Reset flagu
 
             # Převod snímku na JPEG
             _, jpeg_frame = cv2.imencode(".jpg", frame)
