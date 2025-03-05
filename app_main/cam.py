@@ -2,11 +2,11 @@ from pathlib import Path
 from time import sleep
 
 import cv2
+import face_recognition
 import numpy as np
 from django.conf import settings
 from django.http import JsonResponse
 from django.http.response import HttpResponse, StreamingHttpResponse
-from django.utils.timezone import now
 from rich.console import Console
 
 from .models import Employee, FaceVector
@@ -26,10 +26,6 @@ else:
     cons.log("Tabulka FaceVector je prazdna")
     face_vectors = {}
 
-
-face_cascade = cv2.CascadeClassifier(
-    cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
-)
 
 capture_frame: bool = False
 
@@ -74,70 +70,83 @@ def capture_photo(request):
 
 def cam_stream(request, speed: int = 12):
     """video stream"""
-    cap = cv2.VideoCapture(0)
-    directory = Path(settings.MEDIA_ROOT)
+    # na flag z fetche
     global capture_frame
+    # dir init
+    media_directory = Path(settings.MEDIA_ROOT)
+    files_directory = Path(settings.BASE_DIR / "files")
+    # video init
+    cap = cv2.VideoCapture(0)
+    width = int(cap.get(3))
+    height = int(cap.get(4))
     if not cap.isOpened():
         return HttpResponse("Kamera není dostupná", status=500)
+    # Yunet path
+    yunet: str = str(
+        files_directory.joinpath("face_detection_yunet_2023mar.onnx")
+    )
+    # Yunet
+    face_detector = cv2.FaceDetectorYN.create(yunet, "", (width, height))
 
     def generate():
         global capture_frame
         while True:
             ret, frame = cap.read()
             if not ret:
+                cons.log("neni video feed")
                 break
 
             # Detekce obličejů
             flip = cv2.flip(frame, 1)
-            gray = cv2.cvtColor(flip, cv2.COLOR_BGR2GRAY)
+            # Detekce obličejů pomocí Yunet
+            _, faces = face_detector.detect(flip)
 
-            faces = face_cascade.detectMultiScale(
-                gray, scaleFactor=1.3, minNeighbors=5, minSize=(30, 30)
-            )
-
-            # Kreslení rámečků kolem obličejů
-            for x, y, w, h in faces:
-                cv2.rectangle(gray, (x, y), (x + w, y + h), (255, 0, 0), 2)
+            # Pokud jsou detekovány obličeje
+            if faces is not None:
+                for face in faces:
+                    # Yunet vrací souřadnice obdélníku (x, y, w, h)
+                    face_array = np.array(face)
+                    x, y, w, h = (
+                        int(face_array[0]),
+                        int(face_array[1]),
+                        int(face_array[2]),
+                        int(face_array[3]),
+                    )
+                    # Nakreslíme obdélník kolem obličeje
+                    cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 1)
 
             # sejmuti obrazku a vytvoreni vektoru
             if capture_frame:
-                for x, y, w, h in faces:
-                    # vyber oblasti obliceje
-                    face_roi = gray[y : y + h, x : x + w]
-                    # resize na 200x200 -> standart resolution pro face recon
-                    face_resized = cv2.resize(face_roi, (200, 200))
-                    # sejmuti face vektoru a ulozeni do variable
-                    new_face_vector = np.array(face_resized, dtype=np.uint8)
-                    # try:
-                    #     employee = Employee.objects.get(
-                    #         slug="kerel-smachka"
-                    #     )  # Najde zaměstnance podle slug
-                    #     face_vector_entry, created = (
-                    #         FaceVector.objects.update_or_create(
-                    #             employee=employee,  # Odkaz na zaměstnance
-                    #             defaults={
-                    #                 "face_vector": new_face_vector
-                    #             },  # Aktualizace sloupce face_vector
-                    #         )
-                    #     )
-                    #     if created:
-                    #         cons.log(
-                    #             "Nový FaceVector vytvořen pro 'kerel-smachka'"
-                    #         )
-                    #     else:
-                    #         cons.log(
-                    #             "FaceVector aktualizován pro 'kerel-smachka'"
-                    #         )
+                # try:
+                #     employee = Employee.objects.get(
+                #         slug="kerel-smachka"
+                #     )  # Najde zaměstnance podle slug
+                #     face_vector_entry, created = (
+                #         FaceVector.objects.update_or_create(
+                #             employee=employee,  # Odkaz na zaměstnance
+                #             defaults={
+                #                 "face_vector": new_face_vector
+                #             },  # Aktualizace sloupce face_vector
+                #         )
+                #     )
+                #     if created:
+                #         cons.log(
+                #             "Nový FaceVector vytvořen pro 'kerel-smachka'"
+                #         )
+                #     else:
+                #         cons.log(
+                #             "FaceVector aktualizován pro 'kerel-smachka'"
+                #         )
 
-                    # except Employee.DoesNotExist:
-                    #     cons.log("Zaměstnanec 'kerel-smachka' nebyl nalezen.")
-                    #     cons.log(f"face vektor: sejmuto")
+                # except Employee.DoesNotExist:
+                #     cons.log("Zaměstnanec 'kerel-smachka' nebyl nalezen.")
+                #     cons.log(f"face vektor: sejmuto")
 
-                    capture_frame = False  # Reset flagu
-                    face_recon(new_face_vector, face_vectors)
+                capture_frame = False  # Reset flagu
+                # face_recon(new_face_vector, face_vectors)
 
             # Převod snímku na JPEG
-            _, jpeg_frame = cv2.imencode(".jpg", gray)
+            _, jpeg_frame = cv2.imencode(".jpg", flip)
             jpeg_bytes = jpeg_frame.tobytes()
 
             # Odeslání snímku jako část MJPEG streamu
