@@ -1,3 +1,5 @@
+"""funkce pro ovladani camstreamu"""
+
 from pathlib import Path
 from time import sleep
 
@@ -9,7 +11,7 @@ from django.http import JsonResponse
 from django.http.response import HttpResponse, StreamingHttpResponse
 from rich.console import Console
 
-from .models import Employee, FaceVector
+from .models import FaceVector
 
 cons = Console()
 media_directory = Path(settings.MEDIA_ROOT)
@@ -68,8 +70,10 @@ def face_recon(vektor1, vectors_from_db) -> JsonResponse:
     # Vyhodnocení výsledku
     if min_distance < threshold:
         cons.log(f"Rozpoznán: {best_match} (Vzdálenost: {min_distance:.4f})")
+        return JsonResponse({"status": "success", "message": best_match})
     else:
         cons.log("Neznámý obličej!")
+        return JsonResponse({"status": "error", "message": "neznamy oblicej"})
 
 
 def capture_photo(request):

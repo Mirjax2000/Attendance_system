@@ -247,21 +247,21 @@ body, body.home {
 /* --- typography --- */
 @font-face {
   font-family: "jet brains";
-  src: url("../fonts/webfonts/Font-face/JetBrainsMono.ttf") format("truetype-variations");
+  src: url("../fonts/webfonts/Font-face/JetBrainsMono.ttf") format("truetype-variations"), url("../fonts/webfonts/Font-face/JetBrainsMono.woff2") format("woff2");
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "jet brains";
-  src: url("../fonts/webfonts/Font-face/JetBrainsMono-Italic.ttf") format("truetype-variations");
+  src: url("../fonts/webfonts/Font-face/JetBrainsMono-Italic.ttf") format("truetype-variations"), url("../fonts/webfonts/Font-face/JetBrainsMono-Italic.woff2") format("woff2");
   font-weight: 100 900;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: roboto;
-  src: url("../fonts/webfonts/Font-face/roboto.ttf") format("truetype-variations");
+  src: url("../fonts/webfonts/Font-face/roboto.ttf") format("truetype-variations"), url("../fonts/webfonts/Font-face/roboto.woff2") format("woff2");
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
