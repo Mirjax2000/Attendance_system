@@ -82,7 +82,16 @@ class CamSystems:
 
             if not ret:
                 cons.log("neni video feed")
-                break
+                empty_frame = np.zeros((480, 640, 3), dtype=np.uint8)
+                _, jpeg_frame = cv2.imencode(".jpg", empty_frame)
+                jpeg_bytes = jpeg_frame.tobytes()
+                yield (
+                    b"--frame\r\n"
+                    b"Content-Type: image/jpeg\r\n\r\n"
+                    + jpeg_bytes
+                    + b"\r\n\r\n"
+                )
+                continue
 
             self.face_recon_rectangle(frame)
 
