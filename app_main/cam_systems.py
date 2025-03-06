@@ -113,6 +113,7 @@ class CamSystems:
     ) -> HttpResponse | StreamingHttpResponse:
         """video stream na endpointu"""
         if not self.cap.isOpened():
+            cons.log("Kamera neni dostupna")
             return HttpResponse("Kamera není dostupná", status=500)
 
         return StreamingHttpResponse(
