@@ -21,13 +21,13 @@ from app_dashboard.views import (
     VacationView,
     WorkingView,
 )
-from app_main.cam import cam_stream, capture_photo, get_result
-from app_main.views import MainPageView
+
+from app_main.views import CamStreamView, MainPageView
 
 urlpatterns = [
     path("", RedirectDashboard.as_view()),
     path("admin/", admin.site.urls),
-    path("camstream/<int:speed>", cam_stream, name="camstream"),
+    path("camstream/<int:speed>", CamStreamView.as_view(), name="camstream"),
 ]
 
 app_dashboard_urls: list = [
@@ -46,8 +46,6 @@ app_dashboard_urls: list = [
 
 app_main_urls: list = [
     path("app_main/", MainPageView.as_view(), name="logout"),
-    path("app_main/capture", capture_photo, name="capture_photo"),
-    path("app_main/result", get_result, name="get_result"),
 ]
 
 app_accounts_urls: list = [

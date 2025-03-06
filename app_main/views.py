@@ -11,9 +11,13 @@ from django.views.generic import (
     ListView,
     TemplateView,
     UpdateView,
+    View,
 )
 
-# Create your views here.
+from .cam_systems import CamSystems
+
+# instance CamSystems
+cam_system = CamSystems()
 
 
 class MainPageView(TemplateView):
@@ -22,3 +26,11 @@ class MainPageView(TemplateView):
     template_name = "app_main/app_main.html"
 
 
+class CamStreamView(View):
+    """video streaming"""
+
+    def get(self, request, *args, **kwargs):
+        """get the fps value"""
+        speed = kwargs.get("speed", 15)  # Získání hodnoty z URL
+
+        return cam_system.cam_stream(speed)
