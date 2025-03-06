@@ -21,7 +21,7 @@ from app_dashboard.views import (
     VacationView,
     WorkingView,
 )
-from app_main.views import CamStreamView, MainPageView, get_result_view
+from app_main.views import CamStreamView, GetResultView, MainPageView
 
 urlpatterns = [
     path("", RedirectDashboard.as_view()),
@@ -45,7 +45,7 @@ app_dashboard_urls: list = [
 
 app_main_urls: list = [
     path("app_main/<int:speed>", MainPageView.as_view(), name="logout"),
-    path("app_main/get_result", get_result_view, name="get_result"),
+    path("app_main/get_result", GetResultView.as_view(), name="get_result"),
 ]
 
 app_accounts_urls: list = [

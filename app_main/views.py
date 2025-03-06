@@ -31,7 +31,7 @@ class MainPageView(TemplateView):
     template_name = "app_main/app_main.html"
 
 
-class CamStreamView(View):
+class CamStreamView(LoginRequiredMixin, View):
     """video streaming"""
 
     def get(self, request, *args, **kwargs):
@@ -41,9 +41,15 @@ class CamStreamView(View):
         return cam_system.cam_stream(speed)
 
 
-def get_result_view(request):
-    """volani z JS"""
-    if request.method == "POST":
+class GetResultView(LoginRequiredMixin, View):
+    """Volání z JS"""
+
+    def post(self, request, *args, **kwargs):
+        """post metoda"""
         return JsonResponse(cam_system.get_result())
 
-    return JsonResponse({"message": "Špatná metoda u get_result"}, status=400)
+    def get(self, request, *args, **kwargs):
+        """to je kdyby nebylo post"""
+        return JsonResponse(
+            {"message": "Špatná metoda u get_result"}, status=400
+        )
