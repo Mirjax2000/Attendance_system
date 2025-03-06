@@ -73,17 +73,15 @@ def face_recon(vektor1, vectors_from_db):
         cons.log(f"Rozpoznán: {best_match} (Vzdálenost: {min_distance:.4f})")
         return {"name": best_match, "message": "success"}
     cons.log("Neznámý obličej!")
-    return {"message": "error", "name": "neznamy oblicej"}
+    return {"message": "error"}
 
 
 def get_result(request) -> JsonResponse:
     """posli vysledek porovnani"""
     global recon_result
     if request.method == "POST":
-        if recon_result["message"] == "success":
+        if recon_result["message"] != "reset":
             return JsonResponse(recon_result)
-        elif recon_result["message"] == "error":
-            return JsonResponse({"message": "nebyl face vektor"})
 
         return JsonResponse({"message": "fail"})
 
@@ -165,8 +163,7 @@ def cam_stream(request, speed: int = 12):
 
                             else:
                                 recon_result = {
-                                    "message": "error",
-                                    "name": "vektor nesejmuto",
+                                    "message": "no-vektor",
                                 }
                                 cons.log("Face vektor nesejmut")
 

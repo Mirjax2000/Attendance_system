@@ -4,6 +4,13 @@
     //
     let timeText = document.getElementById('timeText');
     let captureBtn = document.getElementById('captureBtn');
+    let frontSide = document.getElementById('frontSide');
+    let backSide = document.getElementById('backSide');
+    let frontSideInfo = document.getElementById('frontSideInfo')
+    let backSideJQ = $('#backSide');
+    let frontSideJQ = $('#frontSide');
+    backSideJQ.hide(1)
+
     // casova funkce
     function updateTime() {
         const now = new Date();
@@ -48,21 +55,33 @@
             });
 
             const data = await response.json();
-            console.log(data.message, data.name);
-
+            console.log(data.message)
+            if (data.message === "error") {
+                frontSideInfo = "Neznamy oblicej"
+            }
             if (data.message === "fail") {
                 if (delay >= 5000) {
                     console.log("Stopuji další pokusy, maximální delay dosažen.");
                     delay = 1000;
-                    captureResultTimeoutId = null; // Reset timeout ID
+                    // Reset timeout ID
+                    captureResultTimeoutId = null;
                     return;
                 }
                 console.log(`Opakuji request za ${delay / 1000} sekund...`);
                 captureResultTimeoutId = setTimeout(captureResult, delay); // Uložíme ID timeoutu
                 delay = Math.min(delay * 2, 5000); // Zastaví se na max. 5000 ms
-            } else {
+            }
+            else {
                 captureResultTimeoutId = null; // Reset timeout ID, pokud je úspěch
             }
+
+            if (data.message === "success") {
+                frontSideInfo.textContent = "nalezeno"
+                frontSideJQ.slideUp(500, function () {
+                    backSideJQ.slideDown(500);
+                });
+            }
+
 
             return data;
         } catch (error) {
@@ -70,10 +89,6 @@
             captureResultTimeoutId = null; // Reset timeout ID v případě chyby
         }
     }
-
-
-
-
     // Funkce na ziskani hodnoty cookie z prohlizece
     function getCookie(name) {
         let cookieValue = null;
