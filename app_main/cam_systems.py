@@ -149,7 +149,7 @@ class CamSystems:
         """posli vysledek porovnani"""
         if self.face_rgb is None:
             cons.log("face rgb je None, protoze neni rectangle")
-            return {"message": "no-face-detected ja jsem None"}
+            return {"message": "no-face-detected"}
 
         face_encoding = face_recognition.face_encodings(
             self.face_rgb, num_jitters=2, model="large"
