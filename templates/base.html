@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
-<html lang="cs"  data-theme='light'>
+<html lang="cs" data-theme='light'>
     <head>
         <meta charset="UTF-8" />
         <title>
@@ -13,9 +13,9 @@
         <meta content="" name="keywords" />
         <meta content="" name="author" />
         <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-        <link href="./assets/img/favicon-32x32.png"
-              rel="shortcut icon"
-              type="image/x-icon" />
+        <!-- <link href="./assets/img/favicon-32x32.png"
+       rel="shortcut icon"
+       type="image/x-icon" /> -->
         <!-- font preload -->
         <link as="font"
               crossorigin="anonymous"
@@ -28,20 +28,20 @@
               rel="preload"
               type="font/woff2" />
         <style>
-            @font-face {
-                font-family: 'Roboto';
-                src: url("{% static 'fonts/webfonts/Font-face/roboto.woff2' %}") format("woff2"), 
-                     url("{% static 'fonts/webfonts/Font-face/roboto.ttf' %}") format("truetype");
-                font-weight: 100 900;
-                font-style: normal;
-                font-display: swap;
-            }
+        @font-face {
+            font-family: 'Roboto';
+            src: url("{% static 'fonts/webfonts/Font-face/roboto.woff2' %}") format("woff2"),
+            url("{% static 'fonts/webfonts/Font-face/roboto.ttf' %}") format("truetype");
+            font-weight: 100 900;
+            font-style: normal;
+            font-display: swap;
+        }
 
 
-            body {
-                opacity: 0;
-                transition: opacity .1s ease-in;
-            }
+        body {
+            opacity: 0;
+            transition: opacity .1s ease-in;
+        }
         </style>
         <!-- css  -->
         {% block css %}

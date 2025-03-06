@@ -4,12 +4,6 @@
     //
     let timeText = document.getElementById('timeText');
     let captureBtn = document.getElementById('captureBtn');
-    let frontSide = document.getElementById('frontSide');
-    let backSide = document.getElementById('backSide');
-    let frontSideInfo = document.getElementById('frontSideInfo')
-    let backSideJQ = $('#backSide');
-    let frontSideJQ = $('#frontSide');
-    backSideJQ.hide(1)
 
     // casova funkce
     function updateTime() {
@@ -25,70 +19,8 @@
     setInterval(updateTime, 1000);
     // spusteni casove funkce
     updateTime();
-    // funkce na prepnuti flagu na True u capture img
-    async function captureImage() {
-        try {
-            const response = await fetch("/app_main/capture", {
-                method: "POST",
-                headers: {
-                    "X-CSRFToken": getCookie("csrftoken")
-                }
-            });
-            const data = await response.json();
-            console.log(data.message);
-            return data;
-        } catch (error) {
-            console.error("Chyba při zachycení snímku:", error);
-            throw error;
-        }
-    }
-    // get result
-    let delay = 1000; // Počáteční delay
-    let captureResultTimeoutId = null; // Proměnná pro uložení ID timeoutu
-    async function captureResult() {
-        try {
-            const response = await fetch("/app_main/result", {
-                method: "POST",
-                headers: {
-                    "X-CSRFToken": getCookie("csrftoken")
-                }
-            });
-
-            const data = await response.json();
-            console.log(data.message)
-            if (data.message === "error") {
-                frontSideInfo = "Neznamy oblicej"
-            }
-            if (data.message === "fail") {
-                if (delay >= 5000) {
-                    console.log("Stopuji další pokusy, maximální delay dosažen.");
-                    delay = 1000;
-                    // Reset timeout ID
-                    captureResultTimeoutId = null;
-                    return;
-                }
-                console.log(`Opakuji request za ${delay / 1000} sekund...`);
-                captureResultTimeoutId = setTimeout(captureResult, delay); // Uložíme ID timeoutu
-                delay = Math.min(delay * 2, 5000); // Zastaví se na max. 5000 ms
-            }
-            else {
-                captureResultTimeoutId = null; // Reset timeout ID, pokud je úspěch
-            }
-
-            if (data.message === "success") {
-                frontSideInfo.textContent = "nalezeno"
-                frontSideJQ.slideUp(500, function () {
-                    backSideJQ.slideDown(500);
-                });
-            }
 
 
-            return data;
-        } catch (error) {
-            console.error("Žádný result:", error);
-            captureResultTimeoutId = null; // Reset timeout ID v případě chyby
-        }
-    }
     // Funkce na ziskani hodnoty cookie z prohlizece
     function getCookie(name) {
         let cookieValue = null;
@@ -113,22 +45,5 @@
     captureBtn.addEventListener("click", function (e) {
         e.preventDefault();
 
-        // Zrušíme timeout, pokud existuje
-        if (captureResultTimeoutId !== null) {
-            clearTimeout(captureResultTimeoutId);
-            console.log("captureResult zastaveno.");
-            captureResultTimeoutId = null; // Reset timeout ID
-            delay = 1000; // Reset delay
-        }
-
-        captureImage()
-            .then(function (data) {
-                if (data.message === "success") {
-                    captureResult();
-                }
-            })
-            .catch(function (error) {
-                console.error("Chyba při zachytávání obrázku:", error);
-            });
     });
 })();

@@ -21,7 +21,6 @@ from app_dashboard.views import (
     VacationView,
     WorkingView,
 )
-
 from app_main.views import CamStreamView, MainPageView
 
 urlpatterns = [
@@ -45,7 +44,7 @@ app_dashboard_urls: list = [
 ]
 
 app_main_urls: list = [
-    path("app_main/", MainPageView.as_view(), name="logout"),
+    path("app_main/<int:speed>", MainPageView.as_view(), name="logout"),
 ]
 
 app_accounts_urls: list = [

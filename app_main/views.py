@@ -23,6 +23,11 @@ cam_system = CamSystems()
 class MainPageView(TemplateView):
     """main page view"""
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["speed"] = self.kwargs.get("speed", 15)
+        return context
+
     template_name = "app_main/app_main.html"
 
 

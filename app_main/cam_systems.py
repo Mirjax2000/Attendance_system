@@ -24,7 +24,7 @@ class CamSystems:
     """kamerove funkce"""
 
     def __init__(self):
-        self.face_vecktors: dict = {}
+        self.face_vectors: dict = {}
         self.last_recon_result: dict = {}
         self.cap = cv2.VideoCapture(0)
         self.width: int = int(self.cap.get(3))
