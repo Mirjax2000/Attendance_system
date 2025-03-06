@@ -24,7 +24,9 @@ class CamSystems:
     """kamerove funkce"""
 
     def __init__(self):
-        self.face_vectors: dict = self.get_vectors_from_db()
+        self.database = Database()
+        self.utility = Utility()
+        self.face_vectors: dict = self.database.get_vectors_from_db()
         self.last_recon_result: dict = {}
         self.cap = cv2.VideoCapture(0)
         self.width: int = int(self.cap.get(3))
@@ -40,12 +42,6 @@ class CamSystems:
             target_id=cv2.dnn.DNN_TARGET_CPU,
         )
         self.face_rgb = None
-
-    def set_fps(self, speed) -> float:
-        """set fps"""
-        temp_speed = min(speed, 24)
-        speed_: float = 1 / temp_speed
-        return speed_
 
     def face_recon_rectangle(self, frame):
         """Face detector a vykresleni ctverce okolo obliceje"""
@@ -96,7 +92,7 @@ class CamSystems:
             )
 
             # fps
-            fps = self.set_fps(speed)
+            fps = self.utility.set_fps(speed)
             sleep(fps)
 
     def cam_stream(
@@ -111,11 +107,6 @@ class CamSystems:
             content_type="multipart/x-mixed-replace; boundary=frame",
         )
 
-    def porovnani(self, vektor1, vektor2):
-        """Porovnávací algoritmus"""
-
-        return np.linalg.norm(vektor1 - vektor2)
-
     def face_recon(self, vektor1, vectors_from_db):
         """Porovnání nového vektoru se všemi uloženými"""
         vectors: dict = vectors_from_db
@@ -124,7 +115,7 @@ class CamSystems:
         threshold = 0.6  # Experimentálně nastavit, podle přesnosti modelu
 
         for name, stored_vector in vectors.items():
-            distance = self.porovnani(vektor1, stored_vector)
+            distance = self.utility.porovnani(vektor1, stored_vector)
             print(f"{name}: {distance:.4f}")
 
             if distance < min_distance:
@@ -167,6 +158,19 @@ class CamSystems:
         cons.log(self.last_recon_result)
         return self.last_recon_result
 
+    def release_camera(self):
+        """Uvolní kameru při ukončení"""
+        if self.cap.isOpened():
+            self.cap.release()
+
+    def __del__(self):
+        """uvolni kameru při zničení instance"""
+        self.release_camera()
+
+
+class Database:
+    """Databse methods"""
+
     def get_vectors_from_db(self) -> dict:
         """get vectors form db"""
         face_vectors_from_db = FaceVector.objects.values(
@@ -188,11 +192,19 @@ class CamSystems:
         cons.log("Tabulka FaceVector je prazdna")
         return face_vectors_
 
-    def release_camera(self):
-        """Uvolní kameru při ukončení"""
-        if self.cap.isOpened():
-            self.cap.release()
 
-    def __del__(self):
-        """uvolni kameru při zničení instance"""
-        self.release_camera()
+class Utility:
+    """Utility classes"""
+
+    @staticmethod
+    def porovnani(vektor1, vektor2):
+        """Porovnávací algoritmus"""
+
+        return np.linalg.norm(vektor1 - vektor2)
+
+    @staticmethod
+    def set_fps(speed) -> float:
+        """set fps"""
+        temp_speed = min(speed, 24)
+        speed_: float = 1 / temp_speed
+        return speed_
