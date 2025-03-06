@@ -18,6 +18,7 @@ files_directory = Path(settings.BASE_DIR / "files")
 # yunet je na detekci obliceje
 yunet_file: str = "face_detection_yunet_2023mar.onnx"
 yunet: str = str(files_directory.joinpath(yunet_file))
+no_video_signal: str = "app_main/static/images/novideosignal.webp"
 
 
 class CamSystems:
@@ -25,6 +26,7 @@ class CamSystems:
 
     def __init__(self):
         self.cap = cv2.VideoCapture(0)
+        # self.cap = cv2.VideoCapture(no_video_signal)
         self.database = Database()
         self.utility = Utility()
         self.face_vectors: dict = self.database.get_vectors_from_db()
@@ -81,8 +83,7 @@ class CamSystems:
             ret, frame = self.cap.read()
 
             if not ret:
-                cons.log("neni video feed")
-                empty_frame = np.zeros((480, 640, 3), dtype=np.uint8)
+                empty_frame = cv2.imread(no_video_signal, 1)
                 _, jpeg_frame = cv2.imencode(".jpg", empty_frame)
                 jpeg_bytes = jpeg_frame.tobytes()
                 yield (
@@ -113,8 +114,10 @@ class CamSystems:
     ) -> HttpResponse | StreamingHttpResponse:
         """video stream na endpointu"""
         if not self.cap.isOpened():
-            cons.log("Kamera neni dostupna")
-            return HttpResponse("Kamera není dostupná", status=500)
+            cons.log("Kamera neni dostupna, zrejme neni naisntalovna")
+            return HttpResponse(
+                "Kamera není dostupná, zrejme neni naistalovana", status=500
+            )
 
         return StreamingHttpResponse(
             self.cam_generator(speed),
