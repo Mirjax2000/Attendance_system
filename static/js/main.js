@@ -40,18 +40,13 @@
     }
     //
 
-    captureBtn.addEventListener("click", function (e) {
-        e.preventDefault();
-        get_result();
-    });
-
+    // spusteni a cekani na vysledek u funkce ve view get_result
     async function get_result() {
         const csrftoken = getCookie("csrftoken");
 
         // Nastavení timeoutu na 5 sekund
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 10000); // 5000 ms = 5 sekund
-
+        const timeoutId = setTimeout(() => controller.abort(), 10000);
         try {
             const response = await fetch("/app_main/get_result", {
                 method: "POST",
@@ -78,5 +73,9 @@
             clearTimeout(timeoutId); // Uvolnění timeoutu, když požadavek skončí
         }
     }
-
+    // click na btn
+    captureBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        get_result();
+    });
 })();
