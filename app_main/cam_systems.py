@@ -24,24 +24,29 @@ class CamSystems:
     """kamerove funkce"""
 
     def __init__(self):
+        self.cap = cv2.VideoCapture(0)
         self.database = Database()
         self.utility = Utility()
         self.face_vectors: dict = self.database.get_vectors_from_db()
         self.last_recon_result: dict = {}
-        self.cap = cv2.VideoCapture(0)
-        self.width: int = int(self.cap.get(3))
-        self.height: int = int(self.cap.get(4))
-        self.face_detector = cv2.FaceDetectorYN.create(
+        self.face_detector = self.create_detector()
+        self.face_rgb = None
+
+    def create_detector(self):
+        """Create face detector"""
+        width: int = int(self.cap.get(3))
+        height: int = int(self.cap.get(4))
+        face_detector = cv2.FaceDetectorYN.create(
             model=yunet,
             config="",
-            input_size=(self.width, self.height),
+            input_size=(width, height),
             score_threshold=0.9,
             nms_threshold=0.3,
             top_k=1,
             backend_id=cv2.dnn.DNN_BACKEND_OPENCV,
             target_id=cv2.dnn.DNN_TARGET_CPU,
         )
-        self.face_rgb = None
+        return face_detector
 
     def face_recon_rectangle(self, frame):
         """Face detector a vykresleni ctverce okolo obliceje"""
@@ -90,7 +95,6 @@ class CamSystems:
                 b"--frame\r\n"
                 b"Content-Type: image/jpeg\r\n\r\n" + jpeg_bytes + b"\r\n\r\n"
             )
-
             # fps
             fps = self.utility.set_fps(speed)
             sleep(fps)
@@ -199,7 +203,6 @@ class Utility:
     @staticmethod
     def porovnani(vektor1, vektor2):
         """Porovnávací algoritmus"""
-
         return np.linalg.norm(vektor1 - vektor2)
 
     @staticmethod
