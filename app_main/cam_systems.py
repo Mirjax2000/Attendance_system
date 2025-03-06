@@ -24,7 +24,7 @@ class CamSystems:
     """kamerove funkce"""
 
     def __init__(self):
-        self.face_vectors: dict = {}
+        self.face_vectors: dict = self.get_vectors_from_db()
         self.last_recon_result: dict = {}
         self.cap = cv2.VideoCapture(0)
         self.width: int = int(self.cap.get(3))
@@ -69,6 +69,10 @@ class CamSystems:
                     cv2.rectangle(
                         frame, (x, y), (x + w, y + h), (108, 255, 2), 2
                     )
+                else:
+                    self.face_rgb = None
+        else:
+            self.face_rgb = None
 
     def cam_generator(self, speed: int = 12):
         """vytvari a pretvari 1 snimek z kamery jako jpeg"""
@@ -107,15 +111,82 @@ class CamSystems:
             content_type="multipart/x-mixed-replace; boundary=frame",
         )
 
-    def get_result(self, request) -> JsonResponse:
+    def porovnani(self, vektor1, vektor2):
+        """Porovnávací algoritmus"""
+
+        return np.linalg.norm(vektor1 - vektor2)
+
+    def face_recon(self, vektor1, vectors_from_db):
+        """Porovnání nového vektoru se všemi uloženými"""
+        vectors: dict = vectors_from_db
+        best_match = None
+        min_distance = float("inf")
+        threshold = 0.6  # Experimentálně nastavit, podle přesnosti modelu
+
+        for name, stored_vector in vectors.items():
+            distance = self.porovnani(vektor1, stored_vector)
+            print(f"{name}: {distance:.4f}")
+
+            if distance < min_distance:
+                min_distance = distance
+                best_match = name
+
+        # Vyhodnocení výsledku
+        if min_distance < threshold:
+            cons.log(
+                f"Rozpoznán: {best_match} (Vzdálenost: {min_distance:.4f})"
+            )
+            return {"name": best_match, "message": "success"}
+        cons.log("Neznámý obličej!")
+        return {"message": "neznamy oblicej"}
+
+    def get_result(self):
         """posli vysledek porovnani"""
-        if request.method == "POST":
-            if hasattr(self, 'last_recon_result') and self.last_recon_result["message"] != "reset":
-                return JsonResponse(self.last_recon_result)
+        if self.face_rgb is None:
+            cons.log("face rgb je None, protoze neni rectangle")
+            return {"message": "no-face-detected ja jsem None"}
 
-            return JsonResponse({"message": "fail"})
+        face_encoding = face_recognition.face_encodings(
+            self.face_rgb, num_jitters=2, model="large"
+        )
 
-        return JsonResponse({"message": "Špatná metoda u porovani"}, status=400)
+        if face_encoding:
+            new_face_vector = face_encoding[0]
+            cons.log("Vektor sejmut!")
+            self.last_recon_result = self.face_recon(
+                new_face_vector, self.face_vectors
+            )
+
+        else:
+            self.last_recon_result = {
+                "message": "no-face-detected",
+            }
+            cons.log("Face vektor nesejmut")
+
+        self.face_rgb = None
+        cons.log(self.last_recon_result)
+        return self.last_recon_result
+
+    def get_vectors_from_db(self) -> dict:
+        """get vectors form db"""
+        face_vectors_from_db = FaceVector.objects.values(
+            "employee__slug", "face_vector"
+        )
+
+        face_vectors_: dict = {}
+        if face_vectors_from_db:
+            for face_vector in face_vectors_from_db:
+                face_vectors_[face_vector["employee__slug"]] = np.array(
+                    face_vector["face_vector"]
+                )
+
+            cons.log(
+                f"Loaded face vectors for employees: {list(face_vectors_.keys())}"
+            )
+            return face_vectors_
+
+        cons.log("Tabulka FaceVector je prazdna")
+        return face_vectors_
 
     def release_camera(self):
         """Uvolní kameru při ukončení"""

@@ -41,8 +41,9 @@ class CamStreamView(View):
         return cam_system.cam_stream(speed)
 
 
-def get_result(request):
+def get_result_view(request):
     """volani z JS"""
     if request.method == "POST":
-        return cam_system.get_result(request)
+        return JsonResponse(cam_system.get_result())
+
     return JsonResponse({"message": "Špatná metoda u get_result"}, status=400)

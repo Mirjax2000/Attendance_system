@@ -53,7 +53,7 @@
         const timeoutId = setTimeout(() => controller.abort(), 10000); // 5000 ms = 5 sekund
 
         try {
-            const response = await fetch("app_main/get_result", {
+            const response = await fetch("/app_main/get_result", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
