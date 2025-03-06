@@ -39,3 +39,10 @@ class CamStreamView(View):
         speed = kwargs.get("speed", 15)  # Získání hodnoty z URL
 
         return cam_system.cam_stream(speed)
+
+
+def get_result(request):
+    """volani z JS"""
+    if request.method == "POST":
+        return cam_system.get_result(request)
+    return JsonResponse({"message": "Špatná metoda u get_result"}, status=400)

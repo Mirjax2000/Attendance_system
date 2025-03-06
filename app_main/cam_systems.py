@@ -107,6 +107,16 @@ class CamSystems:
             content_type="multipart/x-mixed-replace; boundary=frame",
         )
 
+    def get_result(self, request) -> JsonResponse:
+        """posli vysledek porovnani"""
+        if request.method == "POST":
+            if hasattr(self, 'last_recon_result') and self.last_recon_result["message"] != "reset":
+                return JsonResponse(self.last_recon_result)
+
+            return JsonResponse({"message": "fail"})
+
+        return JsonResponse({"message": "Špatná metoda u porovani"}, status=400)
+
     def release_camera(self):
         """Uvolní kameru při ukončení"""
         if self.cap.isOpened():
