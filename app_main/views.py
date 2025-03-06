@@ -20,7 +20,7 @@ from .cam_systems import CamSystems
 cam_system = CamSystems()
 
 
-class MainPageView(TemplateView):
+class MainPageView(LoginRequiredMixin, TemplateView):
     """main page view"""
 
     def get_context_data(self, **kwargs):
