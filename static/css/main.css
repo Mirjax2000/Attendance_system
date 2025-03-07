@@ -374,14 +374,15 @@ body {
   color: var(--text-clr-default);
   text-align: center;
   border-radius: 5px;
-  background-color: var(--background-clr-login-btn);
+  background-color: var(--background-clr-btn);
   box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.7764705882);
   padding: 0.5em 1em;
   border: none;
   transition: all ease-in-out 0.1s;
+  cursor: pointer;
 }
 .c-button:hover {
-  background-color: var(--background-clr-login-btn-hover);
+  background-color: var(--background-clr-btn-hover);
   color: white;
 }
 .c-button:active {

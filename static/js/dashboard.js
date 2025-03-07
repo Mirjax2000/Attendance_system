@@ -16,7 +16,6 @@
     // 
     // --- Fetch function ---
     function loadContent(url) {
-        content.innerHTML = ""
         fetch(url)
             .then(function (response) {
                 if (!response.ok) {
@@ -25,7 +24,12 @@
                 return response.text();
             })
             .then(function (html) {
-                content.innerHTML = html;// html injektaz
+                content.innerHTML = html;
+                setTimeout(() => {
+                    document.querySelectorAll("link[rel='stylesheet']").forEach(link => {
+                        link.href = link.href; // Přepíše href stejnou hodnotou
+                    });
+                }, 10);// html injektaz
             })
             .catch(function (error) {
                 console.error("Chyba:", error);

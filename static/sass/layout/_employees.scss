@@ -1,0 +1,11 @@
+.l-employees {
+    &__list {
+        padding: 1em;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        border-radius: 5px;
+        border: 1px solid #504f4f;
+        box-shadow: 1px 2px 5px #000000c3;
+    }
+}
