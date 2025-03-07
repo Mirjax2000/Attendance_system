@@ -7,9 +7,6 @@
     const navMenu = document.getElementById("navigationPanel");
     const employeeSublistJQ = $("#employeesSublist"); /* pro JQ slide */
 
-    const loginBtn = document.getElementById("loginBtn");
-    const loginForm = document.getElementById("loginForm");
-    const loginClose = document.getElementById("loginClose");
     // Nodelists
     const fetchLinks = navMenu.querySelectorAll(".fetch-url");
     // Arrays
@@ -19,6 +16,7 @@
     // 
     // --- Fetch function ---
     function loadContent(url) {
+        content.innerHTML = ""
         fetch(url)
             .then(function (response) {
                 if (!response.ok) {
@@ -70,14 +68,4 @@
             employeeSublistJQ.stop(true, true).slideDown(animationTime);
         }
     })
-
-    // logovani z loging rollety 
-    loginBtn.addEventListener("click", function (e) {
-        loginForm.dataset.show = "show"
-    })
-
-    loginClose.addEventListener("click", function (e) {
-        loginForm.dataset.show = "hide"
-    })
-    // 
 })();

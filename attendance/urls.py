@@ -44,7 +44,7 @@ app_dashboard_urls: list = [
 ]
 
 app_main_urls: list = [
-    path("app_main/<int:speed>", MainPageView.as_view(), name="logout"),
+    path("app_main/<int:speed>", MainPageView.as_view(), name="mainpage"),
     path("app_main/get_result", GetResultView.as_view(), name="get_result"),
 ]
 
