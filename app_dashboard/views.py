@@ -1,7 +1,9 @@
 """dashboard views CBVs"""
 
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
 from django.views.generic import (
+    CreateView,
     DeleteView,
     DetailView,
     FormView,
@@ -10,6 +12,10 @@ from django.views.generic import (
     TemplateView,
     UpdateView,
 )
+
+from app_main.models import Employee
+
+from .forms import EmployeeForm
 
 
 class RedirectDashboard(RedirectView):
@@ -97,3 +103,12 @@ class CamView(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         context["speed"] = self.kwargs.get("speed", 10)
         return context
+
+
+class CreateEmpView(CreateView):
+    """Vytvor zamestance"""
+
+    model = Employee
+    form_class = EmployeeForm
+    template_name = "includes/create_emp_form.html"
+    success_url = reverse_lazy("dashboard")

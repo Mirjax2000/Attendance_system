@@ -11,6 +11,7 @@ from app_dashboard.views import (
     AttendanceView,
     CamView,
     ChartsView,
+    CreateEmpView,
     DashboardView,
     EmailView,
     EmployeesView,
@@ -21,7 +22,11 @@ from app_dashboard.views import (
     VacationView,
     WorkingView,
 )
-from app_main.views import CamStreamView, GetResultView, MainPageView
+from app_main.views import (
+    CamStreamView,
+    GetResultView,
+    MainPageView,
+)
 
 urlpatterns = [
     path("", RedirectDashboard.as_view()),
@@ -32,6 +37,7 @@ urlpatterns = [
 app_dashboard_urls: list = [
     path("dashboard/", DashboardView.as_view(), name="dashboard"),
     path("dashboard/attendance", AttendanceView.as_view(), name="attendance"),
+    path("dashboard/create_emp", CreateEmpView.as_view(), name="create_emp"),
     path("dashboard/main_panel", MainPanelView.as_view(), name="main_panel"),
     path("dashboard/employees", EmployeesView.as_view(), name="employees"),
     path("dashboard/vacation", VacationView.as_view(), name="vacation"),

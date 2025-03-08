@@ -15,3 +15,9 @@
 %select-none {
     user-select: none;
 }
+
+%center-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

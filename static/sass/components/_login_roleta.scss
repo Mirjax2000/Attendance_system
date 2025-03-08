@@ -10,6 +10,7 @@ $login-roleta-context: 16;
     left: 0;
     pointer-events: none;
     display: none;
+    z-index: 100;
 
     &__list {
         margin-top: 35px;

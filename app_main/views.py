@@ -5,6 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseNotFound, JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic import (
+    CreateView,
     DeleteView,
     DetailView,
     FormView,
@@ -13,6 +14,8 @@ from django.views.generic import (
     UpdateView,
     View,
 )
+
+from . import models
 
 from .cam_systems import CamSystems
 
@@ -53,3 +56,4 @@ class GetResultView(LoginRequiredMixin, View):
         return JsonResponse(
             {"message": "Špatná metoda u get_result"}, status=400
         )
+

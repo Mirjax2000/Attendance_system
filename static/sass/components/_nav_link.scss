@@ -10,17 +10,18 @@ $nav-lin-transtime: 0.2s;
     @include flex(flex-start);
     @extend %pos-rel;
 
+    z-index: 10;
     color: var(--text-clr-default);
     padding-block: em(8, $nav-link-context);
     border-radius: em(5, $nav-link-context);
 
     @extend %select-none;
 
+    overflow: hidden;
     transition:
         color ease-in-out $nav-lin-transtime,
         box-shadow ease-in-out $nav-lin-transtime,
         transform ease-in-out $nav-lin-transtime;
-    overflow: hidden;
 
     &::before {
         content: "";
