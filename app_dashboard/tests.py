@@ -1,3 +1,5 @@
+"""Django tests"""
+
 from datetime import date
 
 from django.test import TestCase
@@ -42,7 +44,7 @@ class EmployeeModelTest(TestCase):
         )
 
     def test_employee_creation(self):
-        employee_jan = Employee.objects.get(email="jan.novak@example.com")
+        employee_jan = Employee.objects.get(slug="jan-novak")
         self.assertEqual(employee_jan.name, "Jan")
         self.assertEqual(employee_jan.surname, "Novák")
         self.assertEqual(employee_jan.city, "Praha")
@@ -50,6 +52,7 @@ class EmployeeModelTest(TestCase):
         self.assertEqual(employee_jan.phone_number, "+420123456789")
         self.assertEqual(employee_jan.email, "jan.novak@example.com")
         self.assertEqual(employee_jan.date_of_birth, date(1985, 5, 10))
+        self.assertEqual(employee_jan.age(), (39))
         self.assertTrue(employee_jan.check_pin_code("1234"))
         self.assertEqual(employee_jan.is_valid, True)
 
@@ -57,6 +60,7 @@ class EmployeeModelTest(TestCase):
         face_vector_jan = FaceVector.objects.get(
             employee__email="jan.novak@example.com"
         )
+        self.assertIsNotNone(face_vector_jan.face_vector_fernet)
         self.assertEqual(
-            face_vector_jan.face_vector, {"vector": [0.1, 0.2, 0.3]}
+            face_vector_jan.decrypt_vector(), '{"vector": [0.1, 0.2, 0.3]}'
         )

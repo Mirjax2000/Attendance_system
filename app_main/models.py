@@ -2,10 +2,10 @@
 
 import os
 from datetime import date
-from json import dumps
+from json import JSONDecodeError, dumps, loads
 
 from cryptography.fernet import Fernet
-from django.contrib.auth.hashers import make_password, check_password
+from django.contrib.auth.hashers import check_password, make_password
 from django.core import validators as val
 from django.db import models
 from django.db import transaction as tran
@@ -131,17 +131,23 @@ class Employee(models.Model):
     def age(self):
         """Vypocet veku"""
         if self.date_of_birth:
-            end_date = date.today()
-            return (end_date - self.date_of_birth).days // 365
+            today = date.today()
+            age = (
+                today.year
+                - self.date_of_birth.year
+                - (
+                    (today.month, today.day)
+                    < (self.date_of_birth.month, self.date_of_birth.day)
+                )
+            )
+            return age
         return None
 
     def set_pin_hash(self):
         """nastav hash na pin_hash a smaz pin"""
         if self.pin_code != "":
             self.pin_code_hash = make_password(self.pin_code)
-            self.pin_code = ""
-        else:
-            con.log("update formulare s prazdnym hashem")
+        self.pin_code = ""
 
     def check_pin_code(self, pin_code):
         """Kontrola pin_code"""
@@ -174,19 +180,38 @@ class FaceVector(models.Model):
         unique=False, blank=True, null=False, verbose_name="Face vector: "
     )
 
-    # face_vector_fernet = models.TextField(
-    #     unique=False, blank=True, null=False, verbose_name="vector fernet:"
-    # )
+    face_vector_fernet = models.BinaryField(
+        unique=False, blank=True, null=True, verbose_name="vector fernet:"
+    )
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"Face vector for {self.employee.name} {self.employee.surname}"
 
-    def fernet_vector(self):
-        """sifruj vector"""
+    def encrypt_vector(self) -> None:
+        """encrypt vector"""
         if self.face_vector:
             to_fernet = dumps(self.face_vector).encode("utf-8")
             self.face_vector_fernet = fernet.encrypt(to_fernet)
-            self.face_vector = []
+        self.face_vector = []
+
+    def decrypt_vector(self) -> str | None:
+        """Decrypt the fernet vector"""
+        if self.face_vector_fernet:
+            decrypted_vector = fernet.decrypt(self.face_vector_fernet).decode()
+            return decrypted_vector
+        return None
+
+    def compare_vectors(self, input_vector):
+        """Compare input vector with the stored face vector."""
+        decrypted_vector = self.decrypt_vector()
+        if decrypted_vector:
+            try:
+                decrypted_vector_json = loads(decrypted_vector)
+                input_vector_json = loads(input_vector)
+                return decrypted_vector_json == input_vector_json
+            except JSONDecodeError:
+                return False
+        return False
 
     def save(
         self,
@@ -194,13 +219,13 @@ class FaceVector(models.Model):
         **kwargs,
     ):
         """Ukladani souboru"""
-        # self.fernet_vector()
+        self.encrypt_vector()
 
-        # if self.face_vector_fernet and self.employee.pin_code_hash:
-        #     self.employee.is_valid = True
-        # else:
-        #     self.employee.is_valid = False
-        #     raise ValidationError("Face vector nebo pin hash neni v poradku")
+        if self.face_vector_fernet and self.employee.pin_code_hash:
+            self.employee.is_valid = True
+        else:
+            self.employee.is_valid = False
+            raise ValidationError("Face vector nebo pin hash neni v poradku")
         with tran.atomic():
             self.employee.save()
             super().save(*args, **kwargs)
