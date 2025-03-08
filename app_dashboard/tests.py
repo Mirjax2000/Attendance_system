@@ -55,6 +55,9 @@ class EmployeeModelTest(TestCase):
         self.assertEqual(employee_jan.age(), (39))
         self.assertTrue(employee_jan.check_pin_code("1234"))
         self.assertEqual(employee_jan.is_valid, True)
+        self.assertEqual(
+            employee_jan.vector.decrypt_vector(), '{"vector": [0.1, 0.2, 0.3]}'
+        )
 
     def test_face_vector_creation(self):
         face_vector_jan = FaceVector.objects.get(
@@ -65,5 +68,8 @@ class EmployeeModelTest(TestCase):
         self.assertIsInstance(face_vector_jan.face_vector_fernet, bytes)
         self.assertEqual(
             face_vector_jan.decrypt_vector(), '{"vector": [0.1, 0.2, 0.3]}'
+        )
+        self.assertNotEqual(
+            face_vector_jan.decrypt_vector(), '{"vector": [0.2, 0.2, 0.3]}'
         )
         self.assertFalse(face_vector_jan.face_vector)

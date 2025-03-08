@@ -25,23 +25,23 @@ class Employee(models.Model):
     """Employee"""
 
     name = models.CharField(
-        max_length=32, null=False, blank=False, verbose_name="Jmeno: "
+        max_length=32, null=False, blank=False, verbose_name="Jmeno:"
     )
     surname = models.CharField(
-        max_length=32, null=False, blank=False, verbose_name="Prijmeni: "
+        max_length=32, null=False, blank=False, verbose_name="Prijmeni:"
     )
     street_number = models.CharField(
-        max_length=50, null=False, blank=False, verbose_name="Ulice/c.p.: "
+        max_length=50, null=False, blank=False, verbose_name="Ulice/c.p.:"
     )
     city = models.CharField(
-        max_length=32, null=False, blank=False, verbose_name="Mesto: "
+        max_length=32, null=False, blank=False, verbose_name="Mesto:"
     )
 
     postal_code = models.CharField(
         max_length=5,
         null=False,
         blank=False,
-        verbose_name="PSC: ",
+        verbose_name="PSC:",
         validators=[
             val.MinLengthValidator(5),
             val.RegexValidator(
@@ -55,7 +55,7 @@ class Employee(models.Model):
         unique=True,
         null=False,
         blank=False,
-        verbose_name="Telefon: ",
+        verbose_name="Telefon:",
         validators=[
             val.MinLengthValidator(5),
             val.RegexValidator(
@@ -70,23 +70,23 @@ class Employee(models.Model):
         unique=True,
         null=False,
         blank=False,
-        verbose_name="Email: ",
+        verbose_name="Email:",
     )
     date_of_birth = models.DateField(
         null=False,
         blank=False,
-        verbose_name="Datum narozeni: ",
+        verbose_name="Datum narozeni:",
     )
     is_valid = models.BooleanField(
         default=False,
         blank=True,
-        verbose_name="Ucet v poradku?: ",
+        verbose_name="Ucet v poradku?:",
     )
     pin_code = models.CharField(
         max_length=4,
         blank=True,
         null=False,
-        verbose_name="PIN kod: ",
+        verbose_name="PIN kod:",
         validators=[
             val.RegexValidator(
                 regex=r"^\d{4}$",
@@ -102,7 +102,7 @@ class Employee(models.Model):
     slug = models.SlugField(
         blank=True,
         unique=True,
-        verbose_name="slug: ",
+        verbose_name="slug:",
     )
 
     def __str__(self) -> str:
@@ -173,19 +173,23 @@ class FaceVector(models.Model):
         Employee,
         on_delete=models.CASCADE,
         related_name="vector",
-        verbose_name="Zamestnanec: ",
+        verbose_name="Employee:",
     )
 
     face_vector = models.JSONField(
-        unique=False, blank=True, null=False, verbose_name="Face vector: "
+        unique=False, blank=True, null=False, verbose_name="Face vector:"
     )
 
     face_vector_fernet = models.BinaryField(
-        unique=False, blank=True, null=True, verbose_name="vector fernet:"
+        unique=False,
+        blank=True,
+        null=True,
+        db_index=True,
+        verbose_name="vector fernet:",
     )
 
     def __str__(self) -> str:
-        return f"Face vector for {self.employee.name} {self.employee.surname}"
+        return f"Face vector for {self.employee.slug}"
 
     def encrypt_vector(self) -> None:
         """encrypt vector"""
@@ -218,7 +222,7 @@ class FaceVector(models.Model):
         *args,
         **kwargs,
     ):
-        """Ukladani souboru"""
+        """Ukladani databaze"""
         self.encrypt_vector()
 
         if self.face_vector_fernet and self.employee.pin_code_hash:
