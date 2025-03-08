@@ -61,6 +61,9 @@ class EmployeeModelTest(TestCase):
             employee__email="jan.novak@example.com"
         )
         self.assertIsNotNone(face_vector_jan.face_vector_fernet)
+        self.assertIsInstance(face_vector_jan.face_vector, list)
+        self.assertIsInstance(face_vector_jan.face_vector_fernet, bytes)
         self.assertEqual(
             face_vector_jan.decrypt_vector(), '{"vector": [0.1, 0.2, 0.3]}'
         )
+        self.assertFalse(face_vector_jan.face_vector)
