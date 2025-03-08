@@ -5,7 +5,7 @@ from datetime import date
 from json import dumps
 
 from cryptography.fernet import Fernet
-from django.contrib.auth.hashers import make_password
+from django.contrib.auth.hashers import make_password, check_password
 from django.core import validators as val
 from django.db import models
 from django.db import transaction as tran
@@ -142,6 +142,10 @@ class Employee(models.Model):
             self.pin_code = ""
         else:
             con.log("update formulare s prazdnym hashem")
+
+    def check_pin_code(self, pin_code):
+        """Kontrola pin_code"""
+        return check_password(pin_code, self.pin_code_hash)
 
     def save(self, *args, **kwargs):
         self.set_slug()

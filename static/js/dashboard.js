@@ -14,32 +14,23 @@
     // settings
     const animationTime = 200;
     // 
-    // --- Fetch function ---
-    function loadContent(url) {
-        fetch(url)
-            .then(function (response) {
-                if (!response.ok) {
-                    throw new Error("Síťová odpověď nebyla OK");
-                }
-                return response.text();
-            })
-            .then(function (html) {
-                content.innerHTML = html;
-                setTimeout(() => {
-                    document.querySelectorAll("link[rel='stylesheet']").forEach(link => {
-                        link.href = link.href; // Přepíše href stejnou hodnotou
-                    });
-                }, 10);// html injektaz
-            })
-            .catch(function (error) {
-                console.error("Chyba:", error);
-            });
+    // --- Fetch function pro innerHTML ---
+    async function loadContent(url, HTMLelement) {
+        try {
+            let response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`Chyba ${response.status}: ${response.statusText}`);
+            }
+            HTMLelement.innerHTML = await response.text();
+        } catch (error) {
+            console.error("Chyba:", error);
+        }
     }
     // prace s fetchlinkama - jako Nodelist
     fetchLinks.forEach(function (element) {
         // hlavni nacitaci stranka
         if (element.classList.contains("active_link")) {
-            loadContent(element.dataset.url);
+            loadContent(element.dataset.url, content);
         }
 
         element.addEventListener('click', function (e) {
@@ -51,7 +42,7 @@
             // pridej classu activ_link na link
             this.classList.add("active_link")
             // spust fetch funkci s dataset url parametrem
-            loadContent(this.dataset.url);
+            loadContent(this.dataset.url, content);
 
             if (this !== employeesBtn && !sublistLinksArray.includes(this)) {
                 employeeSublistJQ.stop(true, true).slideUp(animationTime);

@@ -11,7 +11,9 @@ Tento projekt je založen na dvou aplikacích:
 
 **Funkce:**
 - Využívá hardwarový ovladač kamery k zachycení tváře zaměstnance.
+- detekce tvare pomoci face detectoru YUNET
 - Vypočítá vektor obličeje ze zachyceného obrazu.
+- Budeme pouzivat neuronovou sit DLIB a modul face_recognition.
 - Porovnává vypočítaný vektor s vektory uloženými v databázi pro ověření.
 - Ověření zaměstnance pomocí vektoru obličeje a PIN kódu.
 - Výběr režimu po úspěšném ověření.
@@ -35,4 +37,9 @@ Tento projekt je založen na dvou aplikacích:
 - Statistiky
 - Hodinové výkazy
 - Rozesílání informačních emailů
+
+**Permisions:**
+- omezeni pro create/delete  zamestnance
+- Prehledy - default
+- rozesilani emailu - HR
 
