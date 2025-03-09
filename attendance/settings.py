@@ -124,7 +124,6 @@ MEDIA_ROOT = BASE_DIR / "media/employee_img"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-LOGIN_REDIRECT_URL = "dashboard"
 LOGIN_URL = "login"
 LOGOUT_URL = "logout"
 LOGIN_REDIRECT_URL = "dashboard"

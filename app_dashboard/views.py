@@ -1,5 +1,6 @@
 """dashboard views CBVs"""
 
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import (
@@ -112,3 +113,8 @@ class CreateEmpView(CreateView):
     form_class = EmployeeForm
     template_name = "includes/create_emp_form.html"
     success_url = reverse_lazy("dashboard")
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, "Zaměstnanec byl úspěšně vytvořen!")
+        return response

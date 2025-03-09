@@ -1,7 +1,7 @@
 @use "../base/placeholders" as *;
 @use "../utils/" as *;
 
-.login-container {
+.c-form {
     @extend %margin-in;
     @extend %select-none;
 
@@ -12,15 +12,15 @@
     border: 1px solid black;
     box-shadow: 1px 1px 2px #0000005a;
 
-    .login__header {
+    &__header {
         border-bottom: 1px solid gray;
     }
 
-    .login__text {
+    &__text {
         display: block;
     }
 
-    .login__form {
+    &__form {
         input {
             display: block;
             width: 100%;
@@ -29,13 +29,13 @@
             margin-bottom: 1em;
             box-shadow: 1px 2px 2px #00000068;
 
-            &:not(.login__btn) {
+            &:not(.form__btn) {
                 background-color: #00000056;
             }
         }
     }
 
-    .login__btn {
+    &__btn {
         display: block;
         color: var(--text-clr-default);
         text-align: center;
@@ -62,7 +62,7 @@
         }
     }
 
-    .login__reset {
+    &__reset {
         display: inline-block;
         color: #339af0;
         text-decoration: underline;
@@ -73,7 +73,8 @@
             color: white;
         }
     }
-    .alert {
+
+    &__alert {
         color: red;
     }
 }

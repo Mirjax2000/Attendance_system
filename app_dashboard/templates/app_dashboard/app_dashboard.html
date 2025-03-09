@@ -1,40 +1,13 @@
-{% extends "base.html" %}
+{% extends "dashboard_base.html" %}
 {% load static %}
 {% block title %}
-    Dashboard
+    Dashboard app
 {% endblock title %}
-<!-- css stylesheet -->
-{% block css %}
-    <link rel="preload"
-          href="{% static 'css/dashboard.css' %}"
-          as="style"
-          onload="this.onload=null;this.rel='stylesheet'">
-{% endblock css %}
-<!-- no js -->
-{% block nojs %}
-    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
-{% endblock nojs %}
-<!-- end -->
 <!-- main content -->
-{% block body %}
-    <div class="l-grid-container">
-        <main class="l-grid-main">
-            <!--left side  navigation Menu -->
-            {% include "includes/dashboard_navigation.html" %}
-            <!-- right side main content -->
-            <section class="p-application">
-                <!-- Header -->
-                {% include "includes/dashboard_header.html" %}
-                <main class="p-content" id="content">
-                    <!-- here comms content  -->
-                    <!-- here comms content -->
-                    <!-- here comms content -->
-                </main>
-            </section>
-        </main>
-    </div>
-{% endblock body %}
-<!-- javascript block-->
-{% block js %}
-    <script src="{% static 'js/dashboard.js'%}"></script>
-{% endblock js %}
+{% block content %}
+    <main class="p-content" id="content">
+        <!-- here comms content  -->
+        <h1>hello there</h1>
+        <!-- here comms content -->
+    </main>
+{% endblock content %}

@@ -22,5 +22,8 @@ class CustomLoginView(LoginView):
         messages.error(
             self.request, "Nepodařilo se přihlásit, zkuste to znovu."
         )
+        return super().form_invalid(form)
 
-        return redirect("dashboard")
+    def form_valid(self, form):
+        messages.success(self.request, "Přihlášení bylo úspěšné!")
+        return super().form_valid(form)

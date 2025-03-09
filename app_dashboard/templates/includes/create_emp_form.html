@@ -1,17 +1,31 @@
+{% extends "base.html" %}
 {% load static %}
-<h2>Vytvořit zaměstnance</h2>
-<form method="post" novalidate>
-    {% csrf_token %}
-    {% for field in form %}
-        <div class="form-group">
-            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-            {{ field }}
-            {% if field.errors %}
-                <div class="error">
-                    {% for error in field.errors %}<p class="error-message">{{ error }}</p>{% endfor %}
+{% block title %}
+    create employee
+{% endblock title %}
+{% block css %}
+    <link rel="preload"
+          href="{% static 'css/dashboard.css' %}"
+          as="style"
+          onload="this.onload=null;this.rel='stylesheet'">
+{% endblock css %}
+{% block body %}
+    <div class="c-form">
+        <h1 class="c-form__header u-mb-small">Vytvořit zaměstnance</h1>
+        <form method="post" class="c-form__form">
+            {% csrf_token %}
+            {% for field in form %}
+                <div>
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        <div>
+                            {% for error in field.errors %}<p class="c-form__alert">{{ error }}</p>{% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
-            {% endif %}
-        </div>
-    {% endfor %}
-    <button type="submit">Uložit</button>
-</form>
+            {% endfor %}
+            <button type="submit" class="c-form__btn">Uložit</button>
+        </form>
+    </div>
+{% endblock body %}

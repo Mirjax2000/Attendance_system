@@ -6,6 +6,9 @@ $l-header-btm-radius: 5px;
 $l-header-context: 16;
 
 .l-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     width: 100%;
     padding: em(10, $l-header-context) 0;
     background-image: var(--background-clr-gradient-secondary);
@@ -18,6 +21,18 @@ $l-header-context: 16;
 
     &__list {
         @include flex(flex-end);
+
+        padding-right: 0.5em;
+    }
+
+    &__text {
+        padding-left: 0.5em;
+        color: var(--text-clr-good);
+    }
+
+    &__error {
+        padding-left: 0.5em;
+        color: var(--text-clr-warning);
     }
 
     &__item {

@@ -1,23 +1,28 @@
+{% extends "base.html" %}
+{% block title %}
+    login
+{% endblock title %}
 {% load static %}
-<div class="login-container">
-    <h1 class="login__header u-mb-small">Log-in</h1>
-    {% if form.errors %}
-        <p class="login__erorr u-mb-small">Vaše uživatelské jméno a heslo se neshodují. Zkuste to prosím znovu.</p>
-    {% else %}
-        <p class="login__text u-mb-medium">Nejdříve se přihlaste.</p>
-    {% endif %}
-    {% if messages %}
-        {% for message in messages %}<div class="alert">{{ message }}</div>{% endfor %}
-    {% endif %}
-    <form action="{% url 'login' %}" method="post" class="login__form">
-        {% csrf_token %}
-        <label for="{{ form.username.id_for_label }} " class="login__text ">Uživatelské jméno:</label>
-        {{ form.username }}
-        <label for="{{ form.password.id_for_label }}" class="login__text">Heslo:</label>
-        {{ form.password }}
-        <input type="submit" value="Přihlásit se" class="login__btn">
-    </form>
-    <p class="u-text-right">
-        <a href="{% url "password_reset" %}" class="login__reset">Zapomenuté heslo?</a>
-    </p>
-</div>
+{% block css %}
+    <link rel="preload"
+          href="{% static 'css/dashboard.css' %}"
+          as="style"
+          onload="this.onload=null;this.rel='stylesheet'">
+{% endblock css %}
+{% block body %}
+    <div class="c-form">
+        <h1 class="c-form__header u-mb-small">Log-in</h1>
+        <p class="c-form__text u-mb-medium">Nejdříve se přihlaste.</p>
+        <form action="{% url 'login' %}" method="post" class="c-form__form">
+            {% csrf_token %}
+            <label for="{{ form.username.id_for_label }} " class="c-form__text ">Uživatelské jméno:</label>
+            {{ form.username }}
+            <label for="{{ form.password.id_for_label }}" class="c-form__text">Heslo:</label>
+            {{ form.password }}
+            <input type="submit" value="Přihlásit se" class="c-form__btn">
+        </form>
+        <p class="u-text-right">
+            <a href="{% url "password_reset" %}" class="c-form__reset">Zapomenuté heslo?</a>
+        </p>
+    </div>
+{% endblock body %}

@@ -3,7 +3,6 @@
     console.log('dashboard.js');
     // by ID
     const employeesBtn = document.getElementById("employeesBtn");
-    const content = document.getElementById("content");
     const navMenu = document.getElementById("navigationPanel");
     const employeeSublistJQ = $("#employeesSublist"); /* pro JQ slide */
 
