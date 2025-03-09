@@ -1,6 +1,7 @@
 /* --- grid --- */
 
-@use "../utils/" as *;
+@use "../../utils/" as *;
+@use "../../base/placeholders" as *;
 
 .l-grid-container {
     @include container(40rem, 71.25rem, 0);
