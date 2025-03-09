@@ -13,9 +13,7 @@
     <ul class="l-nav__list mainlist">
         <!-- Main panel -->
         <li class="l-nav__list__item">
-            <a class="c-nav-link fetch-url active_link"
-               id="mainPanelBtn"
-               href="{% url "main_panel" %}">
+            <a class="c-nav-link" id="mainPanelBtn" href="{% url "main_panel" %}">
                 <img class="c-nav-link__ico"
                      src="{% static "images/icons8-control-panel.png" %}"
                      alt="dashboard icon"
@@ -26,7 +24,7 @@
         </li>
         <!-- zamestnanci -->
         <li class="l-nav__list__item">
-            <a class="c-nav-link c-pointer fetch-url"
+            <a class="c-nav-link c-pointer"
                href="{% url "employees" %}"
                id="employeesBtn"
                data-pointer="left">
@@ -52,7 +50,7 @@
         </li>
         <!-- camera -->
         <li class="l-nav__list__item">
-            <a class="c-nav-link fetch-url" id="cameraBtn" href="{% url "cam" 15 %}">
+            <a class="c-nav-link" id="cameraBtn" href="{% url "cam" 15 %}">
                 <img class="c-nav-link__ico"
                      src="{% static "images/icons8-add-camera.png" %}"
                      alt="camera icon"
@@ -63,7 +61,7 @@
         </li>
         <!-- emails -->
         <li class="l-nav__list__item">
-            <a class="c-nav-link fetch-url" id="emailsBtn" href="{% url "emails" %}">
+            <a class="c-nav-link" id="emailsBtn" href="{% url "emails" %}">
                 <img class="c-nav-link__ico"
                      src="{% static "images/icons8-email.png" %}"
                      alt="camera icon"
@@ -74,7 +72,7 @@
         </li>
         <!-- prehledy -->
         <li class="l-nav__list__item">
-            <a class="c-nav-link fetch-url" id="emailsBtn" href="{% url "charts" %}">
+            <a class="c-nav-link" id="emailsBtn" href="{% url "charts" %}">
                 <img class="c-nav-link__ico"
                      src="{% static "images/icons8-chart.png" %}"
                      alt="chart icon"
@@ -84,9 +82,7 @@
             </a>
         </li>
         <li class="l-nav__list__item">
-            <a class="c-nav-link fetch-url"
-               id="emailsBtn"
-               href="{% url "attendance" %}">
+            <a class="c-nav-link" id="emailsBtn" href="{% url "attendance" %}">
                 <img class="c-nav-link__ico"
                      src="{% static "images/icons8-conference.png" %}"
                      alt="chart icon"
