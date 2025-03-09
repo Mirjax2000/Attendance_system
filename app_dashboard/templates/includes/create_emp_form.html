@@ -1,15 +1,9 @@
-{% extends "base.html" %}
+{% extends "dashboard_base.html" %}
 {% load static %}
 {% block title %}
     create employee
 {% endblock title %}
-{% block css %}
-    <link rel="preload"
-          href="{% static 'css/dashboard.css' %}"
-          as="style"
-          onload="this.onload=null;this.rel='stylesheet'">
-{% endblock css %}
-{% block body %}
+{% block content %}
     <div class="c-form">
         <h1 class="c-form__header u-mb-small">Vytvořit zaměstnance</h1>
         <form method="post" class="c-form__form">
@@ -28,4 +22,4 @@
             <button type="submit" class="c-form__btn">Uložit</button>
         </form>
     </div>
-{% endblock body %}
+{% endblock content %}
