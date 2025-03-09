@@ -7,7 +7,7 @@
              height="20"
              alt="Project logo">
         <h2 class="c-logo__text">
-            Project X <small>&nbsp;v.0.6</small>
+            Project X <small>&nbsp;v.0.7</small>
         </h2>
     </div>
     <ul class="l-nav__list mainlist">
@@ -15,8 +15,7 @@
         <li class="l-nav__list__item">
             <a class="c-nav-link fetch-url active_link"
                id="mainPanelBtn"
-               href="#"
-               data-url="{% url "main_panel" %}">
+               href="{% url "main_panel" %}">
                 <img class="c-nav-link__ico"
                      src="{% static "images/icons8-control-panel.png" %}"
                      alt="dashboard icon"
@@ -28,10 +27,9 @@
         <!-- zamestnanci -->
         <li class="l-nav__list__item">
             <a class="c-nav-link c-pointer fetch-url"
-               href="#"
+               href="{% url "employees" %}"
                id="employeesBtn"
-               data-pointer="left"
-               data-url="{% url "employees" %}">
+               data-pointer="left">
                 <img class="c-nav-link__ico"
                      src="{% static "images/icons8-employees.png" %}"
                      alt="employees icon"
@@ -54,10 +52,7 @@
         </li>
         <!-- camera -->
         <li class="l-nav__list__item">
-            <a class="c-nav-link fetch-url"
-               id="cameraBtn"
-               href="#"
-               data-url="{% url "cam" 12 %}">
+            <a class="c-nav-link fetch-url" id="cameraBtn" href="{% url "cam" 15 %}">
                 <img class="c-nav-link__ico"
                      src="{% static "images/icons8-add-camera.png" %}"
                      alt="camera icon"
@@ -68,10 +63,7 @@
         </li>
         <!-- emails -->
         <li class="l-nav__list__item">
-            <a class="c-nav-link fetch-url"
-               id="emailsBtn"
-               href="#"
-               data-url="{% url "emails" %}">
+            <a class="c-nav-link fetch-url" id="emailsBtn" href="{% url "emails" %}">
                 <img class="c-nav-link__ico"
                      src="{% static "images/icons8-email.png" %}"
                      alt="camera icon"
@@ -82,10 +74,7 @@
         </li>
         <!-- prehledy -->
         <li class="l-nav__list__item">
-            <a class="c-nav-link fetch-url"
-               id="emailsBtn"
-               href="#"
-               data-url="{% url "charts" %}">
+            <a class="c-nav-link fetch-url" id="emailsBtn" href="{% url "charts" %}">
                 <img class="c-nav-link__ico"
                      src="{% static "images/icons8-chart.png" %}"
                      alt="chart icon"
@@ -97,8 +86,7 @@
         <li class="l-nav__list__item">
             <a class="c-nav-link fetch-url"
                id="emailsBtn"
-               href="#"
-               data-url="{% url "attendance" %}">
+               href="{% url "attendance" %}">
                 <img class="c-nav-link__ico"
                      src="{% static "images/icons8-conference.png" %}"
                      alt="chart icon"

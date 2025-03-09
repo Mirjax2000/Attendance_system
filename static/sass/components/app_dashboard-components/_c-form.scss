@@ -1,5 +1,5 @@
-@use "../base/placeholders" as *;
-@use "../utils/" as *;
+@use "../../base/placeholders" as *;
+@use "../../utils/" as *;
 
 .c-form {
     @extend %margin-in;

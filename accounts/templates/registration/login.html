@@ -1,15 +1,9 @@
-{% extends "base.html" %}
+{% extends "dashboard_base.html" %}
 {% block title %}
     login
 {% endblock title %}
 {% load static %}
-{% block css %}
-    <link rel="preload"
-          href="{% static 'css/dashboard.css' %}"
-          as="style"
-          onload="this.onload=null;this.rel='stylesheet'">
-{% endblock css %}
-{% block body %}
+{% block content %}
     <div class="c-form">
         <h1 class="c-form__header u-mb-small">Log-in</h1>
         <p class="c-form__text u-mb-medium">Nejdříve se přihlaste.</p>
@@ -25,4 +19,4 @@
             <a href="{% url "password_reset" %}" class="c-form__reset">Zapomenuté heslo?</a>
         </p>
     </div>
-{% endblock body %}
+{% endblock content %}

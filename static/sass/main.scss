@@ -3,5 +3,5 @@
 @use "./utils/" as *;
 @use "./base/for_main" as *;
 @use "./layout/for_main" as *;
-@use "./components/for_main" as *;
+@use "./components/app_main-components" as *;
 @use "./pages/main" as *;

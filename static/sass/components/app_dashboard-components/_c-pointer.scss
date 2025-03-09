@@ -1,0 +1,33 @@
+@use "../../utils/" as *;
+
+.c-pointer {
+    $c-pointer-context: 16;
+    $c-pointer-size: 1rem;
+
+    position: relative;
+
+    &::after {
+        content: ">>";
+        font-size: $c-pointer-size;
+        z-index: 100;
+        position: absolute;
+        letter-spacing: -4px;
+        font-weight: 900;
+        top: 50%;
+        transform: translate(0, -50%);
+        right: em(16, $c-pointer-context);
+        transition: all 0.2s ease-in-out;
+    }
+}
+
+[data-pointer="down"].c-pointer {
+    &:not(.active_link) {
+        outline: 1px solid #fff;
+        background-color: var(--background-clr-nav-pointer);
+    }
+
+    &::after {
+        letter-spacing: -14px;
+        transform: translate(0%, -50%) rotate(90deg);
+    }
+}

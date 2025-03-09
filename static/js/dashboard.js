@@ -7,7 +7,7 @@
     const employeeSublistJQ = $("#employeesSublist"); /* pro JQ slide */
 
     // Nodelists
-    const fetchLinks = navMenu.querySelectorAll(".fetch-url");
+    const navLinks = navMenu.querySelectorAll(".fetch-url");
     // Arrays
     const sublistLinksArray = Array.from(navMenu.querySelectorAll(".sublink"));
     // settings

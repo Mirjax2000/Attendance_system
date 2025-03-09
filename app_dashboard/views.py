@@ -25,7 +25,7 @@ class RedirectDashboard(RedirectView):
     url = "dashboard"
 
 
-class DashboardView(TemplateView):
+class DashboardView(LoginRequiredMixin, TemplateView):
     """Homepage"""
 
     template_name = "app_dashboard/app_dashboard.html"
