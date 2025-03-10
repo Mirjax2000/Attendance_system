@@ -9,6 +9,7 @@ $header-brdr-rds: 5px;
     border-bottom-right-radius: $header-brdr-rds;
     border-bottom-left-radius: $header-brdr-rds;
     box-shadow: 0 0 2px #0000005b;
+    padding-block: 0.3em;
 
     &__list {
         @include flex(space-between, center, 0.5em);
@@ -18,9 +19,5 @@ $header-brdr-rds: 5px;
 
     &__item {
         padding-inline: 0.5em;
-    }
-
-    &__text {
-        color: var(--scheme-good);
     }
 }

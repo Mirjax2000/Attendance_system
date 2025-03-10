@@ -1,16 +1,16 @@
 {% load static %}
-<div class="c-logo">
+<div class="c-logo u-mb-medium">
     <img src="{% static "images/icons8-logo.png" %}"
          width="20"
          height="20"
          alt="Project logo">
-    <h4 class="c-logo__text">
+    <p class="c-logo__text">
         Project X <small>&nbsp;v.0.7</small>
-    </h4>
+    </p>
 </div>
-<ul>
+<ul class="L-navigation__list u-mb-medium">
     <!-- Main panel -->
-    <li>
+    <li class="L-navigation__item">
         <a class="c-ico-btn" href="{% url "main_panel" %}">
             <img src="{% static "images/icons8-control-panel.png" %}"
                  alt="dashboard icon"
@@ -20,7 +20,7 @@
         </a>
     </li>
     <!-- zamestnanci -->
-    <li>
+    <li class="L-navigation__item">
         <a class="c-ico-btn" href=" {% url "employees" %} ">
             <img src="{% static "images/icons8-employees.png" %}"
                  alt="employees icon"
@@ -31,7 +31,7 @@
         {% include "app_dashboard/sublist_employees.html" %}
     </li>
     <!-- admin panel  -->
-    <li>
+    <li class="L-navigation__item">
         <a class="c-ico-btn" href="{% url "admin:index" %}">
             <img src="{% static "images/icons8-admin.png" %}"
                  alt="camera icon"
@@ -41,7 +41,7 @@
         </a>
     </li>
     <!-- camera -->
-    <li>
+    <li class="L-navigation__item">
         <a class="c-ico-btn" href="{% url "cam" 15 %}">
             <img src="{% static "images/icons8-add-camera.png" %}"
                  alt="camera icon"
@@ -51,7 +51,7 @@
         </a>
     </li>
     <!-- emails -->
-    <li>
+    <li class="L-navigation__item">
         <a class="c-ico-btn" href="{% url "emails" %}">
             <img src="{% static "images/icons8-email.png" %}"
                  alt="camera icon"
@@ -61,7 +61,7 @@
         </a>
     </li>
     <!-- prehledy -->
-    <li>
+    <li class="L-navigation__item">
         <a class="c-ico-btn" href="{% url "charts" %}">
             <img src="{% static "images/icons8-chart.png" %}"
                  alt="chart icon"
@@ -70,18 +70,18 @@
             <p>Přehledy</p>
         </a>
     </li>
-    <li>
+    <li class="L-navigation__item">
         <a class="c-ico-btn" href="{% url "attendance" %}">
             <img src="{% static "images/icons8-conference.png" %}"
                  alt="chart icon"
                  width="24"
                  height="24">
-            <p>Dochazka</p>
+            <p>Docházka</p>
         </a>
     </li>
 </ul>
 <div>
-    <a class="c-ico-btn" href="{% url "attendance" %}">
+    <a class="c-ico-btn" href="{% url "logout" %}">
         <img src="{% static "images/icons8-log-out.png" %}"
              alt="chart icon"
              width="24"

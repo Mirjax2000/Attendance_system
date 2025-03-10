@@ -2,14 +2,17 @@
 @use "../../base/placeholders" as *;
 
 .c-ico-btn {
-    @include flex(center, center);
+    @include flex(flex-start, center);
 
     img {
         background-color: transparent;
     }
 
     p {
-        color: var(--scheme-default);
         padding: 0.3em;
+
+        &:not(.u-text-success, .u-text-warning) {
+            color: var(--scheme-default);
+        }
     }
 }

@@ -10,7 +10,7 @@
   --scheme-clr-8: #dd7373;
   --scheme-default: #d2d2d2;
   --scheme-accent: #7f5af0;
-  --scheme-good: #339af0;
+  --scheme-success: #339af0;
   --scheme-info: #0f0;
   --scheme-warning: #ff3c00;
   --background-clr-gradient-primary: linear-gradient(to right bottom, #2a2b2e, #2a324e);
@@ -207,6 +207,18 @@ body.home {
   text-align: right;
 }
 
+.u-text-success {
+  color: var(--scheme-success);
+}
+
+.u-text-info {
+  color: var(--scheme-info);
+}
+
+.u-text-warning {
+  color: var(--scheme-warning);
+}
+
 .u-mb-small {
   margin-bottom: 1rem;
 }
@@ -267,6 +279,7 @@ body {
   background-color: var(--scheme-clr-2);
   height: 100svh;
   width: 12.5rem;
+  box-shadow: 1px 0 3px rgba(0, 0, 0, 0.1803921569);
 }
 .P-container .P-right-side {
   display: flex;
@@ -280,6 +293,10 @@ body {
 
 .L-navigation {
   background-color: var(--scheme-clr-2);
+  padding-inline: 1em;
+}
+.L-navigation__item:not(:last-child) {
+  margin-bottom: 0.5em;
 }
 
 .L-header {
@@ -288,6 +305,7 @@ body {
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.3568627451);
+  padding-block: 0.3em;
 }
 .L-header__list {
   display: flex;
@@ -299,13 +317,10 @@ body {
 .L-header__item {
   padding-inline: 0.5em;
 }
-.L-header__text {
-  color: var(--scheme-good);
-}
 
 .c-ico-btn {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   gap: 0;
 }
@@ -313,14 +328,17 @@ body {
   background-color: transparent;
 }
 .c-ico-btn p {
-  color: var(--scheme-default);
   padding: 0.3em;
+}
+.c-ico-btn p:not(.u-text-success, .u-text-warning) {
+  color: var(--scheme-default);
 }
 
 .c-logo {
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  padding-block: 0.3em;
 }
 .c-logo img {
   background-color: transparent;
@@ -328,7 +346,9 @@ body {
   margin-right: 0.5em;
 }
 .c-logo__text {
-  color: var(--scheme-good);
+  color: var(--scheme-success);
+  font-weight: bolder;
+  padding-block: 0.3em;
 }
 .c-logo__text small {
   color: var(--scheme-clr-3);

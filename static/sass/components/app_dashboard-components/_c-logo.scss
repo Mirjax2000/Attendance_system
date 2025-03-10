@@ -2,6 +2,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    padding-block: 0.3em;
 
     img {
         background-color: transparent;
@@ -10,7 +11,9 @@
     }
 
     &__text {
-        color: var(--scheme-good);
+        color: var(--scheme-success);
+        font-weight: bolder;
+        padding-block: 0.3em;
 
         small {
             color: var(--scheme-clr-3);

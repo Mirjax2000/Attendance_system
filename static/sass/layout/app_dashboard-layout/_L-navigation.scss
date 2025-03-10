@@ -3,4 +3,11 @@
 
 .L-navigation {
     background-color: var(--scheme-clr-2);
+    padding-inline: 1em;
+    &__list {
+    }
+
+    &__item:not(:last-child) {
+        margin-bottom: 0.5em;
+    }
 }

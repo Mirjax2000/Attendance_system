@@ -231,6 +231,18 @@ body.home {
   text-align: right;
 }
 
+.u-text-success {
+  color: var(--scheme-success);
+}
+
+.u-text-info {
+  color: var(--scheme-info);
+}
+
+.u-text-warning {
+  color: var(--scheme-warning);
+}
+
 .u-mb-small {
   margin-bottom: 1rem;
 }
