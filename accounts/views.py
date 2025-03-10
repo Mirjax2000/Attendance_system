@@ -1,13 +1,38 @@
+"""Account views"""
+
 from django.contrib import messages
 from django.contrib.auth import logout
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import redirect
 
 
+def get_user_name(view_instance) -> str:
+    """Získej jméno přihlášeného uživatele"""
+    result: str = str(view_instance.request.user.username)
+    return result
+
+
 def user_logout(request):
-    """Logout a redirect"""
+    """Logout a zustan na strance"""
+    name = request.user.username
     logout(request)
-    return redirect("dashboard")
+    messages.success(request, f"Uživatel {name} odhlášen")
+    return redirect(request.META.get("HTTP_REFERER", "/"))
+
+
+class CustomLogoutView(LogoutView):
+    """Logout view with message"""
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            messages.success(
+                request, f"Uživatel {get_user_name(self)} odhlášen"
+            )
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_next_page(self):
+        """Správné přesměrování po odhlášení"""
+        return self.request.META.get("HTTP_REFERER") or "/"
 
 
 class CustomLoginView(LoginView):

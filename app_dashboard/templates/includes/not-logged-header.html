@@ -1,11 +1,22 @@
 {% load static %}
-<li class="L-header__item">
-    <a class="L-header__login" href="{% url "login" %}">
-        <img src="{% static "images/icons8-login-red.png" %}"
-             data-logged="false"
-             alt="login"
-             width="25"
-             height="25">
-        <p class="L-header__text u-text-warning">not-logged</p>
-    </a>
-</li>
+<ul class="L-header__list">
+    <li class="L-header__item">
+        <p class="L-header__text u-text-info">
+            {% if messages %}
+                {{ messages|join:", " }}
+            {% else %}
+                Nejdříve se přihlaste
+            {% endif %}
+        </p>
+    </li>
+    <li class="L-header__item">
+        <a class="L-header__login" href="{% url "login" %}">
+            <img src="{% static "images/icons8-login-red.png" %}"
+                 data-logged="false"
+                 alt="login"
+                 width="25"
+                 height="25">
+            <p class="L-header__text u-text-warning">not-logged</p>
+        </a>
+    </li>
+</ul>

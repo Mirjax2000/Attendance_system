@@ -71,7 +71,11 @@
             <section class="P-right-side">
                 <!-- Header -->
                 <header class="L-header">
-                    {% include "includes/dashboard_header.html" %}
+                    {% if request.user.is_authenticated %}
+                        {% include "includes/logged-header.html" %}
+                    {% else %}
+                        {% include "includes/not-logged-header.html" %}
+                    {% endif %}
                 </header>
                 <main class="L-content">
                     {% block content %}

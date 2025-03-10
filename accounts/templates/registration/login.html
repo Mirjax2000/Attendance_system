@@ -6,17 +6,17 @@
 {% block content %}
     <div class="c-form">
         <h1 class="c-form__header u-mb-small">Log-in</h1>
-        <p class="c-form__text u-mb-medium u-text-info">Nejdříve se přihlaste.</p>
         <form action="{% url 'login' %}" method="post" class="c-form__form">
             {% csrf_token %}
-            <label for="{{ form.username.id_for_label }} " class="c-form__text ">Uživatelské jméno:</label>
+            <label for="{{ form.username.id_for_label }} " class="c-form__label ">Uživatelské jméno:</label>
             {{ form.username }}
-            <label for="{{ form.password.id_for_label }}" class="c-form__text">Heslo:</label>
+            <label for="{{ form.password.id_for_label }}" class="c-form__label">Heslo:</label>
             {{ form.password }}
-            <input type="submit" value="Přihlásit se" class="c-form__btn">
+            <input type="submit" value="Přihlásit se" class="c-form__submit">
         </form>
-        <p class="u-text-right">
-            <a href="{% url "password_reset" %}" class="c-form__reset">Zapomenuté heslo?</a>
+        <p class="u-text-right u-text-warning">
+            <a href="{% url "password_reset" %}"
+               class="c-form__reset u-text-warning">Zapomenuté heslo?</a>
         </p>
     </div>
 {% endblock content %}

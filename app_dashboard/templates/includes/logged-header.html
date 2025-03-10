@@ -1,10 +1,21 @@
 {% load static %}
-<li class="L-header__item">
-    <a class="L-header__login" href="{% url "login" %}">
-        <img src="{% static "images/icons8-login-blue.png" %}"
-             alt="login"
-             width="25"
-             height="25">
-        <p class="L-header__text u-text-success">{{ user_name }}</p>
-    </a>
-</li>
+<ul class="L-header__list">
+    <li class="L-header__item">
+        <p class="L-header__text u-text-success">
+            {% if messages %}
+                {{ messages|join:", " }}
+            {% else %}
+                &nbsp;
+            {% endif %}
+        </p>
+    </li>
+    <li class="L-header__item">
+        <a class="L-header__login" href="{% url "login" %}">
+            <img src="{% static "images/icons8-login-blue.png" %}"
+                 alt="login"
+                 width="25"
+                 height="25">
+            <p class="L-header__text u-text-success">{{ user_name }}</p>
+        </a>
+    </li>
+</ul>

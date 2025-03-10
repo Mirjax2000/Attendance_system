@@ -1,3 +1,23 @@
 @use "../../utils/" as *;
 @use "../../base/placeholders" as *;
 
+.c-form {
+    @extend %margin-in;
+
+    width: 80%;
+    padding: 2em;
+    border-radius: 5px;
+    border: 1px solid #00000057;
+    box-shadow: 1px 1px 3px #00000031;
+
+    &__header {
+    }
+    &__text {
+    }
+    &__form {
+    }
+    &__label {
+    }
+    &__submit {
+    }
+}

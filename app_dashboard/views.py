@@ -22,17 +22,17 @@ from .forms import EmployeeForm
 cons: Console = Console()
 
 
-class RedirectDashboard(RedirectView):
-    """Redirect na /dashboard"""
-
-    url = "dashboard"
-
-
 def get_user_name(view_instance) -> str:
     """Získej jméno přihlášeného uživatele"""
     result: str = str(view_instance.request.user.username)
     cons.log(f"Aktivni User: {result},", style="green")
     return result
+
+
+class RedirectDashboard(RedirectView):
+    """Redirect na /dashboard"""
+
+    url = "dashboard"
 
 
 class DashboardView(LoginRequiredMixin, TemplateView):

@@ -7,11 +7,13 @@ $header-brdr-rds: 5px;
     @extend %select-none;
 
     width: 100%;
-    background: var(--background-clr-gradient-primary);
+    background-color: var(--scheme-clr-2);
     border-bottom-right-radius: $header-brdr-rds;
     border-bottom-left-radius: $header-brdr-rds;
-    box-shadow: 0 0 2px #0000005b;
+    box-shadow: 0 1px 1px #00000027;
     padding-block: 0.3em;
+    border: 1px solid #00000027;
+    border-top: none;
 
     &__list {
         @include flex(space-between, center, 0.5em);

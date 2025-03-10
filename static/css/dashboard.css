@@ -10,9 +10,10 @@
   --scheme-clr-8: #2cb67d;
   --scheme-clr-9: #dd7373;
   --scheme-default: #d2d2d2;
+  --scheme-default-darker: #9f9e9e;
   --scheme-accent: rgba(109, 60, 255, 0.862745098);
   --scheme-success: #339af0;
-  --scheme-info: #0f0;
+  --scheme-info: #54da54;
   --scheme-warning: #ff3c00;
   --background-clr-gradient-primary: linear-gradient(to right, #2a2b2e, #2c2e32);
 }
@@ -199,6 +200,10 @@ body.home {
 }
 
 /* --- placeholders --- */
+.c-form {
+  margin-inline: auto;
+}
+
 .L-header, .L-navigation {
   user-select: none;
 }
@@ -286,7 +291,8 @@ body {
   height: 100dvh;
   flex-basis: 12.5rem;
   flex-shrink: 0;
-  box-shadow: 3px 0 1px rgba(0, 0, 0, 0.062745098);
+  box-shadow: 1px 0 1px rgba(0, 0, 0, 0.062745098);
+  border-right: 1px solid rgba(0, 0, 0, 0.062745098);
 }
 .P-container .P-right-side {
   display: flex;
@@ -303,7 +309,7 @@ body {
   padding-inline: 1em;
 }
 .L-navigation__sublist {
-  margin-left: 1.3em;
+  margin-left: 1.5em;
   padding-block: 0.3em;
 }
 .L-navigation__item:not(:last-child) {
@@ -312,11 +318,13 @@ body {
 
 .L-header {
   width: 100%;
-  background: var(--background-clr-gradient-primary);
+  background-color: var(--scheme-clr-2);
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
-  box-shadow: 0 0 2px rgba(0, 0, 0, 0.3568627451);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1529411765);
   padding-block: 0.3em;
+  border: 1px solid rgba(0, 0, 0, 0.1529411765);
+  border-top: none;
 }
 .L-header__list {
   display: flex;
@@ -344,6 +352,13 @@ body {
   padding: 0.3em;
 }
 
+.c-form {
+  width: 80%;
+  padding: 2em;
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.3411764706);
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1921568627);
+}
 .c-ico-btn {
   display: flex;
   justify-content: flex-start;
@@ -353,16 +368,19 @@ body {
   border-radius: 5px;
   padding: 0.3em;
   outline: none;
-  box-shadow: none;
+  border-bottom: 1px solid rgba(82, 82, 82, 0.2078431373);
 }
 .c-ico-btn img {
   background-color: transparent;
 }
 .c-ico-btn p {
-  margin-left: 0.5em;
+  margin-left: 1em;
 }
 .c-ico-btn p:not(.u-text-success, .u-text-warning, .u-text-info) {
   color: var(--scheme-default);
+}
+.c-ico-btn p.sublink {
+  color: var(--scheme-default-darker);
 }
 .c-ico-btn:hover, .c-ico-btn:focus, .c-ico-btn.active {
   background-color: var(--scheme-accent);
@@ -374,6 +392,7 @@ body {
   justify-content: flex-start;
   align-items: center;
   padding-block: 0.3em;
+  border-bottom: 1px solid rgba(82, 82, 82, 0.2078431373);
 }
 .c-logo img {
   background-color: transparent;
