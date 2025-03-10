@@ -13,16 +13,26 @@ from django.views.generic import (
     TemplateView,
     UpdateView,
 )
+from rich.console import Console
 
 from app_main.models import Employee
 
 from .forms import EmployeeForm
+
+cons: Console = Console()
 
 
 class RedirectDashboard(RedirectView):
     """Redirect na /dashboard"""
 
     url = "dashboard"
+
+
+def get_user_name(view_instance) -> str:
+    """Získej jméno přihlášeného uživatele"""
+    result: str = str(view_instance.request.user.username)
+    cons.log(f"Aktivni User: {result},", style="green")
+    return result
 
 
 class DashboardView(LoginRequiredMixin, TemplateView):
@@ -32,12 +42,9 @@ class DashboardView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        if self.request.user.is_authenticated:
-            context["user_exist"] = "True"
-            context["user_name"] = self.request.user.username
-        else:
-            context["user_exist"] = "False"
-            context["user_name"] = "Nepřihlášen"
+        context["user_name"] = get_user_name(self)
+        context["active_link"] = "main_panel"
+
         return context
 
 
@@ -46,11 +53,25 @@ class MainPanelView(LoginRequiredMixin, TemplateView):
 
     template_name = "app_dashboard/main_panel.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["user_name"] = get_user_name(self)
+        context["active_link"] = "main_panel"
+
+        return context
+
 
 class EmployeesView(LoginRequiredMixin, TemplateView):
     """Seznam vsech zamestnancu"""
 
     template_name = "app_dashboard/employees.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["user_name"] = get_user_name(self)
+        context["active_link"] = "employees"
+
+        return context
 
 
 class VacationView(LoginRequiredMixin, TemplateView):
@@ -58,11 +79,27 @@ class VacationView(LoginRequiredMixin, TemplateView):
 
     template_name = "app_dashboard/vacation.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["user_name"] = get_user_name(self)
+        context["pointer"] = "down"
+        context["active_link"] = "vacation"
+
+        return context
+
 
 class WorkingView(LoginRequiredMixin, TemplateView):
     """Seznam vsech zamestnancu"""
 
     template_name = "app_dashboard/working.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["user_name"] = get_user_name(self)
+        context["pointer"] = "down"
+        context["active_link"] = "working"
+
+        return context
 
 
 class SickView(LoginRequiredMixin, TemplateView):
@@ -70,11 +107,27 @@ class SickView(LoginRequiredMixin, TemplateView):
 
     template_name = "app_dashboard/sick.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["user_name"] = get_user_name(self)
+        context["pointer"] = "down"
+        context["active_link"] = "sick"
+
+        return context
+
 
 class OtherView(LoginRequiredMixin, TemplateView):
     """Seznam vsech zamestnancu"""
 
     template_name = "app_dashboard/other.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["user_name"] = get_user_name(self)
+        context["pointer"] = "down"
+        context["active_link"] = "other"
+
+        return context
 
 
 class EmailView(LoginRequiredMixin, TemplateView):
@@ -82,17 +135,38 @@ class EmailView(LoginRequiredMixin, TemplateView):
 
     template_name = "app_dashboard/emails.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["user_name"] = get_user_name(self)
+        context["active_link"] = "emails"
+
+        return context
+
 
 class ChartsView(LoginRequiredMixin, TemplateView):
     """rozesilani emialu"""
 
     template_name = "app_dashboard/charts.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["user_name"] = get_user_name(self)
+        context["active_link"] = "charts"
+
+        return context
+
 
 class AttendanceView(LoginRequiredMixin, TemplateView):
     """detail o zamestanci"""
 
     template_name = "app_dashboard/attendance.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["user_name"] = get_user_name(self)
+        context["active_link"] = "attendance"
+
+        return context
 
 
 class CamView(LoginRequiredMixin, TemplateView):
@@ -103,6 +177,8 @@ class CamView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["speed"] = self.kwargs.get("speed", 10)
+        context["user_name"] = get_user_name(self)
+        context["active_link"] = "camera"
         return context
 
 
@@ -113,6 +189,11 @@ class CreateEmpView(CreateView):
     form_class = EmployeeForm
     template_name = "includes/create_emp_form.html"
     success_url = reverse_lazy("dashboard")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["user_name"] = get_user_name(self)
+        return context
 
     def form_valid(self, form):
         response = super().form_valid(form)

@@ -318,9 +318,6 @@ body {
 .l-nav__list__item:not(:last-child) {
   margin-bottom: 0.3125em;
 }
-.l-nav__list.mainlist {
-  margin-top: 5em;
-}
 .l-nav__list.sublist {
   margin-left: 1em;
   padding: 1em 0;

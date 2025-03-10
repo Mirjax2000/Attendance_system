@@ -19,9 +19,6 @@ $l-nav-font-context: 16;
         }
     }
 
-    &__list.mainlist {
-        margin-top: em(80, $l-nav-font-context);
-    }
 
     &__list.sublist {
         margin-left: em(16, $l-nav-font-context);
