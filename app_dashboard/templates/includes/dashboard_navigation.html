@@ -11,7 +11,8 @@
 <ul class="L-navigation__list u-mb-medium">
     <!-- Main panel -->
     <li class="L-navigation__item">
-        <a class="c-ico-btn" href="{% url "main_panel" %}">
+        <a class="c-ico-btn {% if active_link == 'main-panel' %}active{% endif %}"
+           href="{% url "main_panel" %}">
             <img src="{% static "images/icons8-control-panel.png" %}"
                  alt="dashboard icon"
                  width="24"
@@ -21,7 +22,8 @@
     </li>
     <!-- zamestnanci -->
     <li class="L-navigation__item">
-        <a class="c-ico-btn" href=" {% url "employees" %} ">
+        <a class="c-ico-btn {% if active_link == 'employees' %}active{% endif %}"
+           href=" {% url "employees" %} ">
             <img src="{% static "images/icons8-employees.png" %}"
                  alt="employees icon"
                  width="24"
@@ -42,7 +44,8 @@
     </li>
     <!-- camera -->
     <li class="L-navigation__item">
-        <a class="c-ico-btn" href="{% url "cam" 15 %}">
+        <a class="c-ico-btn {% if active_link == 'cams' %}active{% endif %}"
+           href="{% url "cam" 15 %}">
             <img src="{% static "images/icons8-add-camera.png" %}"
                  alt="camera icon"
                  width="24"
@@ -52,7 +55,8 @@
     </li>
     <!-- emails -->
     <li class="L-navigation__item">
-        <a class="c-ico-btn" href="{% url "emails" %}">
+        <a class="c-ico-btn {% if active_link == 'emails' %}active{% endif %}"
+           href="{% url "emails" %}">
             <img src="{% static "images/icons8-email.png" %}"
                  alt="camera icon"
                  width="24"
@@ -62,7 +66,8 @@
     </li>
     <!-- prehledy -->
     <li class="L-navigation__item">
-        <a class="c-ico-btn" href="{% url "charts" %}">
+        <a class="c-ico-btn {% if active_link == 'charts' %}active{% endif %}"
+           href="{% url "charts" %}">
             <img src="{% static "images/icons8-chart.png" %}"
                  alt="chart icon"
                  width="24"
@@ -71,7 +76,8 @@
         </a>
     </li>
     <li class="L-navigation__item">
-        <a class="c-ico-btn" href="{% url "attendance" %}">
+        <a class="c-ico-btn {% if active_link == 'attendances' %}active{% endif %}"
+           href="{% url "attendance" %}">
             <img src="{% static "images/icons8-conference.png" %}"
                  alt="chart icon"
                  width="24"

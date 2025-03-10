@@ -2,7 +2,8 @@
 {% load static %}
 <ul class="L-navigation__sublist">
     <li class="L-navigation__item">
-        <a class="c-ico-btn" href="{% url "working" %}">
+        <a class="c-ico-btn {% if active_link == 'works' %}active{% endif %}"
+           href="{% url "working" %}">
             <img src="{% static "images/icons8-circle.png" %} "
                  alt="circle icon"
                  width="10"
@@ -11,7 +12,8 @@
         </a>
     </li>
     <li class="L-navigation__item">
-        <a class="c-ico-btn" href="{% url "vacation" %}">
+        <a class="c-ico-btn {% if active_link == 'vacations' %}active{% endif %}"
+           href="{% url "vacation" %}">
             <img src="{% static "images/icons8-circle.png" %} "
                  alt="circle icon"
                  width="10"
@@ -20,7 +22,8 @@
         </a>
     </li>
     <li class="L-navigation__item">
-        <a class="c-ico-btn" href="{% url "sick" %}">
+        <a class="c-ico-btn {% if active_link == 'sick' %}active{% endif %}"
+           href="{% url "sick" %}">
             <img src="{% static "images/icons8-circle.png" %} "
                  alt="circle icon"
                  width="10"
@@ -29,7 +32,8 @@
         </a>
     </li>
     <li class="L-navigation__item">
-        <a class="c-ico-btn" href="{% url "other" %}">
+        <a class="c-ico-btn {% if active_link == 'others' %}active{% endif %}"
+           href="{% url "other" %}">
             <img src="{% static "images/icons8-circle.png" %} "
                  alt="circle icon"
                  width="10"

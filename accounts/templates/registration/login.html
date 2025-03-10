@@ -1,12 +1,12 @@
 {% extends "dashboard_base.html" %}
+{% load static %}
 {% block title %}
     login
 {% endblock title %}
-{% load static %}
 {% block content %}
     <div class="c-form">
         <h1 class="c-form__header u-mb-small">Log-in</h1>
-        <p class="c-form__text u-mb-medium">Nejdříve se přihlaste.</p>
+        <p class="c-form__text u-mb-medium u-text-info">Nejdříve se přihlaste.</p>
         <form action="{% url 'login' %}" method="post" class="c-form__form">
             {% csrf_token %}
             <label for="{{ form.username.id_for_label }} " class="c-form__text ">Uživatelské jméno:</label>

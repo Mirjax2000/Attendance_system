@@ -1,19 +1,17 @@
 {% load static %}
 <ul class="L-header__list">
     <li class="L-header__item">
-        {% if messages %}
-            {% for message in messages %}<p class="L-header__text u-text-success">{{ message }}</p>{% endfor %}
-        {% else %}
-            <p class="L-header__text u-text-success">&nbsp; no message</p>
-        {% endif %}
+        <p class="L-header__text u-text-success">
+            {% if messages %}
+                {{ messages|join:", " }}
+            {% else %}
+                &nbsp;
+            {% endif %}
+        </p>
     </li>
-    <li class="L-header__item">
-        <a class="c-ico-btn" href="{% url "login" %}">
-            <img src="{% static "images/icons8-login-blue.png" %}"
-                 alt="login"
-                 width="25"
-                 height="25">
-            <p class="L-header__text u-text-success">{{ user_name }}</p>
-        </a>
-    </li>
+    {% if request.user.is_authenticated %}
+        {% include "includes/logged-header.html" %}
+    {% else %}
+        {% include "includes/not-logged-header.html" %}
+    {% endif %}
 </ul>

@@ -1,0 +1,11 @@
+{% load static %}
+<li class="L-header__item">
+    <a class="L-header__login" href="{% url "login" %}">
+        <img src="{% static "images/icons8-login-red.png" %}"
+             data-logged="false"
+             alt="login"
+             width="25"
+             height="25">
+        <p class="L-header__text u-text-warning">not-logged</p>
+    </a>
+</li>

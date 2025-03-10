@@ -7,18 +7,21 @@
     @include container(31.25rem, 64rem, 1em);
     @include flex(flex-start, flex-start, 1em);
 
+    background-color: var(--scheme-clr-1);
+
     .P-navigation {
-        background-color: var(--scheme-clr-2);
-        height: 100svh;
-        width: 12.5rem;
-        box-shadow: 1px 0 3px #0000002e;
+        background: var(--background-clr-gradient-primary);
+        height: 100dvh;
+        flex-basis: 12.5rem;
+        flex-shrink: 0;
+        box-shadow: 3px 0 1px #00000010;
     }
 
     .P-right-side {
         @include flex(flex-start, flex-start, 1em);
 
         flex-grow: 1;
-        height: 100svh;
+        height: 100dvh;
         flex-direction: column;
     }
 }

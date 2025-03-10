@@ -2,22 +2,23 @@
 $light-theme-dashboard: (
     "scheme": (
         "clr-1": #2a2b2eff,
-        "clr-2": #2a324e,
-        "clr-3": #5a5a66ff,
-        "clr-4": #a4c2a8ff,
-        "clr-5": #aceb98ff,
-        "clr-6": #87ff65ff,
-        "clr-7": #2cb67d,
-        "clr-8": #dd7373,
+        "clr-2": #2c2e32,
+        "clr-3": #252831,
+        "clr-4": #5a5a66ff,
+        "clr-5": #a4c2a8ff,
+        "clr-6": #aceb98ff,
+        "clr-7": #87ff65ff,
+        "clr-8": #2cb67d,
+        "clr-9": #dd7373,
 
         "default": #d2d2d2,
-        "accent": #7f5af0,
+        "accent": #6d3cffdc,
         "success": #339af0,
         "info": #0f0,
         "warning": #ff3c00,
     ),
 
     "background-clr": (
-        "gradient-primary": linear-gradient(to left, #273358, #2a324e),
+        "gradient-primary": linear-gradient(to right, #2a2b2eff, #2c2e32),
     ),
 );

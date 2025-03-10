@@ -4,15 +4,28 @@
 .c-ico-btn {
     @include flex(flex-start, center);
 
+    transition: all ease-in-out 0.1s;
+    border-radius: 5px;
+    padding: 0.3em;
+    outline: none;
+    box-shadow: none;
+
     img {
         background-color: transparent;
     }
 
     p {
-        padding: 0.3em;
+        margin-left: 0.5em;
 
-        &:not(.u-text-success, .u-text-warning) {
+        &:not(.u-text-success, .u-text-warning, .u-text-info) {
             color: var(--scheme-default);
         }
+    }
+
+    &:hover,
+    &:focus,
+    &.active {
+        background-color: var(--scheme-accent);
+        box-shadow: 1px 1px 3px black;
     }
 }

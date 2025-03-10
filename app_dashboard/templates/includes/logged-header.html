@@ -1,0 +1,10 @@
+{% load static %}
+<li class="L-header__item">
+    <a class="L-header__login" href="{% url "login" %}">
+        <img src="{% static "images/icons8-login-blue.png" %}"
+             alt="login"
+             width="25"
+             height="25">
+        <p class="L-header__text u-text-success">{{ user_name }}</p>
+    </a>
+</li>

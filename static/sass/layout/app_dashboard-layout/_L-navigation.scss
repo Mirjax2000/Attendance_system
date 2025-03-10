@@ -2,7 +2,9 @@
 @use "../../base/placeholders" as *;
 
 .L-navigation {
-    background-color: var(--scheme-clr-2);
+    @extend %select-none;
+
+    background: var(--background-clr-gradient-primary);
     padding-inline: 1em;
 
     &__sublist {
