@@ -1,0 +1,26 @@
+@use "../../utils/" as *;
+@use "../../base/placeholders" as *;
+
+$header-brdr-rds: 5px;
+
+.L-header {
+    width: 100%;
+    background-color: var(--scheme-clr-2);
+    border-bottom-right-radius: $header-brdr-rds;
+    border-bottom-left-radius: $header-brdr-rds;
+    box-shadow: 0 0 2px #0000005b;
+
+    &__list {
+        @include flex(space-between, center, 0.5em);
+
+        width: 100%;
+    }
+
+    &__item {
+        padding-inline: 0.5em;
+    }
+
+    &__text {
+        color: var(--scheme-good);
+    }
+}

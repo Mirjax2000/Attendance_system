@@ -1,85 +1,91 @@
 {% load static %}
-<nav>
-    <div>
-        <img src="{% static "images/icons8-logo.png" %}"
-             width="20"
-             height="20"
-             alt="Project logo">
-        <h2>
-            Project X <small>&nbsp;v.0.7</small>
-        </h2>
-    </div>
-    <ul>
-        <!-- Main panel -->
-        <li>
-            <a href="{% url "main_panel" %}">
-                <img src="{% static "images/icons8-control-panel.png" %}"
-                     alt="dashboard icon"
-                     width="24"
-                     height="24">
-                <p>Main panel</p>
-            </a>
-        </li>
-        <!-- zamestnanci -->
-        <li>
-            <a href=" {% url "employees" %} "
-               data-pointer="{% if pointer == 'down' %}down{% else %} left {% endif %}">
-                <img src="{% static "images/icons8-employees.png" %}"
-                     alt="employees icon"
-                     width="24"
-                     height="24">
-                <p>Zaměstanci</p>
-            </a>
-            {% include "app_dashboard/sublist_employees.html" %}
-        </li>
-        <!-- admin panel  -->
-        <li>
-            <a href="{% url "admin:index" %}" id="adminPanelBtn">
-                <img src="{% static "images/icons8-admin.png" %}"
-                     alt="camera icon"
-                     width="24"
-                     height="24">
-                <p>admin panel</p>
-            </a>
-        </li>
-        <!-- camera -->
-        <li>
-            <a href="{% url "cam" 15 %}">
-                <img src="{% static "images/icons8-add-camera.png" %}"
-                     alt="camera icon"
-                     width="24"
-                     height="24">
-                <p>camera stream</p>
-            </a>
-        </li>
-        <!-- emails -->
-        <li>
-            <a href="{% url "emails" %}">
-                <img src="{% static "images/icons8-email.png" %}"
-                     alt="camera icon"
-                     width="24"
-                     height="24">
-                <p>Emails</p>
-            </a>
-        </li>
-        <!-- prehledy -->
-        <li>
-            <a href="{% url "charts" %}">
-                <img src="{% static "images/icons8-chart.png" %}"
-                     alt="chart icon"
-                     width="24"
-                     height="24">
-                <p>Přehledy</p>
-            </a>
-        </li>
-        <li>
-            <a href="{% url "attendance" %}">
-                <img src="{% static "images/icons8-conference.png" %}"
-                     alt="chart icon"
-                     width="24"
-                     height="24">
-                <p>Dochazka</p>
-            </a>
-        </li>
-    </ul>
-</nav>
+<div class="c-logo">
+    <img src="{% static "images/icons8-logo.png" %}"
+         width="20"
+         height="20"
+         alt="Project logo">
+    <h4 class="c-logo__text">
+        Project X <small>&nbsp;v.0.7</small>
+    </h4>
+</div>
+<ul>
+    <!-- Main panel -->
+    <li>
+        <a class="c-ico-btn" href="{% url "main_panel" %}">
+            <img src="{% static "images/icons8-control-panel.png" %}"
+                 alt="dashboard icon"
+                 width="24"
+                 height="24">
+            <p>Main panel</p>
+        </a>
+    </li>
+    <!-- zamestnanci -->
+    <li>
+        <a class="c-ico-btn" href=" {% url "employees" %} ">
+            <img src="{% static "images/icons8-employees.png" %}"
+                 alt="employees icon"
+                 width="24"
+                 height="24">
+            <p>Zaměstanci</p>
+        </a>
+        {% include "app_dashboard/sublist_employees.html" %}
+    </li>
+    <!-- admin panel  -->
+    <li>
+        <a class="c-ico-btn" href="{% url "admin:index" %}">
+            <img src="{% static "images/icons8-admin.png" %}"
+                 alt="camera icon"
+                 width="24"
+                 height="24">
+            <p>admin panel</p>
+        </a>
+    </li>
+    <!-- camera -->
+    <li>
+        <a class="c-ico-btn" href="{% url "cam" 15 %}">
+            <img src="{% static "images/icons8-add-camera.png" %}"
+                 alt="camera icon"
+                 width="24"
+                 height="24">
+            <p>camera stream</p>
+        </a>
+    </li>
+    <!-- emails -->
+    <li>
+        <a class="c-ico-btn" href="{% url "emails" %}">
+            <img src="{% static "images/icons8-email.png" %}"
+                 alt="camera icon"
+                 width="24"
+                 height="24">
+            <p>Emails</p>
+        </a>
+    </li>
+    <!-- prehledy -->
+    <li>
+        <a class="c-ico-btn" href="{% url "charts" %}">
+            <img src="{% static "images/icons8-chart.png" %}"
+                 alt="chart icon"
+                 width="24"
+                 height="24">
+            <p>Přehledy</p>
+        </a>
+    </li>
+    <li>
+        <a class="c-ico-btn" href="{% url "attendance" %}">
+            <img src="{% static "images/icons8-conference.png" %}"
+                 alt="chart icon"
+                 width="24"
+                 height="24">
+            <p>Dochazka</p>
+        </a>
+    </li>
+</ul>
+<div>
+    <a class="c-ico-btn" href="{% url "attendance" %}">
+        <img src="{% static "images/icons8-log-out.png" %}"
+             alt="chart icon"
+             width="24"
+             height="24">
+        <p>Log out</p>
+    </a>
+</div>

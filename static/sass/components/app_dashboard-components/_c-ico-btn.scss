@@ -1,0 +1,15 @@
+@use "../../utils/" as *;
+@use "../../base/placeholders" as *;
+
+.c-ico-btn {
+    @include flex(center, center);
+
+    img {
+        background-color: transparent;
+    }
+
+    p {
+        color: var(--scheme-default);
+        padding: 0.3em;
+    }
+}

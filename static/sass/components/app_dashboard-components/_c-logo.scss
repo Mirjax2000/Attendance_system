@@ -1,0 +1,19 @@
+.c-logo {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    img {
+        background-color: transparent;
+        animation: logo-rotation 2s ease-in-out 2s forwards;
+        margin-right: 0.5em;
+    }
+
+    &__text {
+        color: var(--scheme-good);
+
+        small {
+            color: var(--scheme-clr-3);
+        }
+    }
+}

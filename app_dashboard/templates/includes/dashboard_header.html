@@ -1,14 +1,19 @@
 {% load static %}
-<header>
-    {% if messages %}
-        {% for message in messages %}<p>{{ message }}</p>{% endfor %}
-    {% endif %}
-    {% if error %}<p>{{ error }}</p>{% endif %}
-    {% if user_exist == "True" %}
-        {% include "app_dashboard/header_logged.html" %}
-    {% else %}
-        {% if user_exist == "False" %}
-            {% include "app_dashboard/header_notlogged.html" %}
+<ul class="L-header__list">
+    <li class="L-header__item">
+        {% if messages %}
+            {% for message in messages %}<p class="L-header__text">{{ message }}</p>{% endfor %}
+        {% else %}
+            <p class="L-header__text">&nbsp; no message</p>
         {% endif %}
-    {% endif %}
-</header>
+    </li>
+    <li class="L-header__item">
+        <a class="c-ico-btn" href="{% url "login" %}">
+            <img src="{% static "images/icons8-login-blue.png" %}"
+                 alt="login"
+                 width="25"
+                 height="25">
+            <p class="L-header__text">{{ user_name }}</p>
+        </a>
+    </li>
+</ul>

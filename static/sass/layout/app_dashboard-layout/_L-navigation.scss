@@ -1,0 +1,6 @@
+@use "../../utils/" as *;
+@use "../../base/placeholders" as *;
+
+.L-navigation {
+    background-color: var(--scheme-clr-2);
+}

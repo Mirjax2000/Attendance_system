@@ -60,24 +60,31 @@
     </head>
     <!--body-->
     <body class="base">
-        <div>
-            <main>
-                <!--left side  navigation Menu -->
-                {% include "includes/dashboard_navigation.html" %}
-                <!-- right side main content -->
-                <section>
-                    <!-- Header -->
+        <main class="P-container">
+            <!--left side  navigation Menu -->
+            <section class="P-navigation">
+                <nav class="L-navigation">
+                    {% include "includes/dashboard_navigation.html" %}
+                </nav>
+            </section>
+            <!-- right side main content -->
+            <section class="P-right-side">
+                <!-- Header -->
+                <header class="L-header">
                     {% include "includes/dashboard_header.html" %}
-                    <main>
-                        {% block content %}
-                        {% endblock content %}
-                    </main>
-                </section>
-            </main>
-            <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous">
-            </script>
-            <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
-            <script src="{% static 'js/dashboard.js' %}"></script>
-        </div>
+                </header>
+                <main class="L-content">
+                    {% block content %}
+                        <!-- here comms content -->
+                        <!-- here comms content -->
+                        <!-- here comms content -->
+                    {% endblock content %}
+                </main>
+            </section>
+        </main>
+        <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous">
+        </script>
+        <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
+        <script src="{% static 'js/dashboard.js' %}"></script>
     </body>
 </html>

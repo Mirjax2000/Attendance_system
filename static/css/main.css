@@ -198,9 +198,10 @@ input {
 }
 
 /* --- base --- */
-body, body.home {
+body,
+body.home {
   opacity: 1;
-  background-color: #333;
+  background-color: var(--scheme-clr-1);
 }
 
 /* --- placeholders --- */

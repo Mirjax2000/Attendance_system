@@ -1,38 +1,23 @@
 // --- light theme dashboard---
 $light-theme-dashboard: (
-    "primary-clr": (
-        "default": #7ed56f,
-        "primary": white,
-    ),
-    "secondary-clr": (
-        "secondary": gray,
-    ),
-    "ternary-clr": (
-        "ternary-1": #7369ff,
-        "ternary-2": #6158d8,
-        "ternary-3": #5049b2,
-    ),
-    "text-clr": (
+    "scheme": (
+        "clr-1": #2a2b2eff,
+        "clr-2": #2a324e,
+        "clr-3": #5a5a66ff,
+        "clr-4": #a4c2a8ff,
+        "clr-5": #aceb98ff,
+        "clr-6": #87ff65ff,
+        "clr-7": #2cb67d,
+        "clr-8": #dd7373,
+
         "default": #d2d2d2,
-        "logo": #339af0,
+        "accent": #7f5af0,
         "good": #339af0,
-        "warning": #ff3c00,
         "info": #0f0,
-        "dark": #111,
+        "warning": #ff3c00,
     ),
+
     "background-clr": (
-        "default": #fff,
-        "nav": #1f2537,
-        "nav-pointer": #313a5e,
-        "btn": #262930,
-        "btn-hover": #313a5e,
-        "login": #262930,
-        "login-link": #303d5b,
-        "content": #161c32,
-        "header": #f7f7f7,
-        "gradient-primary": linear-gradient(to right bottom, #161c32, #2a324e),
-        "gradient-secondary": linear-gradient(to right bottom, #1f2537, #2b2b2b),
-        "gradient-ternary": linear-gradient(to right bottom, #7369ff, #4a44a5),
-        "gradient-quartery": linear-gradient(to right bottom, #5049b2, #3c3785),
+        "gradient-primary": linear-gradient(to right bottom, #2a2b2eff, #2a324e),
     ),
 );

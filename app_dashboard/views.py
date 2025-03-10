@@ -187,5 +187,5 @@ class CreateEmpView(CreateView):
 
     def form_invalid(self, form):
         response = super().form_invalid(form)
-        messages.error(self.request, "Chyba - zaznam nebyl vytvoren")
+        messages.error(self.request, "Chyba - záznam nebyl vytvořen")
         return response

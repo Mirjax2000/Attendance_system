@@ -1,5 +1,6 @@
 /* --- base --- */
-body, body.home {
-    opacity:1;
-    background-color: #333;
-  }
+body,
+body.home {
+    opacity: 1;
+    background-color: var(--scheme-clr-1);
+}

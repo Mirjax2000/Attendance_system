@@ -19,9 +19,7 @@ class CustomLoginView(LoginView):
         return super().get(request, *args, **kwargs)
 
     def form_invalid(self, form):
-        messages.error(
-            self.request, "Nepodařilo se přihlásit, zkuste to znovu."
-        )
+        form.add_error(None, "Nepodařilo se přihlásit, zkuste to znovu.")
         return super().form_invalid(form)
 
     def form_valid(self, form):

@@ -2,3 +2,22 @@
 
 @use "../utils/" as *;
 @use "../base/placeholders" as *;
+
+.P-container {
+    @include container(31.25rem, 64rem, 1em);
+    @include flex(flex-start, flex-start, 1em);
+
+    .P-navigation {
+        background-color: var(--scheme-clr-2);
+        height: 100svh;
+        width: 12.5rem;
+    }
+
+    .P-right-side {
+        @include flex(flex-start, flex-start, 1em);
+
+        flex-grow: 1;
+        height: 100svh;
+        flex-direction: column;
+    }
+}
