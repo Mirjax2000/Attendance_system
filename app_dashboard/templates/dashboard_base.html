@@ -60,15 +60,15 @@
     </head>
     <!--body-->
     <body class="base">
-        <div class="l-grid-container">
-            <main class="l-grid-main">
+        <div>
+            <main>
                 <!--left side  navigation Menu -->
                 {% include "includes/dashboard_navigation.html" %}
                 <!-- right side main content -->
-                <section class="p-application">
+                <section>
                     <!-- Header -->
                     {% include "includes/dashboard_header.html" %}
-                    <main class="p-content" id="content">
+                    <main>
                         {% block content %}
                         {% endblock content %}
                     </main>

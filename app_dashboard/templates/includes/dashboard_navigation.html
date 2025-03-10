@@ -1,99 +1,84 @@
 {% load static %}
-<nav class="l-nav" id="navigationPanel">
-    <div class="c-logo u-mb-big">
-        <img class="c-logo__img"
-             src="{% static "images/icons8-logo.png" %}"
+<nav>
+    <div>
+        <img src="{% static "images/icons8-logo.png" %}"
              width="20"
              height="20"
              alt="Project logo">
-        <h2 class="c-logo__text">
+        <h2>
             Project X <small>&nbsp;v.0.7</small>
         </h2>
     </div>
-    <ul class="l-nav__list">
+    <ul>
         <!-- Main panel -->
-        <li class="l-nav__list__item">
-            <a class="c-nav-link {% if active_link == 'main_panel' %}active_link{% endif %}"
-               href="{% url "main_panel" %}">
-                <img class="c-nav-link__ico"
-                     src="{% static "images/icons8-control-panel.png" %}"
+        <li>
+            <a href="{% url "main_panel" %}">
+                <img src="{% static "images/icons8-control-panel.png" %}"
                      alt="dashboard icon"
                      width="24"
                      height="24">
-                <p class="c-nav-link__text">Main panel</p>
+                <p>Main panel</p>
             </a>
         </li>
         <!-- zamestnanci -->
-        <li class="l-nav__list__item">
-            <a class="c-nav-link c-pointer {% if active_link == 'employees' %}active_link{% endif %}"
-               href=" {% url "employees" %} "
-               id="employeesBtn"
+        <li>
+            <a href=" {% url "employees" %} "
                data-pointer="{% if pointer == 'down' %}down{% else %} left {% endif %}">
-                <img class="c-nav-link__ico"
-                     src="{% static "images/icons8-employees.png" %}"
+                <img src="{% static "images/icons8-employees.png" %}"
                      alt="employees icon"
                      width="24"
                      height="24">
-                <p class="c-nav-link__text ">Zaměstanci</p>
+                <p>Zaměstanci</p>
             </a>
             {% include "app_dashboard/sublist_employees.html" %}
         </li>
         <!-- admin panel  -->
-        <li class="l-nav__list__item">
-            <a class="c-nav-link" href="{% url "admin:index" %}" id="adminPanelBtn">
-                <img class="c-nav-link__ico"
-                     src="{% static "images/icons8-admin.png" %}"
+        <li>
+            <a href="{% url "admin:index" %}" id="adminPanelBtn">
+                <img src="{% static "images/icons8-admin.png" %}"
                      alt="camera icon"
                      width="24"
                      height="24">
-                <p class="c-nav-link__text">admin panel</p>
+                <p>admin panel</p>
             </a>
         </li>
         <!-- camera -->
-        <li class="l-nav__list__item">
-            <a class="c-nav-link{% if active_link == 'camera' %} active_link{% endif %}"
-               href="{% url "cam" 15 %}">
-                <img class="c-nav-link__ico"
-                     src="{% static "images/icons8-add-camera.png" %}"
+        <li>
+            <a href="{% url "cam" 15 %}">
+                <img src="{% static "images/icons8-add-camera.png" %}"
                      alt="camera icon"
                      width="24"
                      height="24">
-                <p class="c-nav-link__text">camera stream</p>
+                <p>camera stream</p>
             </a>
         </li>
         <!-- emails -->
-        <li class="l-nav__list__item">
-            <a class="c-nav-link {% if active_link == 'emails' %}active_link{% endif %}"
-               href="{% url "emails" %}">
-                <img class="c-nav-link__ico"
-                     src="{% static "images/icons8-email.png" %}"
+        <li>
+            <a href="{% url "emails" %}">
+                <img src="{% static "images/icons8-email.png" %}"
                      alt="camera icon"
                      width="24"
                      height="24">
-                <p class="c-nav-link__text">Emails</p>
+                <p>Emails</p>
             </a>
         </li>
         <!-- prehledy -->
-        <li class="l-nav__list__item">
-            <a class="c-nav-link {% if active_link == 'charts' %}active_link{% endif %}"
-               href="{% url "charts" %}">
-                <img class="c-nav-link__ico"
-                     src="{% static "images/icons8-chart.png" %}"
+        <li>
+            <a href="{% url "charts" %}">
+                <img src="{% static "images/icons8-chart.png" %}"
                      alt="chart icon"
                      width="24"
                      height="24">
-                <p class="c-nav-link__text">Přehledy</p>
+                <p>Přehledy</p>
             </a>
         </li>
-        <li class="l-nav__list__item">
-            <a class="c-nav-link {% if active_link == 'attendance' %}active_link{% endif %}"
-               href="{% url "attendance" %}">
-                <img class="c-nav-link__ico"
-                     src="{% static "images/icons8-conference.png" %}"
+        <li>
+            <a href="{% url "attendance" %}">
+                <img src="{% static "images/icons8-conference.png" %}"
                      alt="chart icon"
                      width="24"
                      height="24">
-                <p class="c-nav-link__text">Dochazka</p>
+                <p>Dochazka</p>
             </a>
         </li>
     </ul>

@@ -1,9 +1,9 @@
 {% load static %}
-<header class="l-header">
+<header>
     {% if messages %}
-        {% for message in messages %}<p class="l-header__text">{{ message }}</p>{% endfor %}
+        {% for message in messages %}<p>{{ message }}</p>{% endfor %}
     {% endif %}
-    {% if error %}<p class="l-header__error">{{ error }}</p>{% endif %}
+    {% if error %}<p>{{ error }}</p>{% endif %}
     {% if user_exist == "True" %}
         {% include "app_dashboard/header_logged.html" %}
     {% else %}
