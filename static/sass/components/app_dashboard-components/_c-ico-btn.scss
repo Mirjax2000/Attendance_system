@@ -9,9 +9,11 @@
     padding: 0.3em;
     outline: none;
     border-bottom: 1px solid #52525235;
+    text-align: left;
 
     img {
         background-color: transparent;
+        align-content: flex-start;
     }
 
     p {
@@ -31,5 +33,10 @@
     &.active {
         background-color: var(--scheme-accent);
         box-shadow: 1px 1px 3px black;
+    }
+
+    &:active {
+        box-shadow: 0 0 1px black;
+        transform: translateY(1px) scale(0.99);
     }
 }

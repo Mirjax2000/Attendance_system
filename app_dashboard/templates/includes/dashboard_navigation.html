@@ -89,7 +89,8 @@
 {% if request.user.is_authenticated %}
     <div>
         <a class="c-ico-btn" href="{% url "logout" %}">
-            <img src="{% static "images/icons8-log-out.png" %}"
+            <img class="u-neg-merge-sml-left"
+                 src="{% static "images/icons8-log-out.png" %}"
                  alt="chart icon"
                  width="24"
                  height="24">
@@ -99,7 +100,8 @@
 {% else %}
     <div>
         <a class="c-ico-btn" href="{% url "login" %}">
-            <img src="{% static "images/icons8-login-btn.png" %}"
+            <img class="u-neg-merge-sml-left"
+                 src="{% static "images/icons8-login-btn.png" %}"
                  alt="chart icon"
                  width="24"
                  height="24">

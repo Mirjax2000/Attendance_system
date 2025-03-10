@@ -200,10 +200,6 @@ body.home {
 }
 
 /* --- placeholders --- */
-.c-form {
-  margin-inline: auto;
-}
-
 .L-header, .L-navigation {
   user-select: none;
 }
@@ -243,6 +239,10 @@ body.home {
 
 .u-mt-medium {
   margin-top: 2.5rem;
+}
+
+.u-neg-merge-sml-left {
+  margin-left: -0.1em;
 }
 
 /* --- typography --- */
@@ -353,11 +353,10 @@ body {
 }
 
 .c-form {
-  width: 80%;
-  padding: 2em;
+  width: 100%;
+  padding: 5em;
   border-radius: 5px;
-  border: 1px solid rgba(0, 0, 0, 0.3411764706);
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1921568627);
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1921568627);
 }
 .c-ico-btn {
   display: flex;
@@ -369,9 +368,11 @@ body {
   padding: 0.3em;
   outline: none;
   border-bottom: 1px solid rgba(82, 82, 82, 0.2078431373);
+  text-align: left;
 }
 .c-ico-btn img {
   background-color: transparent;
+  align-content: flex-start;
 }
 .c-ico-btn p {
   margin-left: 1em;
@@ -385,6 +386,10 @@ body {
 .c-ico-btn:hover, .c-ico-btn:focus, .c-ico-btn.active {
   background-color: var(--scheme-accent);
   box-shadow: 1px 1px 3px black;
+}
+.c-ico-btn:active {
+  box-shadow: 0 0 1px black;
+  transform: translateY(1px) scale(0.99);
 }
 
 .c-logo {
