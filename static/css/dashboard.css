@@ -13,7 +13,7 @@
   --scheme-success: #339af0;
   --scheme-info: #0f0;
   --scheme-warning: #ff3c00;
-  --background-clr-gradient-primary: linear-gradient(to right bottom, #2a2b2e, #2a324e);
+  --background-clr-gradient-primary: linear-gradient(to left, #273358, #2a324e);
 }
 
 /* --- normalize --- */
@@ -294,6 +294,10 @@ body {
 .L-navigation {
   background-color: var(--scheme-clr-2);
   padding-inline: 1em;
+}
+.L-navigation__sublist {
+  margin-left: 1.3em;
+  padding-block: 0.3em;
 }
 .L-navigation__item:not(:last-child) {
   margin-bottom: 0.5em;

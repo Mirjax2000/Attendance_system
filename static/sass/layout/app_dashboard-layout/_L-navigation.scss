@@ -4,7 +4,10 @@
 .L-navigation {
     background-color: var(--scheme-clr-2);
     padding-inline: 1em;
-    &__list {
+
+    &__sublist {
+        margin-left: 1.3em;
+        padding-block: 0.3em;
     }
 
     &__item:not(:last-child) {
