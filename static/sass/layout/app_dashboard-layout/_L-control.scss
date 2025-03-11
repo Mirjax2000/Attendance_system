@@ -1,0 +1,11 @@
+@use "../../utils/" as *;
+@use "../../base/placeholders" as *;
+
+.L-controls {
+    width: 100%;
+    margin-bottom: 1em;
+
+    &__list {
+        @include flex(flex-start, center);
+    }
+}

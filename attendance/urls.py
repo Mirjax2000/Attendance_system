@@ -6,7 +6,7 @@ from django.contrib import admin
 from django.urls import path
 from django.urls.conf import include
 
-from accounts.views import CustomLoginView, user_logout
+from accounts.views import CustomLoginView, SignUpView, user_logout
 from app_dashboard.views import (
     AttendanceView,
     CamView,
@@ -57,6 +57,7 @@ app_main_urls: list = [
 app_accounts_urls: list = [
     path("accounts/login/", CustomLoginView.as_view(), name="login"),
     path("accounts/logout/", user_logout, name="logout"),
+    path("accounts/signup/", SignUpView.as_view(), name="signup"),
     path("accounts/", include("django.contrib.auth.urls")),
 ]
 

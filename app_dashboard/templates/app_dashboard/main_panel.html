@@ -4,16 +4,77 @@
     main panel
 {% endblock title %}
 {% block content %}
-    <div>
-        <h1>main panel</h1>
-        <p class="c-button">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam ex officia, dolorem inventore voluptatum modi? Ab, adipisci dolore odit alias esse voluptate beatae illo amet distinctio, eum in nostrum totam!
-        </p>
-        <p class="c-button">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam ex officia, dolorem inventore voluptatum modi? Ab, adipisci dolore odit alias esse voluptate beatae illo amet distinctio, eum in nostrum totam!
-        </p>
-        <p class="c-button">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam ex officia, dolorem inventore voluptatum modi? Ab, adipisci dolore odit alias esse voluptate beatae illo amet distinctio, eum in nostrum totam!
-        </p>
-    </div>
+    <section>
+        <p>vypis organizacnich struktur</p>
+        <ul>
+            <li>management</li>
+            <li>udrzba</li>
+            <li>uklid</li>
+        </ul>
+    </section>
+    <section class="L-controls">
+        <ul class="L-controls__list">
+            <li class="L-controls__item">
+                <a class="c-ico-btn" href="#">
+                    <img class="L-controls__ico"
+                         src="{% static "images/icons8-add-group.png" %}"
+                         alt="employees icon"
+                         width="24"
+                         height="24">
+                    <p>Přidat organizační strukturu</p>
+                </a>
+            </li>
+            <li class="L-controls__item">
+                <a class="c-ico-btn" href="#">
+                    <img class="L-controls__ico"
+                         src="{% static "images/icons8-add-group.png" %}"
+                         alt="employees icon"
+                         width="24"
+                         height="24">
+                    <p>Upravit organizační strukturu</p>
+                </a>
+            </li>
+            <li class="L-controls__item">
+                <a class="c-ico-btn" href="#">
+                    <img class="L-controls__ico"
+                         src="{% static "images/icons8-add-group.png" %}"
+                         alt="employees icon"
+                         width="24"
+                         height="24">
+                    <p>Odebrat organizační strukturu</p>
+                </a>
+            </li>
+        </ul>
+    </section>
+    <section class="L-controls">
+        <ul class="L-controls__list">
+            <li class="L-controls__item">
+                <a class="c-ico-btn" href="{% url "signup" %}">
+                    <img src="{% static "images/icons8-update-blue.png" %}"
+                         alt="employees icon"
+                         width="24"
+                         height="24">
+                    <p>Přidat uživatele</p>
+                </a>
+            </li>
+            <li class="L-controls__item">
+                <a class="c-ico-btn" href="#">
+                    <img src="{% static "images/icons8-update-blue.png" %}"
+                         alt="employees icon"
+                         width="24"
+                         height="24">
+                    <p>Update uživatele</p>
+                </a>
+            </li>
+            <li class="L-controls__item">
+                <a class="c-ico-btn" href="#">
+                    <img src="{% static "images/icons8-update-blue.png" %}"
+                         alt="employees icon"
+                         width="24"
+                         height="24">
+                    <p>Smazat uživatele</p>
+                </a>
+            </li>
+        </ul>
+    </section>
 {% endblock content %}

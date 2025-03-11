@@ -4,42 +4,38 @@
     Create employee
 {% endblock title %}
 {% block content %}
-    <div class="content__container">
-        <main class="l-controls">
-            <ul class="l-controls__list">
-                <li class="l-controls__item">
-                    <a class="c-button l-controls__btn" href="{% url "create_emp" %}">
-                        <img class="l-controls__ico"
-                             src="{% static "images/icons8-add-group.png" %}"
-                             alt="employees icon"
-                             width="24"
-                             height="24">
-                        <p class="l-controls__text">Přidat zaměstnance</p>
-                    </a>
-                </li>
-                <li class="l-controls__item">
-                    <a class="c-button l-controls__btn" href="#">
-                        <img class="l-controls__ico"
-                             src="{% static "images/icons8-update-blue.png" %}"
-                             alt="employees icon"
-                             width="24"
-                             height="24">
-                        <p class="l-controls__text">Update zaměstnance</p>
-                    </a>
-                </li>
-                <li class="l-controls__item">
-                    <a class="c-button l-controls__btn" href="#">
-                        <img class="l-controls__ico"
-                             src="{% static "images/icons8-delete-48-red.png" %}"
-                             alt="employees icon"
-                             width="24"
-                             height="24">
-                        <p class="l-controls__text">Smazat zaměstnance</p>
-                    </a>
-                </li>
-            </ul>
-        </main>
-        <section class="create_emp" id="createEMP">
-        </section>
-    </div>
+    <section>
+        <ul class="l-controls__list">
+            <li class="l-controls__item">
+                <a class="c-button l-controls__btn" href="{% url "create_emp" %}">
+                    <img class="l-controls__ico"
+                         src="{% static "images/icons8-add-group.png" %}"
+                         alt="employees icon"
+                         width="24"
+                         height="24">
+                    <p class="l-controls__text">Přidat zaměstnance</p>
+                </a>
+            </li>
+            <li class="l-controls__item">
+                <a class="c-button l-controls__btn" href="#">
+                    <img class="l-controls__ico"
+                         src="{% static "images/icons8-update-blue.png" %}"
+                         alt="employees icon"
+                         width="24"
+                         height="24">
+                    <p class="l-controls__text">Update zaměstnance</p>
+                </a>
+            </li>
+            <li class="l-controls__item">
+                <a class="c-button l-controls__btn" href="#">
+                    <img class="l-controls__ico"
+                         src="{% static "images/icons8-delete-48-red.png" %}"
+                         alt="employees icon"
+                         width="24"
+                         height="24">
+                    <p class="l-controls__text">Smazat zaměstnance</p>
+                </a>
+            </li>
+        </ul>
+    </section>
 {% endblock content %}
