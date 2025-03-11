@@ -1,0 +1,58 @@
+@use "../../utils/" as *;
+@use "../../base/placeholders" as *;
+
+.L-list {
+    padding: 0.5em;
+
+    &__title {
+        color: var(--scheme-default);
+        display: inline-block;
+        line-height: 1;
+        margin-bottom: 1em;
+        border-bottom: 1px solid var(--scheme-default);
+    }
+
+    &__table {
+        width: 100%;
+    }
+
+    &__table-header {
+        color: var(--scheme-default);
+    }
+
+    &__table-row {
+        padding: 0.3em;
+    }
+
+    &__table-cell {
+        border: 1px solid #434343;
+        padding-inline: 0.5em;
+        color: var(--scheme-default);
+
+        &.id {
+            min-width: 5ch;
+            text-align: center;
+            padding: 0;
+        }
+
+        &.username {
+            min-width: 20ch;
+            width: 30%;
+        }
+
+        &.email {
+            min-width: 30ch;
+            width: 70%;
+        }
+
+        &.CAT {
+            border: none;
+            min-width: 200px;
+        }
+    }
+
+    &__actions {
+        @include flex(flex-start, center);
+        @extend %select-none;
+    }
+}

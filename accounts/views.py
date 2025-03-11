@@ -1,20 +1,62 @@
 """Account views"""
 
 from django.contrib import messages
-from django.contrib.auth import authenticate, logout
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.views import LoginView, LogoutView
-from django.shortcuts import redirect
+from django.contrib.auth import logout
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
+from django.contrib.auth.views import LoginView
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
-from django.views.generic import CreateView
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
-from accounts.forms import SignUpForm
+from accounts.forms import SignUpForm, UserUpdateForm
 
 
 def get_user_name(view_instance) -> str:
     """Získej jméno přihlášeného uživatele"""
     result: str = str(view_instance.request.user.username)
     return result
+
+
+class UserListView(ListView):
+    """Vypis users"""
+
+    model = User
+    template_name = "accounts/user_list.html"
+    context_object_name = "users"
+    paginate_by = 20
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["user_name"] = get_user_name(self)
+        context["active_link"] = "main-panel"
+
+        return context
+
+
+class UserUpdateView(LoginRequiredMixin, UpdateView):
+    """Update user"""
+
+    model = User
+    form_class = UserUpdateForm
+    template_name = "registration/user_update.html"
+    success_url = reverse_lazy("dashboard")
+
+    def form_valid(self, form):
+        messages.success(self.request, "Updated")
+        return super().form_valid(form)
+
+
+class UserDeleteView(LoginRequiredMixin, DeleteView):
+    """User Delete"""
+
+    model = User
+    template_name = "registration/user_confirm_delete.html"
+    success_url = reverse_lazy("dashboard")
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, "Uživatel byl úspěšně smazán.")
+        return super().delete(request, *args, **kwargs)
 
 
 class SignUpView(CreateView):

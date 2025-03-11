@@ -15,64 +15,22 @@
     <section class="L-controls">
         <ul class="L-controls__list">
             <li class="L-controls__item">
-                <a class="c-ico-btn" href="#">
+                <a class="c-ico-btn" href="{% url "department_list" %}">
                     <img class="L-controls__ico"
                          src="{% static "images/icons8-add-group.png" %}"
                          alt="employees icon"
                          width="24"
                          height="24">
-                    <p>Přidat organizační strukturu</p>
+                    <p>Departements</p>
                 </a>
             </li>
             <li class="L-controls__item">
-                <a class="c-ico-btn" href="#">
-                    <img class="L-controls__ico"
-                         src="{% static "images/icons8-add-group.png" %}"
-                         alt="employees icon"
-                         width="24"
-                         height="24">
-                    <p>Upravit organizační strukturu</p>
-                </a>
-            </li>
-            <li class="L-controls__item">
-                <a class="c-ico-btn" href="#">
-                    <img class="L-controls__ico"
-                         src="{% static "images/icons8-add-group.png" %}"
-                         alt="employees icon"
-                         width="24"
-                         height="24">
-                    <p>Odebrat organizační strukturu</p>
-                </a>
-            </li>
-        </ul>
-    </section>
-    <section class="L-controls">
-        <ul class="L-controls__list">
-            <li class="L-controls__item">
-                <a class="c-ico-btn" href="{% url "signup" %}">
+                <a class="c-ico-btn" href="{% url "user_list" %}">
                     <img src="{% static "images/icons8-login-blue.png" %}"
                          alt="employees icon"
                          width="24"
                          height="24">
-                    <p>Přidat uživatele</p>
-                </a>
-            </li>
-            <li class="L-controls__item">
-                <a class="c-ico-btn" href="#">
-                    <img src="{% static "images/icons8-login.png" %}"
-                         alt="employees icon"
-                         width="24"
-                         height="24">
-                    <p>Update uživatele</p>
-                </a>
-            </li>
-            <li class="L-controls__item">
-                <a class="c-ico-btn" href="#">
-                    <img src="{% static "images/icons8-login-red.png" %}"
-                         alt="employees icon"
-                         width="24"
-                         height="24">
-                    <p>Smazat uživatele</p>
+                    <p>Users</p>
                 </a>
             </li>
         </ul>

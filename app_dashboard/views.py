@@ -15,7 +15,7 @@ from django.views.generic import (
 )
 from rich.console import Console
 
-from app_main.models import Employee
+from app_main.models import Department, Employee
 
 from .forms import EmployeeForm
 
@@ -200,3 +200,19 @@ class CreateEmpView(CreateView):
         response = super().form_invalid(form)
         messages.error(self.request, "Chyba - záznam nebyl vytvořen")
         return response
+
+
+class DepartmentListView(ListView):
+    """Vypis users"""
+
+    model = Department
+    template_name = "app_dashboard/department_list.html"
+    context_object_name = "departments"
+    paginate_by = 20
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["user_name"] = get_user_name(self)
+        context["active_link"] = "main-panel"
+
+        return context

@@ -1,0 +1,8 @@
+{% extends "dashboard_base.html" %}
+{% load static %}
+{% block title %}
+    deaprtement list
+{% endblock title %}
+{% block content %}
+    {% for department in departments %}<p>{{ department.name }}</p>{% endfor %}
+{% endblock content %}

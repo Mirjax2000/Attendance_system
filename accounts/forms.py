@@ -7,6 +7,7 @@ from django.forms import (
     CharField,
     DateField,
     EmailField,
+    ModelForm,
     NumberInput,
     PasswordInput,
     Textarea,
@@ -19,21 +20,11 @@ User = get_user_model()
 class SignUpForm(UserCreationForm):
     """Formular pro noveho uzivatele"""
 
-    class Meta(UserCreationForm.Meta):
-        """Meta pole"""
-
-        fields = [
-            "username",
-            "first_name",
-            "last_name",
-            "email",
-            "password1",
-            "password2",
-        ]
-
-    username = CharField(label="Uživatelské jméno", required=True)
-    first_name = CharField(label="Jméno", required=True)
-    last_name = CharField(label="Příjmení", required=True)
+    username = CharField(
+        max_length=20, label="Uživatelské jméno", required=True
+    )
+    first_name = CharField(max_length=25, label="Jméno", required=True)
+    last_name = CharField(max_length=25, label="Příjmení", required=True)
 
     password1 = CharField(widget=PasswordInput(), label="Heslo")
 
@@ -43,9 +34,39 @@ class SignUpForm(UserCreationForm):
     )
     email = EmailField(label="E-mail", required=True)
 
+    class Meta(UserCreationForm.Meta):
+        """Meta pole"""
+
+        model = User
+        fields = [
+            "username",
+            "first_name",
+            "last_name",
+            "email",
+            "password1",
+            "password2",
+        ]
+
     def clean_email(self):
         """Kontrola emailu"""
         email = self.cleaned_data.get("email")
         if User.objects.filter(email=email).exists():
             raise ValidationError("Tento e-mail je již používán. Zvolte jiný.")
         return email
+
+
+class UserUpdateForm(ModelForm):
+    """Formulář pro aktualizaci uživatele (bez hesla)"""
+
+    username = CharField(
+        max_length=20, label="Uživatelské jméno", required=True
+    )
+
+    first_name = CharField(max_length=25, label="Jméno", required=True)
+    last_name = CharField(max_length=25, label="Příjmení", required=True)
+
+    class Meta:
+        """zobrazeni poli"""
+
+        model = User
+        fields = ["username", "email", "first_name", "last_name"]

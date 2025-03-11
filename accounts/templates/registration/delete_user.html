@@ -1,0 +1,13 @@
+{% extends "dashboard_base.html" %}
+{% load static %}
+{% block title %}
+    login
+{% endblock title %}
+{% block content %}
+    <h2>Opravdu chcete smazat tohoto uživatele?</h2>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Ano, smazat</button>
+        <a href="{% url 'dashboard' %}">Zrušit</a>
+    </form>
+{% endblock content %}
