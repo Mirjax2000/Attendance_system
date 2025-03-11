@@ -457,7 +457,7 @@ body {
   width: 30%;
 }
 .L-list__table-cell.email {
-  min-width: 30ch;
+  min-width: 20ch;
   width: 70%;
   overflow: auto;
 }
@@ -473,7 +473,7 @@ body {
 }
 .L-list__table-cell.CAT {
   border: none;
-  min-width: 200px;
+  min-width: 220px;
 }
 .L-list__actions {
   display: flex;
@@ -490,7 +490,7 @@ body {
   transition: all ease-in-out 0.1s;
   padding: 0.3em;
   outline: none;
-  border-bottom: 1px solid rgba(91, 91, 91, 0.2078431373);
+  border-bottom: 1px solid rgba(109, 109, 109, 0.2078431373);
   text-align: left;
 }
 .c-ico-btn img {
