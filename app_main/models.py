@@ -100,7 +100,7 @@ class Employee(models.Model):
     )
 
     department = models.ForeignKey(
-        Department,
+        "Department",
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
