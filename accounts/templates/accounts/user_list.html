@@ -6,7 +6,13 @@
 {% block content %}
     <section class="L-list">
         <div class="L-list__wrapper">
-            <h2 class="L-list__title">Seznam uživatelů</h2>
+            <h2 class="L-list__title">
+                <img src="{% static 'images/icons8-list.png' %}"
+                     alt="delete icon"
+                     width="24"
+                     height="24">
+                Seznam uživatelů
+            </h2>
             <a class="c-ico-btn" href="{% url 'signup' %}">
                 <img src="{% static 'images/icons8-login-blue.png' %}"
                      alt="delete icon"

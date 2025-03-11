@@ -433,6 +433,10 @@ body {
   display: inline-block;
   border-bottom: 1px solid var(--scheme-default);
 }
+.L-list__title img {
+  background-color: transparent;
+  margin-top: -3px;
+}
 .L-list__table {
   width: 100%;
 }

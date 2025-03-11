@@ -15,6 +15,11 @@
         color: var(--scheme-default);
         display: inline-block;
         border-bottom: 1px solid var(--scheme-default);
+
+        img {
+            background-color: transparent;
+            margin-top: -3px;
+        }
     }
 
     &__table {
