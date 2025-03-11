@@ -4,11 +4,16 @@
 .L-list {
     padding: 0.5em;
 
+    &__wrapper {
+        @include flex(space-between, center);
+        @extend %select-none;
+
+        margin-bottom: 2em;
+    }
+
     &__title {
         color: var(--scheme-default);
         display: inline-block;
-        line-height: 1;
-        margin-bottom: 1em;
         border-bottom: 1px solid var(--scheme-default);
     }
 
@@ -43,6 +48,20 @@
         &.email {
             min-width: 30ch;
             width: 70%;
+            overflow: auto;
+
+            &::-webkit-scrollbar {
+                height: 2px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background-color: #999;
+                border-radius: 4px;
+            }
+
+            &::-webkit-scrollbar-track {
+                background: transparent;
+            }
         }
 
         &.CAT {
