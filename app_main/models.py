@@ -99,6 +99,14 @@ class Employee(models.Model):
         max_length=255, blank=True, null=False, verbose_name="Pin Hash:"
     )
 
+    department = models.ForeignKey(
+        Department,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Oddělení",
+    )
+
     slug = models.SlugField(
         blank=True,
         unique=True,
@@ -233,3 +241,19 @@ class FaceVector(models.Model):
         with tran.atomic():
             self.employee.save()
             super().save(*args, **kwargs)
+
+
+class Department(models.Model):
+    """Oddělení"""
+
+    name = models.CharField(
+        max_length=50, unique=True, verbose_name="Název oddělení"
+    )
+
+    def __str__(self) -> str:
+        return str(self.name)
+
+    class Meta:
+        """Tridit podle"""
+
+        ordering = ["name"]
