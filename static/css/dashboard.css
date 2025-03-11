@@ -460,6 +460,9 @@ body {
   min-width: 20ch;
   width: 30%;
 }
+.L-list__table-cell.username.current {
+  color: var(--scheme-success);
+}
 .L-list__table-cell.email {
   min-width: 20ch;
   width: 70%;
@@ -484,6 +487,10 @@ body {
   justify-content: flex-start;
   align-items: center;
   gap: 0;
+}
+.L-list__actions .hide {
+  opacity: 0.3;
+  pointer-events: none;
 }
 
 .c-ico-btn {

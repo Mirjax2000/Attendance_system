@@ -48,6 +48,10 @@
         &.username {
             min-width: 20ch;
             width: 30%;
+
+            &.current {
+                color: var(--scheme-success);
+            }
         }
 
         &.email {
@@ -78,5 +82,10 @@
     &__actions {
         @include flex(flex-start, center);
         @extend %select-none;
+
+        .hide {
+            opacity: 0.3;
+            pointer-events: none;
+        }
     }
 }

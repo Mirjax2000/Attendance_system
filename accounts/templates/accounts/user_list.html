@@ -34,11 +34,24 @@
                 {% for user in users %}
                     <tr class="L-list__table-row">
                         <td class="L-list__table-cell id">{{ user.id }}</td>
-                        <td class="L-list__table-cell username">{{ user.username }}</td>
-                        <td class="L-list__table-cell email">{{ user.email }}</td>
+                        <td class="L-list__table-cell username {% if request.user.username == user.username %}current{% endif %}">
+                            {% if request.user.username == user.username %}
+                                - {{ user.username }} -
+                            {% else %}
+                                {{ user.username }}
+                            {% endif %}
+                        </td>
+                        <td class="L-list__table-cell email">
+                            {% if user.email %}
+                                {{ user.email }}
+                            {% else %}
+                                <small class="u-text-success">No value</small>
+                            {% endif %}
+                        </td>
                         <td class="L-list__table-cell CAT">
                             <div class="L-list__actions">
-                                <a class="c-ico-btn" href="{% url 'delete-user' user.pk %}">
+                                <a class="c-ico-btn {% if request.user.username == user.username %}hide{% endif %}"
+                                   href="{% url 'delete-user' user.pk %}">
                                     <img src="{% static 'images/icons8-delete-48-red.png' %}"
                                          alt="delete icon"
                                          width="24"
