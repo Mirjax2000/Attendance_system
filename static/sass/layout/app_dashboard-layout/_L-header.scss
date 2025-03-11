@@ -6,6 +6,7 @@ $header-brdr-rds: 5px;
 .L-header {
     @extend %select-none;
 
+    flex-shrink: 0;
     width: 100%;
     background-color: var(--scheme-clr-2);
     border-bottom-right-radius: $header-brdr-rds;

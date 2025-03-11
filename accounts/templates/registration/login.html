@@ -4,19 +4,42 @@
     login
 {% endblock title %}
 {% block content %}
-    <div class="c-form">
-        <h1 class="c-form__header u-mb-small">Log-in</h1>
-        <form action="{% url 'login' %}" method="post" class="c-form__form">
+    <div class="L-form">
+        <h1 class="L-form__header u-mb-small">Log-in</h1>
+        <form action="{% url 'login' %}"
+              method="post"
+              class="L-form__form"
+              novalidate>
             {% csrf_token %}
-            <label for="{{ form.username.id_for_label }} " class="c-form__label ">Uživatelské jméno:</label>
+            <!-- Zobrazení obecných chyb formuláře -->
+            {% if form.non_field_errors %}
+                <div class="L-form__error">
+                    {% for error in form.non_field_errors %}<p class="u-text-warning">{{ error }}</p>{% endfor %}
+                </div>
+            {% else %}
+                <div class="L-form__error">
+                    <p>&nbsp;</p>
+                </div>
+            {% endif %}
+            <label for="{{ form.username.id_for_label }}" class="L-form__label">Uživatelské jméno:</label>
             {{ form.username }}
-            <label for="{{ form.password.id_for_label }}" class="c-form__label">Heslo:</label>
+            {% if form.username.errors %}
+                <p class="u-text-warning">{{ form.username.errors.0 }}</p>
+            {% else %}
+                <p>&nbsp;</p>
+            {% endif %}
+            <label for="{{ form.password.id_for_label }}" class="L-form__label">Heslo:</label>
             {{ form.password }}
-            <input type="submit" value="Přihlásit se" class="c-form__submit">
+            {% if form.password.errors %}
+                <p class="u-text-warning">{{ form.password.errors.0 }}</p>
+            {% else %}
+                <p>&nbsp;</p>
+            {% endif %}
+            <button class="L-form__submit">Přihlásit se</button>
         </form>
         <p class="u-text-right u-text-warning">
             <a href="{% url "password_reset" %}"
-               class="c-form__reset u-text-warning">Zapomenuté heslo?</a>
+               class="L-form__reset u-text-warning">Zapomenuté heslo?</a>
         </p>
     </div>
 {% endblock content %}

@@ -3,9 +3,9 @@
 
 .c-ico-btn {
     @include flex(flex-start, center);
+    @extend %border-radius;
 
     transition: all ease-in-out 0.1s;
-    border-radius: 5px;
     padding: 0.3em;
     outline: none;
     border-bottom: 1px solid #52525235;

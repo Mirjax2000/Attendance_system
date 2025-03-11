@@ -1,0 +1,10 @@
+@use "../../utils/" as *;
+@use "../../base/placeholders" as *;
+
+.L-content {
+    @extend %border-radius;
+
+    flex-grow: 1;
+    width: clamp(500px, 100%, 100%);
+    box-shadow: 0 1px 5px #00000031;
+}

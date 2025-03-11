@@ -1,20 +1,62 @@
 @use "../../utils/" as *;
 @use "../../base/placeholders" as *;
 
-.c-form {
-    width: 100%;
-    padding: 5em;
-    border-radius: 5px;
-    box-shadow: 0 1px 5px #00000031;
+.L-form {
+    @extend %margin-in;
+    @extend %border-radius;
+    // @extend %select-none;
+
+    color: var(--scheme-default);
+    margin-top: 2em;
+    width: clamp(400px, 60%, 60%);
+    padding: 3em 5em;
+    border: 1px solid #383838;
 
     &__header {
     }
     &__text {
     }
+
     &__form {
+        input {
+            @extend %border-radius;
+
+            display: block;
+            width: 100%;
+            padding: 0.3em 1em;
+            color: var(--scheme-default);
+        }
     }
+
     &__label {
+        display: block;
+        margin-bottom: 0.3em;
     }
+
     &__submit {
+        @extend %border-radius;
+
+        border: none;
+        appearance: none;
+        color: var(--scheme-default);
+        width: 100%;
+        margin-block: 1em;
+        padding-block: 0.3em;
+        background-color: var(--scheme-accent);
+        transition: all ease-in-out 0.1s;
+
+        &:hover {
+            background-color: var(--scheme-accent-darker);
+            box-shadow: 1px 1px 3px #0000004c;
+            cursor: pointer;
+        }
+    }
+
+    &__error {
+        margin-bottom: 0.5em;
+
+        p {
+            margin-bottom: 0.5em;
+        }
     }
 }

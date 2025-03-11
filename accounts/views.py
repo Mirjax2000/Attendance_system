@@ -1,7 +1,8 @@
 """Account views"""
 
 from django.contrib import messages
-from django.contrib.auth import logout
+from django.contrib.auth import authenticate, logout
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import redirect
 
@@ -20,19 +21,19 @@ def user_logout(request):
     return redirect(request.META.get("HTTP_REFERER", "/"))
 
 
-class CustomLogoutView(LogoutView):
-    """Logout view with message"""
+# class CustomLogoutView(LogoutView):
+#     """Logout view with message"""
 
-    def dispatch(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
-            messages.success(
-                request, f"Uživatel {get_user_name(self)} odhlášen"
-            )
-        return super().dispatch(request, *args, **kwargs)
+#     def dispatch(self, request, *args, **kwargs):
+#         if request.user.is_authenticated:
+#             messages.success(
+#                 request, f"Uživatel {get_user_name(self)} odhlášen"
+#             )
+#         return super().dispatch(request, *args, **kwargs)
 
-    def get_next_page(self):
-        """Správné přesměrování po odhlášení"""
-        return self.request.META.get("HTTP_REFERER") or "/"
+#     def get_next_page(self):
+#         """Správné přesměrování po odhlášení"""
+#         return self.request.META.get("HTTP_REFERER") or "/"
 
 
 class CustomLoginView(LoginView):
