@@ -5,6 +5,7 @@ from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
@@ -18,7 +19,7 @@ def get_user_name(view_instance) -> str:
     return result
 
 
-class UserListView(ListView):
+class UserListView(LoginRequiredMixin, ListView):
     """Vypis users"""
 
     model = User
@@ -29,7 +30,6 @@ class UserListView(ListView):
         context = super().get_context_data(**kwargs)
         context["user_name"] = get_user_name(self)
         context["active_link"] = "main-panel"
-        messages.success(self.request, f"pocet zaznamu: {User.objects.count()}")
 
         return context
 
@@ -60,16 +60,23 @@ class UserDeleteView(LoginRequiredMixin, DeleteView):
         context["active_link"] = "main-panel"
         return context
 
-    def delete(self, request, *args, **kwargs):
-        """delete user s ochranou protu smazani sama sebe"""
-        obj = self.get_object()
-        if request.user == obj:
-            messages.error(self.request, "Nemůžete smazat svůj vlastní účet.")
+    def control(self):
+        """Self protection"""
+        current_user = get_user_name(self)
+        user_to_delete = str(self.get_object())
+        if current_user == user_to_delete:
+            messages.error(self.request, "Nemuzes smazat sam sebe")
+            return True
+        return False
+
+    def get(self, request, *args, **kwargs):
+        if self.control():
             return redirect("user_list")
+        return super().get(request, *args, **kwargs)
 
-        messages.success(self.request, "Uživatel byl úspěšně smazán.")
-
-        return super().delete(request, *args, **kwargs)
+    def form_valid(self, form):
+        messages.success(self.request, f"Uzivatel{self.get_object()} smazan")
+        return super().form_valid(form)
 
 
 class SignUpView(CreateView):
@@ -77,7 +84,7 @@ class SignUpView(CreateView):
 
     template_name = "registration/signup.html"
     form_class = SignUpForm
-    success_url = reverse_lazy("dashboard")
+    success_url = reverse_lazy("user_list")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -87,7 +94,9 @@ class SignUpView(CreateView):
         return context
 
     def form_valid(self, form):
-        messages.success(self.request, "Uživatel vytvořen")
+        user = form.save()  # Uloží nového uživatele
+        user_name = user.username
+        messages.success(self.request, f"Uživatel {user_name} vytvořen")
         return super().form_valid(form)
 
 
