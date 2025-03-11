@@ -5,6 +5,8 @@
 {% endblock title %}
 {% block content %}
     <h2>Opravdu chcete smazat tohoto uživatele?</h2>
+    <h2>{{ user_to_delete }}</h2>
+    <h2>{{ user.username }}</h2>
     <form method="post">
         {% csrf_token %}
         <button type="submit">Ano, smazat</button>
