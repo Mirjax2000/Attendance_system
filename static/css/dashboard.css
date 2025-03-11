@@ -434,7 +434,7 @@ body {
   align-content: flex-start;
 }
 .c-ico-btn p {
-  margin-left: 1em;
+  padding-inline: 0.5em;
 }
 .c-ico-btn p:not(.u-text-success, .u-text-warning, .u-text-info) {
   color: var(--scheme-default);

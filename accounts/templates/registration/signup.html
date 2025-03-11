@@ -5,7 +5,7 @@
 {% endblock title %}
 {% block content %}
     <div class="L-form">
-        <h1 class="L-form__header u-mb-small">Sign-up</h1>
+        <h1 class="L-form__header u-mb-small">Přidat uživatele</h1>
         <form action="{% url 'signup' %}"
               method="post"
               class="L-form__form"
@@ -31,8 +31,5 @@
             {% endfor %}
             <button class="L-form__submit">Registrovat se</button>
         </form>
-        <p class="u-text-right u-text-warning">
-            Již máte účet? <a href="{% url 'login' %}" class="L-form__reset u-text-warning">Přihlásit se</a>
-        </p>
     </div>
 {% endblock content %}

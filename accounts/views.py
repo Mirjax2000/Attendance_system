@@ -31,6 +31,10 @@ class SignUpView(CreateView):
 
         return context
 
+    def form_valid(self, form):
+        messages.success(self.request, "Uživatel vytvořen")
+        return super().form_valid(form)
+
 
 def user_logout(request):
     """Logout a zustan na strance"""

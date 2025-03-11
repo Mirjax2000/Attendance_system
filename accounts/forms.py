@@ -30,11 +30,10 @@ class SignUpForm(UserCreationForm):
             "password1",
             "password2",
         ]
-        labels = {
-            "username": "Uživatelské jméno",
-            "first_name": "Jméno",
-            "last_name": "Příjmení",
-        }
+
+    username = CharField(label="Uživatelské jméno", required=True)
+    first_name = CharField(label="Jméno", required=True)
+    last_name = CharField(label="Příjmení", required=True)
 
     password1 = CharField(widget=PasswordInput(), label="Heslo")
 

@@ -17,7 +17,7 @@
     }
 
     p {
-        margin-left: 1em;
+        padding-inline: 0.5em;
 
         &:not(.u-text-success, .u-text-warning, .u-text-info) {
             color: var(--scheme-default);

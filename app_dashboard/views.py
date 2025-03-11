@@ -38,7 +38,7 @@ class RedirectDashboard(RedirectView):
 class DashboardView(LoginRequiredMixin, TemplateView):
     """Homepage"""
 
-    template_name = "app_dashboard/app_dashboard.html"
+    template_name = "app_dashboard/main_panel.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
