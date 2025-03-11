@@ -1,3 +1,3 @@
-from django.db import models
+"""app_dashboard Models"""
 
-# Create your models here.
+from django.db import models
