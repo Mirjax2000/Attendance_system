@@ -52,7 +52,7 @@ class UserDeleteView(LoginRequiredMixin, DeleteView):
 
     model = User
     template_name = "registration/delete_user.html"
-    success_url = reverse_lazy("dashboard")
+    success_url = reverse_lazy("user_list")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -65,7 +65,7 @@ class UserDeleteView(LoginRequiredMixin, DeleteView):
         obj = self.get_object()
         if request.user == obj:
             messages.error(self.request, "Nemůžete smazat svůj vlastní účet.")
-            return redirect(self.success_url)
+            return redirect("user_list")
 
         messages.success(self.request, "Uživatel byl úspěšně smazán.")
 
