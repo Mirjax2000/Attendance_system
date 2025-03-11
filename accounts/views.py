@@ -24,12 +24,12 @@ class UserListView(ListView):
     model = User
     template_name = "accounts/user_list.html"
     context_object_name = "users"
-    paginate_by = 20
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["user_name"] = get_user_name(self)
         context["active_link"] = "main-panel"
+        messages.success(self.request, f"pocet zaznamu: {User.objects.count()}")
 
         return context
 
@@ -54,17 +54,21 @@ class UserDeleteView(LoginRequiredMixin, DeleteView):
     template_name = "registration/delete_user.html"
     success_url = reverse_lazy("dashboard")
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["user_name"] = get_user_name(self)
+        context["active_link"] = "main-panel"
+        return context
+
     def delete(self, request, *args, **kwargs):
         """delete user s ochranou protu smazani sama sebe"""
-        current_user = request.user
-        user_to_delete = self.get_object()
-        print(current_user, user_to_delete)
-
-        if user_to_delete == current_user:
-            messages.success(request, "Nemůžete smazat svůj vlastní účet.")
-            return redirect("user_list")
+        obj = self.get_object()
+        if request.user == obj:
+            messages.error(self.request, "Nemůžete smazat svůj vlastní účet.")
+            return redirect(self.success_url)
 
         messages.success(self.request, "Uživatel byl úspěšně smazán.")
+
         return super().delete(request, *args, **kwargs)
 
 
