@@ -8,7 +8,13 @@ from django.contrib.auth.views import LoginView
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DeleteView, ListView, UpdateView
+from django.views.generic import (
+    CreateView,
+    DeleteView,
+    DetailView,
+    ListView,
+    UpdateView,
+)
 
 from accounts.forms import SignUpForm, UserUpdateForm
 
@@ -25,6 +31,23 @@ class UserListView(LoginRequiredMixin, ListView):
     model = User
     template_name = "accounts/user_list.html"
     context_object_name = "users"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["user_name"] = get_user_name(self)
+        context["active_link"] = "main-panel"
+
+        return context
+
+
+class UserDetailView(LoginRequiredMixin, DetailView):
+    """Detail user"""
+
+    model = User
+    template_name = "accounts/user_detail.html"
+    context_object_name = (
+        "user"  # Tento název bude v template jako objekt 'user'
+    )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

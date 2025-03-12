@@ -1,0 +1,103 @@
+{% extends "dashboard_base.html" %}
+{% load static %}
+{% block title %}
+    user detail
+{% endblock title %}
+{% block content %}
+    <div class="L-detail">
+        <h1 class="L-detail__header">
+            Detail uživatele: <span class="L-detail__header--username">"{{ user.username }}"</span>
+        </h1>
+        <ul class="L-detail__list">
+            <li class="L-detail__item">
+                <p>
+                    <strong>Jméno:</strong> {{ user.first_name }} {{ user.last_name }}
+                </p>
+            </li>
+            <li class="L-detail__item">
+                <p>
+                    <strong>Email:</strong> {{ user.email }}
+                </p>
+            </li>
+            <li class="L-detail__item">
+                <p>
+                    <strong>Datum registrace:</strong> {{ user.date_joined }}
+                </p>
+            </li>
+            <li class="L-detail__item">
+                <p>
+                    <strong>Poslední přihlášení:</strong> {{ user.last_login }}
+                </p>
+            </li>
+            <li class="L-detail__item">
+                <p>
+                    <strong>Superuživatel:</strong>
+                    {% if user.is_superuser %}
+                        Ano
+                    {% else %}
+                        Ne
+                    {% endif %}
+                </p>
+            </li>
+            <li class="L-detail__item">
+                <p>
+                    <strong>Administrátor:</strong>
+                    {% if user.is_staff %}
+                        Ano
+                    {% else %}
+                        Ne
+                    {% endif %}
+                </p>
+            </li>
+            <li class="L-detail__item">
+                <p>
+                    <strong>Aktivní účet:</strong>
+                    {% if user.is_active %}
+                        Ano
+                    {% else %}
+                        Ne
+                    {% endif %}
+                </p>
+            </li>
+            <li class="L-detail__item">
+                <p>
+                    <strong>Skupiny:</strong>
+                    {% for group in user.groups.all %}
+                        {{ group.name }}
+                        {% if not forloop.last %},{% endif %}
+                    {% endfor %}
+                </p>
+            </li>
+            <li class="L-detail__item">
+                <p>
+                    <strong>Oprávnění:</strong>
+                    {% for perm in user.user_permissions.all %}
+                        {{ perm.name }}
+                        {% if not forloop.last %},{% endif %}
+                    {% endfor %}
+                </p>
+            </li>
+            <li class="L-detail__item">
+                <div class="L-detail__actions">
+                    <a class="c-ico-btn {% if request.user.username == user.username %}hide{% endif %}"
+                       href="{% url 'delete-user' user.pk %}">
+                        <img src="{% static 'images/icons8-delete-48-red.png' %}"
+                             alt="delete icon"
+                             width="24"
+                             height="24">
+                        <p>smazat</p>
+                    </a>
+                    <a class="c-ico-btn" href="{% url 'update-user' user.pk %}">
+                        <img class="list__action-icon"
+                             src="{% static 'images/icons8-update-blue.png' %}"
+                             alt="update icon"
+                             width="24"
+                             height="24">
+                        <p class="list__action-text">update</p>
+                    </a>
+                </div>
+            </li>
+        </ul>
+        <a href="{% url 'user_list' %}" class="L-detail__redirect">Zpět na seznam uživatelů</a>
+    </div>
+{% endblock content %}

@@ -4,7 +4,7 @@
 .L-form {
     @extend %margin-in;
     @extend %border-radius;
-    // @extend %select-none;
+    @extend %select-none;
 
     color: var(--scheme-default);
     margin-top: 2em;
@@ -12,9 +12,17 @@
     padding: 3em 5em;
     border: 1px solid #383838;
 
-    &__header {
+    &__user {
+        @extend %border-radius;
+
+        display: block;
+        margin-bottom: 0.3em;
+        padding: 0.3em 0.5em;
+        background-color: var(--scheme-clr-4);
     }
-    &__text {
+
+    &__header {
+        border-bottom: 1px solid var(--scheme-default);
     }
 
     &__form {

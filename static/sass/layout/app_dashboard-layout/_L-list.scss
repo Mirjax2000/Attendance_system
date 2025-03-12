@@ -22,6 +22,19 @@
         }
     }
 
+    &__detail {
+        color: var(--scheme-default);
+        transition: all 0.1s ease-in-out;
+
+        &.current {
+            color: var(--scheme-success);
+        }
+
+        &:hover {
+            color: var(--scheme-accent);
+        }
+    }
+
     &__table {
         width: 100%;
     }
@@ -62,10 +75,6 @@
         &.username {
             min-width: 20ch;
             max-width: 20ch;
-
-            &.current {
-                color: var(--scheme-success);
-            }
         }
 
         &.email {

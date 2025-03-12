@@ -10,6 +10,7 @@ from accounts.views import (
     CustomLoginView,
     SignUpView,
     UserDeleteView,
+    UserDetailView,
     UserListView,
     UserUpdateView,
     user_logout,
@@ -72,6 +73,9 @@ app_accounts_urls: list = [
     path("accounts/logout/", user_logout, name="logout"),
     path("accounts/signup/", SignUpView.as_view(), name="signup"),
     path("accounts/user_list/", UserListView.as_view(), name="user_list"),
+    path(
+        "accounts/user/<int:pk>/", UserDetailView.as_view(), name="user_detail"
+    ),
     path(
         "accounts/delete-user/<int:pk>/",
         UserDeleteView.as_view(),

@@ -34,12 +34,9 @@
                 {% for user in users %}
                     <tr class="L-list__table-row">
                         <td class="L-list__table-cell id">{{ user.id }}</td>
-                        <td class="L-list__table-cell username {% if request.user.username == user.username %}current{% endif %}">
-                            {% if request.user.username == user.username %}
-                                - {{ user.username }} -
-                            {% else %}
-                                {{ user.username }}
-                            {% endif %}
+                        <td class="L-list__table-cell username">
+                            <a href="{% url "user_detail" user.pk %}"
+                               class="L-list__detail {% if request.user.username == user.username %}current{% endif %}">{{ user.username }}</a>
                         </td>
                         <td class="L-list__table-cell email">
                             {% if user.email %}

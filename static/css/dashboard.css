@@ -205,11 +205,11 @@ body.home {
   margin-inline: auto;
 }
 
-.L-list__wrapper, .L-list__actions, .L-header, .L-navigation {
+.L-detail, .L-detail__item p strong, .L-detail__actions, .L-list__wrapper, .L-list__actions, .L-form, .L-header, .L-navigation {
   user-select: none;
 }
 
-.c-ico-btn, .L-form, .L-form__form input, .L-form__submit, .L-content {
+.c-ico-btn, .L-detail__header--username, .L-form, .L-form__user, .L-form__form input, .L-form__submit, .L-content {
   border-radius: 5px;
 }
 
@@ -375,6 +375,15 @@ body {
   padding: 3em 5em;
   border: 1px solid #383838;
 }
+.L-form__user {
+  display: block;
+  margin-bottom: 0.3em;
+  padding: 0.3em 0.5em;
+  background-color: var(--scheme-clr-4);
+}
+.L-form__header {
+  border-bottom: 1px solid var(--scheme-default);
+}
 .L-form__form input {
   display: block;
   width: 100%;
@@ -446,6 +455,16 @@ body {
   background-color: transparent;
   margin-top: -3px;
 }
+.L-list__detail {
+  color: var(--scheme-default);
+  transition: all 0.1s ease-in-out;
+}
+.L-list__detail.current {
+  color: var(--scheme-success);
+}
+.L-list__detail:hover {
+  color: var(--scheme-accent);
+}
 .L-list__table {
   width: 100%;
 }
@@ -480,9 +499,6 @@ body {
   min-width: 20ch;
   max-width: 20ch;
 }
-.L-list__table-cell.username.current {
-  color: var(--scheme-success);
-}
 .L-list__table-cell.email {
   min-width: 20ch;
   max-width: 30ch;
@@ -501,6 +517,41 @@ body {
 .L-list__actions .hide {
   opacity: 0.3;
   pointer-events: none;
+}
+
+.L-detail {
+  color: var(--scheme-default);
+  width: 100%;
+  padding: 1em;
+}
+.L-detail__header {
+  margin-bottom: 1em;
+  padding-bottom: 1em;
+  border-bottom: 1px solid gray;
+}
+.L-detail__header--username {
+  background-color: var(--scheme-clr-4);
+  padding-inline: 0.5em;
+  box-shadow: 1px 1px 3px black;
+}
+.L-detail__item {
+  margin-bottom: 1em;
+}
+.L-detail__item p {
+  user-select: text;
+}
+.L-detail__redirect {
+  transition: all 0.1s ease-in-out;
+  color: var(--scheme-success);
+}
+.L-detail__redirect:hover {
+  text-decoration: underline;
+}
+.L-detail__actions {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0;
 }
 
 .c-ico-btn {

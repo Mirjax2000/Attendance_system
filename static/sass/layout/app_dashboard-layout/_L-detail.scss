@@ -1,0 +1,50 @@
+@use "../../utils/" as *;
+@use "../../base/placeholders" as *;
+
+.L-detail {
+    @extend %select-none;
+
+    color: var(--scheme-default);
+    width: 100%;
+    padding: 1em;
+
+    &__header {
+        margin-bottom: 1em;
+        padding-bottom: 1em;
+        border-bottom: 1px solid gray;
+
+        &--username {
+            @extend %border-radius;
+
+            background-color: var(--scheme-clr-4);
+            padding-inline: 0.5em;
+            box-shadow: 1px 1px 3px black;
+        }
+    }
+
+    &__item {
+        margin-bottom: 1em;
+
+        p {
+            user-select: text;
+
+            strong {
+                @extend %select-none;
+            }
+        }
+    }
+
+    &__redirect {
+        transition: all 0.1s ease-in-out;
+        color: var(--scheme-success);
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    &__actions {
+        @include flex(flex-start, center);
+        @extend %select-none;
+    }
+}
