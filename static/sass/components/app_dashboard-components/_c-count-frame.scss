@@ -1,0 +1,64 @@
+@use "../../utils/" as *;
+@use "../../base/placeholders" as *;
+
+.c-count {
+
+    @extend %select-none;
+    @extend %border-radius;
+
+    width: 7rem;
+    font-size: 0.875rem;
+    aspect-ratio: 1;
+    text-align: center;
+    background-color: var(--scheme-clr-2);
+    box-shadow: 1px 1px 5px #00000076;
+
+    &__content {
+        @extend %border-radius;
+        @include flex;
+
+        font-size: 1.3rem;
+        margin: 1em;
+        background-color: var(--scheme-clr-3);
+        color: #d2d2d2;
+        box-shadow: 0 0 10px rgba(#d2d2d2, 0.3);
+
+        &__info {
+            @include scroll(2px);
+    
+            padding-block: 0.3em;
+            overflow: auto;
+        }
+    }
+
+    $clr-set: (
+        #2cb67d,
+        #87ff65ff,
+        #aceb98ff,
+        #a4c2a8ff,
+        #ddb673,
+        #ffdea6,
+        #339af0,
+        #5fb3f8
+    );
+
+    @for $i from 1 through length($clr-set) {
+        $shadow-color: nth($clr-set, $i);
+
+        &:nth-child(#{$i}) &__info {
+            color: $shadow-color;
+            box-shadow: 0 0 10px rgba($shadow-color, 0.3);
+        }
+    }
+}
+
+
+
+    &__content {
+    }
+    &__info {
+    }
+    &__name {
+        color: var(--scheme-default);
+    }
+}

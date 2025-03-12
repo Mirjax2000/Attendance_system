@@ -43,6 +43,21 @@
     gap: $gap;
 }
 
+@mixin scroll($height: 3px) {
+    &::-webkit-scrollbar {
+        height: $height;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: #999;
+        border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+}
+
 // --- visually-hidden ---
 @mixin black-hole {
     position: absolute;
