@@ -15,6 +15,15 @@
     <section class="L-controls">
         <ul class="L-controls__list">
             <li class="L-controls__item">
+                <a class="c-ico-btn" href="{% url "user_list" %}">
+                    <img src="{% static "images/icons8-login-blue.png" %}"
+                         alt="employees icon"
+                         width="24"
+                         height="24">
+                    <p>Users</p>
+                </a>
+            </li>
+            <li class="L-controls__item">
                 <a class="c-ico-btn" href="{% url "department_list" %}">
                     <img class="L-controls__ico"
                          src="{% static "images/icons8-add-group.png" %}"
@@ -22,15 +31,6 @@
                          width="24"
                          height="24">
                     <p>Departements</p>
-                </a>
-            </li>
-            <li class="L-controls__item">
-                <a class="c-ico-btn" href="{% url "user_list" %}">
-                    <img src="{% static "images/icons8-login-blue.png" %}"
-                         alt="employees icon"
-                         width="24"
-                         height="24">
-                    <p>Users</p>
                 </a>
             </li>
         </ul>
