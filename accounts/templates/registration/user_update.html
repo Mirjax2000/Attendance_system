@@ -1,0 +1,33 @@
+{% extends "dashboard_base.html" %}
+{% load static %}
+{% block title %}
+    update-user
+{% endblock title %}
+{% block content %}
+    <div class="L-form">
+        <h1 class="L-form__header u-mb-small">Upravit profil</h1>
+        <form method="post" class="L-form__form" novalidate>
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+                <div class="L-form__error">
+                    {% for error in form.non_field_errors %}<p class="u-text-warning">{{ error }}</p>{% endfor %}
+                </div>
+            {% else %}
+                <div class="L-form__error">
+                    <p>&nbsp;</p>
+                </div>
+            {% endif %}
+            {% for field in form %}
+                <label for="{{ field.id_for_label }}" class="L-form__label">{{ field.label }}:</label>
+                {{ field }}
+                {% if field.errors %}
+                    <p class="u-text-warning">{{ field.errors.0 }}</p>
+                {% else %}
+                    <p>&nbsp;</p>
+                {% endif %}
+            {% endfor %}
+            <button type="submit" class="L-form__submit">Uložit změny</button>
+        </form>
+        <a href="{% url 'user_list' %}" class="L-form__redirect">Zpět</a>
+    </div>
+{% endblock content %}

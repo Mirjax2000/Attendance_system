@@ -406,6 +406,15 @@ body {
 .L-form__error p {
   margin-bottom: 0.5em;
 }
+.L-form__redirect {
+  display: block;
+  text-align: right;
+  color: var(--scheme-success);
+  transition: all 0.1s ease-in-out;
+}
+.L-form__redirect:hover {
+  text-decoration: underline;
+}
 
 .L-controls {
   width: 100%;

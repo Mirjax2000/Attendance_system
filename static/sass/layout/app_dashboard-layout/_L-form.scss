@@ -59,4 +59,15 @@
             margin-bottom: 0.5em;
         }
     }
+
+    &__redirect {
+        display: block;
+        text-align: right;
+        color: var(--scheme-success);
+        transition: all 0.1s ease-in-out;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
 }

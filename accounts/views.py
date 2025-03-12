@@ -40,10 +40,17 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
     model = User
     form_class = UserUpdateForm
     template_name = "registration/user_update.html"
-    success_url = reverse_lazy("dashboard")
+    success_url = reverse_lazy("user_list")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["user_name"] = get_user_name(self)
+        context["active_link"] = "main-panel"
+
+        return context
 
     def form_valid(self, form):
-        messages.success(self.request, "Updated")
+        messages.success(self.request, f"{self.get_object()}: Updated")
         return super().form_valid(form)
 
 
@@ -75,7 +82,7 @@ class UserDeleteView(LoginRequiredMixin, DeleteView):
         return super().get(request, *args, **kwargs)
 
     def form_valid(self, form):
-        messages.success(self.request, f"Uzivatel: {self.get_object()} smazan")
+        messages.success(self.request, f"{self.get_object()} smazan")
         return super().form_valid(form)
 
 

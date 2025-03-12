@@ -25,9 +25,7 @@ class SignUpForm(UserCreationForm):
     )
     first_name = CharField(max_length=30, label="Jméno", required=True)
     last_name = CharField(max_length=30, label="Příjmení", required=True)
-
     password1 = CharField(widget=PasswordInput(), label="Heslo")
-
     password2 = CharField(
         widget=PasswordInput(),
         label="Heslo znovu",
@@ -58,13 +56,11 @@ class SignUpForm(UserCreationForm):
 class UserUpdateForm(ModelForm):
     """Formulář pro aktualizaci uživatele (bez hesla)"""
 
-    username = CharField(
-        max_length=20, label="Uživatelské jméno", required=True
-    )
+    username = CharField(max_length=20, label="Uživatelské jméno")
 
-    first_name = CharField(max_length=30, label="Jméno", required=True)
-    last_name = CharField(max_length=30, label="Příjmení", required=True)
-    email = EmailField(max_length=50, label="E-mail", required=True)
+    first_name = CharField(max_length=30, label="Jméno")
+    last_name = CharField(max_length=30, label="Příjmení")
+    email = EmailField(max_length=50, label="E-mail")
 
     class Meta:
         """zobrazeni poli"""
