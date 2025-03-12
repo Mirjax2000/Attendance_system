@@ -1,0 +1,103 @@
+@use "../../utils/" as *;
+@use "../../base/placeholders" as *;
+
+.L-departments {
+    width: 100%;
+    padding: 1em;
+    border-bottom: 1px solid black;
+    box-shadow: 1px 1px 2px #00000039;
+    margin-bottom: 2em;
+
+    &__header {
+        color: var(--scheme-default);
+        margin-bottom: 1em;
+
+        i {
+            color: var(--scheme-success);
+        }
+    }
+
+    &__list {
+        @include flex(flex-start, center);
+
+        flex-wrap: wrap;
+    }
+
+    &__item {
+        @extend %select-none;
+        @extend %border-radius;
+
+        width: 7rem;
+        font-size: 0.875rem;
+        aspect-ratio: 1;
+        text-align: center;
+        background-color: var(--scheme-clr-2);
+        box-shadow: 1px 1px 5px #00000076;
+
+        &:not(:last-child) {
+            margin-right: 0.625rem;
+        }
+
+        &__info {
+            @extend %border-radius;
+
+            font-size: 1.3rem;
+            margin: 1em;
+            background-color: var(--scheme-clr-3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            &::-webkit-scrollbar {
+                height: 3px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background-color: #999;
+                border-radius: 4px;
+            }
+
+            &::-webkit-scrollbar-track {
+                background: transparent;
+            }
+
+            p {
+                padding-block: 0.3em;
+                overflow: auto;
+
+                &::-webkit-scrollbar {
+                    height: 2px;
+                }
+
+                &::-webkit-scrollbar-thumb {
+                    background-color: #999;
+                    border-radius: 4px;
+                }
+
+                &::-webkit-scrollbar-track {
+                    background: transparent;
+                }
+            }
+        }
+
+        $clr-set: (
+            #2cb67d,
+            #87ff65ff,
+            #aceb98ff,
+            #a4c2a8ff,
+            #ddb673,
+            #ffdea6,
+            #339af0,
+            #5fb3f8
+        );
+
+        @for $i from 1 through length($clr-set) {
+            $shadow-color: nth($clr-set, $i);
+
+            &:nth-child(#{$i}) &__info {
+                color: $shadow-color;
+                box-shadow: 0 0 10px rgba($shadow-color, 0.3);
+            }
+        }
+    }
+}
