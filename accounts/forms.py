@@ -23,8 +23,8 @@ class SignUpForm(UserCreationForm):
     username = CharField(
         max_length=20, label="Uživatelské jméno", required=True
     )
-    first_name = CharField(max_length=25, label="Jméno", required=True)
-    last_name = CharField(max_length=25, label="Příjmení", required=True)
+    first_name = CharField(max_length=30, label="Jméno", required=True)
+    last_name = CharField(max_length=30, label="Příjmení", required=True)
 
     password1 = CharField(widget=PasswordInput(), label="Heslo")
 
@@ -32,7 +32,7 @@ class SignUpForm(UserCreationForm):
         widget=PasswordInput(),
         label="Heslo znovu",
     )
-    email = EmailField(label="E-mail", required=True)
+    email = EmailField(max_length=50, label="E-mail", required=True)
 
     class Meta(UserCreationForm.Meta):
         """Meta pole"""
@@ -40,9 +40,9 @@ class SignUpForm(UserCreationForm):
         model = User
         fields = [
             "username",
+            "email",
             "first_name",
             "last_name",
-            "email",
             "password1",
             "password2",
         ]
@@ -62,11 +62,12 @@ class UserUpdateForm(ModelForm):
         max_length=20, label="Uživatelské jméno", required=True
     )
 
-    first_name = CharField(max_length=25, label="Jméno", required=True)
-    last_name = CharField(max_length=25, label="Příjmení", required=True)
+    first_name = CharField(max_length=30, label="Jméno", required=True)
+    last_name = CharField(max_length=30, label="Příjmení", required=True)
+    email = EmailField(max_length=50, label="E-mail", required=True)
 
     class Meta:
         """zobrazeni poli"""
 
         model = User
-        fields = ["username", "email", "first_name", "last_name"]
+        fields = ["username", "first_name", "last_name", "email"]

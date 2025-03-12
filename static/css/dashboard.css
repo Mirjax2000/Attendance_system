@@ -450,33 +450,34 @@ body {
   border: 1px solid #434343;
   padding-inline: 0.5em;
   color: var(--scheme-default);
+  overflow: auto;
+}
+.L-list__table-cell::-webkit-scrollbar {
+  height: 2px;
+}
+.L-list__table-cell::-webkit-scrollbar-thumb {
+  background-color: #999;
+  border-radius: 4px;
+}
+.L-list__table-cell::-webkit-scrollbar-track {
+  background: transparent;
 }
 .L-list__table-cell.id {
   min-width: 5ch;
-  text-align: center;
-  padding: 0;
+  max-width: 5ch;
+  padding-inline: 0.3em;
 }
 .L-list__table-cell.username {
   min-width: 20ch;
-  width: 30%;
+  max-width: 20ch;
 }
 .L-list__table-cell.username.current {
   color: var(--scheme-success);
 }
 .L-list__table-cell.email {
   min-width: 20ch;
+  max-width: 30ch;
   width: 70%;
-  overflow: auto;
-}
-.L-list__table-cell.email::-webkit-scrollbar {
-  height: 2px;
-}
-.L-list__table-cell.email::-webkit-scrollbar-thumb {
-  background-color: #999;
-  border-radius: 4px;
-}
-.L-list__table-cell.email::-webkit-scrollbar-track {
-  background: transparent;
 }
 .L-list__table-cell.CAT {
   border: none;

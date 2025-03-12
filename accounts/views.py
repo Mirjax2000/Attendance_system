@@ -75,7 +75,7 @@ class UserDeleteView(LoginRequiredMixin, DeleteView):
         return super().get(request, *args, **kwargs)
 
     def form_valid(self, form):
-        messages.success(self.request, f"Uzivatel{self.get_object()} smazan")
+        messages.success(self.request, f"Uzivatel: {self.get_object()} smazan")
         return super().form_valid(form)
 
 
