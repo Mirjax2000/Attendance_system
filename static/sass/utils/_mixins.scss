@@ -44,6 +44,8 @@
 }
 
 @mixin scroll($height: 3px) {
+    overflow: auto;
+
     &::-webkit-scrollbar {
         height: $height;
     }

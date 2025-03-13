@@ -371,7 +371,7 @@ body {
 .L-form {
   color: var(--scheme-default);
   margin-top: 2em;
-  width: clamp(400px, 60%, 60%);
+  width: clamp(400px, 60%, 27rem);
   padding: 3em 5em;
   border: 1px solid #383838;
 }
@@ -475,13 +475,13 @@ body {
   padding: 0.3em;
 }
 .L-list__table-cell {
+  overflow: auto;
   border: 1px solid #434343;
   padding-inline: 0.5em;
   color: var(--scheme-default);
-  overflow: auto;
 }
 .L-list__table-cell::-webkit-scrollbar {
-  height: 2px;
+  height: 3px;
 }
 .L-list__table-cell::-webkit-scrollbar-thumb {
   background-color: #999;
@@ -496,12 +496,12 @@ body {
   padding-inline: 0.3em;
 }
 .L-list__table-cell.username {
-  min-width: 20ch;
+  min-width: 10ch;
   max-width: 20ch;
 }
 .L-list__table-cell.email {
-  min-width: 30ch;
-  max-width: 30ch;
+  min-width: 10ch;
+  max-width: 25ch;
 }
 .L-list__table-cell.suser, .L-list__table-cell.admin, .L-list__table-cell.active {
   min-width: 5ch;
@@ -708,6 +708,7 @@ body {
   box-shadow: 0 0 10px rgba(210, 210, 210, 0.3);
 }
 .c-count__card__content__info {
+  overflow: auto;
   padding-block: 0.3em;
   overflow: auto;
 }

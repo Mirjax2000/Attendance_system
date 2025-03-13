@@ -48,23 +48,11 @@
     }
 
     &__table-cell {
+        @include scroll(3px);
+
         border: 1px solid #434343;
         padding-inline: 0.5em;
         color: var(--scheme-default);
-        overflow: auto;
-
-        &::-webkit-scrollbar {
-            height: 2px;
-        }
-
-        &::-webkit-scrollbar-thumb {
-            background-color: #999;
-            border-radius: 4px;
-        }
-
-        &::-webkit-scrollbar-track {
-            background: transparent;
-        }
 
         &.id {
             min-width: 5ch;
@@ -73,13 +61,13 @@
         }
 
         &.username {
-            min-width: 20ch;
+            min-width: 10ch;
             max-width: 20ch;
         }
 
         &.email {
-            min-width: 30ch;
-            max-width: 30ch;
+            min-width: 10ch;
+            max-width: 25ch;
         }
 
         &.suser,
