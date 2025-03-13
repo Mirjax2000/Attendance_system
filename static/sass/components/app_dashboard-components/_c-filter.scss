@@ -9,7 +9,7 @@
     border: 1px solid black;
 
     &__list {
-        @include flex(space-around, center);
+        @include flex(flex-start, center);
 
         flex-wrap: wrap;
         padding: 0.5em;
@@ -17,7 +17,7 @@
 
     &__item {
         font-size: 0.75rem;
-        flex-basis: 20%;
+        flex-basis: 25%;
         color: var(--scheme-default);
         margin-bottom: 0.3em;
 
@@ -28,6 +28,15 @@
             width: 90%;
             border: 1px solid #8080806a;
             padding: 0.3em 0.5em;
+
+            &.checkboxes {
+                display: flex;
+                text-align: center;
+
+                & > * {
+                    flex-basis: 100%;
+                }
+            }
         }
     }
 

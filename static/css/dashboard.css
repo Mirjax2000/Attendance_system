@@ -805,7 +805,7 @@ body {
 }
 .c-filter__list {
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-start;
   align-items: center;
   gap: 0;
   flex-wrap: wrap;
@@ -813,7 +813,7 @@ body {
 }
 .c-filter__item {
   font-size: 0.75rem;
-  flex-basis: 20%;
+  flex-basis: 25%;
   color: var(--scheme-default);
   margin-bottom: 0.3em;
 }
@@ -821,6 +821,13 @@ body {
   width: 90%;
   border: 1px solid rgba(128, 128, 128, 0.4156862745);
   padding: 0.3em 0.5em;
+}
+.c-filter__item .form__wrapper.checkboxes {
+  display: flex;
+  text-align: center;
+}
+.c-filter__item .form__wrapper.checkboxes > * {
+  flex-basis: 100%;
 }
 .c-filter__form input {
   width: 100%;
