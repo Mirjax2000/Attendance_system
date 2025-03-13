@@ -1,11 +1,45 @@
- ## start projektu
+ ## how to install
+ prerequisities
+ C++ build tools / desktop development
+
+ pres winget terminalovym prikazem
  ```shell
- django-admin startproject <jmeno projektu> . 
- python manage.py startapp <jmeno applikace>
+winget install Microsoft.VisualStudio.2022.BuildTools --force --override "--passive --wait --add Microsoft.VisualStudio.Workload.VCTools;includeRecommended"
+
  ```
+nebo rucne / desktop development
+https://visualstudio.microsoft.com/cs/visual-cpp-build-tools/
+
+stahni Visual Studio 2022
+    https://visualstudio.microsoft.com/cs/thank-you-downloading-visual-studio/?sku=Community&channel=Release&version=VS2022&source=VSLandingPage&cid=2030&passive=false
+
+nainstaluj cmake: C++ nastroj
+https://github.com/Kitware/CMake/releases/download/v4.0.0-rc4/cmake-4.0.0-rc4-windows-x86_64.msi
+v instalatoru zaskrtni add CMake to PATH
+
+ 
+
+naclonuj github: https://github.com/Mirjax2000/Attendance_system.git
+
+sled prikazu do terminalu
+```shell
+pip install uv
+```
+vytvoreni VR enviroment
+```shell
+uv venv
+
+```
+activace VR enviroment
+```shell
+.venv\Scripts\activate
+```
+
+
 ## SECRET KEY
-1. priprav .env soubor a vytvor promennou SECRET_KEY
-2. bez uvozovek prekopiruj hodnotu ze settings
+1. priprav .env soubor prejmenovanim souboru .env.example a vytvor promennou SECRET_KEY
+2. bez uvozovek prekopiruj hodnotu z Django attendance settings.py
+a prepis settings tykajici se SECRET key na nasledujici
 3. ```python
     load_dotenv(override=True)
     SECRET_KEY = os.getenv("SECRET_KEY", default="")
@@ -14,6 +48,14 @@
     ```shell
     python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
     ```
+5. FERNET klic pouzij z .env.example 
+ 
+ 
+ ## start projektu
+ ```shell
+ django-admin startproject <jmeno projektu> . 
+ python manage.py startapp <jmeno applikace>
+ ```
 
 ## migrace DB
 ```shell

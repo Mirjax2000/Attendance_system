@@ -1,3 +1,7 @@
+
+
+
+
 # Docházkový systém projektu
 
 Tento projekt je založen na dvou aplikacích:
@@ -42,4 +46,5 @@ Tento projekt je založen na dvou aplikacích:
 - omezeni pro create/delete  zamestnance
 - Prehledy - default
 - rozesilani emailu - HR
+
 
