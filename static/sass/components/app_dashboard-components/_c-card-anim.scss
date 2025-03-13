@@ -1,0 +1,18 @@
+@keyframes card-rotation {
+    0% {
+        transform: rotateY(180deg);
+    }
+
+    50% {
+        transform: rotateY(-20deg);
+    }
+
+    80% {
+        transform: rotateY(10deg);
+    }
+
+    100% {
+        transform: rotate(0deg); /* Pauza na konci */
+        opacity: 1;
+    }
+}

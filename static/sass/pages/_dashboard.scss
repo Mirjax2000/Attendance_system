@@ -4,7 +4,7 @@
 @use "../base/placeholders" as *;
 
 .P-container {
-    @include container(31.25rem, 64rem, 1em);
+    @include container(31.25rem, 90rem, 1em);
     @include flex(flex-start, flex-start, 1em);
 
     background-color: var(--scheme-clr-1);
