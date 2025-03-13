@@ -188,8 +188,6 @@ class CamSystems:
         self.release_camera()
 
 
-import numpy as np
-
 
 class Database:
     """Database methods"""
