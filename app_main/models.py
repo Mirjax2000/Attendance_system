@@ -225,6 +225,11 @@ class FaceVector(models.Model):
                 return False
         return False
 
+    def clean(self):
+        """Validace dat"""
+        if not self.face_vector_fernet or not self.employee.pin_code_hash:
+            raise ValidationError("Face vector nebo pin hash neni v poradku")
+
     def save(
         self,
         *args,
@@ -233,11 +238,10 @@ class FaceVector(models.Model):
         """Ukladani databaze"""
         self.encrypt_vector()
 
-        if self.face_vector_fernet and self.employee.pin_code_hash:
-            self.employee.is_valid = True
-        else:
-            self.employee.is_valid = False
-            raise ValidationError("Face vector nebo pin hash neni v poradku")
+        self.employee.is_valid = bool(
+            self.face_vector_fernet and self.employee.pin_code_hash
+        )
+
         with tran.atomic():
             self.employee.save()
             super().save(*args, **kwargs)

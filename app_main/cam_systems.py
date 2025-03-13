@@ -1,3 +1,5 @@
+"""cam systems OOP"""
+
 from pathlib import Path
 from time import sleep
 
@@ -5,6 +7,7 @@ import cv2
 import face_recognition
 import numpy as np
 from django.conf import settings
+from django.db.utils import OperationalError
 from django.http import JsonResponse
 from django.http.response import HttpResponse, StreamingHttpResponse
 from rich.console import Console
@@ -185,28 +188,36 @@ class CamSystems:
         self.release_camera()
 
 
+import numpy as np
+
+
 class Database:
-    """Databse methods"""
+    """Database methods"""
 
     def get_vectors_from_db(self) -> dict:
-        """get vectors form db"""
-        face_vectors_from_db = FaceVector.objects.values(
-            "employee__slug", "face_vector"
-        )
+        """Get vectors from database"""
+        try:
+            face_vectors_from_db = list(
+                FaceVector.objects.values("employee__slug", "face_vector")
+            )
+        except OperationalError as e:
+            cons.log(f"Chyba při načítání vektorů z databáze: {e}")
+            return {}
+
+        if not face_vectors_from_db:
+            cons.log("Tabulka FaceVector je prazdna")
+            default_vector = np.zeros(128)
+            return {"default_employee_slug": default_vector}
 
         face_vectors_: dict = {}
-        if face_vectors_from_db:
-            for face_vector in face_vectors_from_db:
-                face_vectors_[face_vector["employee__slug"]] = np.array(
-                    face_vector["face_vector"]
-                )
-
-            cons.log(
-                f"Loaded face vectors for employees: {list(face_vectors_.keys())}"
+        for face_vector in face_vectors_from_db:
+            face_vectors_[face_vector["employee__slug"]] = np.array(
+                face_vector["face_vector"]
             )
-            return face_vectors_
 
-        cons.log("Tabulka FaceVector je prazdna")
+        cons.log(
+            f"Loaded face vectors for employees: {list(face_vectors_.keys())}"
+        )
         return face_vectors_
 
 
