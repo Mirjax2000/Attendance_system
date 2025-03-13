@@ -4,6 +4,7 @@
     user_list
 {% endblock title %}
 {% block content %}
+    <!-- filters -->
     <section class="c-filter">
         <div class="c-filter__banner">
             <p>filters</p>
@@ -14,19 +15,108 @@
         </div>
         <div class="c-filter__container">
             <ul class="c-filter__list">
-                <li class="c-filter__item">id</li>
-                <li class="c-filter__item">Uživatelské jméno</li>
-                <li class="c-filter__item">email</li>
-                <li class="c-filter__item">superUser</li>
-                <li class="c-filter__item">admin</li>
-                <li class="c-filter__item">aktivní účet</li>
-                <li class="c-filter__item">skupiny</li>
-                <li class="c-filter__item">oprávnění</li>
-                <li class="c-filter__item">datum registrace</li>
-                <li class="c-filter__item">poslední přihlášení</li>
+                <li class="c-filter__item">
+                    <div class="form__wrapper">
+                        <form class="c-filter__form">
+                            <label for="filterId">ID</label>
+                            <input type="number" id="filterId" placeholder="Zadejte ID">
+                        </form>
+                    </div>
+                </li>
+                <li class="c-filter__item">
+                    <div class="form__wrapper">
+                        <form class="c-filter__form">
+                            <label for="filterUsername">uživatelské jméno</label>
+                            <input type="text" id="filterUsername" placeholder="uživatelské jméno">
+                        </form>
+                    </div>
+                </li>
+                <li class="c-filter__item">
+                    <div class="form__wrapper">
+                        <form class="c-filter__form">
+                            <label for="filterEmail">email</label>
+                            <input type="email" id="filterEmail" placeholder="Zadejte email">
+                        </form>
+                    </div>
+                </li>
+                <li class="c-filter__item">
+                    <div class="form__wrapper">
+                        <form class="c-filter__form">
+                            <label for="filterSuperuser">super user</label>
+                            <input type="checkbox" id="filterSuperuser">
+                        </form>
+                    </div>
+                </li>
+                <li class="c-filter__item">
+                    <div class="form__wrapper">
+                        <form class="c-filter__form">
+                            <label for="filterAdmin">Administrator</label>
+                            <input type="checkbox" id="filterAdmin">
+                        </form>
+                    </div>
+                </li>
+                <li class="c-filter__item">
+                    <div class="form__wrapper">
+                        <form class="c-filter__form">
+                            <label for="filterActive">aktivní účet</label>
+                            <input type="checkbox" id="filterActive">
+                        </form>
+                    </div>
+                </li>
+                <li class="c-filter__item">
+                    <div class="form__wrapper">
+                        <form class="c-filter__form">
+                            <label for="filterGroups">Skupiny</label>
+                            <select id="filterGroups" name="groups">
+                                <option value="" disabled selected>Vyberte skupinu</option>
+                                <option value="group1">Skupina 1</option>
+                                <option value="group2">Skupina 2</option>
+                                <option value="group3">Skupina 3</option>
+                                <option value="group4">Skupina 4</option>
+                            </select>
+                        </form>
+                    </div>
+                </li>
+                <li class="c-filter__item">
+                    <div class="form__wrapper">
+                        <form class="c-filter__form">
+                            <label for="filterPermission">Oprávnění</label>
+                            <select id="filterPermission" name="permission">
+                                <option value="" disabled selected>Vyberte oprávnění</option>
+                                <option value="perm_read">READ</option>
+                                <option value="perm_create">CREATE</option>
+                                <option value="perm_update">UPDATE</option>
+                                <option value="perm_delete">DELETE</option>
+                            </select>
+                        </form>
+                    </div>
+                </li>
+                <li class="c-filter__item">
+                    <div class="form__wrapper">
+                        <form class="c-filter__form">
+                            <label for="filter-registration-date">datum registrace Od:</label>
+                            <input type="date" id="filter-registration-date-from">
+                        </form>
+                    </div>
+                </li>
+                <li class="c-filter__item">
+                    <div class="form__wrapper">
+                        <p>poslední přihlášení</p>
+                        <form class="c-filter__form">
+                            <select id="lastLogin">
+                                <option value="" disabled selected>Vyberte opravneni</option>
+                                <option value="group1">Posledních 24 hodin</option>
+                                <option value="group2">Posledních 7 dní</option>
+                                <option value="group3">Posledních 30 dní</option>
+                                <option value="group4">Poslední rok</option>
+                            </select>
+                        </form>
+                    </div>
+                </li>
             </ul>
         </div>
     </section>
+    <!-- end filters -->
     <section class="L-list">
         <div class="L-list__wrapper">
             <h2 class="L-list__title">
@@ -50,6 +140,11 @@
                     <th class="L-list__table-heading">ID</th>
                     <th class="L-list__table-heading">Uživatelské jméno</th>
                     <th class="L-list__table-heading">Email</th>
+                    <th class="L-list__table-heading">S.user</th>
+                    <th class="L-list__table-heading">Admin</th>
+                    <th class="L-list__table-heading">aktivni</th>
+                    <th class="L-list__table-heading">oprávnění</th>
+                    <th class="L-list__table-heading">skupiny</th>
                     <th class="L-list__table-heading">Akce</th>
                 </tr>
             </thead>
@@ -67,6 +162,51 @@
                             {% else %}
                                 <small class="u-text-success">No value</small>
                             {% endif %}
+                        </td>
+                        <td class="L-list__table-cell suser">
+                            {% if user.is_superuser %}
+                                <p class="u-text-success">Ano</p>
+                            {% else %}
+                                <p>
+                                    <i>Ne</i>
+                                </p>
+                            {% endif %}
+                        </td>
+                        <td class="L-list__table-cell admin">
+                            {% if user.is_staff %}
+                                <p class="u-text-success">Ano</p>
+                            {% else %}
+                                <p>
+                                    <i>Ne</i>
+                                </p>
+                            {% endif %}
+                        </td>
+                        <td class="L-list__table-cell active">
+                            {% if user.is_active %}
+                                <p class="u-text-success">Ano</p>
+                            {% else %}
+                                <p class="u-text-warrning">
+                                    <i>Ne</i>
+                                </p>
+                            {% endif %}
+                        </td>
+                        <td class="L-list__table-cell permission">
+                            {% for perm in user.user_permissions.all %}
+                                {{ perm.name|join:", " }}
+                            {% empty %}
+                                <p>
+                                    <i>no value</i>
+                                </p>
+                            {% endfor %}
+                        </td>
+                        <td class="L-list__table-cell group">
+                            {% for group in user.groups.all %}
+                                {{ group.name|join:", " }}
+                            {% empty %}
+                                <p>
+                                    <i>no value</i>
+                                </p>
+                            {% endfor %}
                         </td>
                         <td class="L-list__table-cell CAT">
                             <div class="L-list__actions">

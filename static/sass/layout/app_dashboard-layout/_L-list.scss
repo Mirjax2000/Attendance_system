@@ -78,9 +78,23 @@
         }
 
         &.email {
-            min-width: 20ch;
+            min-width: 30ch;
             max-width: 30ch;
-            width: 70%;
+        }
+
+        &.suser,
+        &.admin,
+        &.active {
+            min-width: 5ch;
+            max-width: 5ch;
+            text-align: center;
+        }
+
+        &.permission,
+        &.group {
+            text-align: center;
+            min-width: 10ch;
+            max-width: 10ch;
         }
 
         &.CAT {

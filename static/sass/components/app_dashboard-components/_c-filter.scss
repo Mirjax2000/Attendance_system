@@ -5,9 +5,6 @@
     @extend %border-radius;
     @extend %select-none;
 
-    &__container {
-    }
-
     margin-block: 1em;
     border: 1px solid black;
 
@@ -19,19 +16,54 @@
     }
 
     &__item {
-        @extend %border-radius;
-
         font-size: 0.75rem;
         flex-basis: 20%;
         color: var(--scheme-default);
         margin-bottom: 0.3em;
-        padding: 0.5em 1em;
-        border: 1px solid #80808058;
+
+        .form__wrapper {
+            @extend %margin-in;
+            @extend %border-radius;
+
+            width: 90%;
+            border: 1px solid #8080806a;
+            padding: 0.3em 0.5em;
+        }
+    }
+
+    &__form {
+        input {
+            width: 100%;
+            padding: 0.5em;
+        }
+
+        input[type="checkbox"] {
+            display: block;
+            padding: 0.5em;
+            margin-block: 0.5em;
+        }
+
+        select {
+            @extend %border-radius;
+
+            width: 100%;
+            padding: 0.5em;
+        }
     }
 
     &__banner {
         text-align: right;
-        padding: 0.3em;
+        margin-right: 1em;
+        padding: 0.3em 1em;
+        cursor: pointer;
+        width: max-content;
+        margin-left: auto;
+        color: var(--scheme-default-darker);
+        transition: all 0.1s ease-in-out;
+
+        &:hover {
+            color: var(--scheme-default);
+        }
 
         p {
             display: inline-block;
