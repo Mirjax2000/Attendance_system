@@ -29,7 +29,7 @@ class UserListView(LoginRequiredMixin, ListView):
     """Vypis users"""
 
     model = User
-    template_name = "accounts/user_list.html"
+    template_name = "accounts/user_list_detail.html"
     context_object_name = "users"
 
     def get_context_data(self, **kwargs):

@@ -1,0 +1,96 @@
+{% extends "dashboard_base.html" %}
+{% load static %}
+{% block title %}
+    user_list
+{% endblock title %}
+{% block content %}
+    <section class="c-filter">
+        <div class="c-filter__banner">
+            <p>filters</p>
+            <img src="{% static 'images/icons8-next.png' %}"
+                 alt="next icon"
+                 width="24"
+                 height="24">
+        </div>
+        <div class="c-filter__container">
+            <ul class="c-filter__list">
+                <li class="c-filter__item">id</li>
+                <li class="c-filter__item">Uživatelské jméno</li>
+                <li class="c-filter__item">email</li>
+                <li class="c-filter__item">superUser</li>
+                <li class="c-filter__item">admin</li>
+                <li class="c-filter__item">aktivní účet</li>
+                <li class="c-filter__item">skupiny</li>
+                <li class="c-filter__item">oprávnění</li>
+                <li class="c-filter__item">datum registrace</li>
+                <li class="c-filter__item">poslední přihlášení</li>
+            </ul>
+        </div>
+    </section>
+    <section class="L-list">
+        <div class="L-list__wrapper">
+            <h2 class="L-list__title">
+                <img src="{% static 'images/icons8-list.png' %}"
+                     alt="delete icon"
+                     width="24"
+                     height="24">
+                Seznam uživatelů
+            </h2>
+            <a class="c-ico-btn" href="{% url 'signup' %}">
+                <img src="{% static 'images/icons8-login-blue.png' %}"
+                     alt="delete icon"
+                     width="24"
+                     height="24">
+                <p>Přidat uživatele</p>
+            </a>
+        </div>
+        <table class="L-list__table">
+            <thead class="L-list__table-header">
+                <tr class="L-list__table-row">
+                    <th class="L-list__table-heading">ID</th>
+                    <th class="L-list__table-heading">Uživatelské jméno</th>
+                    <th class="L-list__table-heading">Email</th>
+                    <th class="L-list__table-heading">Akce</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr class="L-list__table-row">
+                        <td class="L-list__table-cell id">{{ user.id }}</td>
+                        <td class="L-list__table-cell username">
+                            <a href="{% url "user_detail" user.pk %}"
+                               class="L-list__detail {% if request.user.username == user.username %}current{% endif %}">{{ user.username }}</a>
+                        </td>
+                        <td class="L-list__table-cell email">
+                            {% if user.email %}
+                                {{ user.email }}
+                            {% else %}
+                                <small class="u-text-success">No value</small>
+                            {% endif %}
+                        </td>
+                        <td class="L-list__table-cell CAT">
+                            <div class="L-list__actions">
+                                <a class="c-ico-btn {% if request.user.username == user.username %}hide{% endif %}"
+                                   href="{% url 'delete-user' user.pk %}">
+                                    <img src="{% static 'images/icons8-delete-48-red.png' %}"
+                                         alt="delete icon"
+                                         width="24"
+                                         height="24">
+                                    <p>smazat</p>
+                                </a>
+                                <a class="c-ico-btn" href="{% url 'update-user' user.pk %}">
+                                    <img class="list__action-icon"
+                                         src="{% static 'images/icons8-update-blue.png' %}"
+                                         alt="update icon"
+                                         width="24"
+                                         height="24">
+                                    <p class="list__action-text">update</p>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+{% endblock content %}

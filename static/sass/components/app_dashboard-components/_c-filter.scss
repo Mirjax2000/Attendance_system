@@ -1,0 +1,44 @@
+@use "../../utils/" as *;
+@use "../../base/placeholders" as *;
+
+.c-filter {
+    @extend %border-radius;
+    @extend %select-none;
+
+    &__container {
+    }
+
+    margin-block: 1em;
+    border: 1px solid black;
+
+    &__list {
+        @include flex(space-around, center);
+
+        flex-wrap: wrap;
+        padding: 0.5em;
+    }
+
+    &__item {
+        @extend %border-radius;
+
+        font-size: 0.75rem;
+        flex-basis: 20%;
+        color: var(--scheme-default);
+        margin-bottom: 0.3em;
+        padding: 0.5em 1em;
+        border: 1px solid #80808058;
+    }
+
+    &__banner {
+        text-align: right;
+        padding: 0.3em;
+
+        p {
+            display: inline-block;
+        }
+
+        img {
+            background-color: transparent;
+        }
+    }
+}
