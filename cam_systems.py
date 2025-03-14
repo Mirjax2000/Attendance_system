@@ -146,15 +146,14 @@ class CamSystems:
         # Vyhodnocení výsledku
         if min_distance < threshold:
             cons.log(
-                f"Rozpoznán: {best_match} (Vzdálenost: {min_distance:.4f})"
+                f"Employee Rozpoznán: {best_match} (Vzdálenost: {min_distance:.4f})"
             )
             return {"name": best_match, "message": "success"}
         cons.log("Neznámý obličej!")
         return {"message": "neznamy oblicej"}
 
-    def save_vector_to_db(self, employee_slug):
+    def save_vector_to_db(self, employee_slug) -> dict:
         """uloz sejmuty vektor do db"""
-        cons.log(f"jen takovej test {employee_slug}")
         if self.face_rgb is None:
             cons.log("face rgb je None, protoze neni rectangle")
             return {"message": "no-face-detected"}
@@ -162,8 +161,6 @@ class CamSystems:
         face_encoding = face_recognition.face_encodings(
             self.face_rgb, num_jitters=2, model="large"
         )
-        print(face_encoding[0])
-        print(type(face_encoding[0]))
 
         if len(face_encoding) > 0:
             new_face_vector = face_encoding[0]
@@ -175,21 +172,27 @@ class CamSystems:
             try:
                 employee = Employee.objects.get(slug=employee_slug)
                 cons.log(f"zamestnanec{employee_slug} nalezen")
-                face_vector_entry, created = (
-                    FaceVector.objects.update_or_create(
-                        employee=employee,
-                        defaults={"face_vector": new_face_vector.tolist()},
-                    )
+                _, created = FaceVector.objects.update_or_create(
+                    employee=employee,
+                    defaults={"face_vector": new_face_vector.tolist()},
                 )
                 if created:
                     cons.log(f"Nový FaceVector vytvořen pro {employee_slug}")
-                else:
-                    cons.log(f"FaceVector aktualizován pro {employee_slug}")
+                    return {"message": f"zaznam vytvoren pro {employee_slug}"}
+
+                cons.log(f"FaceVector aktualizován pro {employee_slug}")
+                return {"message": f"zaznam aktualizovan pro {employee_slug}"}
 
             except Employee.DoesNotExist as e:
-                cons.log(f"Zaměstnanec {employee_slug} nebyl nalezen. {e}")
+                cons.log(f"Zaměstnanec {employee_slug} nebyl nalezen. {str(e)}")
+                return {
+                    "message": f"Zaměstnanec {employee_slug} nebyl nalezen. {str(e)}"
+                }
             except Exception as e:
-                cons.log(f"Chyba při ukládání face vectoru: {e}")
+                cons.log(f"Chyba při ukládání face vectoru: {str(e)}")
+                return {"message": f"Chyba při ukládání face vectoru: {str(e)}"}
+
+        return {"message": "No face encoding detected."}
 
     def get_result(self):
         """posli vysledek porovnani"""
@@ -197,11 +200,12 @@ class CamSystems:
             cons.log("face rgb je None, protoze neni rectangle")
             return {"message": "no-face-detected"}
 
+        # toto vraci face vektor jako numpy array
         face_encoding = face_recognition.face_encodings(
             self.face_rgb, num_jitters=2, model="large"
         )
 
-        if face_encoding:
+        if len(face_encoding) > 0:
             new_face_vector = face_encoding[0]
             cons.log("Vektor sejmut!")
             self.last_recon_result = self.face_recon(
@@ -214,6 +218,7 @@ class CamSystems:
             }
             cons.log("Face vektor nesejmut")
 
+        # je treba to resetovat
         self.face_rgb = None
         cons.log(self.last_recon_result)
         return self.last_recon_result
@@ -251,7 +256,7 @@ class Database:
                 face_vectors_[face_vector["employee__slug"]] = decrypted_vector
 
         cons.log(
-            f"Loaded face vectors for employees: {list(face_vectors_.keys())}"
+            f"vektory v DB k porovnani: {len(face_vectors_)}", style="green"
         )
         return face_vectors_
 
