@@ -38,6 +38,7 @@ from app_main.views import (
     GetResultView,
     MainPageView,
 )
+from cam_systems import cam_systems_instance as csi
 
 urlpatterns = [
     path("", RedirectDashboard.as_view()),
@@ -48,7 +49,7 @@ urlpatterns = [
 app_dashboard_urls: list = [
     path("dashboard/", DashboardView.as_view(), name="dashboard"),
     path(
-        "dashboard/save_vector_to_db/<int:pk>/",
+        "dashboard/save_vector_to_db/<slug:slug>",
         SaveVectorToDbView.as_view(),
         name="save_vector_to_db",
     ),

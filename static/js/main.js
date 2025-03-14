@@ -57,7 +57,7 @@
                     "X-CSRFToken": csrftoken,
                 },
                 body: JSON.stringify({}),
-                signal: controller.signal // Připojení signálu pro zrušení
+                signal: controller.signal 
             });
 
             if (!response.ok) {

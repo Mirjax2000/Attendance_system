@@ -1,18 +1,25 @@
 """cam systems OOP"""
 
+import os
+from json import JSONDecodeError, loads
 from pathlib import Path
 from time import sleep
 
 import cv2
 import face_recognition
 import numpy as np
+from cryptography.fernet import Fernet
 from django.conf import settings
 from django.db.utils import OperationalError
 from django.http.response import HttpResponse, StreamingHttpResponse
+from dotenv import load_dotenv
 from rich.console import Console
 
 from app_main.models import Employee, FaceVector
 
+load_dotenv()
+key: str = os.getenv("FERNET_KEY", default="")
+fernet = Fernet(key)
 cons = Console()
 
 media_directory = Path(settings.MEDIA_ROOT)
@@ -152,7 +159,7 @@ class CamSystems:
 
     def save_vector_to_db(self, employee_slug):
         """uloz sejmuty vektor do db"""
-
+        cons.log(f"jen takovej test {employee_slug}")
         if self.face_rgb is None:
             cons.log("face rgb je None, protoze neni rectangle")
             return {"message": "no-face-detected"}
@@ -161,25 +168,25 @@ class CamSystems:
             self.face_rgb, num_jitters=2, model="large"
         )
 
-        if face_encoding:
+        if len(face_encoding) > 0:
             new_face_vector = face_encoding[0]
             cons.log("Vektor sejmut!")
+            cons.log(new_face_vector)
 
             self.face_rgb = None
+
             try:
-                employee = Employee.objects.get(
-                    slug=employee_slug
-                )  # Najde zaměstnance podle slug
+                employee = Employee.objects.get(slug=employee_slug)
+                cons.log(f"zamestnanec{employee_slug} nalezen")
                 face_vector_entry, created = (
                     FaceVector.objects.update_or_create(
-                        employee=employee,  # Odkaz na zaměstnance
-                        defaults={
-                            "face_vector": new_face_vector
-                        },  # Aktualizace sloupce face_vector
+                        employee=employee,
+                        defaults={"face_vector": new_face_vector.tolist()},
                     )
                 )
                 if created:
                     cons.log(f"Nový FaceVector vytvořen pro {employee_slug}")
+                    cons.log(f"novy vector {new_face_vector.tolist()}")
                 else:
                     cons.log(f"FaceVector aktualizován pro {employee_slug}")
 
@@ -229,28 +236,45 @@ class Database:
     """Database methods"""
 
     def get_vectors_from_db(self) -> dict:
-        """Get vectors from database"""
+        """Get decrypted vectors from database"""
         try:
+            # Načteme zaměstnanecké vektory spolu se slugy a šifrovaným vektorem
             face_vectors_from_db = list(
-                FaceVector.objects.values("employee__slug", "face_vector")
+                FaceVector.objects.values(
+                    "employee__slug", "face_vector_fernet"
+                )
             )
         except OperationalError as e:
             cons.log(f"Chyba při načítání vektorů z databáze: {e}")
             return {}
 
         if not face_vectors_from_db:
-            cons.log("Tabulka FaceVector je prazdna")
+            cons.log("FaceVector tabulka je prázdná")
             default_vector = np.zeros(128)
             return {"default_employee_slug": default_vector}
 
         face_vectors_: dict = {}
         for face_vector in face_vectors_from_db:
-            face_vectors_[face_vector["employee__slug"]] = np.array(
-                face_vector["face_vector"]
-            )
+            slug = face_vector["employee__slug"]
+            encrypted_vector = face_vector["face_vector_fernet"]
+
+            if encrypted_vector:
+                # Dešifrujeme vektor
+                decrypted_vector = fernet.decrypt(encrypted_vector).decode()
+                print(decrypted_vector)
+
+                try:
+                    # Převeďte dešifrovaný vektor na seznam/JSON
+                    decrypted_vector_json = loads(decrypted_vector)
+                    # Uložte dešifrovaný vektor jako np.array
+                    face_vectors_[slug] = np.array(decrypted_vector_json)
+                except JSONDecodeError:
+                    cons.log(f"Chyba při dekódování JSON vektoru pro {slug}")
+            else:
+                cons.log(f"Pro {slug} nebyl nalezen šifrovaný vektor")
 
         cons.log(
-            f"Loaded face vectors for employees: {list(face_vectors_.keys())}"
+            f"Načtené face vektory pro zaměstnance: {list(face_vectors_.keys())}"
         )
         return face_vectors_
 

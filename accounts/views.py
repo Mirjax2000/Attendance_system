@@ -46,7 +46,7 @@ class UserDetailView(LoginRequiredMixin, DetailView):
     model = User
     template_name = "accounts/user_detail.html"
     context_object_name = (
-        "user"  # Tento název bude v template jako objekt 'user'
+        "user" 
     )
 
     def get_context_data(self, **kwargs):

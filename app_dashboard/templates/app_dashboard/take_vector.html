@@ -6,20 +6,17 @@
 {% block content %}
     <section>
         <header>
-            <h1>update vektoru zamestnance: Franta pina</h1>
+            <h1>update vektoru zamestnance: {{ employee.id }}, {{ employee.slug }}</h1>
         </header>
+        <hr>
         <main>
             <div>
                 <img src="{% url "camstream" 12 %}" alt="">
             </div>
-            <form id="myForm" method="post">
+            <form method="post" action="{% url "save_vector_to_db" employee.slug %}">
                 {% csrf_token %}
-                <input type="text" name="user_input" placeholder="Zadej něco..." required>
                 <button type="submit">Odeslat</button>
             </form>
-            <!-- Místo, kam zobrazíme výsledek -->
-            <div id="resultContainer"></div>
-            
         </main>
     </section>
 {% endblock content %}

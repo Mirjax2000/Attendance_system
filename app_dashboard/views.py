@@ -3,6 +3,7 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import (
     CreateView,
@@ -17,7 +18,7 @@ from django.views.generic import (
 )
 from rich.console import Console
 
-from app_main.models import Department, Employee
+from app_main.models import Department, Employee, FaceVector
 
 # importuju instanci tridy Camsystems
 from cam_systems import cam_systems_instance as csi
@@ -66,10 +67,12 @@ class MainPanelView(LoginRequiredMixin, TemplateView):
         return context
 
 
-class EmployeesView(LoginRequiredMixin, TemplateView):
+class EmployeesView(LoginRequiredMixin, ListView):
     """Seznam vsech zamestnancu"""
 
+    model = Employee
     template_name = "app_dashboard/employees.html"
+    context_object_name = "employees"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -223,10 +226,12 @@ class DepartmentListView(ListView):
         return context
 
 
-class TakeVectorView(LoginRequiredMixin, TemplateView):
+class TakeVectorView(LoginRequiredMixin, DetailView):
     """Take vektorr from camera"""
 
+    model = Employee
     template_name = "app_dashboard/take_vector.html"
+    context_object_name = "employee"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -236,15 +241,34 @@ class TakeVectorView(LoginRequiredMixin, TemplateView):
         return context
 
 
+# class SaveVectorToDbView(LoginRequiredMixin, View):
+#     """Volání z JS"""
+
+#     def post(self, request, *args, **kwargs):
+#         """post metoda"""
+#         employee_slug = self.kwargs.get("slug", None)
+
+#         return JsonResponse(csi.save_vector_to_db(employee_slug))
+
+#     def get(self, request, *args, **kwargs):
+#         """to je kdyby nebylo post"""
+#         return JsonResponse(
+#             {"message": "Špatná metoda u get_result"}, status=400
+#         )
+
+
 class SaveVectorToDbView(LoginRequiredMixin, View):
-    """Volání z JS"""
+    """Volání z formuláře"""
 
     def post(self, request, *args, **kwargs):
-        """post metoda"""
-        return JsonResponse(csi.save_vector_to_db())
+        employee_slug = self.kwargs.get("slug")
 
-    def get(self, request, *args, **kwargs):
-        """to je kdyby nebylo post"""
-        return JsonResponse(
-            {"message": "Špatná metoda u get_result"}, status=400
-        )
+        if not employee_slug:
+            messages.error(request, "Chybí slug zaměstnance!")
+            return redirect("employees")
+
+        result = csi.save_vector_to_db(employee_slug)
+        print(result)
+
+        messages.success(request, "Vektor úspěšně uložen!")
+        return redirect("employees")

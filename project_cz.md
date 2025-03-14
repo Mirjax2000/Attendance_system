@@ -2,7 +2,7 @@
 
 
 
-# Docházkový systém projektu
+# Docházkový systém
 
 Tento projekt je založen na dvou aplikacích:
 
@@ -11,7 +11,7 @@ Tento projekt je založen na dvou aplikacích:
 **Funkčnost:**
 - Příchod
 - Odchod
-- Další akce (potřebné další podrobnosti)
+- Další akce (napr, sluzebni cesta, dovolena, atd)
 
 **Funkce:**
 - Využívá hardwarový ovladač kamery k zachycení tváře zaměstnance.
@@ -36,11 +36,13 @@ Tento projekt je založen na dvou aplikacích:
 - Administrativní panel
 
 **Přístup k datům:**
+- CRUD zamestance
 - Počet zaměstnanců
 - Stav zaměstnanců v reálném čase (v práci, na služební cestě, na nemocenské)
 - Statistiky
 - Hodinové výkazy
 - Rozesílání informačních emailů
+- CRUD departement
 
 **Permisions:**
 - omezeni pro create/delete  zamestnance

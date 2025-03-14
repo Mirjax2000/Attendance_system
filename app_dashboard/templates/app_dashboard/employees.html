@@ -5,6 +5,15 @@
 {% endblock title %}
 {% block content %}
     <section>
+        <h1>seznam</h1>
+        <div>
+            {% for employee in employees %}
+                <p>{{ employee.id }}</p>
+                <p>{{ employee.slug }}</p>
+                <p>{{ employee.department }}</p>
+                <hr>
+            {% endfor %}
+        </div>
         <ul class="l-controls__list">
             <li class="l-controls__item">
                 <a class="c-button l-controls__btn" href="{% url "create_emp" %}">
