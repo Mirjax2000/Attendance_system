@@ -233,20 +233,14 @@ class Database:
 
     def get_vectors_from_db(self) -> dict:
         """Get vectors from database"""
-        try: # tohle vyhodi chybu, kdyz je DB prazdna
+        try:  # tohle dotaz vyhodi chybu, kdyz je DB prazdna
             face_vectors_from_db = list(
                 FaceVector.objects.values(
                     "employee__slug", "face_vector_fernet"
                 )
             )
-        except OperationalError as e:
-            cons.log(f"Chyba při načítání vektorů z databáze: {e}")
-            cons.log("Tabulka FaceVector je prazdna")
+        except OperationalError:
             return {}
-
-        if not face_vectors_from_db:
-            default_vector = np.zeros(128)
-            return {"default_employee_slug": default_vector}
 
         face_vectors_: dict = {}
         for face_vector in face_vectors_from_db:

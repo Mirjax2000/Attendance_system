@@ -189,12 +189,11 @@ class FaceVector(models.Model):
         unique=False,
         blank=True,
         null=False,
-        default=dict,
         verbose_name="Face vector:",
     )
 
     face_vector_fernet = models.BinaryField(
-        unique=False,
+        unique=True,
         blank=True,
         null=True,
         db_index=True,
