@@ -19,6 +19,9 @@ from rich.console import Console
 
 from app_main.models import Department, Employee
 
+# importuju instanci tridy Camsystems
+from cam_systems import cam_systems_instance as csi
+
 from .forms import EmployeeForm
 
 cons: Console = Console()
@@ -238,7 +241,7 @@ class SaveVectorToDbView(LoginRequiredMixin, View):
 
     def post(self, request, *args, **kwargs):
         """post metoda"""
-        return JsonResponse(cam_system.save_vector_to_db())
+        return JsonResponse(csi.save_vector_to_db())
 
     def get(self, request, *args, **kwargs):
         """to je kdyby nebylo post"""

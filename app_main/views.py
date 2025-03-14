@@ -1,25 +1,14 @@
 """app_main views"""
 
-from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseNotFound, JsonResponse
-from django.urls import reverse_lazy
+from django.http import JsonResponse
 from django.views.generic import (
-    CreateView,
-    DeleteView,
-    DetailView,
-    FormView,
-    ListView,
     TemplateView,
-    UpdateView,
     View,
 )
 
-from . import models
-from .cam_systems import CamSystems
-
-# instance CamSystems
-cam_system = CamSystems()
+# importuju instanci tridy Camsystems
+from cam_systems import cam_systems_instance as csi
 
 
 class MainPageView(LoginRequiredMixin, TemplateView):
@@ -40,7 +29,7 @@ class CamStreamView(LoginRequiredMixin, View):
         """get the fps value"""
         speed = kwargs.get("speed", 15)  # Získání hodnoty z URL
 
-        return cam_system.cam_stream(speed)
+        return csi.cam_stream(speed)
 
 
 class GetResultView(LoginRequiredMixin, View):
@@ -48,7 +37,7 @@ class GetResultView(LoginRequiredMixin, View):
 
     def post(self, request, *args, **kwargs):
         """post metoda"""
-        return JsonResponse(cam_system.get_result())
+        return JsonResponse(csi.get_result())
 
     def get(self, request, *args, **kwargs):
         """to je kdyby nebylo post"""

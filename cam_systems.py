@@ -8,11 +8,10 @@ import face_recognition
 import numpy as np
 from django.conf import settings
 from django.db.utils import OperationalError
-from django.http import JsonResponse
 from django.http.response import HttpResponse, StreamingHttpResponse
 from rich.console import Console
 
-from .models import FaceVector
+from app_main.models import FaceVector
 
 cons = Console()
 
@@ -237,3 +236,7 @@ class Utility:
         temp_speed = min(speed, 24)
         speed_: float = 1 / temp_speed
         return speed_
+
+
+# globalni instance kamery na kterou se muze napojit kazda aplikace
+cam_systems_instance: CamSystems = CamSystems()

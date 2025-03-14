@@ -49,7 +49,7 @@ app_dashboard_urls: list = [
     path("dashboard/", DashboardView.as_view(), name="dashboard"),
     path(
         "dashboard/save_vector_to_db",
-        SaveVectorToDbView().as_view(),
+        SaveVectorToDbView.as_view(),
         name="save_vector_to_db",
     ),
     path("dashboard/take_vector", TakeVectorView.as_view(), name="take_vector"),
