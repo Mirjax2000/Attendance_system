@@ -137,7 +137,7 @@ class CamSystems:
 
         for name, stored_vector in vectors.items():
             distance = self.utility.porovnani(vektor1, stored_vector)
-            print(f"{name}: {distance:.4f}")
+            cons.log(f"{name}: {distance:.4f}",style="green")
 
             if distance < min_distance:
                 min_distance = distance
@@ -146,16 +146,17 @@ class CamSystems:
         # Vyhodnocení výsledku
         if min_distance < threshold:
             cons.log(
-                f"Employee Rozpoznán: {best_match} (Vzdálenost: {min_distance:.4f})"
+                f"Employee Rozpoznán: {best_match} (Vzdálenost: {min_distance:.4f})",
+                style="blue",
             )
             return {"name": best_match, "message": "success"}
-        cons.log("Neznámý obličej!")
+        cons.log("Neznámý obličej!", style="red")
         return {"message": "neznamy oblicej"}
 
     def save_vector_to_db(self, employee_slug) -> dict:
         """uloz sejmuty vektor do db"""
         if self.face_rgb is None:
-            cons.log("face rgb je None, protoze neni rectangle")
+            cons.log("face rgb je None, protoze neni rectangle", style="green")
             return {"message": "no-face-detected"}
 
         face_encoding = face_recognition.face_encodings(
@@ -164,32 +165,41 @@ class CamSystems:
 
         if len(face_encoding) > 0:
             new_face_vector = face_encoding[0]
-            cons.log("Vektor sejmut!")
-            cons.log(new_face_vector)
+            cons.log("Vektor sejmut!", style="blue")
 
             self.face_rgb = None
 
             try:
                 employee = Employee.objects.get(slug=employee_slug)
-                cons.log(f"zamestnanec{employee_slug} nalezen")
+                cons.log(f"zamestnanec {employee_slug} nalezen", style="blue")
                 _, created = FaceVector.objects.update_or_create(
                     employee=employee,
                     defaults={"face_vector": new_face_vector.tolist()},
                 )
                 if created:
-                    cons.log(f"Nový FaceVector vytvořen pro {employee_slug}")
+                    cons.log(
+                        f"FaceVector vytvořen pro {employee_slug}",
+                        style="blue",
+                    )
                     return {"message": f"zaznam vytvoren pro {employee_slug}"}
 
-                cons.log(f"FaceVector aktualizován pro {employee_slug}")
+                cons.log(
+                    f"FaceVector aktualizován pro {employee_slug}", style="blue"
+                )
                 return {"message": f"zaznam aktualizovan pro {employee_slug}"}
 
             except Employee.DoesNotExist as e:
-                cons.log(f"Zaměstnanec {employee_slug} nebyl nalezen. {str(e)}")
+                cons.log(
+                    f"Zaměstnanec {employee_slug} nebyl nalezen. {str(e)}",
+                    style="red",
+                )
                 return {
                     "message": f"Zaměstnanec {employee_slug} nebyl nalezen. {str(e)}"
                 }
             except Exception as e:
-                cons.log(f"Chyba při ukládání face vectoru: {str(e)}")
+                cons.log(
+                    f"Chyba při ukládání face vectoru: {str(e)}", style="red"
+                )
                 return {"message": f"Chyba při ukládání face vectoru: {str(e)}"}
 
         return {"message": "No face encoding detected."}
