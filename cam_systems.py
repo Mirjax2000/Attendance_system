@@ -11,7 +11,7 @@ from django.db.utils import OperationalError
 from django.http.response import HttpResponse, StreamingHttpResponse
 from rich.console import Console
 
-from app_main.models import FaceVector
+from app_main.models import Employee, FaceVector
 
 cons = Console()
 
@@ -150,10 +150,43 @@ class CamSystems:
         cons.log("Neznámý obličej!")
         return {"message": "neznamy oblicej"}
 
-    def save_vector_to_db(self):
+    def save_vector_to_db(self, employee_slug):
         """uloz sejmuty vektor do db"""
-        # pracuj se slugem employee.
-        pass
+
+        if self.face_rgb is None:
+            cons.log("face rgb je None, protoze neni rectangle")
+            return {"message": "no-face-detected"}
+
+        face_encoding = face_recognition.face_encodings(
+            self.face_rgb, num_jitters=2, model="large"
+        )
+
+        if face_encoding:
+            new_face_vector = face_encoding[0]
+            cons.log("Vektor sejmut!")
+
+            self.face_rgb = None
+            try:
+                employee = Employee.objects.get(
+                    slug=employee_slug
+                )  # Najde zaměstnance podle slug
+                face_vector_entry, created = (
+                    FaceVector.objects.update_or_create(
+                        employee=employee,  # Odkaz na zaměstnance
+                        defaults={
+                            "face_vector": new_face_vector
+                        },  # Aktualizace sloupce face_vector
+                    )
+                )
+                if created:
+                    cons.log(f"Nový FaceVector vytvořen pro {employee_slug}")
+                else:
+                    cons.log(f"FaceVector aktualizován pro {employee_slug}")
+
+            except Employee.DoesNotExist as e:
+                cons.log(f"Zaměstnanec {employee_slug} nebyl nalezen. {e}")
+            except Exception as e:
+                cons.log(f"Chyba při ukládání face vectoru: {e}")
 
     def get_result(self):
         """posli vysledek porovnani"""

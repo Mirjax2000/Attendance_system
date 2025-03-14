@@ -48,11 +48,15 @@ urlpatterns = [
 app_dashboard_urls: list = [
     path("dashboard/", DashboardView.as_view(), name="dashboard"),
     path(
-        "dashboard/save_vector_to_db",
+        "dashboard/save_vector_to_db/<int:pk>/",
         SaveVectorToDbView.as_view(),
         name="save_vector_to_db",
     ),
-    path("dashboard/take_vector", TakeVectorView.as_view(), name="take_vector"),
+    path(
+        "dashboard/take_vector/<int:pk>/",
+        TakeVectorView.as_view(),
+        name="take_vector",
+    ),
     path("dashboard/attendance", AttendanceView.as_view(), name="attendance"),
     path("dashboard/create_emp", CreateEmpView.as_view(), name="create_emp"),
     path("dashboard/main_panel", MainPanelView.as_view(), name="main_panel"),
