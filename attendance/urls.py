@@ -38,7 +38,6 @@ from app_main.views import (
     GetResultView,
     MainPageView,
 )
-from cam_systems import cam_systems_instance as csi
 
 urlpatterns = [
     path("", RedirectDashboard.as_view()),

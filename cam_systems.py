@@ -1,7 +1,6 @@
 """cam systems OOP"""
 
-import os
-from json import JSONDecodeError, loads
+from json import loads
 from pathlib import Path
 from time import sleep
 
@@ -12,14 +11,10 @@ from cryptography.fernet import Fernet
 from django.conf import settings
 from django.db.utils import OperationalError
 from django.http.response import HttpResponse, StreamingHttpResponse
-from dotenv import load_dotenv
 from rich.console import Console
 
-from app_main.models import Employee, FaceVector
+from app_main.models import Employee, FaceVector, fernet
 
-load_dotenv()
-key: str = os.getenv("FERNET_KEY", default="")
-fernet = Fernet(key)
 cons = Console()
 
 media_directory = Path(settings.MEDIA_ROOT)
@@ -36,8 +31,8 @@ class CamSystems:
     def __init__(self):
         self.cap = cv2.VideoCapture(0)
         # self.cap = cv2.VideoCapture(no_video_signal)
-        self.database = Database()
         self.utility = Utility()
+        self.database = Database()
         self.face_vectors: dict = self.database.get_vectors_from_db()
         self.last_recon_result: dict = {}
         self.face_detector = self.create_detector()
@@ -167,6 +162,8 @@ class CamSystems:
         face_encoding = face_recognition.face_encodings(
             self.face_rgb, num_jitters=2, model="large"
         )
+        print(face_encoding[0])
+        print(type(face_encoding[0]))
 
         if len(face_encoding) > 0:
             new_face_vector = face_encoding[0]
@@ -186,7 +183,6 @@ class CamSystems:
                 )
                 if created:
                     cons.log(f"Nový FaceVector vytvořen pro {employee_slug}")
-                    cons.log(f"novy vector {new_face_vector.tolist()}")
                 else:
                     cons.log(f"FaceVector aktualizován pro {employee_slug}")
 
@@ -236,9 +232,8 @@ class Database:
     """Database methods"""
 
     def get_vectors_from_db(self) -> dict:
-        """Get decrypted vectors from database"""
-        try:
-            # Načteme zaměstnanecké vektory spolu se slugy a šifrovaným vektorem
+        """Get vectors from database"""
+        try: # tohle vyhodi chybu, kdyz je DB prazdna
             face_vectors_from_db = list(
                 FaceVector.objects.values(
                     "employee__slug", "face_vector_fernet"
@@ -246,35 +241,23 @@ class Database:
             )
         except OperationalError as e:
             cons.log(f"Chyba při načítání vektorů z databáze: {e}")
+            cons.log("Tabulka FaceVector je prazdna")
             return {}
 
         if not face_vectors_from_db:
-            cons.log("FaceVector tabulka je prázdná")
             default_vector = np.zeros(128)
             return {"default_employee_slug": default_vector}
 
         face_vectors_: dict = {}
         for face_vector in face_vectors_from_db:
-            slug = face_vector["employee__slug"]
-            encrypted_vector = face_vector["face_vector_fernet"]
-
-            if encrypted_vector:
-                # Dešifrujeme vektor
-                decrypted_vector = fernet.decrypt(encrypted_vector).decode()
-                print(decrypted_vector)
-
-                try:
-                    # Převeďte dešifrovaný vektor na seznam/JSON
-                    decrypted_vector_json = loads(decrypted_vector)
-                    # Uložte dešifrovaný vektor jako np.array
-                    face_vectors_[slug] = np.array(decrypted_vector_json)
-                except JSONDecodeError:
-                    cons.log(f"Chyba při dekódování JSON vektoru pro {slug}")
-            else:
-                cons.log(f"Pro {slug} nebyl nalezen šifrovaný vektor")
+            decrypted_vector = Utility.decrypt_face_vector(
+                face_vector["face_vector_fernet"]
+            )
+            if decrypted_vector is not None:
+                face_vectors_[face_vector["employee__slug"]] = decrypted_vector
 
         cons.log(
-            f"Načtené face vektory pro zaměstnance: {list(face_vectors_.keys())}"
+            f"Loaded face vectors for employees: {list(face_vectors_.keys())}"
         )
         return face_vectors_
 
@@ -293,6 +276,19 @@ class Utility:
         temp_speed = min(speed, 24)
         speed_: float = 1 / temp_speed
         return speed_
+
+    @staticmethod
+    def decrypt_face_vector(encrypted_vector: bytes):
+        """Dešifruje šifrovaný vektor a vrací NumPy pole."""
+        try:
+            decrypted_vector_bytes = fernet.decrypt(encrypted_vector)
+            decrypted_vector_str = decrypted_vector_bytes.decode()
+            decrypted_vector_list = loads(decrypted_vector_str)
+            decrypted_vector_np = np.array(decrypted_vector_list)
+            return decrypted_vector_np
+        except Exception as e:
+            print(f"Chyba při dešifrování vektoru: {e}")
+            return None
 
 
 # globalni instance kamery na kterou se muze napojit kazda aplikace

@@ -4,6 +4,7 @@ import os
 from datetime import date
 from json import JSONDecodeError, dumps, loads
 
+import numpy as np
 from cryptography.fernet import Fernet
 from django.contrib.auth.hashers import check_password, make_password
 from django.core import validators as val
@@ -185,7 +186,11 @@ class FaceVector(models.Model):
     )
 
     face_vector = models.JSONField(
-        unique=False, blank=True, null=False, verbose_name="Face vector:"
+        unique=False,
+        blank=True,
+        null=False,
+        default=dict,
+        verbose_name="Face vector:",
     )
 
     face_vector_fernet = models.BinaryField(
