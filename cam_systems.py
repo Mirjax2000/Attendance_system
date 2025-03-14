@@ -38,6 +38,9 @@ class CamSystems:
         self.face_detector = self.create_detector()
         self.face_rgb = None
 
+    def __str__(self) -> str:
+        return f"vektory v DB k porovnani: {len(self.face_vectors)}"
+
     def create_detector(self):
         """Create face detector"""
         width: int = int(self.cap.get(3))
@@ -118,7 +121,9 @@ class CamSystems:
     ) -> HttpResponse | StreamingHttpResponse:
         """video stream na endpointu"""
         if not self.cap.isOpened():
-            cons.log("Kamera neni dostupna, zrejme neni naisntalovna")
+            cons.log(
+                "Kamera neni dostupna, zrejme neni nainstalovana", style="red"
+            )
             return HttpResponse(
                 "Kamera není dostupná, zrejme neni naistalovana", status=500
             )
@@ -137,7 +142,7 @@ class CamSystems:
 
         for name, stored_vector in vectors.items():
             distance = self.utility.porovnani(vektor1, stored_vector)
-            cons.log(f"{name}: {distance:.4f}",style="green")
+            cons.log(f"{name}: {distance:.4f}", style="green")
 
             if distance < min_distance:
                 min_distance = distance
@@ -152,6 +157,72 @@ class CamSystems:
             return {"name": best_match, "message": "success"}
         cons.log("Neznámý obličej!", style="red")
         return {"message": "neznamy oblicej"}
+
+    def get_result(self):
+        """posli vysledek porovnani"""
+        if self.face_rgb is None:
+            cons.log("face rgb je None, protoze neni rectangle")
+            return {"message": "no-face-detected"}
+
+        # toto vraci face vektor jako numpy array
+        face_encoding = face_recognition.face_encodings(
+            self.face_rgb, num_jitters=2, model="large"
+        )
+
+        if len(face_encoding) > 0:
+            new_face_vector = face_encoding[0]
+            cons.log("Vektor sejmut!")
+            self.last_recon_result = self.face_recon(
+                new_face_vector, self.face_vectors
+            )
+
+        else:
+            self.last_recon_result = {
+                "message": "no-face-detected",
+            }
+            cons.log("Face vektor nesejmut")
+
+        # je treba to resetovat
+        self.face_rgb = None
+        cons.log(self.last_recon_result)
+        return self.last_recon_result
+
+    def release_camera(self):
+        """Uvolní kameru při ukončení"""
+        if self.cap.isOpened():
+            self.cap.release()
+
+    def __del__(self):
+        """uvolni kameru při zničení instance"""
+        self.release_camera()
+
+
+class Database:
+    """Database methods"""
+
+    def __init__(self, face_rgb=None):
+        self.face_rgb = face_rgb
+
+    def get_vectors_from_db(self) -> dict:
+        """Get vectors from database"""
+        try:  # tohle dotaz vyhodi chybu, kdyz je DB prazdna
+            face_vectors_from_db = list(
+                FaceVector.objects.values(
+                    "employee__slug", "face_vector_fernet"
+                )
+            )
+        except OperationalError:
+            return {}
+
+        face_vectors_: dict = {}
+        for face_vector in face_vectors_from_db:
+            decrypted_vector = Utility.decrypt_face_vector(
+                face_vector["face_vector_fernet"]
+            )
+            if decrypted_vector is not None:
+                face_vectors_[face_vector["employee__slug"]] = decrypted_vector
+
+        return face_vectors_
 
     def save_vector_to_db(self, employee_slug) -> dict:
         """uloz sejmuty vektor do db"""
@@ -204,72 +275,6 @@ class CamSystems:
 
         return {"message": "No face encoding detected."}
 
-    def get_result(self):
-        """posli vysledek porovnani"""
-        if self.face_rgb is None:
-            cons.log("face rgb je None, protoze neni rectangle")
-            return {"message": "no-face-detected"}
-
-        # toto vraci face vektor jako numpy array
-        face_encoding = face_recognition.face_encodings(
-            self.face_rgb, num_jitters=2, model="large"
-        )
-
-        if len(face_encoding) > 0:
-            new_face_vector = face_encoding[0]
-            cons.log("Vektor sejmut!")
-            self.last_recon_result = self.face_recon(
-                new_face_vector, self.face_vectors
-            )
-
-        else:
-            self.last_recon_result = {
-                "message": "no-face-detected",
-            }
-            cons.log("Face vektor nesejmut")
-
-        # je treba to resetovat
-        self.face_rgb = None
-        cons.log(self.last_recon_result)
-        return self.last_recon_result
-
-    def release_camera(self):
-        """Uvolní kameru při ukončení"""
-        if self.cap.isOpened():
-            self.cap.release()
-
-    def __del__(self):
-        """uvolni kameru při zničení instance"""
-        self.release_camera()
-
-
-class Database:
-    """Database methods"""
-
-    def get_vectors_from_db(self) -> dict:
-        """Get vectors from database"""
-        try:  # tohle dotaz vyhodi chybu, kdyz je DB prazdna
-            face_vectors_from_db = list(
-                FaceVector.objects.values(
-                    "employee__slug", "face_vector_fernet"
-                )
-            )
-        except OperationalError:
-            return {}
-
-        face_vectors_: dict = {}
-        for face_vector in face_vectors_from_db:
-            decrypted_vector = Utility.decrypt_face_vector(
-                face_vector["face_vector_fernet"]
-            )
-            if decrypted_vector is not None:
-                face_vectors_[face_vector["employee__slug"]] = decrypted_vector
-
-        cons.log(
-            f"vektory v DB k porovnani: {len(face_vectors_)}", style="green"
-        )
-        return face_vectors_
-
 
 class Utility:
     """Utility classes"""
@@ -302,3 +307,4 @@ class Utility:
 
 # globalni instance kamery na kterou se muze napojit kazda aplikace
 cam_systems_instance: CamSystems = CamSystems()
+cons.log(f"instance camsystems vytvorena {cam_systems_instance}")
