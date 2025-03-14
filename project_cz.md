@@ -1,7 +1,5 @@
 
 
-
-
 # Docházkový systém
 
 Tento projekt je založen na dvou aplikacích:
@@ -25,7 +23,7 @@ Tento projekt je založen na dvou aplikacích:
 - Po potvrzení zaměstnancem nastaví stav na 'v práci' a začne sledovat čas v databázi.
 - Databázové modely lze rozšířit o různé další funkce a metody.
 
-## 2. Dashboard / Přehled
+## 2. Dashboard aplikace / Přehled
 
 **Uživatelé:**
 - Majitel společnosti
@@ -34,19 +32,27 @@ Tento projekt je založen na dvou aplikacích:
 
 **Přístup:**
 - Administrativní panel
+- zde hlavni prehledy s rozklikem na detailni vypisy
 
 **Přístup k datům:**
 - CRUD zamestance
+- CRUD departements
 - Počet zaměstnanců
 - Stav zaměstnanců v reálném čase (v práci, na služební cestě, na nemocenské)
 - Statistiky
 - Hodinové výkazy
 - Rozesílání informačních emailů
-- CRUD departement
 
 **Permisions:**
 - omezeni pro create/delete  zamestnance
 - Prehledy - default
 - rozesilani emailu - HR
+
+**databaze:**
+- tabulka: employee
+- tabulka: department
+- tabulka: oblicejovych vektoru
+- tabulka: zaznam casu v praci
+
 
 
