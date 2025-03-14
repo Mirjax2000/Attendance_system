@@ -16,7 +16,6 @@ from django.views.generic import (
 )
 
 from . import models
-
 from .cam_systems import CamSystems
 
 # instance CamSystems
@@ -56,4 +55,3 @@ class GetResultView(LoginRequiredMixin, View):
         return JsonResponse(
             {"message": "Špatná metoda u get_result"}, status=400
         )
-

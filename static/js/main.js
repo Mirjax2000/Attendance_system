@@ -43,10 +43,12 @@
     // spusteni a cekani na vysledek u funkce ve view get_result
     async function get_result() {
         const csrftoken = getCookie("csrftoken");
+        captureBtn.disabled = true;
+
 
         // Nastavení timeoutu na 5 sekund
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 10000);
+        const timeoutId = setTimeout(() => controller.abort(), 5000);
         try {
             const response = await fetch("/app_main/get_result", {
                 method: "POST",
@@ -54,6 +56,7 @@
                     "Content-Type": "application/json",
                     "X-CSRFToken": csrftoken,
                 },
+                body: JSON.stringify({}),
                 signal: controller.signal // Připojení signálu pro zrušení
             });
 
@@ -70,7 +73,9 @@
                 console.error("Error:", error);
             }
         } finally {
-            clearTimeout(timeoutId); // Uvolnění timeoutu, když požadavek skončí
+            clearTimeout(timeoutId);
+            captureBtn.disabled = false;
+
         }
     }
     // click na btn

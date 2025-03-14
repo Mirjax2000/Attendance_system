@@ -1,0 +1,25 @@
+{% extends "dashboard_base.html" %}
+{% load static %}
+{% block title %}
+    take vektor
+{% endblock title %}
+{% block content %}
+    <section>
+        <header>
+            <h1>update vektoru zamestnance: Franta pina</h1>
+        </header>
+        <main>
+            <div>
+                <img src="{% url "camstream" 12 %}" alt="">
+            </div>
+            <form id="myForm" method="post">
+                {% csrf_token %}
+                <input type="text" name="user_input" placeholder="Zadej něco..." required>
+                <button type="submit">Odeslat</button>
+            </form>
+            <!-- Místo, kam zobrazíme výsledek -->
+            <div id="resultContainer"></div>
+            
+        </main>
+    </section>
+{% endblock content %}

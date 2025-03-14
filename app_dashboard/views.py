@@ -2,6 +2,7 @@
 
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic import (
     CreateView,
@@ -12,6 +13,7 @@ from django.views.generic import (
     RedirectView,
     TemplateView,
     UpdateView,
+    View,
 )
 from rich.console import Console
 
@@ -20,6 +22,7 @@ from app_main.models import Department, Employee
 from .forms import EmployeeForm
 
 cons: Console = Console()
+# instance CamSystems
 
 
 def get_user_name(view_instance) -> str:
@@ -215,3 +218,30 @@ class DepartmentListView(ListView):
         context["active_link"] = "main-panel"
 
         return context
+
+
+class TakeVectorView(LoginRequiredMixin, TemplateView):
+    """Take vektorr from camera"""
+
+    template_name = "app_dashboard/take_vector.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["user_name"] = get_user_name(self)
+        context["active_link"] = "employees"
+
+        return context
+
+
+class SaveVectorToDbView(LoginRequiredMixin, View):
+    """Volání z JS"""
+
+    def post(self, request, *args, **kwargs):
+        """post metoda"""
+        return JsonResponse(cam_system.save_vector_to_db())
+
+    def get(self, request, *args, **kwargs):
+        """to je kdyby nebylo post"""
+        return JsonResponse(
+            {"message": "Špatná metoda u get_result"}, status=400
+        )

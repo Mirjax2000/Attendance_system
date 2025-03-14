@@ -151,6 +151,11 @@ class CamSystems:
         cons.log("Neznámý obličej!")
         return {"message": "neznamy oblicej"}
 
+    def save_vector_to_db(self):
+        """uloz sejmuty vektor do db"""
+        # pracuj se slugem employee.
+        pass
+
     def get_result(self):
         """posli vysledek porovnani"""
         if self.face_rgb is None:
@@ -186,7 +191,6 @@ class CamSystems:
     def __del__(self):
         """uvolni kameru při zničení instance"""
         self.release_camera()
-
 
 
 class Database:
