@@ -13,20 +13,20 @@
             {% csrf_token %}
             {% if form.non_field_errors %}
                 <div class="L-form__error">
-                    {% for error in form.non_field_errors %}<p class="u-text-warning">{{ error }}</p>{% endfor %}
+                    {% for error in form.non_field_errors %}<p class="L-form__error--text">{{ error }}</p>{% endfor %}
                 </div>
             {% else %}
                 <div class="L-form__error">
-                    <p>&nbsp;</p>
+                    <p class="L-form__error--text">&nbsp;</p>
                 </div>
             {% endif %}
             {% for field in form %}
                 <label for="{{ field.id_for_label }}" class="L-form__label">{{ field.label }}:</label>
                 {{ field }}
                 {% if field.errors %}
-                    <p class="u-text-warning">{{ field.errors.0 }}</p>
+                    <p class="L-form__error--text">{{ field.errors.0 }}</p>
                 {% else %}
-                    <p>&nbsp;</p>
+                    <p class="L-form__error--text">&nbsp;</p>
                 {% endif %}
             {% endfor %}
             <button class="L-form__submit">Registrovat se</button>

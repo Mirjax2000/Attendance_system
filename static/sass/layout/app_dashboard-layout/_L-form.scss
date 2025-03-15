@@ -18,7 +18,7 @@
 
     &__header {
         border-bottom: 1px solid var(--scheme-default);
-        margin-bottom: 1em;
+        margin-bottom: 0.3em;
     }
 
     &__form {
@@ -59,8 +59,10 @@
     &__error {
         margin-bottom: 0.5em;
 
-        p {
-            margin-bottom: 0.5em;
+        &--text {
+            font-size: 0.75rem;
+            margin-bottom: 0.3em;
+            color: var(--scheme-warning);
         }
     }
 
