@@ -327,4 +327,3 @@ class Utility:
 # globalni instance kamery na kterou se muze napojit kazda aplikace
 cam_systems_instance: CamSystems = CamSystems()
 cons.log(f"instance camsystems vytvorena {cam_systems_instance}")
-cons.log(cam_systems_instance.face_vectors["jaroslav-curda"])
