@@ -271,10 +271,10 @@ class SaveVectorToDbView(LoginRequiredMixin, View):
         result = csi.database.save_vector_to_db(employee_slug)
         cons.log(result, style="green")
 
-        if result["success"]== True:
+        if result["success"]:
             messages.success(request, result["message"])
             return redirect("employees")
-        
+
         messages.error(request, result["message"])
         return redirect("employees")
 
