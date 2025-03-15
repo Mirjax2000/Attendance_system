@@ -284,7 +284,7 @@ class EmployeeDeleteView(LoginRequiredMixin, DeleteView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["user_name"] = get_user_name(self)
-        context["active_link"] = "employee"
+        context["active_link"] = "employees"
         return context
 
     def form_valid(self, form):
@@ -310,3 +310,18 @@ class EmployeeUpdateView(LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         messages.success(self.request, f"{self.get_object()}: Updated")
         return super().form_valid(form)
+
+
+class EmployeeDetailView(LoginRequiredMixin, DetailView):
+    """Detail user"""
+
+    model = Employee
+    template_name = "app_dashboard/employee_detail.html"
+    context_object_name = "employee"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["user_name"] = get_user_name(self)
+        context["active_link"] = "employees"
+
+        return context

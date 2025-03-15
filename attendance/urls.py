@@ -24,6 +24,7 @@ from app_dashboard.views import (
     DepartmentListView,
     EmailView,
     EmployeeDeleteView,
+    EmployeeDetailView,
     EmployeesView,
     EmployeeUpdateView,
     MainPanelView,
@@ -63,6 +64,11 @@ app_dashboard_urls: list = [
     path("dashboard/create_emp", CreateEmpView.as_view(), name="create_emp"),
     path("dashboard/main_panel", MainPanelView.as_view(), name="main_panel"),
     path("dashboard/employees", EmployeesView.as_view(), name="employees"),
+    path(
+        "dashboard/detail_employee/<int:pk>/",
+        EmployeeDetailView.as_view(),
+        name="detail_employee",
+    ),
     path(
         "dashboard/delete_employee/<int:pk>/",
         EmployeeDeleteView.as_view(),

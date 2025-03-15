@@ -16,9 +16,12 @@
         &--username {
             @extend %border-radius;
 
-            background-color: var(--scheme-clr-4);
-            padding-inline: 0.5em;
-            box-shadow: 1px 1px 3px black;
+            display: inline-block;
+            padding: 0.3em 0.5em;
+            background-color: var(--scheme-clr-3);
+            box-shadow: 1px 1px 2px #0000004c;
+            border: 1px solid black;
+            margin-bottom: 1em;
         }
     }
 

@@ -22,7 +22,7 @@
             </a>
         </div>
         <p class="L-list__info">
-            počet zaměstnanců:&nbsp;<span class="u-text-success">{{ employees.count }}</span>
+            počet zaměstnanců:&nbsp;<span class="u-text-success c-info-highlight">{{ employees.count }}</span>
         </p>
         <table class="L-list__table">
             <thead class="L-list__table-header">
@@ -42,7 +42,9 @@
                 {% for employee in employees %}
                     <tr class="L-list__table-row">
                         <td class="L-list__table-cell id">{{ employee.id }}</td>
-                        <td class="L-list__table-cell name">{{ employee.name }}</td>
+                        <td class="L-list__table-cell name">
+                            <a href="{% url "detail_employee" employee.pk %}" class="L-list__detail">{{ employee.name }}</a>
+                        </td>
                         <td class="L-list__table-cell surname">{{ employee.surname }}</td>
                         <td class="L-list__table-cell email">{{ employee.email }}</td>
                         <td class="L-list__table-cell street">{{ employee.street_number }}</td>

@@ -205,11 +205,11 @@ body.home {
   margin-inline: auto;
 }
 
-.c-filter, .c-count__card, .L-detail, .L-detail__item p strong, .L-detail__actions, .L-list__wrapper, .L-list__info, .L-list__actions, .L-form, .L-header, .L-navigation {
+.c-info-highlight, .c-filter, .c-count__card, .L-detail, .L-detail__item p strong, .L-detail__actions, .L-list__wrapper, .L-list__info, .L-list__actions, .L-form, .L-header, .L-navigation {
   user-select: none;
 }
 
-.c-filter, .c-filter__item .form__wrapper, .c-filter__form select, .c-count__card, .c-count__card__content, .c-ico-btn, .L-detail__header--username, .L-list__info span, .L-form, .L-form__user, .L-form__form input, .L-form__submit, .L-content {
+.c-info-highlight, .c-filter, .c-filter__item .form__wrapper, .c-filter__form select, .c-count__card, .c-count__card__content, .c-ico-btn, .L-detail__header--username, .L-form, .L-form__user, .L-form__form input, .L-form__submit, .L-content {
   border-radius: 5px;
 }
 
@@ -462,6 +462,7 @@ body {
 .L-list__detail {
   color: var(--scheme-default);
   transition: all 0.1s ease-in-out;
+  text-decoration: underline;
 }
 .L-list__detail.current {
   color: var(--scheme-success);
@@ -471,12 +472,6 @@ body {
 }
 .L-list__info {
   margin-bottom: 1em;
-}
-.L-list__info span {
-  display: inline-block;
-  padding: 0.1em 0.5em;
-  background-color: var(--scheme-clr-3);
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.368627451);
 }
 .L-list__table {
   width: 100%;
@@ -574,9 +569,12 @@ body {
   border-bottom: 1px solid gray;
 }
 .L-detail__header--username {
-  background-color: var(--scheme-clr-4);
-  padding-inline: 0.5em;
-  box-shadow: 1px 1px 3px black;
+  display: inline-block;
+  padding: 0.3em 0.5em;
+  background-color: var(--scheme-clr-3);
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2980392157);
+  border: 1px solid black;
+  margin-bottom: 1em;
 }
 .L-detail__item {
   margin-bottom: 1em;
@@ -895,6 +893,13 @@ body {
 }
 .c-filter__banner img {
   background-color: transparent;
+}
+
+.c-info-highlight {
+  display: inline-block;
+  padding: 0.3em 0.5em;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4392156863);
+  border: 1px solid rgba(0, 0, 0, 0.2431372549);
 }
 
 /*# sourceMappingURL=dashboard.css.map */

@@ -1,0 +1,60 @@
+{% extends "dashboard_base.html" %}
+{% load static %}
+{% block title %}
+    Employee detail
+{% endblock title %}
+{% block content %}
+    <div class="L-detail">
+        <h1 class="L-detail__header">
+            Detail zaměstnance:&nbsp; <span class="L-detail__header--username">"{{ employee.name }} {{ employee.surname }}"</span>
+        </h1>
+        <ul class="L-detail__list">
+            <li class="L-detail__item">
+                <p>
+                    <strong>Jméno a příjmení:</strong> {{ employee.name }} {{ employee.surname }}
+                </p>
+            </li>
+            <li class="L-detail__item">
+                <p>
+                    <strong>Email:</strong> {{ employee.email }}
+                </p>
+            </li>
+            <li class="L-detail__item">
+                <p>
+                    <strong>Věk:</strong> {{ employee.age }}
+                </p>
+            </li>
+            <li class="L-detail__item">
+                <p>
+                    <strong>Účet v pořádku?:</strong>
+                    {% if employee.is_valid == True %}
+                        <span class="u-text-success c-info-highlight">&nbsp;ANO</span>
+                    {% else %}
+                        <span class="u-text-warning c-info-highlight">&nbsp;NE</span>
+                    {% endif %}
+                </p>
+            </li>
+            <li class="L-detail__item">
+                <div class="L-detail__actions">
+                    <a class="c-ico-btn {% if request.user.username == user.username %}hide{% endif %}"
+                       href="{% url 'delete-user' user.pk %}">
+                        <img src="{% static 'images/icons8-delete-48-red.png' %}"
+                             alt="delete icon"
+                             width="24"
+                             height="24">
+                        <p>smazat</p>
+                    </a>
+                    <a class="c-ico-btn" href="{% url 'update-user' user.pk %}">
+                        <img class="list__action-icon"
+                             src="{% static 'images/icons8-update-blue.png' %}"
+                             alt="update icon"
+                             width="24"
+                             height="24">
+                        <p class="list__action-text">update</p>
+                    </a>
+                </div>
+            </li>
+        </ul>
+        <a href="{% url 'employees' %}" class="L-detail__redirect">Zpět na seznam uživatelů</a>
+    </div>
+{% endblock content %}
