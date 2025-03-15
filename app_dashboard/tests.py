@@ -1,10 +1,23 @@
 """Django tests"""
 
+import json
 from datetime import date
 
+import numpy as np
 from django.test import TestCase
 
 from app_main.models import Employee, FaceVector
+
+seed: int = 42
+rng = np.random.default_rng(seed)
+vektor = rng.random((128))
+vektor_2 = rng.random((128))
+
+face_vektor_list = vektor.tolist()
+face_vektor_list_2 = vektor_2.tolist()
+
+expected_vector_1: str = json.dumps({"vector": face_vektor_list})
+expected_vector_2: str = json.dumps({"vector": face_vektor_list_2})
 
 
 class EmployeeModelTest(TestCase):
@@ -24,7 +37,7 @@ class EmployeeModelTest(TestCase):
             pin_code="1234",
         )
         FaceVector.objects.create(
-            employee=employee1, face_vector={"vector": [0.1, 0.2, 0.3]}
+            employee=employee1, face_vector={"vector": face_vektor_list}
         )
 
         employee2 = Employee.objects.create(
@@ -40,10 +53,11 @@ class EmployeeModelTest(TestCase):
             pin_code="5678",
         )
         FaceVector.objects.create(
-            employee=employee2, face_vector={"vector": [0.4, 0.5, 0.6]}
+            employee=employee2, face_vector={"vector": face_vektor_list_2}
         )
 
     def test_employee_creation(self):
+        """Z tabulky employee"""
         employee_jan = Employee.objects.get(slug="jan-novak")
         self.assertEqual(employee_jan.name, "Jan")
         self.assertEqual(employee_jan.surname, "Novák")
@@ -55,21 +69,23 @@ class EmployeeModelTest(TestCase):
         self.assertEqual(employee_jan.age(), (39))
         self.assertTrue(employee_jan.check_pin_code("1234"))
         self.assertEqual(employee_jan.is_valid, True)
+        # propojeni pres FK na tabulku FaceVector
         self.assertEqual(
-            employee_jan.vector.decrypt_vector(), '{"vector": [0.1, 0.2, 0.3]}'
+            employee_jan.vector.decrypt_vector(),
+            expected_vector_1,
         )
 
     def test_face_vector_creation(self):
+        """z tabulky FaceVector"""
         face_vector_jan = FaceVector.objects.get(
             employee__email="jan.novak@example.com"
         )
         self.assertIsNotNone(face_vector_jan.face_vector_fernet)
         self.assertIsInstance(face_vector_jan.face_vector, list)
         self.assertIsInstance(face_vector_jan.face_vector_fernet, bytes)
-        self.assertEqual(
-            face_vector_jan.decrypt_vector(), '{"vector": [0.1, 0.2, 0.3]}'
-        )
+        self.assertEqual(face_vector_jan.decrypt_vector(), expected_vector_1)
         self.assertNotEqual(
-            face_vector_jan.decrypt_vector(), '{"vector": [0.2, 0.2, 0.3]}'
+            face_vector_jan.decrypt_vector(),
+            expected_vector_2,
         )
         self.assertFalse(face_vector_jan.face_vector)
