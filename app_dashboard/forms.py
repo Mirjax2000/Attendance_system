@@ -22,6 +22,8 @@ class EmployeeForm(forms.ModelForm):
             "email",
             "date_of_birth",
             "pin_code",
+            "department",
+            "employee_status",
         ]
         error_messages = {
             "name": {
