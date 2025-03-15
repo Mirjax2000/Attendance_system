@@ -4,7 +4,6 @@ import os
 from datetime import date
 from json import JSONDecodeError, dumps, loads
 
-import numpy as np
 from cryptography.fernet import Fernet
 from django.contrib.auth.hashers import check_password, make_password
 from django.core import validators as val
@@ -26,27 +25,27 @@ class Employee(models.Model):
     """Employee"""
 
     name = models.CharField(
-        max_length=32, null=False, blank=False, verbose_name="Jmeno:"
+        max_length=32, null=False, blank=False, verbose_name="Jméno:"
     )
     surname = models.CharField(
-        max_length=32, null=False, blank=False, verbose_name="Prijmeni:"
+        max_length=32, null=False, blank=False, verbose_name="Příjmení:"
     )
     street_number = models.CharField(
-        max_length=50, null=False, blank=False, verbose_name="Ulice/c.p.:"
+        max_length=50, null=False, blank=False, verbose_name="Ulice/č.p.:"
     )
     city = models.CharField(
-        max_length=32, null=False, blank=False, verbose_name="Mesto:"
+        max_length=32, null=False, blank=False, verbose_name="Město:"
     )
 
     postal_code = models.CharField(
         max_length=5,
         null=False,
         blank=False,
-        verbose_name="PSC:",
+        verbose_name="PSČ:",
         validators=[
             val.MinLengthValidator(5),
             val.RegexValidator(
-                regex=r"^\d{5}$", message="PSC musí obsahovat 5 číslic."
+                regex=r"^\d{5}$", message="PSČ musí obsahovat 5 číslic."
             ),
         ],
     )
@@ -76,7 +75,7 @@ class Employee(models.Model):
     date_of_birth = models.DateField(
         null=False,
         blank=False,
-        verbose_name="Datum narozeni:",
+        verbose_name="Datum narození:",
     )
     is_valid = models.BooleanField(
         default=False,

@@ -7,9 +7,9 @@
     @extend %select-none;
 
     color: var(--scheme-default);
-    margin-top: 2em;
+    margin-top: 1em;
     width: clamp(400px, 60%, 27rem);
-    padding: 3em 5em;
+    padding: 2em 4em;
     border: 1px solid #383838;
 
     &__user {
@@ -23,6 +23,7 @@
 
     &__header {
         border-bottom: 1px solid var(--scheme-default);
+        margin-bottom: 0.3em;
     }
 
     &__form {

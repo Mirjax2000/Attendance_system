@@ -4,22 +4,35 @@
     create employee
 {% endblock title %}
 {% block content %}
-    <div class="c-form">
-        <h1 class="c-form__header u-mb-small">Vytvořit zaměstnance</h1>
-        <form method="post" class="c-form__form">
+    <div class="L-form">
+        <h1 class="L-form__header">Vytvořit zaměstnance</h1>
+        <form method="post" class="L-form__form" novalidate>
             {% csrf_token %}
-            {% for field in form %}
-                <div>
-                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                    {{ field }}
-                    {% if field.errors %}
-                        <div>
-                            {% for error in field.errors %}<p class="c-form__alert">{{ error }}</p>{% endfor %}
-                        </div>
-                    {% endif %}
+            {% if form.non_field_errors %}
+                <div class="L-form__error">
+                    {% for error in form.non_field_errors %}
+                        <p class="u-text-warning">
+                            <small>{{ error }}</small>
+                        </p>
+                    {% endfor %}
                 </div>
+            {% else %}
+                <div class="L-form__error">
+                    <p>&nbsp;</p>
+                </div>
+            {% endif %}
+            {% for field in form %}
+                <label class="L-form__label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                    <p class="u-text-warning">
+                        <small>{{ field.errors.0 }}</small>
+                    </p>
+                {% else %}
+                    <p>&nbsp;</p>
+                {% endif %}
             {% endfor %}
-            <button type="submit" class="c-form__btn">Uložit</button>
+            <button type="submit" class="L-form__submit">Uložit</button>
         </form>
     </div>
 {% endblock content %}

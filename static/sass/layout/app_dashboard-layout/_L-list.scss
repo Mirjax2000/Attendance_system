@@ -35,6 +35,11 @@
         }
     }
 
+    &__info {
+        text-decoration: underline;
+        margin-bottom: 1em;
+    }
+
     &__table {
         width: 100%;
     }

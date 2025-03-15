@@ -370,9 +370,9 @@ body {
 
 .L-form {
   color: var(--scheme-default);
-  margin-top: 2em;
+  margin-top: 1em;
   width: clamp(400px, 60%, 27rem);
-  padding: 3em 5em;
+  padding: 2em 4em;
   border: 1px solid #383838;
 }
 .L-form__user {
@@ -383,6 +383,7 @@ body {
 }
 .L-form__header {
   border-bottom: 1px solid var(--scheme-default);
+  margin-bottom: 0.3em;
 }
 .L-form__form input {
   display: block;
@@ -464,6 +465,10 @@ body {
 }
 .L-list__detail:hover {
   color: var(--scheme-accent);
+}
+.L-list__info {
+  text-decoration: underline;
+  margin-bottom: 1em;
 }
 .L-list__table {
   width: 100%;

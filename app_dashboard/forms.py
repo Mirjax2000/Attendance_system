@@ -43,6 +43,7 @@ class EmployeeForm(forms.ModelForm):
             },
             "pin_code": {
                 "invalid": "PIN musí obsahovat přesně 4 číslice.",
+                "required": "Toto pole je povinné",
             },
         }
         widgets = {
