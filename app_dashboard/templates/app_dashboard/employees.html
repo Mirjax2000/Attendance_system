@@ -22,7 +22,7 @@
             </a>
         </div>
         <p class="L-list__info">
-            počet zaměstnanců:  <span class="u-text-success">{{ employees.count }}</span>
+            počet zaměstnanců:&nbsp;<span class="u-text-success">{{ employees.count }}</span>
         </p>
         <table class="L-list__table">
             <thead class="L-list__table-header">
@@ -52,7 +52,7 @@
                         <td class="L-list__table-cell date">{{ employee.date_of_birth }}</td>
                         <td class="L-list__table-cell CAT">
                             <div class="L-list__actions">
-                                <a class="c-ico-btn" href="#">
+                                <a class="c-ico-btn" href="{% url "del_employee" employee.id %}">
                                     <img src="{% static 'images/icons8-delete-48-red.png' %}"
                                          alt="delete icon"
                                          width="24"

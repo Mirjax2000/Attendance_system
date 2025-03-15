@@ -272,3 +272,21 @@ class SaveVectorToDbView(LoginRequiredMixin, View):
 
 #         messages.success(request, "Vektor úspěšně uložen!")
 #         return redirect("employees")
+
+
+class EmployeeDeleteView(LoginRequiredMixin, DeleteView):
+    """User Delete"""
+
+    model = Employee
+    template_name = "app_dashboard/delete_employee.html"
+    success_url = reverse_lazy("employees")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["user_name"] = get_user_name(self)
+        context["active_link"] = "employee"
+        return context
+
+    def form_valid(self, form):
+        messages.success(self.request, f"{self.get_object()} smazan")
+        return super().form_valid(form)

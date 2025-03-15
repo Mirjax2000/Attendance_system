@@ -36,8 +36,18 @@
     }
 
     &__info {
-        text-decoration: underline;
+        @extend %select-none;
+
         margin-bottom: 1em;
+
+        span {
+            @extend %border-radius;
+
+            display: inline-block;
+            padding: 0.1em 0.5em;
+            background-color: var(--scheme-clr-3);
+            box-shadow: 1px 1px 1px #0000005e;
+        }
     }
 
     &__table {

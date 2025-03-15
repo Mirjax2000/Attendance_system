@@ -1,16 +1,16 @@
 {% extends "dashboard_base.html" %}
 {% load static %}
 {% block title %}
-   Delete User
+    Delete Employee
 {% endblock title %}
 {% block content %}
     <div class="L-form">
         <h1 class="L-form__header u-mb-small">Opravdu chcete smazat?</h1>
-        <h2 class="L-form__user">"{{ user.username }}"</h2>
+        <h2 class="L-form__user u-text-success">"{{ employee.name }} {{ employee.surname }}"</h2>
         <form method="post" class="L-form__form">
             {% csrf_token %}
             <button type="submit" class="L-form__submit">Ano, smazat</button>
-            <a href="{% url 'user_list' %}" class="L-form__redirect">Zrušit</a>
+            <a href="{% url 'employees' %}" class="L-form__redirect">Zrušit</a>
         </form>
     </div>
 {% endblock content %}
