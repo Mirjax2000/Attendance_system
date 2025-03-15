@@ -237,7 +237,7 @@ class Database:
         """uloz sejmuty vektor do db"""
         if self.parent.face_rgb is None:
             cons.log("face rgb je None, protoze neni rectangle", style="green")
-            return {"message": "no-face-detected"}
+            return {"message": "no-face-detected", "success": False}
 
         face_encoding = face_recognition.face_encodings(
             self.parent.face_rgb, num_jitters=2, model="large"
@@ -261,12 +261,18 @@ class Database:
                         f"FaceVector vytvořen pro {employee_slug}",
                         style="blue",
                     )
-                    return {"message": f"zaznam vytvoren pro {employee_slug}"}
+                    return {
+                        "message": f"zaznam vytvoren pro {employee_slug}",
+                        "success": True,
+                    }
 
                 cons.log(
                     f"FaceVector aktualizován pro {employee_slug}", style="blue"
                 )
-                return {"message": f"zaznam aktualizovan pro {employee_slug}"}
+                return {
+                    "message": f"zaznam aktualizovan pro {employee_slug}",
+                    "success": True,
+                }
 
             except Employee.DoesNotExist as e:
                 cons.log(
@@ -274,15 +280,19 @@ class Database:
                     style="red",
                 )
                 return {
-                    "message": f"Zaměstnanec {employee_slug} nebyl nalezen. {str(e)}"
+                    "message": f"Zaměstnanec {employee_slug} nebyl nalezen. {(str(e),)}",
+                    "success": False,
                 }
             except Exception as e:
                 cons.log(
                     f"Chyba při ukládání face vectoru: {str(e)}", style="red"
                 )
-                return {"message": f"Chyba při ukládání face vectoru: {str(e)}"}
+                return {
+                    "message": f"Chyba při ukládání face vectoru: {str(e)}",
+                    "success": False,
+                }
 
-        return {"message": "No face encoding detected."}
+        return {"message": "No face encoding detected.", "success": False}
 
 
 class Utility:

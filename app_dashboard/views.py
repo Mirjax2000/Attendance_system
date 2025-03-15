@@ -271,7 +271,11 @@ class SaveVectorToDbView(LoginRequiredMixin, View):
         result = csi.database.save_vector_to_db(employee_slug)
         cons.log(result, style="green")
 
-        messages.success(request, "Vektor úspěšně uložen!")
+        if result["success"]== True:
+            messages.success(request, result["message"])
+            return redirect("employees")
+        
+        messages.error(request, result["message"])
         return redirect("employees")
 
 
