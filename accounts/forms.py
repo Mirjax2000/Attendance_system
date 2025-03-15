@@ -60,10 +60,17 @@ class UserUpdateForm(ModelForm):
 
     first_name = CharField(max_length=30, label="Jméno")
     last_name = CharField(max_length=30, label="Příjmení")
-    email = EmailField(max_length=50, label="E-mail")
+    email = EmailField(max_length=50, label="E-mail",required=False)
 
     class Meta:
         """zobrazeni poli"""
 
         model = User
         fields = ["username", "first_name", "last_name", "email"]
+
+    # def clean_email(self):
+    #     """Kontrola emailu"""
+    #     email = self.cleaned_data.get("email")
+    #     if User.objects.filter(email=email).exists():
+    #         raise ValidationError("Tento e-mail je již používán. Zvolte jiný.")
+    #     return email
