@@ -525,8 +525,8 @@ body {
   max-width: 25ch;
 }
 .L-list__table-cell.date {
-  min-width: 15ch;
-  max-width: 15ch;
+  min-width: 17ch;
+  max-width: 17ch;
 }
 .L-list__table-cell.suser, .L-list__table-cell.admin, .L-list__table-cell.active {
   min-width: 5ch;
@@ -593,7 +593,7 @@ body {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  gap: 0;
+  gap: 0.5em;
 }
 
 .L-departments {

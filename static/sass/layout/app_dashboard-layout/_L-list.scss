@@ -40,7 +40,6 @@
         @extend %select-none;
 
         margin-bottom: 1em;
-
     }
 
     &__table {
@@ -96,8 +95,8 @@
         }
 
         &.date {
-            min-width: 15ch;
-            max-width: 15ch;
+            min-width: 17ch;
+            max-width: 17ch;
         }
 
         &.suser,
