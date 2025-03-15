@@ -6,7 +6,7 @@
 {% block content %}
     <div class="L-detail">
         <h1 class="L-detail__header">
-            Detail zaměstnance:&nbsp; <span class="L-detail__header--username">"{{ employee.name }} {{ employee.surname }}"</span>
+            Detail zaměstnance:&nbsp; <span class="L-detail__header--username c-info-highlight">"{{ employee.name }} {{ employee.surname }}"</span>
         </h1>
         <ul class="L-detail__list">
             <li class="L-detail__item">
@@ -41,11 +41,11 @@
             </li>
             <li class="L-detail__item">
                 <p>
-                    <strong>Účet v pořádku?:</strong>
+                    <strong>Účet v pořádku?:</strong>&nbsp;
                     {% if employee.is_valid == True %}
-                        <span class="u-text-success c-info-highlight">&nbsp;ANO</span>
+                        <span class="u-text-success c-info-highlight">ANO</span>
                     {% else %}
-                        <span class="u-text-warning c-info-highlight">&nbsp;NE</span>
+                        <span class="u-text-warning c-info-highlight">NE</span>
                     {% endif %}
                 </p>
             </li>

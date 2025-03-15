@@ -6,7 +6,6 @@
     @extend %border-radius;
     @extend %select-none;
 
-    text-align: center;
     color: var(--scheme-default);
     margin-top: 1em;
     width: clamp(400px, 60%, 27rem);
@@ -14,13 +13,6 @@
     border: 1px solid #383838;
 
     &__user {
-        @extend %border-radius;
-
-        display: block;
-        padding: 0.3em 0.5em;
-        background-color: var(--scheme-clr-3);
-        box-shadow: 1px 1px 2px #0000004c;
-        border: 1px solid black;
         margin-bottom: 1em;
     }
 

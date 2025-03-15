@@ -1,12 +1,12 @@
 {% extends "dashboard_base.html" %}
 {% load static %}
 {% block title %}
-   Delete User
+    Delete User
 {% endblock title %}
 {% block content %}
-    <div class="L-form">
-        <h1 class="L-form__header u-mb-small">Opravdu chcete smazat?</h1>
-        <h2 class="L-form__user">"{{ user.username }}"</h2>
+    <div class="L-form u-text-center">
+        <h1 class="L-form__header">Opravdu chcete smazat?</h1>
+        <h2 class="L-form__user c-info-highlight">"{{ user.username }}"</h2>
         <form method="post" class="L-form__form">
             {% csrf_token %}
             <button type="submit" class="L-form__submit">Ano, smazat</button>

@@ -4,9 +4,9 @@
     Delete Employee
 {% endblock title %}
 {% block content %}
-    <div class="L-form">
-        <h1 class="L-form__header u-mb-small">Opravdu chcete smazat?</h1>
-        <h2 class="L-form__user u-text-success">"{{ employee.name }} {{ employee.surname }}"</h2>
+    <div class="L-form u-text-center">
+        <h1 class="L-form__header">Opravdu chcete smazat?</h1>
+        <h2 class="L-form__user u-text-success c-info-highlight">"{{ employee.name }} {{ employee.surname }}"</h2>
         <form method="post" class="L-form__form">
             {% csrf_token %}
             <button type="submit" class="L-form__submit">Ano, smazat</button>

@@ -231,6 +231,10 @@ body.home {
   text-align: right;
 }
 
+.u-text-left {
+  text-align: left;
+}
+
 .u-text-success {
   color: var(--scheme-success);
 }
