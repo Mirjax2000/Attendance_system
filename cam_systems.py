@@ -214,6 +214,15 @@ class Database:
         except OperationalError:
             return {}
 
+        if not FaceVector.objects.first():
+            return {}
+
+        # TODO udelej funkcu a pridej ji ke vsem volanim z DB
+        if (
+            not FaceVector.objects.exists()
+        ):  # Ověření, jestli jsou v DB nějaká data
+            return {}
+
         face_vectors_: dict = {}
         for face_vector in face_vectors_from_db:
             decrypted_vector = Utility.decrypt_face_vector(
@@ -308,3 +317,4 @@ class Utility:
 # globalni instance kamery na kterou se muze napojit kazda aplikace
 cam_systems_instance: CamSystems = CamSystems()
 cons.log(f"instance camsystems vytvorena {cam_systems_instance}")
+cons.log(cam_systems_instance.face_vectors["jaroslav-curda"])

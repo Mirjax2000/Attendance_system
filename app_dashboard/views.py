@@ -227,7 +227,7 @@ class DepartmentListView(ListView):
 
 
 class TakeVectorView(LoginRequiredMixin, DetailView):
-    """Take vektorr from camera"""
+    """Take vector from camera"""
 
     model = Employee
     template_name = "app_dashboard/take_vector.html"
@@ -241,37 +241,38 @@ class TakeVectorView(LoginRequiredMixin, DetailView):
         return context
 
 
+# class SaveVectorToDbView(LoginRequiredMixin, View):
+#     """Volání funkce z cam_system.py"""
+
+#     def post(self, request, *args, **kwargs):
+#         """post metoda"""
+#         employee_slug = self.kwargs.get("slug", None)
+
+#         return JsonResponse(csi.database.save_vector_to_db(employee_slug))
+
+#     def get(self, request, *args, **kwargs):
+#         """to je kdyby nebylo post"""
+#         return JsonResponse(
+#             {"message": "Špatná metoda u get_result"}, status=400
+#         )
+
+
 class SaveVectorToDbView(LoginRequiredMixin, View):
-    """Volání z JS"""
+    """Volání z formuláře"""
 
     def post(self, request, *args, **kwargs):
         """post metoda"""
-        employee_slug = self.kwargs.get("slug", None)
+        employee_slug = self.kwargs.get("slug")
 
-        return JsonResponse(csi.database.save_vector_to_db(employee_slug))
+        if not employee_slug:
+            messages.error(request, "Chybí slug zaměstnance!")
+            return redirect("employees")
 
-    def get(self, request, *args, **kwargs):
-        """to je kdyby nebylo post"""
-        return JsonResponse(
-            {"message": "Špatná metoda u get_result"}, status=400
-        )
+        result = csi.database.save_vector_to_db(employee_slug)
+        cons.log(result, style="green")
 
-
-# class SaveVectorToDbView(LoginRequiredMixin, View):
-#     """Volání z formuláře"""
-
-#     def post(self, request, *args, **kwargs):
-#         employee_slug = self.kwargs.get("slug")
-
-#         if not employee_slug:
-#             messages.error(request, "Chybí slug zaměstnance!")
-#             return redirect("employees")
-
-#         result = csi.database.save_vector_to_db(employee_slug)
-#         print(result)
-
-#         messages.success(request, "Vektor úspěšně uložen!")
-#         return redirect("employees")
+        messages.success(request, "Vektor úspěšně uložen!")
+        return redirect("employees")
 
 
 class EmployeeDeleteView(LoginRequiredMixin, DeleteView):

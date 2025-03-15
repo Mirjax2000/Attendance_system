@@ -11,32 +11,5 @@ $(function () {
     });
 
 
-    document.getElementById("myForm").addEventListener("submit", async function (e) {
-        e.preventDefault();
-
-        const form = e.target;
-        const formData = new FormData(form);
-        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-
-        try {
-            const response = await fetch("/dashboard/save_vector_to_db", {
-                method: "POST",
-                headers: {
-                    "X-CSRFToken": csrftoken,  // Ochrana proti CSRF
-                },
-                body: formData,  
-            });
-
-            if (!response.ok) {
-                throw new Error("Chyba při odesílání dat");
-            }
-
-            const data = await response.json();
-
-        } catch (error) {
-            console.error("Error:", error);
-        }
-    });
-
 
 });

@@ -61,12 +61,11 @@
     }
 
     &__banner {
-        text-align: right;
+        text-align: left;
         margin-right: 1em;
         padding: 0.3em 1em;
         cursor: pointer;
         width: max-content;
-        margin-left: auto;
         color: var(--scheme-default-darker);
         transition: all 0.1s ease-in-out;
 

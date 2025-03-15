@@ -35,7 +35,7 @@ class CamStreamView(LoginRequiredMixin, View):
 
 
 class GetResultView(LoginRequiredMixin, View):
-    """Volání z JS"""
+    """Volání funkce get result z cam_system.py"""
 
     def post(self, request, *args, **kwargs):
         """post metoda"""
