@@ -290,3 +290,23 @@ class EmployeeDeleteView(LoginRequiredMixin, DeleteView):
     def form_valid(self, form):
         messages.success(self.request, f"{self.get_object()} smazan")
         return super().form_valid(form)
+
+
+class EmployeeUpdateView(LoginRequiredMixin, UpdateView):
+    """Update user"""
+
+    model = Employee
+    form_class = EmployeeForm
+    template_name = "includes/create_emp_form.html"
+    success_url = reverse_lazy("employees")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["user_name"] = get_user_name(self)
+        context["active_link"] = "employees"
+
+        return context
+
+    def form_valid(self, form):
+        messages.success(self.request, f"{self.get_object()}: Updated")
+        return super().form_valid(form)
