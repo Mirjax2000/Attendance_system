@@ -57,7 +57,7 @@
                     "X-CSRFToken": csrftoken,
                 },
                 body: JSON.stringify({}),
-                signal: controller.signal 
+                signal: controller.signal
             });
 
             if (!response.ok) {

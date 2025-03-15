@@ -50,24 +50,46 @@
     &__table-cell {
         @include scroll(3px);
 
+        font-size: 0.75rem;
         border: 1px solid #434343;
         padding-inline: 0.5em;
         color: var(--scheme-default);
 
         &.id {
             min-width: 5ch;
-            max-width: 5ch;
+            max-width: 6ch;
             padding-inline: 0.3em;
         }
 
+        &.name,
+        &.surname {
+            min-width: 16ch;
+            max-width: 20ch;
+        }
+
+        &.city {
+            min-width: 15ch;
+            max-width: 20ch;
+        }
+
         &.username {
-            min-width: 10ch;
+            min-width: 15ch;
             max-width: 20ch;
         }
 
         &.email {
-            min-width: 10ch;
+            min-width: 15ch;
             max-width: 25ch;
+        }
+
+        &.street {
+            min-width: 20ch;
+            max-width: 25ch;
+        }
+
+        &.date {
+            min-width: 15ch;
+            max-width: 15ch;
         }
 
         &.suser,
@@ -78,21 +100,27 @@
             text-align: center;
         }
 
+        &.psc {
+            min-width: 8ch;
+            max-width: 8ch;
+            text-align: center;
+        }
+
         &.permission,
         &.group {
             text-align: center;
-            min-width: 10ch;
-            max-width: 10ch;
+            min-width: 15ch;
+            max-width: 15ch;
         }
 
         &.CAT {
             border: none;
-            min-width: 220px;
+            min-width: 13.75rem;
         }
     }
 
     &__actions {
-        @include flex(flex-start, center);
+        @include flex(center, center);
         @extend %select-none;
 
         .hide {

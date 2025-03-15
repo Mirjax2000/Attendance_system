@@ -32,14 +32,14 @@ class CamSystems:
         self.cap = cv2.VideoCapture(0)
         # self.cap = cv2.VideoCapture(no_video_signal)
         self.utility = Utility()
-        self.database = Database()
+        self.database = Database(self)
         self.face_vectors: dict = self.database.get_vectors_from_db()
         self.last_recon_result: dict = {}
         self.face_detector = self.create_detector()
         self.face_rgb = None
 
     def __str__(self) -> str:
-        return f"vektory v DB k porovnani: {len(self.face_vectors)}"
+        return f"{len(self.face_vectors)} vektoru ulozeno v pameti"
 
     def create_detector(self):
         """Create face detector"""
@@ -154,15 +154,15 @@ class CamSystems:
                 f"Employee Rozpoznán: {best_match} (Vzdálenost: {min_distance:.4f})",
                 style="blue",
             )
-            return {"name": best_match, "message": "success"}
+            return {"jmeno": best_match, "message": "success"}
         cons.log("Neznámý obličej!", style="red")
-        return {"message": "neznamy oblicej"}
+        return {"error": "neznamy oblicej"}
 
     def get_result(self):
         """posli vysledek porovnani"""
         if self.face_rgb is None:
             cons.log("face rgb je None, protoze neni rectangle")
-            return {"message": "no-face-detected"}
+            return {"error": "no-face-detected"}
 
         # toto vraci face vektor jako numpy array
         face_encoding = face_recognition.face_encodings(
@@ -171,14 +171,14 @@ class CamSystems:
 
         if len(face_encoding) > 0:
             new_face_vector = face_encoding[0]
-            cons.log("Vektor sejmut!")
+            cons.log("Vektor sejmut!", style="blue")
             self.last_recon_result = self.face_recon(
                 new_face_vector, self.face_vectors
             )
 
         else:
             self.last_recon_result = {
-                "message": "no-face-detected",
+                "error": "no-face-detected",
             }
             cons.log("Face vektor nesejmut")
 
@@ -200,8 +200,8 @@ class CamSystems:
 class Database:
     """Database methods"""
 
-    def __init__(self, face_rgb=None):
-        self.face_rgb = face_rgb
+    def __init__(self, parent):
+        self.parent = parent
 
     def get_vectors_from_db(self) -> dict:
         """Get vectors from database"""
@@ -226,19 +226,19 @@ class Database:
 
     def save_vector_to_db(self, employee_slug) -> dict:
         """uloz sejmuty vektor do db"""
-        if self.face_rgb is None:
+        if self.parent.face_rgb is None:
             cons.log("face rgb je None, protoze neni rectangle", style="green")
             return {"message": "no-face-detected"}
 
         face_encoding = face_recognition.face_encodings(
-            self.face_rgb, num_jitters=2, model="large"
+            self.parent.face_rgb, num_jitters=2, model="large"
         )
 
         if len(face_encoding) > 0:
             new_face_vector = face_encoding[0]
             cons.log("Vektor sejmut!", style="blue")
 
-            self.face_rgb = None
+            self.parent.face_rgb = None
 
             try:
                 employee = Employee.objects.get(slug=employee_slug)

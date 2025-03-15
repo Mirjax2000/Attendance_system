@@ -476,6 +476,7 @@ body {
 }
 .L-list__table-cell {
   overflow: auto;
+  font-size: 0.75rem;
   border: 1px solid #434343;
   padding-inline: 0.5em;
   color: var(--scheme-default);
@@ -492,34 +493,55 @@ body {
 }
 .L-list__table-cell.id {
   min-width: 5ch;
-  max-width: 5ch;
+  max-width: 6ch;
   padding-inline: 0.3em;
 }
+.L-list__table-cell.name, .L-list__table-cell.surname {
+  min-width: 16ch;
+  max-width: 20ch;
+}
+.L-list__table-cell.city {
+  min-width: 15ch;
+  max-width: 20ch;
+}
 .L-list__table-cell.username {
-  min-width: 10ch;
+  min-width: 15ch;
   max-width: 20ch;
 }
 .L-list__table-cell.email {
-  min-width: 10ch;
+  min-width: 15ch;
   max-width: 25ch;
+}
+.L-list__table-cell.street {
+  min-width: 20ch;
+  max-width: 25ch;
+}
+.L-list__table-cell.date {
+  min-width: 15ch;
+  max-width: 15ch;
 }
 .L-list__table-cell.suser, .L-list__table-cell.admin, .L-list__table-cell.active {
   min-width: 5ch;
   max-width: 5ch;
   text-align: center;
 }
+.L-list__table-cell.psc {
+  min-width: 8ch;
+  max-width: 8ch;
+  text-align: center;
+}
 .L-list__table-cell.permission, .L-list__table-cell.group {
   text-align: center;
-  min-width: 10ch;
-  max-width: 10ch;
+  min-width: 15ch;
+  max-width: 15ch;
 }
 .L-list__table-cell.CAT {
   border: none;
-  min-width: 220px;
+  min-width: 13.75rem;
 }
 .L-list__actions {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   gap: 0;
 }

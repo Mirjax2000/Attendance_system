@@ -192,7 +192,7 @@ class CreateEmpView(CreateView):
     model = Employee
     form_class = EmployeeForm
     template_name = "includes/create_emp_form.html"
-    success_url = reverse_lazy("dashboard")
+    success_url = reverse_lazy("employees")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -241,34 +241,34 @@ class TakeVectorView(LoginRequiredMixin, DetailView):
         return context
 
 
-# class SaveVectorToDbView(LoginRequiredMixin, View):
-#     """Volání z JS"""
-
-#     def post(self, request, *args, **kwargs):
-#         """post metoda"""
-#         employee_slug = self.kwargs.get("slug", None)
-
-#         return JsonResponse(csi.save_vector_to_db(employee_slug))
-
-#     def get(self, request, *args, **kwargs):
-#         """to je kdyby nebylo post"""
-#         return JsonResponse(
-#             {"message": "Špatná metoda u get_result"}, status=400
-#         )
-
-
 class SaveVectorToDbView(LoginRequiredMixin, View):
-    """Volání z formuláře"""
+    """Volání z JS"""
 
     def post(self, request, *args, **kwargs):
-        employee_slug = self.kwargs.get("slug")
+        """post metoda"""
+        employee_slug = self.kwargs.get("slug", None)
 
-        if not employee_slug:
-            messages.error(request, "Chybí slug zaměstnance!")
-            return redirect("employees")
+        return JsonResponse(csi.database.save_vector_to_db(employee_slug))
 
-        result = csi.save_vector_to_db(employee_slug)
-        print(result)
+    def get(self, request, *args, **kwargs):
+        """to je kdyby nebylo post"""
+        return JsonResponse(
+            {"message": "Špatná metoda u get_result"}, status=400
+        )
 
-        messages.success(request, "Vektor úspěšně uložen!")
-        return redirect("employees")
+
+# class SaveVectorToDbView(LoginRequiredMixin, View):
+#     """Volání z formuláře"""
+
+#     def post(self, request, *args, **kwargs):
+#         employee_slug = self.kwargs.get("slug")
+
+#         if not employee_slug:
+#             messages.error(request, "Chybí slug zaměstnance!")
+#             return redirect("employees")
+
+#         result = csi.database.save_vector_to_db(employee_slug)
+#         print(result)
+
+#         messages.success(request, "Vektor úspěšně uložen!")
+#         return redirect("employees")

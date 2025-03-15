@@ -1,5 +1,7 @@
 """app_main views"""
 
+import json
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.views.generic import (
@@ -37,6 +39,9 @@ class GetResultView(LoginRequiredMixin, View):
 
     def post(self, request, *args, **kwargs):
         """post metoda"""
+        data = json.loads(request.body)
+        employee_name = data.get("employeeName")
+
         return JsonResponse(csi.get_result())
 
     def get(self, request, *args, **kwargs):
