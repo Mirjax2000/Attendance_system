@@ -288,6 +288,12 @@ class EmployeeStatus(models.Model):
         max_length=50, unique=True, choices=STATUS_CHOICES, verbose_name="Stav"
     )
 
+    def __str__(self) -> str:
+        return str(self.name)
+
+    def __repr__(self) -> str:
+        return f"EmployeeStatus: {self.name}"
+
     class Meta:
         """ordering"""
 
