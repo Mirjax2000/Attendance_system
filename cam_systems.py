@@ -75,6 +75,7 @@ class CamSystems:
                 face_roi = frame[y : y + h, x : x + w]
                 # Převod na RGB pro face_recognition
                 if face_roi.size != 0:
+                    # toto jde do neuronove site
                     self.face_rgb = cv2.cvtColor(face_roi, cv2.COLOR_BGR2RGB)
                     cv2.rectangle(
                         frame, (x, y), (x + w, y + h), (108, 255, 2), 2
@@ -90,6 +91,7 @@ class CamSystems:
             ret, frame = self.cap.read()
 
             if not ret:
+                # neni zdroj z kamery
                 empty_frame = cv2.imread(no_video_signal, 1)
                 _, jpeg_frame = cv2.imencode(".jpg", empty_frame)
                 jpeg_bytes = jpeg_frame.tobytes()
@@ -160,6 +162,7 @@ class CamSystems:
 
     def get_result(self):
         """posli vysledek porovnani"""
+
         if self.face_rgb is None:
             cons.log("face rgb je None, protoze neni rectangle")
             return {"error": "no-face-detected"}
@@ -214,8 +217,8 @@ class Database:
         except OperationalError:
             return {}
 
-        if not FaceVector.objects.first():
-            return {}
+        # if not FaceVector.objects.first():
+        #     return {}
 
         # TODO udelej funkcu a pridej ji ke vsem volanim z DB
         if (
