@@ -1,65 +1,23 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
 {% load static %}
-<html lang="cs" data-theme='light'>
-    <head>
-        <meta charset="UTF-8" />
-        <title>
-            {% block title %}
-                jmeno stranky
-            {% endblock title %}
-        </title>
-        <meta content="IE=edge" http-equiv="X-UA-Compatible" />
-        <meta content="" name="description" />
-        <meta content="" name="keywords" />
-        <meta content="" name="author" />
-        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-        <link href="{% static './assets/favicon.png' %}"
-              rel="shortcut icon"
-              type="image/x-icon" />
-        <!-- font preload -->
-        <link as="font"
-              crossorigin="anonymous"
-              href="{% static 'fonts/webfonts/Font-face/roboto.woff2' %}"
-              rel="preload"
-              type="font/woff2" />
-        <link as="font"
-              crossorigin="anonymous"
-              href="{% static 'fonts/webfonts/Font-face/JetBrainsMono.woff2' %}"
-              rel="preload"
-              type="font/woff2" />
-        <style>
-        @font-face {
-            font-family: 'Roboto';
-            src: url("{% static 'fonts/webfonts/Font-face/roboto.woff2' %}") format("woff2"),
-            url("{% static 'fonts/webfonts/Font-face/roboto.ttf' %}") format("truetype");
-            font-weight: 100 900;
-            font-style: normal;
-            font-display: swap;
-        }
-
-
-        body {
-            opacity: 0;
-            transition: opacity .1s ease-in;
-        }
-        </style>
-        <!-- css  -->
-        {% block css %}
-            <link rel="preload"
-                  href="{% static 'css/dashboard.css' %}"
-                  as="style"
-                  onload="this.onload=null;this.rel='stylesheet'">
-        {% endblock css %}
-        <!-- no js -->
-        <noscript>
-            {% block nojs %}
-                <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
-            {% endblock nojs %}
-        </noscript>
-        <!-- end -->
-    </head>
-    <!--body-->
-    <body class="base">
+{% block title %}
+    Application
+{% endblock title %}
+<!-- css  -->
+{% block css %}
+    <link rel="preload"
+          href="{% static 'css/dashboard.css' %}"
+          as="style"
+          onload="this.onload=null;this.rel='stylesheet'">
+{% endblock css %}
+<!-- no js -->
+{% block nojs %}
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+{% endblock nojs %}
+<!-- end -->
+<!--body-->
+<body class="base">
+    {% block body %}
         <main class="P-container">
             <!--left side  navigation Menu -->
             <section class="P-navigation">
@@ -86,9 +44,9 @@
                 </main>
             </section>
         </main>
-        <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous">
-        </script>
-        <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
+    {% endblock body %}
+    {% block js %}
         <script src="{% static 'js/dashboard.js' %}"></script>
-    </body>
+    {% endblock js %}
+</body>
 </html>

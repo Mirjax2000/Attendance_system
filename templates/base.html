@@ -13,7 +13,9 @@
         <meta content="" name="keywords" />
         <meta content="" name="author" />
         <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-        <link href="./assets/favicon.png" rel="shortcut icon" type="image/x-icon" />
+        <link href="{% static "./assets/favicon.png" %}"
+              rel="shortcut icon"
+              type="image/x-icon" />
         <!-- font preload -->
         <link as="font"
               crossorigin="anonymous"
@@ -35,23 +37,17 @@
             font-display: swap;
         }
 
-
         body {
             opacity: 0;
             transition: opacity .1s ease-in;
         }
         </style>
-        <!-- css  -->
+        <!-- css FOUC -->
         {% block css %}
-            <link rel="preload"
-                  href="{% static 'css/base.css' %}"
-                  as="style"
-                  onload="this.onload=null;this.rel='stylesheet'">
         {% endblock css %}
-        <!-- no js -->
+        <!-- no js FOUC-->
         <noscript>
             {% block nojs %}
-                <link rel="stylesheet" href="{% static 'css/base.css' %}">
             {% endblock nojs %}
         </noscript>
         <!-- end -->
@@ -63,11 +59,13 @@
             <!-- html obsah -->
             <!-- html obsah -->
         {% endblock body %}
-        {% comment %} <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous">
-        </script> {% endcomment %}
+        <!-- CDN -->
+        <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous">
+        </script>
+        <!-- local -->
         <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
+        <!-- link na js soubory -->
         {% block js %}
-            <!-- javascript block -->
         {% endblock js %}
     </body>
 </html>
