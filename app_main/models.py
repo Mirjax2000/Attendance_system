@@ -107,6 +107,14 @@ class Employee(models.Model):
         verbose_name="Oddělení",
     )
 
+    employee_status = models.ForeignKey(
+        "EmployeeStatus",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="pracovni status",
+    )
+
     slug = models.SlugField(
         blank=True,
         unique=True,
@@ -262,5 +270,31 @@ class Department(models.Model):
 
     class Meta:
         """Tridit podle"""
+
+        ordering = ["name"]
+
+
+class EmployeeStatus(models.Model):
+    """Stav zaměstnance"""
+
+    STATUS_CHOICES = [
+        ("working", "V práci"),
+        ("sick_leave", "Nemocenská"),
+        ("business_trip", "Služební cesta"),
+        ("vacation", "Dovolená"),
+    ]
+
+    name = models.CharField(
+        max_length=50, unique=True, choices=STATUS_CHOICES, verbose_name="Stav"
+    )
+
+    def __str__(self) -> str:
+        return str(self.name)
+
+    def __repr__(self) -> str:
+        return f"EmployeeStatus: {self.name}"
+
+    class Meta:
+        """ordering"""
 
         ordering = ["name"]

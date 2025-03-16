@@ -75,6 +75,7 @@ class CamSystems:
                 face_roi = frame[y : y + h, x : x + w]
                 # Převod na RGB pro face_recognition
                 if face_roi.size != 0:
+                    # toto jde do neuronove site
                     self.face_rgb = cv2.cvtColor(face_roi, cv2.COLOR_BGR2RGB)
                     cv2.rectangle(
                         frame, (x, y), (x + w, y + h), (108, 255, 2), 2
@@ -90,6 +91,7 @@ class CamSystems:
             ret, frame = self.cap.read()
 
             if not ret:
+                # neni zdroj z kamery
                 empty_frame = cv2.imread(no_video_signal, 1)
                 _, jpeg_frame = cv2.imencode(".jpg", empty_frame)
                 jpeg_bytes = jpeg_frame.tobytes()
@@ -160,6 +162,7 @@ class CamSystems:
 
     def get_result(self):
         """posli vysledek porovnani"""
+
         if self.face_rgb is None:
             cons.log("face rgb je None, protoze neni rectangle")
             return {"error": "no-face-detected"}
@@ -214,6 +217,15 @@ class Database:
         except OperationalError:
             return {}
 
+        # if not FaceVector.objects.first():
+        #     return {}
+
+        # TODO udelej funkcu a pridej ji ke vsem volanim z DB
+        if (
+            not FaceVector.objects.exists()
+        ):  # Ověření, jestli jsou v DB nějaká data
+            return {}
+
         face_vectors_: dict = {}
         for face_vector in face_vectors_from_db:
             decrypted_vector = Utility.decrypt_face_vector(
@@ -228,7 +240,7 @@ class Database:
         """uloz sejmuty vektor do db"""
         if self.parent.face_rgb is None:
             cons.log("face rgb je None, protoze neni rectangle", style="green")
-            return {"message": "no-face-detected"}
+            return {"message": "no-face-detected", "success": False}
 
         face_encoding = face_recognition.face_encodings(
             self.parent.face_rgb, num_jitters=2, model="large"
@@ -252,12 +264,18 @@ class Database:
                         f"FaceVector vytvořen pro {employee_slug}",
                         style="blue",
                     )
-                    return {"message": f"zaznam vytvoren pro {employee_slug}"}
+                    return {
+                        "message": f"zaznam vytvoren pro {employee_slug}",
+                        "success": True,
+                    }
 
                 cons.log(
                     f"FaceVector aktualizován pro {employee_slug}", style="blue"
                 )
-                return {"message": f"zaznam aktualizovan pro {employee_slug}"}
+                return {
+                    "message": f"zaznam aktualizovan pro {employee_slug}",
+                    "success": True,
+                }
 
             except Employee.DoesNotExist as e:
                 cons.log(
@@ -265,15 +283,19 @@ class Database:
                     style="red",
                 )
                 return {
-                    "message": f"Zaměstnanec {employee_slug} nebyl nalezen. {str(e)}"
+                    "message": f"Zaměstnanec {employee_slug} nebyl nalezen. {(str(e),)}",
+                    "success": False,
                 }
             except Exception as e:
                 cons.log(
                     f"Chyba při ukládání face vectoru: {str(e)}", style="red"
                 )
-                return {"message": f"Chyba při ukládání face vectoru: {str(e)}"}
+                return {
+                    "message": f"Chyba při ukládání face vectoru: {str(e)}",
+                    "success": False,
+                }
 
-        return {"message": "No face encoding detected."}
+        return {"message": "No face encoding detected.", "success": False}
 
 
 class Utility:

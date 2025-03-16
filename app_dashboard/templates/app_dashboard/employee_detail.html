@@ -41,6 +41,20 @@
             </li>
             <li class="L-detail__item">
                 <p>
+                    {% if employee.department %}
+                        <strong>Department:</strong> &nbsp;<span class="u-text-success">{{ employee.department }}</span>
+                    {% else %}
+                        <strong>Department:&nbsp;<b class="u-text-info">nezarazen</b></strong>
+                    {% endif %}
+                </p>
+            </li>
+            <li class="L-detail__item">
+                <p>
+                    <strong>Pracovni status:</strong> {{ employee.employee_status }}
+                </p>
+            </li>
+            <li class="L-detail__item">
+                <p>
                     <strong>Účet v pořádku?:</strong>&nbsp;
                     {% if employee.is_valid == True %}
                         <span class="u-text-success c-info-highlight">ANO</span>

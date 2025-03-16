@@ -45,9 +45,7 @@ class UserDetailView(LoginRequiredMixin, DetailView):
 
     model = User
     template_name = "accounts/user_detail.html"
-    context_object_name = (
-        "user" 
-    )
+    context_object_name = "user"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
