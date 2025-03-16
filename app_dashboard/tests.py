@@ -79,14 +79,34 @@ class EmployeeModelTest(TestCase):
             employee=employee2, face_vector={"vector": face_vektor_list_2}
         )
 
+    def test_employee_count(self):
+        """Test na počet záznamů v tabulce Employee"""
+        expected_count = 2
+        self.assertEqual(Employee.objects.count(), expected_count)
+
+    def test_employees_tatus_count(self):
+        """Test na počet záznamů v tabulce EmployeeStatus"""
+        expected_count = 5
+        self.assertEqual(EmployeeStatus.objects.count(), expected_count)
+
+    def test_employees_in_department(self):
+        """kolik lidi je departments v nezarazeno"""
+        expected_count = 2
+        nezarazeno = Department.objects.get(name="nezarazeno")
+        count = Employee.objects.filter(department=nezarazeno).count()
+        self.assertEqual(count, expected_count)
+
     def test_employee_creation(
         self,
     ):
         """Z tabulky employee"""
         free_id = EmployeeStatus.objects.get(name="free")
         nezarazeno_id = Department.objects.get(name="nezarazeno")
-
+        # instance jan-novak
         employee_jan = Employee.objects.get(slug="jan-novak")
+        self.assertIsNotNone(employee_jan)
+        self.assertTrue(employee_jan)
+        self.assertIsInstance(employee_jan, Employee)
         self.assertEqual(employee_jan.name, "Jan")
         self.assertEqual(employee_jan.surname, "Novák")
         self.assertEqual(employee_jan.city, "Praha")
