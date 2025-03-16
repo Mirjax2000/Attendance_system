@@ -7,7 +7,7 @@ import numpy as np
 from django.test import TestCase
 
 from app_dashboard.forms import EmployeeForm
-from app_main.models import Employee, FaceVector, Department, EmployeeStatus
+from app_main.models import Department, Employee, EmployeeStatus, FaceVector
 
 seed: int = 42
 rng = np.random.default_rng(seed)
@@ -24,6 +24,28 @@ expected_vector_2: str = json.dumps({"vector": face_vektor_list_2})
 class EmployeeModelTest(TestCase):
     @classmethod
     def setUpTestData(cls):
+        # one to many tabulky se musi zaplnit
+        working_statuses = [
+            EmployeeStatus(name="working"),
+            EmployeeStatus(name="sick_leave"),
+            EmployeeStatus(name="vacation"),
+            EmployeeStatus(name="business_trip"),
+            EmployeeStatus(name="free"),
+        ]
+
+        departments = [
+            Department(name="uklid"),
+            Department(name="management"),
+            Department(name="udrzba"),
+            Department(name="testing"),
+            Department(name="front-end"),
+            Department(name="back-end"),
+            Department(name="nezarazeno"),
+        ]
+
+        EmployeeStatus.objects.bulk_create(working_statuses)
+        Department.objects.bulk_create(departments)
+
         # Vytvořte zaměstnance pro testovací data
         employee1 = Employee.objects.create(
             name="Jan",
@@ -66,11 +88,12 @@ class EmployeeModelTest(TestCase):
         self.assertEqual(employee_jan.postal_code, "10000")
         self.assertEqual(employee_jan.phone_number, "+420123456789")
         self.assertEqual(employee_jan.email, "jan.novak@example.com")
-        self.assertEqual(employee_jan.date_of_birth, date(
-            1985, 5, 10)
-                         )
+        self.assertEqual(employee_jan.date_of_birth, date(1985, 5, 10))
         self.assertEqual(employee_jan.age(), (39))
         self.assertTrue(employee_jan.check_pin_code("1234"))
+        self.assertTrue(employee_jan.department, "nezarazeno")
+        self.assertEqual(employee_jan.employee_status, "free")
+        self.assertNotEqual(employee_jan.employee_status, "vacation")
         self.assertEqual(employee_jan.is_valid, True)
         # propojeni pres FK na tabulku FaceVector
         self.assertEqual(
@@ -80,9 +103,7 @@ class EmployeeModelTest(TestCase):
 
     def test_face_vector_creation(self):
         """z tabulky FaceVector"""
-        face_vector_jan = FaceVector.objects.get(
-            employee__email="jan.novak@example.com"
-        )
+        face_vector_jan = FaceVector.objects.get(employee__slug="jan-novak")
         self.assertIsNotNone(face_vector_jan.face_vector_fernet)
         self.assertIsInstance(face_vector_jan.face_vector, list)
         self.assertIsInstance(face_vector_jan.face_vector_fernet, bytes)
@@ -96,7 +117,7 @@ class EmployeeModelTest(TestCase):
 
 class EmployeeFormTests(TestCase):
     def setUp(self):
-        """Vytvoření potřebných objektů.""" 
+        """Vytvoření potřebných objektů."""
         self.department = Department.objects.create(name="IT Department")
         self.employee_status = EmployeeStatus.objects.create(name="Active")
 
@@ -111,7 +132,7 @@ class EmployeeFormTests(TestCase):
             date_of_birth="1989-02-13",
             pin_code="1234",
             department=self.department,
-            employee_status=self.employee_status
+            employee_status=self.employee_status,
         )
 
     def get_valid_form_data(self):
@@ -156,7 +177,7 @@ class EmployeeFormTests(TestCase):
 
     def test_duplicate_email(self):
         """
-        Testuje, že při zadání e-mailu, který již existuje 
+        Testuje, že při zadání e-mailu, který již existuje
         (upraví i velikost písma),dojde k chybě.
         """
         form_data = self.get_valid_form_data()
@@ -165,13 +186,12 @@ class EmployeeFormTests(TestCase):
         self.assertFalse(form.is_valid())
         self.assertIn("email", form.errors)
         self.assertEqual(
-            form.errors["email"],
-            ["Tento e-mail je již používán. Zvolte jiný."]
+            form.errors["email"], ["Tento e-mail je již používán. Zvolte jiný."]
         )
 
     def test_invalid_postal_code(self):
         """
-        Testuje, že je vyvolána chyba validace pro PSČ, 
+        Testuje, že je vyvolána chyba validace pro PSČ,
         pokud PSČ neobsahuje přesně 5 číslic.
         """
         form_data = self.get_valid_form_data()
@@ -179,12 +199,13 @@ class EmployeeFormTests(TestCase):
         form = EmployeeForm(data=form_data)
         self.assertFalse(form.is_valid())
         self.assertIn("postal_code", form.errors)
-        self.assertIn("PSČ musí obsahovat 5 číslic.",
-                      form.errors["postal_code"])
+        self.assertIn(
+            "PSČ musí obsahovat 5 číslic.", form.errors["postal_code"]
+        )
 
     def test_invalid_pin_code(self):
         """
-        Testuje, že je vyvolána chyba validace, 
+        Testuje, že je vyvolána chyba validace,
         pokud PIN kód neobsahuje přesně 4 číslice.
         """
         form_data = self.get_valid_form_data()
@@ -192,5 +213,6 @@ class EmployeeFormTests(TestCase):
         form = EmployeeForm(data=form_data)
         self.assertFalse(form.is_valid())
         self.assertIn("pin_code", form.errors)
-        self.assertIn("PIN kód musí obsahovat přesně 4 číslice.",
-                      form.errors["pin_code"])
+        self.assertIn(
+            "PIN kód musí obsahovat přesně 4 číslice.", form.errors["pin_code"]
+        )
