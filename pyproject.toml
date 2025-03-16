@@ -25,5 +25,4 @@ dependencies = [
     "ruff>=0.9.6",
     "selenium>=4.29.0",
     "setuptools>=75.8.2",
-    "selenium>=4.8.2"
 ]

@@ -81,7 +81,6 @@ requires-dist = [
     { name = "python-dotenv", specifier = ">=1.0.1" },
     { name = "rich", specifier = ">=13.9.4" },
     { name = "ruff", specifier = ">=0.9.6" },
-    { name = "selenium", specifier = ">=4.8.2" },
     { name = "selenium", specifier = ">=4.29.0" },
     { name = "setuptools", specifier = ">=75.8.2" },
 ]
