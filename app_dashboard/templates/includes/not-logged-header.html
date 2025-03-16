@@ -4,7 +4,7 @@
         {% for message in messages %}
             <p class="L-header__text u-text-{{ message.tags }}">{{ message }}</p>
         {% empty %}
-            <p class="L-header__text u-text-warning">Nejdříve se přihlaste</p>
+            <p class="L-header__text u-text-error">Nejdříve se přihlaste</p>
         {% endfor %}
     </li>
     <li class="L-header__item">
