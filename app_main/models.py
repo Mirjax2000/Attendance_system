@@ -172,6 +172,10 @@ class Employee(models.Model):
     def save(self, *args, **kwargs):
         self.set_slug()
         self.set_pin_hash()
+        if not self.employee_status:
+            self.employee_status = EmployeeStatus.objects.get(name="free")
+        if not self.department:
+            self.department = Department.objects.get(name="nezarazeno")
 
         with tran.atomic():
             super().save(*args, **kwargs)
@@ -262,7 +266,10 @@ class Department(models.Model):
     """Oddělení"""
 
     name = models.CharField(
-        max_length=50, unique=True, verbose_name="Název oddělení"
+        max_length=50,
+        unique=True,
+        default="nezarazeno",
+        verbose_name="Název oddělení",
     )
 
     def __str__(self) -> str:
@@ -286,7 +293,11 @@ class EmployeeStatus(models.Model):
     ]
 
     name = models.CharField(
-        max_length=50, unique=True, choices=STATUS_CHOICES, verbose_name="Stav"
+        max_length=50,
+        unique=True,
+        choices=STATUS_CHOICES,
+        default="free",
+        verbose_name="Stav",
     )
 
     def __str__(self) -> str:
@@ -294,24 +305,3 @@ class EmployeeStatus(models.Model):
 
     def __repr__(self) -> str:
         return f"EmployeeStatus: {self.name}"
-
-    def default_status(self):
-        """auto assigment"""
-        if self.name not in [
-            "working",
-            "sick_leave",
-            "business_trip",
-            "vacation",
-        ]:
-            self.name = "free"
-
-    def save(self, *args, **kwargs):
-        self.default_status()
-
-        with tran.atomic():
-            super().save(*args, **kwargs)  # Pokračuje
-
-    class Meta:
-        """ordering"""
-
-        ordering = ["name"]
