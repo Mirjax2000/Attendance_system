@@ -16,37 +16,34 @@
 {% endblock nojs %}
 <!-- end -->
 <!--body-->
-<body class="base">
-    {% block body %}
-        <main class="P-container">
-            <!--left side  navigation Menu -->
-            <section class="P-navigation">
-                <nav class="L-navigation">
-                    {% include "includes/dashboard_navigation.html" %}
-                </nav>
-            </section>
-            <!-- right side main content -->
-            <section class="P-right-side">
-                <!-- Header -->
-                <header class="L-header">
-                    {% if request.user.is_authenticated %}
-                        {% include "includes/logged-header.html" %}
-                    {% else %}
-                        {% include "includes/not-logged-header.html" %}
-                    {% endif %}
-                </header>
-                <main class="L-content">
-                    {% block content %}
-                        <!-- here comms content -->
-                        <!-- here comms content -->
-                        <!-- here comms content -->
-                    {% endblock content %}
-                </main>
-            </section>
-        </main>
-    {% endblock body %}
-    {% block js %}
-        <script src="{% static 'js/dashboard.js' %}"></script>
-    {% endblock js %}
-</body>
-</html>
+{% block body %}
+    <main class="P-container">
+        <!--left side  navigation Menu -->
+        <section class="P-navigation">
+            <nav class="L-navigation">
+                {% include "includes/dashboard_navigation.html" %}
+            </nav>
+        </section>
+        <!-- right side main content -->
+        <section class="P-right-side">
+            <!-- Header -->
+            <header class="L-header">
+                {% if request.user.is_authenticated %}
+                    {% include "includes/logged-header.html" %}
+                {% else %}
+                    {% include "includes/not-logged-header.html" %}
+                {% endif %}
+            </header>
+            <main class="L-content">
+                {% block content %}
+                    <!-- here comms content -->
+                    <!-- here comms content -->
+                    <!-- here comms content -->
+                {% endblock content %}
+            </main>
+        </section>
+    </main>
+{% endblock body %}
+{% block js %}
+    <script src="{% static 'js/dashboard.js' %}"></script>
+{% endblock js %}

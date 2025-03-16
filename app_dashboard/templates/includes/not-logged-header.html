@@ -1,13 +1,11 @@
 {% load static %}
 <ul class="L-header__list">
     <li class="L-header__item">
-        <p class="L-header__text u-text-info">
-            {% if messages %}
-                {{ messages|join:", " }}
-            {% else %}
-                Nejdříve se přihlaste
-            {% endif %}
-        </p>
+        {% for message in messages %}
+            <p class="L-header__text u-text-{{ message.tags }}">{{ message }}</p>
+        {% empty %}
+            <p class="L-header__text u-text-warning">Nejdříve se přihlaste</p>
+        {% endfor %}
     </li>
     <li class="L-header__item">
         <a class="L-header__login" href="{% url "login" %}">
