@@ -49,6 +49,8 @@ class EmployeeForm(forms.ModelForm):
             },
         }
         widgets = {
-            "date_of_birth": forms.DateInput(attrs={"type": "date"}),
+            "date_of_birth": forms.DateInput(
+                attrs={"type": "date"}, format="%Y-%m-%d"
+            ),
             "pin_code": forms.PasswordInput(attrs={"maxlength": 4}),
         }
