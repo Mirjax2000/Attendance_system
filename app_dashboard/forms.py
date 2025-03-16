@@ -1,8 +1,10 @@
 """Forms"""
 
 from django import forms
+from django.core.exceptions import ValidationError
 
 from app_main import models
+from app_main.models import Employee
 
 
 class EmployeeForm(forms.ModelForm):
@@ -54,3 +56,10 @@ class EmployeeForm(forms.ModelForm):
             ),
             "pin_code": forms.PasswordInput(attrs={"maxlength": 4}),
         }
+    
+    def clean_email(self):
+        """Kontrola emailu a převod na lowercase"""
+        email = self.cleaned_data.get("email").lower()
+        if Employee.objects.filter(email__iexact=email).exists():
+            raise ValidationError("Tento e-mail je již používán. Zvolte jiný.")
+        return email
