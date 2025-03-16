@@ -1,13 +1,16 @@
+"""Selenimum testy"""
+
 import time
+
+from django.contrib.auth import get_user_model
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.edge.options import Options as EdgeOptions
-from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from django.contrib.auth import get_user_model
+from selenium.webdriver.support.ui import WebDriverWait
 
 User = get_user_model()
 
@@ -47,7 +50,7 @@ def get_available_driver():
 
 class LoginLogoutSeleniumTest(StaticLiveServerTestCase):
     """
-    Selenium test, který ověřuje přihlášení 
+    Selenium test, který ověřuje přihlášení
     a následné odhlášení v aplikaci.
     """
 
@@ -78,7 +81,7 @@ class LoginLogoutSeleniumTest(StaticLiveServerTestCase):
         User.objects.create_user(
             username=self.test_username,
             password=self.test_password,
-            email="testbot@selenim.cz"
+            email="testbot@selenim.cz",
         )
         print("[LOG] Testovací uživatel byl vytvořen.")
         time.sleep(1)
@@ -106,12 +109,13 @@ class LoginLogoutSeleniumTest(StaticLiveServerTestCase):
 
         WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located(
-                (By.XPATH, "//a[contains(@href, '/accounts/logout/')]"))
+                (By.XPATH, "//a[contains(@href, '/accounts/logout/')]")
+            )
         )
         print("[LOG] Přihlášení bylo úspěšné, nalezen odkaz pro odhlášení.")
-        logout_link = self.driver.find_element(By.XPATH,
-                                               "//a[contains(@href,"
-                                               " '/accounts/logout/')]")
+        logout_link = self.driver.find_element(
+            By.XPATH, "//a[contains(@href, '/accounts/logout/')]"
+        )
         self.assertIsNotNone(logout_link)
 
         logout_link.click()
@@ -122,10 +126,7 @@ class LoginLogoutSeleniumTest(StaticLiveServerTestCase):
             EC.presence_of_element_located((By.ID, "id_username"))
         )
         print("[LOG] Odhlášení bylo úspěšné.")
-        
-        login_form_username = self.driver.find_element(
-            By.ID, "id_username"
-        )
+
+        login_form_username = self.driver.find_element(By.ID, "id_username")
         self.assertIsNotNone(login_form_username)
         print("[LOG] Přihlašovací formulář byl nalezen.")
-        
