@@ -253,7 +253,7 @@ class SignUpFormTests(TestCase):
 
     def test_signup_form_missing_required_field(self):
         """
-        Formulář není validní, pokud chybí povinné pole (first_name)
+        Formulář je validní, pokud chybí nepovinné pole (first_name)
         """
         form_data = {
             'username': 'josefvyskocil',
@@ -264,13 +264,11 @@ class SignUpFormTests(TestCase):
             'password2': 'Zass12345!'
         }
         form = SignUpForm(data=form_data)
-        self.assertFalse(form.is_valid())
-        self.assertIn('first_name', form.errors)
-        self.assertTrue(form.errors['first_name'])
+        self.assertTrue(form.is_valid())
         
     def test_signup_form_missing_required_field_2(self):
         """
-        Formulář není validní, pokud chybí povinné pole (last_name)
+        Formulář je validní, pokud chybí nepovinné pole (last_name)
         """
         form_data = {
             'username': 'josefvyskocil',
@@ -281,9 +279,7 @@ class SignUpFormTests(TestCase):
             'password2': 'Zass12345!'
         }
         form = SignUpForm(data=form_data)
-        self.assertFalse(form.is_valid())
-        self.assertIn('last_name', form.errors)
-        self.assertTrue(form.errors['last_name'])
+        self.assertTrue(form.is_valid())
         
     def test_signup_form_missing_required_field_3(self):
         """
@@ -362,7 +358,7 @@ class UserUpdateFormTests(TestCase):
         self.assertIn('username', form.errors)
         
     def test_update_form_missing_required_field2(self):
-        """Formulář není validní, pokud chybí povinné pole (first_name)"""
+        """Formulář je validní, pokud chybí nepovinné pole (first_name)"""
         form_data = {
             'username': 'lojzahovorka',
             'first_name': '',
@@ -370,11 +366,10 @@ class UserUpdateFormTests(TestCase):
             'email': 'janvon@rokycan.eu'
         }
         form = UserUpdateForm(instance=self.user, data=form_data)
-        self.assertFalse(form.is_valid())
-        self.assertIn('first_name', form.errors)
+        self.assertTrue(form.is_valid())
         
     def test_update_form_missing_required_field3(self):
-        """Formulář není validní, pokud chybí povinné pole (last_name)"""
+        """Formulář je validní, pokud chybí nepovinné pole (last_name)"""
         form_data = {
             'username': 'lojzahovorka',
             'first_name': 'Jan',
@@ -382,8 +377,7 @@ class UserUpdateFormTests(TestCase):
             'email': 'janvon@rokycan.eu'
         }
         form = UserUpdateForm(instance=self.user, data=form_data)
-        self.assertFalse(form.is_valid())
-        self.assertIn('last_name', form.errors)
+        self.assertTrue(form.is_valid())
 
     def test_update_form_optional_email(self):
         """
