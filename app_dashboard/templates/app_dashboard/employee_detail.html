@@ -11,46 +11,48 @@
         <ul class="L-detail__list">
             <li class="L-detail__item">
                 <p>
-                    <strong>Jméno a příjmení:</strong> {{ employee.name }} {{ employee.surname }}
+                    <strong>Jméno a příjmení:</strong><span class="c-info-highlight">{{ employee.name }} {{ employee.surname }}</span>
                 </p>
             </li>
             <li class="L-detail__item">
                 <p>
-                    <strong>Email:</strong> {{ employee.email }}
+                    <strong>Email:</strong>
+                    <span class="c-info-highlight">{{ employee.email }}</span>
                 </p>
             </li>
             <li class="L-detail__item">
                 <p>
-                    <strong>Telefon:</strong> {{ employee.phone_number }}
+                    <strong>Telefon:</strong><span class="c-info-highlight">{{ employee.phone_number }}</span>
                 </p>
             </li>
             <li class="L-detail__item">
                 <p>
-                    <strong>Adresa:</strong> {{ employee.street_number }}
+                    <strong>Adresa:</strong>
+                    <span class="c-info-highlight">{{ employee.street_number }}</span>
                 </p>
             </li>
             <li class="L-detail__item">
                 <p>
-                    <strong>Adresa:</strong> {{ employee.city }} {{ employee.postal_code }}
+                    <strong>Adresa:</strong><span class="c-info-highlight">{{ employee.city }} {{ employee.postal_code }}</span>
                 </p>
             </li>
             <li class="L-detail__item">
                 <p>
-                    <strong>Věk:</strong> {{ employee.age }}
+                    <strong>Věk:</strong><span class="c-info-highlight">{{ employee.age }}</span>
                 </p>
             </li>
             <li class="L-detail__item">
                 <p>
                     {% if employee.department %}
-                        <strong>Department:</strong> &nbsp;<span class="u-text-success">{{ employee.department }}</span>
+                        <strong>Department:</strong> &nbsp;<span class="u-text-success c-info-highlight">{{ employee.department }}</span>
                     {% else %}
-                        <strong>Department:&nbsp;<b class="u-text-info">nezarazen</b></strong>
+                        <strong>Department:&nbsp;<b class="u-text-info c-info-highlight">nezařazen</b></strong>
                     {% endif %}
                 </p>
             </li>
             <li class="L-detail__item">
                 <p>
-                    <strong>Pracovni status:</strong> {{ employee.employee_status }}
+                    <strong>Pracovni status:</strong> <span class="c-info-highlight">{{ employee.employee_status }}</span>
                 </p>
             </li>
             <li class="L-detail__item">
