@@ -92,8 +92,8 @@ class EmployeeModelTest(TestCase):
         self.assertEqual(employee_jan.age(), (39))
         self.assertTrue(employee_jan.check_pin_code("1234"))
         self.assertTrue(employee_jan.department, "nezarazeno")
-        self.assertEqual(employee_jan.employee_status, "free")
-        self.assertNotEqual(employee_jan.employee_status, "vacation")
+        self.assertEqual(employee_jan.employee_status.name, "free")
+        self.assertNotEqual(employee_jan.employee_status.name, "vacation")
         self.assertEqual(employee_jan.is_valid, True)
         # propojeni pres FK na tabulku FaceVector
         self.assertEqual(

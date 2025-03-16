@@ -25,12 +25,16 @@ LOGGING = {
         },
     },
     'loggers': {
+        'django.request': {
+            'handlers': ['console'],
+            'level': 'ERROR',  # Změněno z DEBUG nebo WARNING na ERROR
+            'propagate': True,
+        },
         'django.server': {
             'handlers': ['console'],
             'level': 'ERROR',
             'propagate': False,
         },
-        # Pokud se hlášky objeví i v root loggeru, můžete přidat filtr i tam:
         '': {
             'handlers': ['console'],
             'level': 'ERROR',
