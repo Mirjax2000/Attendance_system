@@ -1,7 +1,43 @@
 import os
+import logging
 from pathlib import Path
 
 from dotenv import load_dotenv
+
+# nastaví ignoraci logging zpráv broken pipe
+class IgnoreBrokenPipeFilter(logging.Filter):
+    """Filtr, který ignoruje logy obsahující 'Broken pipe'."""
+    def filter(self, record):
+        return "Broken pipe" not in record.getMessage()
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'ignore_broken_pipe': {
+            '()': IgnoreBrokenPipeFilter,
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'filters': ['ignore_broken_pipe'],
+        },
+    },
+    'loggers': {
+        'django.server': {
+            'handlers': ['console'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        # Pokud se hlášky objeví i v root loggeru, můžete přidat filtr i tam:
+        '': {
+            'handlers': ['console'],
+            'level': 'ERROR',
+            'filters': ['ignore_broken_pipe'],
+        },
+    },
+}
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
