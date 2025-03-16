@@ -22,13 +22,32 @@
     }
 
     &__form {
-        input {
+        font-size: 0.875rem;
+
+        input,
+        select {
             @extend %border-radius;
 
             display: block;
             width: 100%;
             padding: 0.3em 1em;
             color: var(--scheme-default);
+        }
+
+        select {
+            position: relative;
+            appearance: none;
+            outline: none;
+            background-color: var(--scheme-clr-4);
+            border: 1px solid black;
+
+            &::after {
+                content: "ahoj";
+                position: absolute;
+                inset: 0;
+                right: -20px;
+                z-index: 100;
+            }
         }
     }
 

@@ -209,7 +209,8 @@ body.home {
   user-select: none;
 }
 
-.c-info-highlight, .c-filter, .c-filter__item .form__wrapper, .c-filter__form select, .c-count__card, .c-count__card__content, .c-ico-btn, .L-form, .L-form__form input, .L-form__submit, .L-content {
+.c-info-highlight, .c-filter, .c-filter__item .form__wrapper, .c-filter__form select, .c-count__card, .c-count__card__content, .c-ico-btn, .L-form, .L-form__form input,
+.L-form__form select, .L-form__submit, .L-content {
   border-radius: 5px;
 }
 
@@ -390,11 +391,29 @@ body {
   border-bottom: 1px solid var(--scheme-default);
   margin-bottom: 0.3em;
 }
-.L-form__form input {
+.L-form__form {
+  font-size: 0.875rem;
+}
+.L-form__form input,
+.L-form__form select {
   display: block;
   width: 100%;
   padding: 0.3em 1em;
   color: var(--scheme-default);
+}
+.L-form__form select {
+  position: relative;
+  appearance: none;
+  outline: none;
+  background-color: var(--scheme-clr-4);
+  border: 1px solid black;
+}
+.L-form__form select::after {
+  content: "ahoj";
+  position: absolute;
+  inset: 0;
+  right: -20px;
+  z-index: 100;
 }
 .L-form__label {
   display: block;
