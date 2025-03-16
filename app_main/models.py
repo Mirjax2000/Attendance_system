@@ -282,6 +282,7 @@ class EmployeeStatus(models.Model):
         ("sick_leave", "Nemocenská"),
         ("business_trip", "Služební cesta"),
         ("vacation", "Dovolená"),
+        ("free", "Volno"),
     ]
 
     name = models.CharField(
@@ -293,6 +294,22 @@ class EmployeeStatus(models.Model):
 
     def __repr__(self) -> str:
         return f"EmployeeStatus: {self.name}"
+
+    def default_status(self):
+        """auto assigment"""
+        if self.name not in [
+            "working",
+            "sick_leave",
+            "business_trip",
+            "vacation",
+        ]:
+            self.name = "free"
+
+    def save(self, *args, **kwargs):
+        self.default_status()
+
+        with tran.atomic():
+            super().save(*args, **kwargs)  # Pokračuje
 
     class Meta:
         """ordering"""

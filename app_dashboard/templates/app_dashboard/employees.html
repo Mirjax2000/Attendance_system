@@ -31,11 +31,9 @@
                     <th class="L-list__table-heading">Jméno</th>
                     <th class="L-list__table-heading">Příjmení</th>
                     <th class="L-list__table-heading">Email</th>
-                    <th class="L-list__table-heading">Ulice</th>
-                    <th class="L-list__table-heading">Město</th>
-                    <th class="L-list__table-heading">PSC</th>
                     <th class="L-list__table-heading">Telefon</th>
-                    <th class="L-list__table-heading">Datum narození</th>
+                    <th class="L-list__table-heading">Department</th>
+                    <th class="L-list__table-heading">status</th>
                 </tr>
             </thead>
             <tbody>
@@ -47,11 +45,9 @@
                         </td>
                         <td class="L-list__table-cell surname">{{ employee.surname }}</td>
                         <td class="L-list__table-cell email">{{ employee.email }}</td>
-                        <td class="L-list__table-cell street">{{ employee.street_number }}</td>
-                        <td class="L-list__table-cell city">{{ employee.city }}</td>
-                        <td class="L-list__table-cell psc">{{ employee.postal_code }}</td>
                         <td class="L-list__table-cell phone">{{ employee.phone_number }}</td>
-                        <td class="L-list__table-cell date">{{ employee.date_of_birth }}</td>
+                        <td class="L-list__table-cell phone">{{ employee.department }}</td>
+                        <td class="L-list__table-cell phone">{{ employee.employee_status }}</td>
                         <td class="L-list__table-cell CAT">
                             <div class="L-list__actions">
                                 <a class="c-ico-btn" href="{% url "delete_employee" employee.id %}">

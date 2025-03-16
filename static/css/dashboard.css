@@ -403,17 +403,16 @@ body {
 }
 .L-form__form select {
   position: relative;
-  appearance: none;
   outline: none;
-  background-color: var(--scheme-clr-4);
+  appearance: none;
   border: 1px solid black;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3137254902);
+  background-color: var(--scheme-clr-1);
+  transition: all ease-in-out 0.1s;
 }
-.L-form__form select::after {
-  content: "ahoj";
-  position: absolute;
-  inset: 0;
-  right: -20px;
-  z-index: 100;
+.L-form__form select:hover {
+  background-color: var(--scheme-clr-4);
+  font-weight: bolder;
 }
 .L-form__label {
   display: block;
