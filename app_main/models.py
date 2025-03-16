@@ -172,6 +172,7 @@ class Employee(models.Model):
     def save(self, *args, **kwargs):
         self.set_slug()
         self.set_pin_hash()
+        # pokud v FK nic neni tak tam dej hodnotu PK klice z default
         if not self.employee_status:
             self.employee_status = EmployeeStatus.objects.get(name="free")
         if not self.department:
