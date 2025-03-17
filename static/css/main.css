@@ -211,7 +211,7 @@ body.home {
   position: absolute;
 }
 
-.c-numpad, .c-numpad__header, .c-numpad__list, .c-camera, .c-scan, .L-check-in__error-frame {
+.c-numpad, .c-numpad__pin-block, .c-numpad__list, .c-camera, .c-scan, .L-check-in__error-frame {
   margin-inline: auto;
 }
 
@@ -219,7 +219,7 @@ body.home {
   user-select: none;
 }
 
-.c-info-highlight, .c-numpad, .c-numpad__header, .c-numpad__list, .c-numpad__item, .c-camera__video, .c-scan__submit {
+.c-info-highlight, .c-numpad, .c-numpad__pin-block, .c-numpad__list, .c-numpad__item, .c-camera__video, .c-scan__submit {
   border-radius: 5px;
 }
 
@@ -370,12 +370,17 @@ body {
   border: 1px solid black;
   padding: 0.5em;
 }
-.c-numpad__header {
-  min-height: 2.3rem;
+.c-numpad__pin-block {
+  width: 33%;
+  background-color: #3b4453;
+  min-height: 2rem;
   text-align: center;
+  margin-bottom: 0.3em;
+}
+.c-numpad__star {
   font-size: 3rem;
-  line-height: 0.8;
-  margin-bottom: 0.2em;
+  line-height: 0;
+  padding-top: 0.45em;
 }
 .c-numpad__list {
   display: flex;
@@ -423,6 +428,11 @@ body {
 }
 .c-numpad__text.enter, .c-numpad__text.del {
   font-size: 1.3rem;
+}
+.c-numpad__text.enter {
+  appearance: none;
+  border: none;
+  background-color: transparent;
 }
 
 .c-logo {

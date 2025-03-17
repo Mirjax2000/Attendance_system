@@ -10,8 +10,10 @@
         <section class="c-numpad">
             <form action="">
                 {% csrf_token %}
-                <input type="text" id="pinInput" class="c-numpad__input" />
-                <p class="c-numpad__header" id="pinDisplay"></p>
+                <input type="text" id="pinInput" class="c-numpad__input" hidden />
+                <div class="c-numpad__pin-block">
+                    <p class="c-numpad__star" id="pinDisplay"></p>
+                </div>
                 <ul class="c-numpad__list" id="numpad">
                     <li class="c-numpad__item btn">
                         <p class="c-numpad__text num">1</p>
@@ -40,14 +42,14 @@
                     <li class="c-numpad__item btn">
                         <p class="c-numpad__text num">9</p>
                     </li>
-                    <li class="c-numpad__item">
+                    <li class="c-numpad__item" id="delPin">
                         <p class="c-numpad__text del">Del</p>
                     </li>
                     <li class="c-numpad__item btn">
                         <p class="c-numpad__text num">0</p>
                     </li>
                     <li class="c-numpad__item">
-                        <button class="c-numpad__text enter" id="sendPin">Enter</button>
+                        <button class="c-numpad__text enter">Enter</button>
                     </li>
                 </ul>
             </form>

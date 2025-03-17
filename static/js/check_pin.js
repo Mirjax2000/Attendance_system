@@ -3,12 +3,12 @@
 (function () {
     console.log("check_pin.js");
     //
-    let timeText = document.getElementById("timeText");
-    let pinInput = document.getElementById("pinInput")
-    let pinDisplay = document.getElementById("pinDisplay")
-    let numpad = document.getElementById("numpad");
-    let numpadKeys = numpad.querySelectorAll(".btn")
-    let delButton = numpad.querySelector('.c-numpad__text.del');
+    const timeText = document.getElementById("timeText");
+    const pinInput = document.getElementById("pinInput");
+    const pinDisplay = document.getElementById("pinDisplay");
+    const numpad = document.getElementById("numpad");
+    const numpadKeys = numpad.querySelectorAll(".btn");
+    const delPin = document.getElementById("delPin");
 
 
     // casova funkce
@@ -26,21 +26,23 @@
     // spusteni casove funkce
     clock();
 
-
+    // tlacitka na numpadu
     numpadKeys.forEach(function (element) {
 
-
         element.addEventListener("click", function (e) {
-            let numVal = this.querySelector(".num").innerText
-            pinInput.value += numVal
-            pinDisplay.append("*")
-            console.log(pinInput.value);
+            // cte text v HTML elementu, tlacitko
+            let numVal = this.querySelector(".num").textContent
+            // pokud nemam 4 znaky v Pinu
+            if (pinInput.value.length < 4) {
+                pinInput.value += numVal.trim()
+                pinDisplay.append("*")
+            }
         })
 
     });
 
-    delButton.addEventListener("click", function () {
-        pinDisplay.innerText = pinDisplay.innerText.slice(0, -1);
+    delPin.addEventListener("click", function () {
+        pinDisplay.textContent = pinDisplay.textContent.slice(0, -1);
         pinInput.value = pinInput.value.slice(0, -1);
     });
 
