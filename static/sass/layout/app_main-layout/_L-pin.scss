@@ -1,0 +1,12 @@
+@use "../../utils/" as *;
+@use "../../base/placeholders" as *;
+
+.L-pin {
+    &__header {
+        text-align: center;
+        color: var(--scheme-default);
+        border-bottom: 1px solid black;
+        padding-bottom: 0.5em;
+        margin-bottom: 1em;
+    }
+}

@@ -1,8 +1,56 @@
 {% extends "app_main_base.html" %}
 {% load static %}
 {% block content %}
-    
     <!-- header -->
     {% include "includes/app_main_header.html" %}
-    <h1>kontrola pinu u osoby {{ name }}</h1>
+    <section class="L-pin">
+        <h1 class="L-pin__header">
+            Potvrzení pinu u osoby: <span class="c-info-highlight u-text-success">" {{ name }} "</span>
+        </h1>
+        <section class="c-numpad">
+            <div class="c-info">
+                <h3 class="c-info__heading">
+                    PIN: <span class="c-info__digits" id="pin">****</span>
+                </h3>
+            </div>
+            <ul class="c-numpad__list">
+                <li class="c-numpad__item">
+                    <p class="c-numpad__text">1</p>
+                </li>
+                <li class="c-numpad__item">
+                    <p class="c-numpad__text">2</p>
+                </li>
+                <li class="c-numpad__item">
+                    <p class="c-numpad__text">3</p>
+                </li>
+                <li class="c-numpad__item">
+                    <p class="c-numpad__text">4</p>
+                </li>
+                <li class="c-numpad__item">
+                    <p class="c-numpad__text">5</p>
+                </li>
+                <li class="c-numpad__item">
+                    <p class="c-numpad__text">6</p>
+                </li>
+                <li class="c-numpad__item">
+                    <p class="c-numpad__text">7</p>
+                </li>
+                <li class="c-numpad__item">
+                    <p class="c-numpad__text">8</p>
+                </li>
+                <li class="c-numpad__item">
+                    <p class="c-numpad__text">9</p>
+                </li>
+                <li class="c-numpad__item">
+                    <p class="c-numpad__text del">Del</p>
+                </li>
+                <li class="c-numpad__item">
+                    <p class="c-numpad__text">0</p>
+                </li>
+                <li class="c-numpad__item">
+                    <p class="c-numpad__text enter" id="sendPin">Enter</p>
+                </li>
+            </ul>
+        </section>
+    </section>
 {% endblock content %}

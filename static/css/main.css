@@ -17,7 +17,7 @@
   --scheme-success: #339af0;
   --scheme-info: #54da54;
   --scheme-warning: #ff3c00;
-  --background-clr-gradient-primary: linear-gradient(to right, #2a2b2e, #2c2e32);
+  --background-clr-gradient-primary: linear-gradient(to right bottom, #2a2b2e, #2f3542);
 }
 
 /* --- normalize --- */
@@ -211,7 +211,7 @@ body.home {
   position: absolute;
 }
 
-.c-camera, .c-scan, .L-check-in__error-frame {
+.c-numpad, .c-numpad__list, .c-camera, .c-scan, .L-check-in__error-frame {
   margin-inline: auto;
 }
 
@@ -219,7 +219,7 @@ body.home {
   user-select: none;
 }
 
-.c-info-highlight, .c-camera__video, .c-scan__submit {
+.c-info-highlight, .c-numpad, .c-numpad__list, .c-numpad__item, .c-camera__video, .c-scan__submit {
   border-radius: 5px;
 }
 
@@ -307,6 +307,14 @@ body {
   left: 0;
 }
 
+.L-pin__header {
+  text-align: center;
+  color: var(--scheme-default);
+  border-bottom: 1px solid black;
+  padding-bottom: 0.5em;
+  margin-bottom: 1em;
+}
+
 .L-check-in__error-frame {
   width: 50%;
 }
@@ -354,6 +362,61 @@ body {
 }
 .c-camera__video {
   border: 1px solid black;
+}
+
+.c-numpad {
+  width: 50%;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5529411765);
+  border: 1px solid black;
+  padding: 0.5em;
+}
+.c-numpad__list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  width: 80%;
+  padding: 0.5em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  flex-wrap: wrap;
+  border: 1px solid rgba(72, 72, 72, 0.5294117647);
+}
+.c-numpad__item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  flex-basis: 33%;
+  text-align: center;
+  aspect-ratio: 1;
+  background-image: var(--background-clr-gradient-primary);
+  opacity: 0.8;
+  transform: scale(0.9);
+  box-shadow: 0 0 1px 1px rgba(64, 101, 125, 0.3411764706);
+  transition: all 0.1s ease-in-out;
+  border: 1px solid rgba(41, 41, 41, 0.3725490196);
+  cursor: pointer;
+  backface-visibility: hidden;
+}
+.c-numpad__item:hover, .c-numpad__item:focus {
+  box-shadow: 0 0 1px 1px #40657d;
+}
+.c-numpad__item:active {
+  transform: scale(0.85);
+  color: var(--scheme-success);
+}
+.c-numpad__text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  font-size: 2rem;
+  font-weight: bold;
+  text-shadow: 1px 1px 5px #0062ff;
+}
+.c-numpad__text.enter, .c-numpad__text.del {
+  font-size: 1.5rem;
 }
 
 .c-logo {
