@@ -47,8 +47,8 @@ class GetResultView(LoginRequiredMixin, View):
         vraci message : name nebo popis chyby
         vraci success True or false
         """
-        # result = csi.get_result()
-        result = {"success": True, "name": "ferda"}
+        result = csi.get_result()
+        # result = {"success": True, "name": "ferda"}
         cons.log(result)
 
         if result["success"]:

@@ -7,13 +7,11 @@
                  alt="camstream">
         </div>
         <div class="L-check-in__error-frame">
-            <p class="L-check-in__error-frame__text">
-                {% if message %}
-                    {{ message }} - Try again
-                {% else %}
-                    &nbsp;
-                {% endif %}
-            </p>
+            {% for message in messages %}
+                <p class="L-check-in__error-frame__text">{{ message }} - Try again</p>
+            {% empty %}
+                <p class="L-check-in__error-frame__text">&nbsp;</p>
+            {% endfor %}
         </div>
         <div class="c-scan">
             <form action="{% url "get_result" %}" class="c-scan__form" method="post">
