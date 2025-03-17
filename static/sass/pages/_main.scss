@@ -4,6 +4,5 @@
 
 .P-container {
     @include container(31.25rem, 64rem, 1em);
-
-    background-color: var(--scheme-clr-2);
+    @extend %select-none;
 }

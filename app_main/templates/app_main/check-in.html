@@ -1,14 +1,20 @@
 {% load static %}
 <main class="L-check-in">
-    <section class="c-camera">
-        <div class="c-camera__container">
+    <section class="face-scan">
+        <div class="c-camera u-mb-small">
             <img src="{% url "camstream" speed=speed %}"
                  class="c-camera__video"
                  alt="camstream">
         </div>
+        <div class="c-scan">
+            <form action="{% url "get_result" %}" class="c-scan__form" method="post">
+                {% csrf_token %}
+                <button class="c-scan__submit">SCAN</button>
+            </form>
+        </div>
     </section>
-    <p class="c-button btn" id="captureBtn">SCAN</p>
-    {% comment %} <div class="back-side side" id="backSide">
+</main>
+{% comment %} <div class="back-side side" id="backSide">
             <section class="c-numpad">
                 <div class="c-info">
                     <h3 class="c-info__heading">
@@ -54,5 +60,4 @@
                     </li>
                 </ul>
             </section>
-    </div> {% endcomment %}
-</main>
+</div> {% endcomment %}

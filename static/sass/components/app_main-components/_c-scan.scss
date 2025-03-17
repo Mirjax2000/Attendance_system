@@ -1,0 +1,35 @@
+@use "../../utils/" as *;
+@use "../../base/placeholders" as *;
+
+.c-scan {
+    @extend %margin-in;
+
+    width: clamp(12.5rem, 30%, 20rem);
+
+    &__form {
+    }
+
+    &__submit {
+        @extend %border-radius;
+
+        width: 100%;
+        border: none;
+        text-align: center;
+        font-size: 2rem;
+        padding: 0.5em;
+        background-color: var(--scheme-clr-8);
+        box-shadow: 1px 1px 5px black;
+        cursor: pointer;
+        transition: all 0.1s ease-in-out;
+
+        &:hover,
+        &:focus {
+            background-color: var(--scheme-accent-darker);
+        }
+
+        &:active {
+            transform: translateY(1px);
+            color: var(--scheme-clr-9);
+        }
+    }
+}

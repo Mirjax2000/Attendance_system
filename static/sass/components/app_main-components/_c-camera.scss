@@ -2,13 +2,13 @@
 @use "../../base/placeholders" as *;
 
 .c-camera {
-    @extend %select-none;
+    @extend %margin-in;
 
-    &__container {
-        @extend %margin-in;
-    }
+    width: 50%;
 
     &__video {
         @extend %border-radius;
+
+        border: 1px solid black;
     }
 }
