@@ -10,6 +10,20 @@
     border: 1px solid black;
     padding: 0.5em;
 
+    &__heading {
+        @extend %margin-in;
+        @extend %border-radius;
+
+        width: 4ch;
+        text-align: center;
+        padding-inline: 0.5em;
+        font-size: 2rem;
+        background-color: black;
+        line-height: 1;
+        padding: 0.2em 0.2em 0;
+        margin-bottom: 0.2em;
+    }
+
     &__list {
         @extend %border-radius;
         @extend %margin-in;
@@ -17,7 +31,6 @@
 
         width: 80%;
         padding: 0.5em;
-        margin-top: 1em;
         margin-bottom: 1em;
         flex-wrap: wrap;
         border: 1px solid #48484887;
@@ -59,7 +72,7 @@
 
         &.enter,
         &.del {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
         }
     }
 }

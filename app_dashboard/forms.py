@@ -56,7 +56,7 @@ class EmployeeForm(forms.ModelForm):
             ),
             "pin_code": forms.PasswordInput(attrs={"maxlength": 4}),
         }
-    
+
     def clean_email(self):
         """Kontrola emailu a převod na lowercase"""
         email = self.cleaned_data.get("email").lower()
