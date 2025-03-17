@@ -8,45 +8,52 @@
             Potvrzení pinu u osoby: <span class="c-info-highlight u-text-success">" {{ name }} "</span>
         </h1>
         <section class="c-numpad">
-            <h3 class="c-numpad__heading" id="pin">&nbsp;</h3>
-            <ul class="c-numpad__list">
-                <li class="c-numpad__item">
-                    <p class="c-numpad__text">1</p>
-                </li>
-                <li class="c-numpad__item">
-                    <p class="c-numpad__text">2</p>
-                </li>
-                <li class="c-numpad__item">
-                    <p class="c-numpad__text">3</p>
-                </li>
-                <li class="c-numpad__item">
-                    <p class="c-numpad__text">4</p>
-                </li>
-                <li class="c-numpad__item">
-                    <p class="c-numpad__text">5</p>
-                </li>
-                <li class="c-numpad__item">
-                    <p class="c-numpad__text">6</p>
-                </li>
-                <li class="c-numpad__item">
-                    <p class="c-numpad__text">7</p>
-                </li>
-                <li class="c-numpad__item">
-                    <p class="c-numpad__text">8</p>
-                </li>
-                <li class="c-numpad__item">
-                    <p class="c-numpad__text">9</p>
-                </li>
-                <li class="c-numpad__item">
-                    <p class="c-numpad__text del">Del</p>
-                </li>
-                <li class="c-numpad__item">
-                    <p class="c-numpad__text">0</p>
-                </li>
-                <li class="c-numpad__item">
-                    <p class="c-numpad__text enter" id="sendPin">Enter</p>
-                </li>
-            </ul>
+            <form action="">
+                {% csrf_token %}
+                <input type="text" id="pinInput" class="c-numpad__input" />
+                <p class="c-numpad__header" id="pinDisplay"></p>
+                <ul class="c-numpad__list" id="numpad">
+                    <li class="c-numpad__item btn">
+                        <p class="c-numpad__text num">1</p>
+                    </li>
+                    <li class="c-numpad__item btn">
+                        <p class="c-numpad__text num">2</p>
+                    </li>
+                    <li class="c-numpad__item btn">
+                        <p class="c-numpad__text num">3</p>
+                    </li>
+                    <li class="c-numpad__item btn">
+                        <p class="c-numpad__text num">4</p>
+                    </li>
+                    <li class="c-numpad__item btn">
+                        <p class="c-numpad__text num">5</p>
+                    </li>
+                    <li class="c-numpad__item btn">
+                        <p class="c-numpad__text num">6</p>
+                    </li>
+                    <li class="c-numpad__item btn">
+                        <p class="c-numpad__text num">7</p>
+                    </li>
+                    <li class="c-numpad__item btn">
+                        <p class="c-numpad__text num">8</p>
+                    </li>
+                    <li class="c-numpad__item btn">
+                        <p class="c-numpad__text num">9</p>
+                    </li>
+                    <li class="c-numpad__item">
+                        <p class="c-numpad__text del">Del</p>
+                    </li>
+                    <li class="c-numpad__item btn">
+                        <p class="c-numpad__text num">0</p>
+                    </li>
+                    <li class="c-numpad__item">
+                        <button class="c-numpad__text enter" id="sendPin">Enter</button>
+                    </li>
+                </ul>
+            </form>
         </section>
     </section>
 {% endblock content %}
+{% block js %}
+    <script src="{% static 'js/check_pin.js' %}"></script>
+{% endblock js %}

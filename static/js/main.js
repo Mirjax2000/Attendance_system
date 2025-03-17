@@ -1,9 +1,11 @@
+
 // IIFE - izolace promennych GlobeScope pouze v teto noname funkci
 (function () {
     console.log("main.js");
     //
     let timeText = document.getElementById("timeText");
-    let captureBtn = document.getElementById("captureBtn");
+
+
 
     // casova funkce
     function clock() {
@@ -19,5 +21,8 @@
     setInterval(clock, 1000);
     // spusteni casove funkce
     clock();
+
+
+
 
 })();

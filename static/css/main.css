@@ -211,7 +211,7 @@ body.home {
   position: absolute;
 }
 
-.c-numpad, .c-numpad__heading, .c-numpad__list, .c-camera, .c-scan, .L-check-in__error-frame {
+.c-numpad, .c-numpad__header, .c-numpad__list, .c-camera, .c-scan, .L-check-in__error-frame {
   margin-inline: auto;
 }
 
@@ -219,7 +219,7 @@ body.home {
   user-select: none;
 }
 
-.c-info-highlight, .c-numpad, .c-numpad__heading, .c-numpad__list, .c-numpad__item, .c-camera__video, .c-scan__submit {
+.c-info-highlight, .c-numpad, .c-numpad__header, .c-numpad__list, .c-numpad__item, .c-camera__video, .c-scan__submit {
   border-radius: 5px;
 }
 
@@ -370,14 +370,11 @@ body {
   border: 1px solid black;
   padding: 0.5em;
 }
-.c-numpad__heading {
-  width: 4ch;
+.c-numpad__header {
+  min-height: 2.3rem;
   text-align: center;
-  padding-inline: 0.5em;
-  font-size: 2rem;
-  background-color: black;
-  line-height: 1;
-  padding: 0.2em 0.2em 0;
+  font-size: 3rem;
+  line-height: 0.8;
   margin-bottom: 0.2em;
 }
 .c-numpad__list {
