@@ -34,7 +34,6 @@ class CamSystems:
         self.utility = Utility()
         self.database = Database(self)
         self.face_vectors: dict = self.database.get_vectors_from_db()
-        self.last_recon_result: dict = {}
         self.face_detector = self.create_detector()
         self.face_rgb = None
 
@@ -135,7 +134,7 @@ class CamSystems:
             content_type="multipart/x-mixed-replace; boundary=frame",
         )
 
-    def face_recon(self, vektor1, vectors_from_db):
+    def face_recon(self, vektor1, vectors_from_db) -> dict:
         """Porovnání nového vektoru se všemi uloženými"""
         vectors: dict = vectors_from_db
         best_match = None
@@ -156,16 +155,16 @@ class CamSystems:
                 f"Employee Rozpoznán: {best_match} (Vzdálenost: {min_distance:.4f})",
                 style="blue",
             )
-            return {"jmeno": best_match, "message": "success"}
+            return {"message": best_match, "success": True}
         cons.log("Neznámý obličej!", style="red")
-        return {"error": "neznamy oblicej"}
+        return {"message": "neznamy oblicej", "success": False}
 
-    def get_result(self):
+    def get_result(self) -> dict:
         """posli vysledek porovnani"""
 
         if self.face_rgb is None:
             cons.log("face rgb je None, protoze neni rectangle")
-            return {"error": "no-face-detected"}
+            return {"message": "no-face-detected", "success": False}
 
         # toto vraci face vektor jako numpy array
         face_encoding = face_recognition.face_encodings(
@@ -175,20 +174,19 @@ class CamSystems:
         if len(face_encoding) > 0:
             new_face_vector = face_encoding[0]
             cons.log("Vektor sejmut!", style="blue")
-            self.last_recon_result = self.face_recon(
-                new_face_vector, self.face_vectors
-            )
+            result = self.face_recon(new_face_vector, self.face_vectors)
 
         else:
-            self.last_recon_result = {
-                "error": "no-face-detected",
+            result = {
+                "message": "no-face-detected",
+                "success": False,
             }
             cons.log("Face vektor nesejmut")
 
         # je treba to resetovat
         self.face_rgb = None
-        cons.log(self.last_recon_result)
-        return self.last_recon_result
+        cons.log(result)
+        return result
 
     def release_camera(self):
         """Uvolní kameru při ukončení"""

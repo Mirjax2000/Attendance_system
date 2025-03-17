@@ -39,10 +39,13 @@ class GetResultView(LoginRequiredMixin, View):
 
     def post(self, request, *args, **kwargs):
         """post metoda"""
-        data = json.loads(request.body)
-        employee_name = data.get("employeeName")
+        # data = json.loads(request.body)
+        # employee_name = data.get("employeeName")
+        result = csi.get_result()
 
-        return JsonResponse(csi.get_result())
+        
+
+        return JsonResponse(result)
 
     def get(self, request, *args, **kwargs):
         """to je kdyby nebylo post"""
