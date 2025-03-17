@@ -1,23 +1,24 @@
-.c-logo {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    padding-block: 0.3em;
-    border-bottom: 1px solid #52525235;
+@use "../../utils/" as *;
+@use "../../base/placeholders" as *;
 
-    img {
-        background-color: transparent;
-        animation: logo-rotation 2s ease-in-out 2s forwards;
-        margin-right: 0.5em;
-    }
+$c-logo-context: 16;
+
+.c-logo {
+    @include flex(flex-start);
+    @extend %select-none;
 
     &__text {
-        color: var(--scheme-success);
-        font-weight: bolder;
-        padding-block: 0.3em;
+        color: var(--text-clr-logo);
+        font-size: 1rem;
+        text-shadow: 1px 1px 2px black;
+        margin-left: em(8, $c-logo-context);
 
         small {
-            color: var(--scheme-clr-4);
+            color: grey;
         }
+    }
+
+    &__img {
+        background-color: transparent;
     }
 }
