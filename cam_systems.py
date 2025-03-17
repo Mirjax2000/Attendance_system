@@ -155,7 +155,7 @@ class CamSystems:
                 f"Employee Rozpoznán: {best_match} (Vzdálenost: {min_distance:.4f})",
                 style="blue",
             )
-            return {"message": best_match, "success": True}
+            return {"message": "found", "success": True, "name": best_match}
         cons.log("Neznámý obličej!", style="red")
         return {"message": "neznamy oblicej", "success": False}
 

@@ -1,10 +1,19 @@
 {% load static %}
 <main class="L-check-in">
     <section class="face-scan">
-        <div class="c-camera u-mb-small">
+        <div class="c-camera">
             <img src="{% url "camstream" speed=speed %}"
                  class="c-camera__video"
                  alt="camstream">
+        </div>
+        <div class="L-check-in__error-frame">
+            <p class="L-check-in__error-frame__text">
+                {% if message %}
+                    {{ message }} - Try again
+                {% else %}
+                    &nbsp;
+                {% endif %}
+            </p>
         </div>
         <div class="c-scan">
             <form action="{% url "get_result" %}" class="c-scan__form" method="post">

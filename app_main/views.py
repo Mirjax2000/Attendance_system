@@ -2,15 +2,20 @@
 
 import json
 
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
+from django.shortcuts import redirect
 from django.views.generic import (
     TemplateView,
     View,
 )
+from rich.console import Console
 
 # importuju instanci tridy Camsystems
 from cam_systems import cam_systems_instance as csi
+
+cons: Console = Console()
 
 
 class MainPageView(LoginRequiredMixin, TemplateView):
@@ -38,17 +43,28 @@ class GetResultView(LoginRequiredMixin, View):
     """Volání funkce get result z cam_system.py"""
 
     def post(self, request, *args, **kwargs):
-        """post metoda"""
-        # data = json.loads(request.body)
-        # employee_name = data.get("employeeName")
-        result = csi.get_result()
+        """ziska vysledek z funkce get_result
+        vraci message : name nebo popis chyby
+        vraci success True or false
+        """
+        # result = csi.get_result()
+        result = {"success": True, "name": "ferda"}
+        cons.log(result)
 
-        
+        if result["success"]:
+            messages.success(request, result["name"])
+            return redirect("check_pin", result["name"])
 
-        return JsonResponse(result)
+        messages.error(request, result["message"])
+        return redirect("mainpage", 15)
 
-    def get(self, request, *args, **kwargs):
-        """to je kdyby nebylo post"""
-        return JsonResponse(
-            {"message": "Špatná metoda u get_result"}, status=400
-        )
+
+class CheckPinView(TemplateView):
+    """stranka na kotrolu Pinu"""
+
+    template_name = "app_main/check-pin.html"
+
+    def get_context_data(self, **kwargs) -> dict:
+        context = super().get_context_data(**kwargs)
+        context["name"] = self.kwargs.get("name")
+        return context

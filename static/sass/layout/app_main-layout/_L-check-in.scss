@@ -2,6 +2,14 @@
 @use "../../base/placeholders" as *;
 
 .L-check-in {
-    .face-scan {
+    &__error-frame {
+        @extend %margin-in;
+
+        width: 50%;
+
+        &__text {
+            padding: 0.3em 0.5em;
+            color: var(--scheme-warning);
+        }
     }
 }

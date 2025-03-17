@@ -211,7 +211,7 @@ body.home {
   position: absolute;
 }
 
-.c-camera, .c-scan {
+.c-camera, .c-scan, .L-check-in__error-frame {
   margin-inline: auto;
 }
 
@@ -305,6 +305,14 @@ body {
 .L-header .c-logo {
   top: 0;
   left: 0;
+}
+
+.L-check-in__error-frame {
+  width: 50%;
+}
+.L-check-in__error-frame__text {
+  padding: 0.3em 0.5em;
+  color: var(--scheme-warning);
 }
 
 /* --- footer --- */

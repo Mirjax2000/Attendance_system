@@ -38,6 +38,7 @@ from app_dashboard.views import (
 )
 from app_main.views import (
     CamStreamView,
+    CheckPinView,
     GetResultView,
     MainPageView,
 )
@@ -96,6 +97,11 @@ app_dashboard_urls: list = [
 app_main_urls: list = [
     path("app_main/<int:speed>", MainPageView.as_view(), name="mainpage"),
     path("app_main/get_result", GetResultView.as_view(), name="get_result"),
+    path(
+        "app_main/check_pin/<str:name>",
+        CheckPinView.as_view(),
+        name="check_pin",
+    ),
 ]
 
 app_accounts_urls: list = [
