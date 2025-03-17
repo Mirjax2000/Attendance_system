@@ -1,24 +1,23 @@
-@use "../../utils/" as *;
-@use "../../base/placeholders" as *;
-
-$c-logo-context: 16;
-
 .c-logo {
-    @include flex(flex-start);
-    @extend %select-none;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-block: 0.3em;
+    border-bottom: 1px solid #52525235;
 
-    &__text {
-        color: var(--text-clr-logo);
-        font-size: 1rem;
-        text-shadow: 1px 1px 2px black;
-        margin-left: em(8, $c-logo-context);
-
-        small {
-            color: grey;
-        }
+    img {
+        background-color: transparent;
+        animation: logo-rotation 2s ease-in-out 2s forwards;
+        margin-right: 0.5em;
     }
 
-    &__img {
-        background-color: transparent;
+    &__text {
+        color: var(--scheme-success);
+        font-weight: bolder;
+        padding-block: 0.3em;
+
+        small {
+            color: var(--scheme-clr-4);
+        }
     }
 }
