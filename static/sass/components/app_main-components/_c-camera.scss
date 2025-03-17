@@ -1,0 +1,14 @@
+@use "../../utils/" as *;
+@use "../../base/placeholders" as *;
+
+.c-camera {
+    @extend %select-none;
+
+    &__container {
+        @extend %margin-in;
+    }
+
+    &__video {
+        @extend %border-radius;
+    }
+}

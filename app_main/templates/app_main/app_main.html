@@ -1,37 +1,9 @@
-{% extends "base.html" %}
+{% extends "app_main_base.html" %}
 {% load static %}
-{% block title %}
-    Application
-{% endblock title %}
-<!-- css stylesheet -->
-<!-- css  -->
-{% block css %}
-    <link rel="preload"
-          href="{% static 'css/main.css' %}"
-          as="style"
-          onload="this.onload=null;this.rel='stylesheet'">
-{% endblock css %}
-<!-- no js -->
-<noscript>
-    {% block nojs %}
-        <link rel="stylesheet" href="{% static 'css/main.css' %}">
-    {% endblock nojs %}
-</noscript>
-<!-- end -->
-<!-- main content -->
-{% block body %}
-    <div class="l-grid-container">
-        <main class="l-grid-main">
-            <section class="p-check-in__container">
-                {% include "app_main/check-in.html" %}
-            </section>
-            <section class="p-message__container">
-                {% include "includes/message.html" %}
-            </section>
-        </main>
-    </div>
-{% endblock body %}
-{% block js %}
-    <script src="{% static 'js/main.js' %}"></script>
-{% endblock js %}
-<!-- javascript-->
+{% block content %}
+    <!-- header -->
+    {% include "includes/app_main_header.html" %}
+    <!-- camera stream -->
+    {% include "app_main/check-in.html" %}
+    <!-- CAT call to action -->
+{% endblock content %}

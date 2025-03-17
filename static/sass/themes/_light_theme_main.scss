@@ -1,36 +1,26 @@
 // --- light theme main---
 $light-theme-main: (
-    "primary-clr": (
-        "primary-1": white,
-    ),
-    "secondary-clr": (
-        "secondary-1": #339af0,
-        "secondary-2": #2d88d6,
-        "secondary-3": #2879bd,
-    ),
-    "ternary-clr": (
-        "ternary-1": #7369ff,
-        "ternary-2": #6158d8,
-        "ternary-3": #5049b2,
-    ),
-    "text-clr": (
+    "scheme": (
+        "clr-1": #2a2b2eff,
+        "clr-2": #2c2e32,
+        "clr-3": #252831,
+        "clr-4": #5a5a66ff,
+        "clr-5": #a4c2a8ff,
+        "clr-6": #aceb98ff,
+        "clr-7": #87ff65ff,
+        "clr-8": #2cb67d,
+        "clr-9": #dd7373,
+
         "default": #d2d2d2,
-        "secondary": #339af0,
-    ),
-    "background-clr": (
-        "default": #fff,
-        "login-btn": #1881d6,
-        "login-btn-hover": #339af0,
-        "message": #2a324e,
-        "numpad": #2c364e,
-        "gradient-primary": linear-gradient(to right bottom, #161c32, #2a324e),
-        "gradient-secondary": linear-gradient(to right bottom, #1f2537, #2b2b2b),
-        "gradient-ternary": linear-gradient(to right bottom, #4f4f4f, #363636),
-        "gradient-quartery": linear-gradient(to right bottom, #5049b2, #3c3785),
+        "default-darker": #9f9e9e,
+        "accent": #6d3cffdc,
+        "accent-darker": #4b23c1dc,
+        "success": #339af0,
+        "info": #54da54,
+        "warning": #ff3c00,
     ),
 
-    "shadow-clr": (
-        "default": rgba(black, 0.3),
-        "higher": rgba(black, 0.5),
+    "background-clr": (
+        "gradient-primary": linear-gradient(to right, #2a2b2eff, #2c2e32),
     ),
 );
