@@ -284,26 +284,6 @@ body {
   font-family: roboto, serif;
 }
 
-/* --- grid --- */
-.l-grid-container {
-  width: clamp(40rem, 100%, 71.25rem);
-  padding-inline: 0;
-  margin-inline: auto;
-  height: 100dvh;
-  display: flex;
-  justify-content: flex-start;
-  align-items: stretch;
-  box-shadow: 1px 3px 5px black;
-  position: relative;
-  isolation: isolate;
-}
-
-.l-grid-main {
-  display: flex;
-  flex-grow: 1;
-  background-image: var(--background-clr-gradient-primary);
-}
-
 .l-header {
   position: relative;
   isolation: isolate;
@@ -315,50 +295,20 @@ body {
   left: 0;
 }
 
-.l-check-in-container {
-  width: 100%;
-  height: 80%;
-  padding: 0.5em;
-}
-
-.l-message {
-  border-radius: 5px;
-  padding: 0.5em;
-  background-color: var(--background-clr-message);
-  box-shadow: 1px 3px 5px black;
-  overflow: auto;
-}
-.l-message__header {
-  color: white;
-  margin-bottom: 1em;
-  border-bottom: 1px solid #545454;
-}
-.l-message__item {
-  margin-bottom: 1em;
-  padding-block: 0.5em;
-  border-bottom: 1px solid #545454;
-}
-.l-message__text {
-  font-size: 0.9rem;
-  color: var(--text-clr-default);
-  line-height: 1.5;
-}
-.l-message__link {
-  padding-inline: 0.5em;
-  color: var(--primary-clr-secondary);
-  transition: all 0.1s ease-in-out;
-  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3568627451);
-  margin-left: 3px;
-}
-.l-message__link:hover {
-  color: white;
-}
-.l-message__link:active {
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4666666667);
-  transform: translateY(1px);
-}
-
 /* --- footer --- */
+.c-time {
+  text-align: center;
+}
+.c-time__text {
+  font-family: "jet brains", monospace;
+  font-size: 3rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+  line-height: 1;
+  text-shadow: 1px 1px 3px black;
+  margin-bottom: 0.3em;
+}
+
 .c-logo {
   display: flex;
   justify-content: flex-start;
@@ -418,19 +368,6 @@ body {
     transform: rotate(0deg); /* Pauza na konci */
   }
 }
-.c-time {
-  text-align: center;
-}
-.c-time__text {
-  font-family: "jet brains", monospace;
-  font-size: 3rem;
-  font-weight: bold;
-  letter-spacing: 2px;
-  line-height: 1;
-  text-shadow: 1px 1px 3px black;
-  margin-bottom: 0.3em;
-}
-
 /* --- main --- */
 .p-check-in__container {
   flex-basis: 70%;
