@@ -15,6 +15,8 @@ from rich.console import Console
 # importuju instanci tridy Camsystems
 from cam_systems import cam_systems_instance as csi
 
+from .models import Employee
+
 cons: Console = Console()
 
 
@@ -48,7 +50,7 @@ class GetResultView(LoginRequiredMixin, View):
         vraci success True or false
         """
         # result = csi.get_result()
-        result = {"success": True, "name": "ferda"}
+        result = {"success": True, "name": "jaroslav-curdik"}
         cons.log(result)
 
         if result["success"]:
@@ -77,6 +79,10 @@ class ComparePinView(View):
         """ziskej data z formulare"""
         form_name = request.POST.get("name")
         form_pin = request.POST.get("pin")
+
+        employee_name = Employee.objects.get(slug=form_name)
+        print(employee_name)
+
         print(form_name, form_pin)
         messages.error(request, "nespravny PIN")
         return redirect("mainpage", 15)
