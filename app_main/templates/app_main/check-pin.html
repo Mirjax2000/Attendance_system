@@ -8,9 +8,10 @@
             Potvrzení pinu u osoby: <span class="c-info-highlight u-text-success">" {{ name }} "</span>
         </h1>
         <section class="c-numpad">
-            <form action="">
+            <form action="{% url "compare_pin" %}" method="post">
                 {% csrf_token %}
-                <input type="text" id="pinInput" class="c-numpad__input" hidden />
+                <input type="hidden" name="pin" id="pinInput" />
+                <input type="hidden"  name-"name" value="{{ name }}" />
                 <div class="c-numpad__pin-block">
                     <p class="c-numpad__star" id="pinDisplay"></p>
                 </div>

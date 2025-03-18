@@ -47,12 +47,12 @@ class GetResultView(LoginRequiredMixin, View):
         vraci message : name nebo popis chyby
         vraci success True or false
         """
-        result = csi.get_result()
-        # result = {"success": True, "name": "ferda"}
+        # result = csi.get_result()
+        result = {"success": True, "name": "ferda"}
         cons.log(result)
 
         if result["success"]:
-            messages.success(request, result["name"])
+            # predani jmena do API
             return redirect("check_pin", result["name"])
 
         messages.error(request, result["message"])
@@ -68,3 +68,15 @@ class CheckPinView(TemplateView):
         context = super().get_context_data(**kwargs)
         context["name"] = self.kwargs.get("name")
         return context
+
+
+class ComparePinView(View):
+    """Porovnej pin s databazi"""
+
+    def post(self, request, *args, **kwargs):
+        """ziskej data z formulare"""
+        form_name = request.POST.get("name")
+        form_pin = request.POST.get("pin")
+        print(form_name, form_pin)
+        messages.error(request, "nespravny PIN")
+        return redirect("mainpage", 15)

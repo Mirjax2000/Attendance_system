@@ -39,6 +39,7 @@ from app_dashboard.views import (
 from app_main.views import (
     CamStreamView,
     CheckPinView,
+    ComparePinView,
     GetResultView,
     MainPageView,
 )
@@ -102,6 +103,7 @@ app_main_urls: list = [
         CheckPinView.as_view(),
         name="check_pin",
     ),
+    path("app_main/compare_pin", ComparePinView.as_view(), name="compare_pin"),
 ]
 
 app_accounts_urls: list = [
