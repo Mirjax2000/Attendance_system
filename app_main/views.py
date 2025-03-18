@@ -1,6 +1,7 @@
 """app_main views"""
 
 import json
+import time
 
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -50,7 +51,7 @@ class GetResultView(LoginRequiredMixin, View):
         vraci success True or false
         """
         # result = csi.get_result()
-        result = {"success": True, "name": "jaroslav-curdik"}
+        result = {"success": True, "name": "jaroslav-curda"}
         cons.log(result)
 
         if result["success"]:
@@ -79,10 +80,13 @@ class ComparePinView(View):
         """ziskej data z formulare"""
         form_name = request.POST.get("name")
         form_pin = request.POST.get("pin")
+        print(form_name)
 
-        employee_name = Employee.objects.get(slug=form_name)
-        print(employee_name)
+        employee_name = Employee.objects.filter(slug="jaroslav-curda").first()
+        if employee_name:
+            print(employee_name.check_pin_code(form_pin))
+        else:
+            cons.log("jmeno nenalezeno", style="red")
 
-        print(form_name, form_pin)
         messages.error(request, "nespravny PIN")
         return redirect("mainpage", 15)

@@ -129,8 +129,7 @@ class Employee(models.Model):
 
     def set_slug(self):
         """Vytvor slug"""
-        if not self.slug:
-            self.slug = slugify(f"{self.name}-{self.surname}")
+        self.slug = slugify(f"{self.name}-{self.surname}")
 
     def status(self) -> str:
         """Status"""
