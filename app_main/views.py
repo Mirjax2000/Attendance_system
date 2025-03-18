@@ -1,11 +1,9 @@
 """app_main views"""
 
-import json
 import time
 
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.views.generic import (
     TemplateView,
@@ -50,8 +48,8 @@ class GetResultView(LoginRequiredMixin, View):
         vraci message : name nebo popis chyby
         vraci success True or false
         """
-        # result = csi.get_result()
-        result = {"success": True, "name": "jaroslav-curda"}
+        result = csi.get_result()
+        # result = {"success": True, "name": "jaroslav-curda"}
         cons.log(result)
 
         if result["success"]:
@@ -71,13 +69,6 @@ class CheckPinView(TemplateView):
         context = super().get_context_data(**kwargs)
         context["name"] = self.kwargs.get("slug")
         return context
-
-
-from django.contrib import messages
-from django.shortcuts import redirect
-from django.views import View
-
-from .models import Employee  # nebo tvůj model Employee
 
 
 class ComparePinView(View):
@@ -122,3 +113,18 @@ class EmpLoginView(TemplateView):
         context = super().get_context_data(**kwargs)
         context["name"] = self.kwargs.get("slug")
         return context
+
+
+class SetStatusView(View):
+    """nastav databazi"""
+
+    def post(self, request, *args, **kwargs):
+        """prijme data z formulare
+        jmeno a Workstatus
+        nastavy pozadovany stav v DB
+        """
+        emp_status = request.POST.get("statusVal", None)
+        emp_name = request.POST.get("name", None)
+        print(emp_name, emp_status)
+        time.sleep(5)
+        return redirect("mainpage", 15)

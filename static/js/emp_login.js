@@ -4,7 +4,8 @@
     console.log("emp_login.js");
     //
     const timeText = document.getElementById("timeText");
-
+    const inputStatus = document.getElementById("statusVal");
+    const subBtns = document.querySelectorAll(".L-choose__item")
 
     // casova funkce
     function clock() {
@@ -21,5 +22,9 @@
     // spusteni casove funkce
     clock();
 
-
+    subBtns.forEach(function (element) {
+        element.addEventListener("click", function (e) {
+            inputStatus.value = element.dataset.value.trim()
+        })
+    })
 })();

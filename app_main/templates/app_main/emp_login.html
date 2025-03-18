@@ -6,13 +6,22 @@
     {% for message in messages %}<p class="u-text-success">{{ message }}</p>{% endfor %}
     <h1>Moznosti pro: {{ name }}</h1>
     <section class="L-choose">
-        <ul class="L-choose__list">
-            <li class="L-choose__item">do prace</li>
-            <li class="L-choose__item">z prace</li>
-            <li class="L-choose__item">k lekari</li>
-            <li class="L-choose__item">sluzebni cesta</li>
-            <li class="L-choose__item">ostatni</li>
-        </ul>
+        <form action="{% url "set_status" %}" method="POST">
+            {% csrf_token %}
+            <input type="text" name="statusVal" id="statusVal">
+            <input type="text" name="name" value="{{ name }}" />
+            <ul class="L-choose__list">
+                <li class="L-choose__item" data-value="working">
+                    <button type="submit">Odeslat-do práce</button>
+                </li>
+                <li class="L-choose__item" data-value="free">
+                    <button type="submit">Odeslat-z práce</button>
+                </li>
+                <li class="L-choose__item" data-value="business_trip">
+                    <button type="submit">Odeslat-služební cesta</button>
+                </li>
+            </ul>
+        </form>
     </section>
 {% endblock content %}
 {% block js %}

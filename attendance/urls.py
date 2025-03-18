@@ -43,6 +43,7 @@ from app_main.views import (
     EmpLoginView,
     GetResultView,
     MainPageView,
+    SetStatusView,
 )
 
 urlpatterns = [
@@ -110,6 +111,7 @@ app_main_urls: list = [
         EmpLoginView.as_view(),
         name="emp_login",
     ),
+    path("app_main/set_status", SetStatusView.as_view(), name="set_status"),
 ]
 
 app_accounts_urls: list = [
