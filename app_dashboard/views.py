@@ -55,15 +55,22 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         return context
 
 
-class MainPanelView(LoginRequiredMixin, TemplateView):
+class MainPanelView(LoginRequiredMixin, ListView):
     """homepage"""
 
     template_name = "app_dashboard/main_panel.html"
+    model = Department
+    context_object_name = "departments"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["user_name"] = get_user_name(self)
         context["active_link"] = "main-panel"
+        departments = context.get(self.context_object_name)
+        for department in departments:
+            department.employee_count = Employee.objects.filter(
+                department=department
+            ).count()
 
         return context
 
@@ -215,9 +222,9 @@ class DepartmentListView(ListView):
     """Vypis users"""
 
     model = Department
-    template_name = "app_dashboard/department_list.html"
+    template_name = "app_dashboard/main_panel.html"
     context_object_name = "departments"
-    paginate_by = 20
+    # paginate_by = 20
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

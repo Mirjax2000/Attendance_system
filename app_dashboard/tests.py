@@ -84,7 +84,7 @@ class EmployeeModelTest(TestCase):
         expected_count = 2
         self.assertEqual(Employee.objects.count(), expected_count)
 
-    def test_employees_tatus_count(self):
+    def test_employees_status_count(self):
         """Test na počet záznamů v tabulce EmployeeStatus"""
         expected_count = 5
         self.assertEqual(EmployeeStatus.objects.count(), expected_count)
