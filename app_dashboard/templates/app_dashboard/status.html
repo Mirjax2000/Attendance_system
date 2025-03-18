@@ -1,0 +1,11 @@
+{% extends "dashboard_base.html" %}
+{% load static %}
+{% block title %}
+    attendance
+{% endblock title %}
+{% block content %}
+    <h1>status view</h1>
+    <p>department nezarazen: {{ department_nezarazeno }}</p>
+    <p>EmployeeStatus: {{ employee_status_table }}</p>
+    <p>Department: {{ department_table }}</p>
+{% endblock content %}

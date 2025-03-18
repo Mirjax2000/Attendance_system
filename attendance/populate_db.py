@@ -33,3 +33,15 @@ class DefaultFillTables:
         if not EmployeeStatus.objects.exists():
             EmployeeStatus.objects.bulk_create(self.working_statuses)
             cons.log("Tabulka EmployeeStatus byla naplněna.")
+
+    def run_all_default(self):
+        """spusteni vsech funkci"""
+        self.default_department()
+        self.default_employee_status()
+
+
+fill_tables: DefaultFillTables = DefaultFillTables()
+
+if not Department.objects.exists() and not EmployeeStatus.objects.exists():
+    fill_tables.run_all_default()
+    cons.log("Tabulky byly naplněny.")

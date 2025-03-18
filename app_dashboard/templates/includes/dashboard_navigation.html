@@ -85,6 +85,16 @@
             <p>Docházka</p>
         </a>
     </li>
+    <li class="L-navigation__item">
+        <a class="c-ico-btn {% if active_link == 'status' %}active{% endif %}"
+           href="{% url "status" %}">
+            <img src="{% static "images/icons8-conference.png" %}"
+                 alt="chart icon"
+                 width="24"
+                 height="24">
+            <p>DB status</p>
+        </a>
+    </li>
 </ul>
 {% if request.user.is_authenticated %}
     <div>

@@ -18,7 +18,8 @@ from django.views.generic import (
 )
 from rich.console import Console
 
-from app_main.models import Department, Employee, FaceVector
+from app_main.models import Department, Employee, EmployeeStatus, FaceVector
+from attendance.populate_db import fill_tables
 
 # importuju instanci tridy Camsystems
 from cam_systems import cam_systems_instance as csi
@@ -328,5 +329,26 @@ class EmployeeDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context["user_name"] = get_user_name(self)
         context["active_link"] = "employees"
+
+        return context
+
+
+class StatusView(TemplateView):
+    """
+    docstring
+    """
+
+    template_name = "app_dashboard/status.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        try:
+            Department.objects.get(name="nezarazeno")
+            context["department_nezarazeno"] = "nezarazeno existuje"
+        except Department.DoesNotExist:
+            context["department_nezarazeno"] = "nezarazeno neexistuje"
+            context["employee_status_table"] = EmployeeStatus.objects.exists()
+            context["department_table"] = Department.objects.exists()
+            context["active_link"] = "status"
 
         return context
