@@ -140,7 +140,7 @@ class Employee(models.Model):
     def date_of_birth_format(self):
         """Datum narozeni formatovani"""
         if self.date_of_birth:
-            return self.date_of_birth.strftime("%d. %m. %Y")
+            return self.date_of_birth.strftime("%Y-%m-%d")
         return None
 
     def age(self):
