@@ -40,6 +40,7 @@ from app_main.views import (
     CamStreamView,
     CheckPinView,
     ComparePinView,
+    EmpLoginView,
     GetResultView,
     MainPageView,
 )
@@ -99,11 +100,16 @@ app_main_urls: list = [
     path("app_main/<int:speed>", MainPageView.as_view(), name="mainpage"),
     path("app_main/get_result", GetResultView.as_view(), name="get_result"),
     path(
-        "app_main/check_pin/<str:name>",
+        "app_main/check_pin/<slug:slug>",
         CheckPinView.as_view(),
         name="check_pin",
     ),
     path("app_main/compare_pin", ComparePinView.as_view(), name="compare_pin"),
+    path(
+        "app_main/emp_login/<slug:slug>",
+        EmpLoginView.as_view(),
+        name="emp_login",
+    ),
 ]
 
 app_accounts_urls: list = [

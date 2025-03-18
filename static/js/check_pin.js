@@ -33,13 +33,11 @@
         element.addEventListener("click", function (e) {
             // cte text v HTML elementu, tlacitko
             let numVal = this.querySelector(".num").textContent
-            console.log(pinInput.value.length);
 
             // pokud nemam 4 znaky v Pinu
             if (pinInput.value.length <= 3) {
                 pinInput.value += numVal.trim()
                 pinDisplay.append("*")
-                console.log(pinInput.value);
                 enterPin.dataset.show = "hide"
                 if (pinInput.value.length === 4) {
                     enterPin.dataset.show = "show"

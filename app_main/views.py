@@ -69,8 +69,15 @@ class CheckPinView(TemplateView):
 
     def get_context_data(self, **kwargs) -> dict:
         context = super().get_context_data(**kwargs)
-        context["name"] = self.kwargs.get("name")
+        context["name"] = self.kwargs.get("slug")
         return context
+
+
+from django.contrib import messages
+from django.shortcuts import redirect
+from django.views import View
+
+from .models import Employee  # nebo tvůj model Employee
 
 
 class ComparePinView(View):
@@ -78,15 +85,40 @@ class ComparePinView(View):
 
     def post(self, request, *args, **kwargs):
         """ziskej data z formulare"""
-        form_name = request.POST.get("name")
-        form_pin = request.POST.get("pin")
-        print(form_name)
+        form_name = request.POST.get("name", None)
+        form_pin = request.POST.get("pin", None)
+        if not form_name or not form_pin:
+            # Pokud není 'name' nebo 'pin' v POST, můžeš reagovat
+            messages.error(request, "Musíte zadat jméno a PIN.")
+            return redirect("mainpage", 15)
 
-        employee_name = Employee.objects.filter(slug="jaroslav-curda").first()
-        if employee_name:
-            print(employee_name.check_pin_code(form_pin))
-        else:
-            cons.log("jmeno nenalezeno", style="red")
+        # instance zamestnance
+        try:
+            employee = Employee.objects.get(slug=form_name)
+            cons.log(f"jmeno nalezeno:{employee.slug}", style="blue")
 
-        messages.error(request, "nespravny PIN")
-        return redirect("mainpage", 15)
+            # kontrola pinhash vs form pin
+            if employee.check_pin_code(form_pin):
+                messages.success(
+                    request, f"zamestnanec potvrzen: {employee.slug}"
+                )
+                return redirect("emp_login", employee.slug)
+
+            messages.error(request, "nespravny PIN")
+            return redirect("mainpage", 15)
+
+        except Employee.DoesNotExist:
+            # velmi vzacne / prakticky nemozne
+            messages.error(request, "zamestnanec neni v databazi")
+            return redirect("mainpage", 15)
+
+
+class EmpLoginView(TemplateView):
+    """stranka se zadavanim stavu v Employee status"""
+
+    template_name = "app_main/emp_login.html"
+
+    def get_context_data(self, **kwargs) -> dict:
+        context = super().get_context_data(**kwargs)
+        context["name"] = self.kwargs.get("slug")
+        return context

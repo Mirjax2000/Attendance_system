@@ -1,0 +1,20 @@
+{% extends "app_main_base.html" %}
+{% load static %}
+{% block content %}
+    <!-- header -->
+    {% include "includes/app_main_header.html" %}
+    {% for message in messages %}<p class="u-text-success">{{ message }}</p>{% endfor %}
+    <h1>Moznosti pro: {{ name }}</h1>
+    <section class="L-choose">
+        <ul class="L-choose__list">
+            <li class="L-choose__item">do prace</li>
+            <li class="L-choose__item">z prace</li>
+            <li class="L-choose__item">k lekari</li>
+            <li class="L-choose__item">sluzebni cesta</li>
+            <li class="L-choose__item">ostatni</li>
+        </ul>
+    </section>
+{% endblock content %}
+{% block js %}
+    <script src="{% static 'js/emp_login.js' %}"></script>
+{% endblock js %}
