@@ -125,6 +125,14 @@ class SetStatusView(View):
         """
         emp_status = request.POST.get("statusVal", None)
         emp_name = request.POST.get("name", None)
-        print(emp_name, emp_status)
-        time.sleep(5)
+
+        status: dict = {
+            "working": f"pan {emp_name} jde do prace.",
+            "free": f"pan {emp_name} jde z prace.",
+            "business_trip": f"pan {emp_name} jede na sluzebni cestu",
+        }
+
+        cons.log(status[emp_status])
+
+        time.sleep(1)
         return redirect("mainpage", 15)
