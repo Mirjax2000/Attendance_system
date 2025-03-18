@@ -417,6 +417,10 @@ body {
   transform: scale(0.85);
   color: var(--scheme-success);
 }
+.c-numpad__item[data-show=hide] {
+  opacity: 0.3;
+  pointer-events: none;
+}
 .c-numpad__text {
   display: flex;
   justify-content: center;
@@ -425,12 +429,15 @@ body {
   font-size: 2rem;
   font-weight: bold;
   text-shadow: 1px 1px 5px #0062ff;
+  cursor: pointer;
 }
 .c-numpad__text.enter, .c-numpad__text.del {
   font-size: 1.3rem;
 }
 .c-numpad__text.enter {
   appearance: none;
+  width: 100%;
+  aspect-ratio: 1;
   border: none;
   background-color: transparent;
 }

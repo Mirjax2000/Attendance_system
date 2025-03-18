@@ -9,6 +9,7 @@
     const numpad = document.getElementById("numpad");
     const numpadKeys = numpad.querySelectorAll(".btn");
     const delPin = document.getElementById("delPin");
+    const enterPin = document.getElementById("enterPin");
 
 
     // casova funkce
@@ -32,18 +33,31 @@
         element.addEventListener("click", function (e) {
             // cte text v HTML elementu, tlacitko
             let numVal = this.querySelector(".num").textContent
+            console.log(pinInput.value.length);
+
             // pokud nemam 4 znaky v Pinu
-            if (pinInput.value.length < 4) {
+            if (pinInput.value.length <= 3) {
                 pinInput.value += numVal.trim()
                 pinDisplay.append("*")
+                console.log(pinInput.value);
+                enterPin.dataset.show = "hide"
+                if (pinInput.value.length === 4) {
+                    enterPin.dataset.show = "show"
+                    numpadKeys.forEach(function (item) {
+                        item.dataset.show = "hide"
+                    })
+                }
             }
         })
-
     });
 
     delPin.addEventListener("click", function () {
         pinDisplay.textContent = pinDisplay.textContent.slice(0, -1);
         pinInput.value = pinInput.value.slice(0, -1);
+        enterPin.dataset.show = "hide"
+        numpadKeys.forEach(function (item) {
+            item.dataset.show = "show"
+        })
     });
 
 
