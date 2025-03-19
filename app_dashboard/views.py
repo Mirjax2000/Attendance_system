@@ -2,6 +2,7 @@
 
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Count
 from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
@@ -60,17 +61,20 @@ class MainPanelView(LoginRequiredMixin, ListView):
 
     template_name = "app_dashboard/main_panel.html"
     model = Department
-    context_object_name = "departments"
+    context_object_name = "departments"  # = Department.objects.all()
+    # zpristupni Department.name a Department.count
+
+    # takze toto jsou dva ruzne Querysety ale sortovany podle META orderingu
+    # v modelu Department
+    def get_queryset(self):
+        # Získání querysetu a přidání počtu zaměstnanců pomocí annotate
+        queryset = Department.objects.annotate(employee_count=Count("employee"))
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["user_name"] = get_user_name(self)
         context["active_link"] = "main-panel"
-        departments = context.get(self.context_object_name)
-        for department in departments:
-            department.employee_count = Employee.objects.filter(
-                department=department
-            ).count()
 
         return context
 
@@ -90,10 +94,16 @@ class EmployeesView(LoginRequiredMixin, ListView):
         return context
 
 
-class VacationView(LoginRequiredMixin, TemplateView):
+class VacationView(LoginRequiredMixin, ListView):
     """Seznam vsech zamestnancu"""
 
+    model = Employee
     template_name = "app_dashboard/vacation.html"
+    context_object_name = "vacations"
+
+    def get_queryset(self):
+        queryset = Employee.objects.filter(employee_status__name="vacation")
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -103,10 +113,16 @@ class VacationView(LoginRequiredMixin, TemplateView):
         return context
 
 
-class WorkingView(LoginRequiredMixin, TemplateView):
+class WorkingView(LoginRequiredMixin, ListView):
     """Seznam vsech zamestnancu"""
 
     template_name = "app_dashboard/working.html"
+    model = Employee
+    context_object_name = "working_employees"
+
+    def get_queryset(self):
+        queryset = Employee.objects.filter(employee_status__name="working")
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -116,10 +132,16 @@ class WorkingView(LoginRequiredMixin, TemplateView):
         return context
 
 
-class SickView(LoginRequiredMixin, TemplateView):
+class SickView(LoginRequiredMixin, ListView):
     """Seznam vsech zamestnancu"""
 
+    model = Employee
+    context_object_name = "sick_employees"
     template_name = "app_dashboard/sick.html"
+
+    def get_queryset(self):
+        queryset = Employee.objects.filter(employee_status__name="sick_leave")
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

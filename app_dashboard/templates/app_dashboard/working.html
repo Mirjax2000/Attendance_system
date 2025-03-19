@@ -6,5 +6,9 @@
 {% block content %}
     <div class="content__container">
         <h1>Working</h1>
+        <p>prave ted pracuje: {{ working_employees.count }}</p>
+        {% for working_employee in working_employees %}
+            <p>jmeno manika co maka jako sroub: {{ working_employee.slug }}</p>
+        {% endfor %}
     </div>
 {% endblock content %}

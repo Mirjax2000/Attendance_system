@@ -5,6 +5,8 @@
 {% endblock title %}
 {% block content %}
     <div class="content__container">
-        <h1>Vacation</h1>
+        <h1>Dovolena</h1>
+        <p>prave ted je : {{ vacations.count }} na dovolene</p>
+        {% for vacation in vacations %}<p>manik na dovoleny: {{ vacation.slug }}</p>{% endfor %}
     </div>
 {% endblock content %}
