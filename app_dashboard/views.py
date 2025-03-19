@@ -80,8 +80,11 @@ class EmployeesView(LoginRequiredMixin, ListView):
     context_object_name = "employees"
 
     def get_context_data(self, **kwargs):
+        user: dict = get_user(self)
+
         context = super().get_context_data(**kwargs)
-        context["user_name"] = get_user(self)
+        context["username"] = user["username"]
+        context["status"] = user["status"]
         context["active_link"] = "employees"
 
         return context
@@ -99,8 +102,11 @@ class VacationView(LoginRequiredMixin, ListView):
         return queryset
 
     def get_context_data(self, **kwargs):
+        user: dict = get_user(self)
+
         context = super().get_context_data(**kwargs)
-        context["user_name"] = get_user(self)
+        context["username"] = user["username"]
+        context["status"] = user["status"]
         context["active_link"] = "vacations"
 
         return context
@@ -118,8 +124,11 @@ class WorkingView(LoginRequiredMixin, ListView):
         return queryset
 
     def get_context_data(self, **kwargs):
+        user: dict = get_user(self)
+
         context = super().get_context_data(**kwargs)
-        context["user_name"] = get_user(self)
+        context["username"] = user["username"]
+        context["status"] = user["status"]
         context["active_link"] = "works"
 
         return context
@@ -137,8 +146,11 @@ class SickView(LoginRequiredMixin, ListView):
         return queryset
 
     def get_context_data(self, **kwargs):
+        user: dict = get_user(self)
+
         context = super().get_context_data(**kwargs)
-        context["user_name"] = get_user(self)
+        context["username"] = user["username"]
+        context["status"] = user["status"]
         context["active_link"] = "sick"
 
         return context
@@ -150,8 +162,11 @@ class OtherView(LoginRequiredMixin, TemplateView):
     template_name = "app_dashboard/other.html"
 
     def get_context_data(self, **kwargs):
+        user: dict = get_user(self)
+
         context = super().get_context_data(**kwargs)
-        context["user_name"] = get_user(self)
+        context["username"] = user["username"]
+        context["status"] = user["status"]
         context["active_link"] = "others"
 
         return context
@@ -163,8 +178,11 @@ class EmailView(LoginRequiredMixin, TemplateView):
     template_name = "app_dashboard/emails.html"
 
     def get_context_data(self, **kwargs):
+        user: dict = get_user(self)
+
         context = super().get_context_data(**kwargs)
-        context["user_name"] = get_user(self)
+        context["username"] = user["username"]
+        context["status"] = user["status"]
         context["active_link"] = "emails"
 
         return context
@@ -176,8 +194,11 @@ class ChartsView(LoginRequiredMixin, TemplateView):
     template_name = "app_dashboard/charts.html"
 
     def get_context_data(self, **kwargs):
+        user: dict = get_user(self)
+
         context = super().get_context_data(**kwargs)
-        context["user_name"] = get_user(self)
+        context["username"] = user["username"]
+        context["status"] = user["status"]
         context["active_link"] = "charts"
 
         return context
@@ -189,8 +210,11 @@ class AttendanceView(LoginRequiredMixin, TemplateView):
     template_name = "app_dashboard/attendance.html"
 
     def get_context_data(self, **kwargs):
+        user: dict = get_user(self)
+
         context = super().get_context_data(**kwargs)
-        context["user_name"] = get_user(self)
+        context["username"] = user["username"]
+        context["status"] = user["status"]
         context["active_link"] = "attendances"
 
         return context
@@ -202,9 +226,12 @@ class CamView(LoginRequiredMixin, TemplateView):
     template_name = "app_dashboard/cam.html"
 
     def get_context_data(self, **kwargs):
+        user: dict = get_user(self)
+
         context = super().get_context_data(**kwargs)
+        context["username"] = user["username"]
+        context["status"] = user["status"]
         context["speed"] = self.kwargs.get("speed", 10)
-        context["user_name"] = get_user(self)
         context["active_link"] = "cams"
         return context
 
@@ -218,7 +245,11 @@ class CreateEmpView(CreateView):
     success_url = reverse_lazy("employees")
 
     def get_context_data(self, **kwargs):
+        user: dict = get_user(self)
+
         context = super().get_context_data(**kwargs)
+        context["username"] = user["username"]
+        context["status"] = user["status"]
         context["user_name"] = get_user(self)
         return context
 
@@ -241,8 +272,11 @@ class DepartmentListView(ListView):
     context_object_name = "departments"
 
     def get_context_data(self, **kwargs):
+        user: dict = get_user(self)
+
         context = super().get_context_data(**kwargs)
-        context["user_name"] = get_user(self)
+        context["username"] = user["username"]
+        context["status"] = user["status"]
         context["active_link"] = "main-panel"
 
         return context
@@ -256,8 +290,11 @@ class TakeVectorView(LoginRequiredMixin, DetailView):
     context_object_name = "employee"
 
     def get_context_data(self, **kwargs):
+        user: dict = get_user(self)
+
         context = super().get_context_data(**kwargs)
-        context["user_name"] = get_user(self)
+        context["username"] = user["username"]
+        context["status"] = user["status"]
         context["active_link"] = "employees"
 
         return context
@@ -300,8 +337,11 @@ class EmployeeDeleteView(LoginRequiredMixin, DeleteView):
         return get_object_or_404(Employee, slug=slug)
 
     def get_context_data(self, **kwargs):
+        user: dict = get_user(self)
+
         context = super().get_context_data(**kwargs)
-        context["user_name"] = get_user(self)
+        context["username"] = user["username"]
+        context["status"] = user["status"]
         context["active_link"] = "employees"
         return context
 
@@ -323,8 +363,11 @@ class EmployeeUpdateView(LoginRequiredMixin, UpdateView):
         return get_object_or_404(Employee, slug=slug)
 
     def get_context_data(self, **kwargs):
+        user: dict = get_user(self)
+
         context = super().get_context_data(**kwargs)
-        context["user_name"] = get_user(self)
+        context["username"] = user["username"]
+        context["status"] = user["status"]
         context["active_link"] = "employees"
 
         return context
@@ -346,8 +389,11 @@ class EmployeeDetailView(LoginRequiredMixin, DetailView):
         return get_object_or_404(Employee, slug=slug)
 
     def get_context_data(self, **kwargs):
+        user: dict = get_user(self)
+
         context = super().get_context_data(**kwargs)
-        context["user_name"] = get_user(self)
+        context["username"] = user["username"]
+        context["status"] = user["status"]
         context["active_link"] = "employees"
 
         return context
@@ -361,7 +407,11 @@ class StatusView(TemplateView):
     template_name = "app_dashboard/status.html"
 
     def get_context_data(self, **kwargs):
+        user: dict = get_user(self)
+
         context = super().get_context_data(**kwargs)
+        context["username"] = user["username"]
+        context["status"] = user["status"]
 
         statuses = [
             "working",
@@ -399,11 +449,14 @@ class DepartmentDetailList(LoginRequiredMixin, ListView):
         return Employee.objects.filter(department_id=department_id)
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+        user: dict = get_user(self)
         department_id = self.kwargs.get("pk")
         department = get_object_or_404(Department, pk=department_id)
+
+        context = super().get_context_data(**kwargs)
+        context["username"] = user["username"]
+        context["status"] = user["status"]
         context["department"] = department
-        context["user_name"] = get_user(self)
         context["active_link"] = "main-panel"
 
         return context
