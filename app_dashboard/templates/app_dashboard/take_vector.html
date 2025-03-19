@@ -13,10 +13,7 @@
             <div>
                 <img src="{% url "camstream" 12 %}" alt="">
             </div>
-            <form method="post" action="{% url "save_vector_to_db" employee.slug %}">
-                {% csrf_token %}
-                <button type="submit">Odeslat</button>
-            </form>
+            <a href="{% url "save_vector_to_db" employee.slug %}">Odeslat</a>
         </main>
     </section>
 {% endblock content %}
