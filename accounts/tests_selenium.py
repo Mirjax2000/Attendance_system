@@ -4,6 +4,7 @@ import time
 
 from django.contrib.auth import get_user_model
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from rich.console import Console
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.common.by import By
@@ -11,6 +12,8 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.edge.options import Options as EdgeOptions
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
+
+cons: Console = Console()
 
 User = get_user_model()
 
@@ -24,26 +27,32 @@ def get_available_driver():
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-dev-shm-usage")
         driver = webdriver.Chrome(options=chrome_options)
-        print("[LOG] Chrome webdriver byl úspěšně inicializován.")
+        cons.log(
+            "[LOG] Chrome webdriver byl úspěšně inicializován.", style="blue"
+        )
         return driver
     except Exception as e:
-        print("Chrome webdriver není k dispozici:", e)
+        cons.log("Chrome webdriver není k dispozici:", e, style="red")
 
     try:
         edge_options = EdgeOptions()
         edge_options.use_chromium = True
         driver = webdriver.Edge(options=edge_options)
-        print("[LOG] Edge webdriver byl úspěšně inicializován.")
+        cons.log(
+            "[LOG] Edge webdriver byl úspěšně inicializován.", style="blue"
+        )
         return driver
     except Exception as e:
-        print("Edge webdriver není k dispozici:", e)
+        cons.log("Edge webdriver není k dispozici:", e, style="red")
 
     try:
         driver = webdriver.Firefox()
-        print("[LOG] Firefox webdriver byl úspěšně inicializován.")
+        cons.log(
+            "[LOG] Firefox webdriver byl úspěšně inicializován.", style="blue"
+        )
         return driver
     except Exception as e:
-        print("Firefox webdriver není k dispozici:", e)
+        cons.log("Firefox webdriver není k dispozici:", e, style="red")
 
     raise Exception("Žádný dostupný webdriver nebyl nalezen.")
 
@@ -60,7 +69,10 @@ class LoginLogoutSeleniumTest(StaticLiveServerTestCase):
         super().setUpClass()
         cls.driver = get_available_driver()
         cls.driver.implicitly_wait(10)
-        print("[LOG] Webdriver byl nastaven s implicitním čekáním 10 sekund.")
+        cons.log(
+            "[LOG] Webdriver byl nastaven s implicitním čekáním 10 sekund.",
+            style="green",
+        )
 
     @classmethod
     def tearDownClass(cls):
@@ -69,9 +81,9 @@ class LoginLogoutSeleniumTest(StaticLiveServerTestCase):
         try:
             if cls.driver:
                 cls.driver.quit()
-                print("[LOG] Webdriver byl úspěšně ukončen.")
+                cons.log("[LOG] Webdriver byl úspěšně ukončen.", style="green")
         except Exception as e:
-            print("Chyba při ukončování webdriveru:", e)
+            cons.log("[LOG] Chyba při ukončování webdriveru:", e, style="red")
         super().tearDownClass()
 
     def setUp(self):
@@ -83,7 +95,7 @@ class LoginLogoutSeleniumTest(StaticLiveServerTestCase):
             password=self.test_password,
             email="testbot@selenim.cz",
         )
-        print("[LOG] Testovací uživatel byl vytvořen.")
+        cons.log("[LOG] Testovací uživatel byl vytvořen.", style="blue")
         time.sleep(1)
 
     def test_login_logout_flow(self):
@@ -92,19 +104,21 @@ class LoginLogoutSeleniumTest(StaticLiveServerTestCase):
 
         login_url = f"{self.live_server_url}/accounts/login/"
         self.driver.get(login_url)
-        print("[LOG] Otevřena přihlašovací stránka:", login_url)
+        cons.log(
+            "[LOG] Otevřena přihlašovací stránka:", login_url, style="green"
+        )
         time.sleep(1)
 
         username_input = self.driver.find_element(By.ID, "id_username")
         password_input = self.driver.find_element(By.ID, "id_password")
-        print("[LOG] Nalezena pole pro username a heslo.")
+        cons.log("[LOG] Nalezena pole pro username a heslo.", style="green")
 
         username_input.send_keys(self.test_username)
         password_input.send_keys(self.test_password)
-        print("[LOG] Vyplněné přihlašovací údaje.")
+        cons.log("[LOG] Vyplněné přihlašovací údaje.", style="green")
         time.sleep(1)
         password_input.send_keys(Keys.RETURN)
-        print("[LOG] Odeslán formulář pro přihlášení.")
+        cons.log("[LOG] Odeslán formulář pro přihlášení.", style="green")
         time.sleep(1)
 
         WebDriverWait(self.driver, 10).until(
@@ -112,21 +126,24 @@ class LoginLogoutSeleniumTest(StaticLiveServerTestCase):
                 (By.XPATH, "//a[contains(@href, '/accounts/logout/')]")
             )
         )
-        print("[LOG] Přihlášení bylo úspěšné, nalezen odkaz pro odhlášení.")
+        cons.log(
+            "[LOG] Přihlášení bylo úspěšné, nalezen odkaz pro odhlášení.",
+            style="green",
+        )
         logout_link = self.driver.find_element(
             By.XPATH, "//a[contains(@href, '/accounts/logout/')]"
         )
         self.assertIsNotNone(logout_link)
 
         logout_link.click()
-        print("[LOG] Kliknuto na odkaz pro odhlášení.")
+        cons.log("[LOG] Kliknuto na odkaz pro odhlášení.", style="green")
         time.sleep(1)
 
         WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((By.ID, "id_username"))
         )
-        print("[LOG] Odhlášení bylo úspěšné.")
+        cons.log("[LOG] Odhlášení bylo úspěšné.", style="green")
 
         login_form_username = self.driver.find_element(By.ID, "id_username")
         self.assertIsNotNone(login_form_username)
-        print("[LOG] Přihlašovací formulář byl nalezen.")
+        cons.log("[LOG] Přihlašovací formulář byl nalezen.", style="green")
