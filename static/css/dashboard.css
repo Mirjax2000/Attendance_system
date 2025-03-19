@@ -17,6 +17,8 @@
   --scheme-info: #54da54;
   --scheme-warning: #ff3c00;
   --background-clr-gradient-primary: linear-gradient(to right, #2a2b2e, #2c2e32);
+  --background-clr-gradient-secondary: linear-gradient(to bottom right, #262729, #273042);
+  --background-clr-gradient-ternary: linear-gradient(to top left, #262729, #273042);
 }
 
 /* --- normalize --- */
@@ -640,6 +642,7 @@ body {
 }
 .L-detail-list__item {
   flex-basis: 20%;
+  min-width: 220px;
   padding-inline: 0.5em;
 }
 
@@ -861,16 +864,19 @@ body {
 }
 
 .c-emp-card {
-  background-image: var(--background-clr-gradient-primary);
   width: 100%;
   min-height: 100px;
+  background-image: var(--background-clr-gradient-secondary);
   border: 1px solid black;
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4470588235);
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4470588235);
   transition: all 0.1s ease-in-out;
   padding: 0.3em;
 }
 .c-emp-card:hover {
+  background-image: none;
+  background-image: var(--background-clr-gradient-ternary);
   transform: scale(1.1);
+  box-shadow: 2px 2px 5px black;
 }
 .c-emp-card__avatar {
   position: absolute;
@@ -879,7 +885,8 @@ body {
   top: -10px;
   left: 15px;
   border-radius: 50%;
-  box-shadow: 1px 1px 5px #000000;
+  border: 2px solid rgba(0, 89, 255, 0.5);
+  box-shadow: 1px 1px 5px #000;
 }
 .c-emp-card__avatar img {
   border-radius: 50%;

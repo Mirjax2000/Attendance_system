@@ -6,16 +6,19 @@
     @extend %border-radius;
     @extend %pos-rel;
 
-    background-image: var(--background-clr-gradient-primary);
     width: 100%;
     min-height: 100px;
+    background-image: var(--background-clr-gradient-secondary);
     border: 1px solid black;
-    box-shadow: 1px 1px 3px #00000072;
+    box-shadow: 1px 1px 2px #00000072;
     transition: all 0.1s ease-in-out;
     padding: 0.3em;
 
     &:hover {
+        background-image: none;
+        background-image: var(--background-clr-gradient-ternary);
         transform: scale(1.1);
+        box-shadow: 2px 2px 5px black;
     }
 
     &__avatar {
@@ -25,7 +28,8 @@
         top: -10px;
         left: 15px;
         border-radius: 50%;
-        box-shadow: 1px 1px 5px #000000;
+        border: 2px solid rgba(0, 89, 255, 0.5);
+        box-shadow: 1px 1px 5px #000;
 
         img {
             border-radius: 50%;
