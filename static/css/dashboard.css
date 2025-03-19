@@ -201,15 +201,20 @@ body.home {
 }
 
 /* --- placeholders --- */
+.c-emp-card {
+  position: relative;
+  isolation: isolate;
+}
+
 .c-filter__item .form__wrapper, .L-form {
   margin-inline: auto;
 }
 
-.c-info-highlight, .c-filter, .c-count__card, .L-detail, .L-detail__item p strong, .L-detail__actions, .L-list__wrapper, .L-list__info, .L-list__actions, .L-form, .L-header, .L-navigation {
+.c-info-highlight, .c-filter, .c-emp-card, .c-count__card, .L-detail-list, .L-detail, .L-detail__item p strong, .L-detail__actions, .L-list__wrapper, .L-list__info, .L-list__actions, .L-form, .L-header, .L-navigation {
   user-select: none;
 }
 
-.c-info-highlight, .c-filter, .c-filter__item .form__wrapper, .c-filter__form select, .c-count__card, .c-count__card__content, .c-ico-btn, .L-form, .L-form__form input,
+.c-info-highlight, .c-filter, .c-filter__item .form__wrapper, .c-filter__form select, .c-emp-card, .c-count__card, .c-count__card__content, .c-ico-btn, .L-detail-list__item, .L-form, .L-form__form input,
 .L-form__form select, .L-form__submit, .L-content {
   border-radius: 5px;
 }
@@ -610,6 +615,34 @@ body {
   gap: 0.5em;
 }
 
+.L-detail-list__wrapper {
+  margin-bottom: 1em;
+}
+.L-detail-list__header {
+  display: inline-block;
+  color: var(--scheme-default);
+  border-bottom: 1px solid var(--scheme-default);
+  padding-bottom: 0.3em;
+}
+.L-detail-list__header img {
+  background-color: transparent;
+}
+.L-detail-list__header span {
+  color: white;
+}
+.L-detail-list__list {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0;
+  flex-wrap: wrap;
+  padding: 1em;
+}
+.L-detail-list__item {
+  flex-basis: 20%;
+  padding-inline: 0.5em;
+}
+
 .L-departments {
   width: 100%;
   padding: 1em;
@@ -825,6 +858,50 @@ body {
 }
 .c-count__name {
   color: var(--scheme-default);
+}
+
+.c-emp-card {
+  background-image: var(--background-clr-gradient-primary);
+  width: 100%;
+  min-height: 100px;
+  border: 1px solid black;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4470588235);
+  transition: all 0.1s ease-in-out;
+  padding: 0.3em;
+}
+.c-emp-card:hover {
+  transform: scale(1.1);
+}
+.c-emp-card__avatar {
+  position: absolute;
+  width: 40px;
+  aspect-ratio: 1;
+  top: -10px;
+  left: 15px;
+  border-radius: 50%;
+  box-shadow: 1px 1px 5px rgb(0, 0, 0);
+}
+.c-emp-card__avatar img {
+  border-radius: 50%;
+}
+.c-emp-card__content {
+  color: var(--scheme-default);
+  font-size: 0.9rem;
+}
+.c-emp-card__content--status {
+  text-align: right;
+  font-size: 1.1rem;
+  text-decoration: underline;
+}
+.c-emp-card__content--name {
+  margin-top: 0.5em;
+  text-align: left;
+  padding-block: 0.3em;
+}
+.c-emp-card__content--email {
+  text-align: left;
+  font-style: italic;
+  padding-block: 0.3em;
 }
 
 .c-filter {

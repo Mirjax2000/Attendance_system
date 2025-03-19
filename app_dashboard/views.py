@@ -386,3 +386,13 @@ class DepartmentDetailList(LoginRequiredMixin, ListView):
     def get_queryset(self):
         department_id = self.kwargs.get("pk")
         return Employee.objects.filter(department_id=department_id)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        department_id = self.kwargs.get("pk")
+        department = get_object_or_404(Department, pk=department_id)
+        context["department"] = department
+        context["user_name"] = get_user_name(self)
+        context["active_link"] = "main-panel"
+
+        return context

@@ -1,0 +1,39 @@
+@use "../../utils/" as *;
+@use "../../base/placeholders" as *;
+
+.L-detail-list {
+    @extend %select-none;
+
+    &__wrapper {
+        margin-bottom: 1em;
+    }
+
+    &__header {
+        display: inline-block;
+        color: var(--scheme-default);
+        border-bottom: 1px solid var(--scheme-default);
+        padding-bottom: 0.3em;
+
+        img {
+            background-color: transparent;
+        }
+
+        span {
+            color: white;
+        }
+    }
+
+    &__list {
+        @include flex(flex-start, center);
+
+        flex-wrap: wrap;
+        padding: 1em;
+    }
+
+    &__item {
+        @extend %border-radius;
+
+        flex-basis: 20%;
+        padding-inline: 0.5em;
+    }
+}

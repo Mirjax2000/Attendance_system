@@ -22,5 +22,10 @@ $light-theme-main: (
 
     "background-clr": (
         "gradient-primary": linear-gradient(to right bottom, #2a2b2eff, #2f3542),
+        "gradient-secondary": linear-gradient(
+                to right bottom,
+                #2a2b2eff,
+                #2f3542
+            ),
     ),
 );

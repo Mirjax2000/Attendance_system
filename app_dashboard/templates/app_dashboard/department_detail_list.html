@@ -1,11 +1,41 @@
 {% extends "dashboard_base.html" %}
 {% load static %}
 {% block title %}
-    Department
+    Department {{ department }}
 {% endblock title %}
 {% block content %}
-    <div class="content__container">
-        <h1>Department Detail seznam</h1>
-        {% for employee in employees %}<p>{{ employee }}</p>{% endfor %}
-    </div>
+    <section class="L-detail-list">
+        <div class="L-detail-list__wrapper">
+            <h2 class="L-detail-list__header">
+                <img src="{% static 'images/icons8-list.png' %}"
+                     alt="delete icon"
+                     width="24"
+                     height="24">
+                Seznam zaměstnanců v: <span class="c-info-highlight">{{ department }}</span>
+            </h2>
+        </div>
+        <ul class="L-detail-list__list">
+            {% for employee in employees %}
+                <li class="L-detail-list__item">
+                    <a href="#" class="c-emp-card">
+                        <div class="c-emp-card__avatar">
+                            <img src="{% static "images/avatars/avatar_01.webp" %}"
+                                 alt="avatar"
+                                 width="50"
+                                 height="50">
+                        </div>
+                        <div class="c-emp-card__content">
+                            <p class="c-emp-card__content--status">{{ employee.employee_status }}</p>
+                            <p class="c-emp-card__content--name">{{ employee.name }} {{ employee.surname }}</p>
+                            <p class="c-emp-card__content--email">{{ employee.email }}</p>
+                        </div>
+                    </a>
+                </li>
+            {% empty %}
+                <li class="L-detail-list__item">
+                    <div class="c-emp-card">Zadny zamestanec</div>
+                </li>
+            {% endfor %}
+        </ul>
+    </section>
 {% endblock content %}
