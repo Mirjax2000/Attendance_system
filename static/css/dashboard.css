@@ -9,6 +9,7 @@
   --scheme-clr-7: #87ff65;
   --scheme-clr-8: #2cb67d;
   --scheme-clr-9: #dd7373;
+  --scheme-clr-10: #2e4a6e;
   --scheme-default: #d2d2d2;
   --scheme-default-darker: #9f9e9e;
   --scheme-accent: rgba(109, 60, 255, 0.862745098);
@@ -791,7 +792,7 @@ body {
   animation: card-rotation 0.5s ease-in-out 0.1s forwards;
 }
 .c-count__card:hover {
-  background-color: var(--scheme-clr-3);
+  background-color: var(--scheme-clr-10);
 }
 .c-count__card:active {
   transform: scale(0.95) !important;
