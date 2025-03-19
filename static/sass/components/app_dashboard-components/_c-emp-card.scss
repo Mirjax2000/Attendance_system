@@ -12,6 +12,7 @@
     border: 1px solid black;
     box-shadow: 1px 1px 2px #00000072;
     transition: all 0.1s ease-in-out;
+    opacity: 0.7;
     padding: 0.3em;
 
     &:hover {
@@ -19,6 +20,7 @@
         background-image: var(--background-clr-gradient-ternary);
         transform: scale(1.1);
         box-shadow: 2px 2px 5px black;
+        opacity: 1;
     }
 
     &__avatar {
