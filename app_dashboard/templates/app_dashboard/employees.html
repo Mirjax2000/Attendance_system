@@ -41,7 +41,8 @@
                     <tr class="L-list__table-row">
                         <td class="L-list__table-cell id">{{ employee.id }}</td>
                         <td class="L-list__table-cell name">
-                            <a href="{% url "detail_employee" employee.pk %}" class="L-list__detail">{{ employee.name }}</a>
+                            <a href="{% url "detail_employee" employee.slug %}"
+                               class="L-list__detail">{{ employee.name }}</a>
                         </td>
                         <td class="L-list__table-cell surname">{{ employee.surname }}</td>
                         <td class="L-list__table-cell email">{{ employee.email }}</td>
@@ -50,14 +51,14 @@
                         <td class="L-list__table-cell phone">{{ employee.employee_status }}</td>
                         <td class="L-list__table-cell CAT">
                             <div class="L-list__actions">
-                                <a class="c-ico-btn" href="{% url "delete_employee" employee.id %}">
+                                <a class="c-ico-btn" href="{% url "delete_employee" employee.slug %}">
                                     <img src="{% static 'images/icons8-delete-48-red.png' %}"
                                          alt="delete icon"
                                          width="24"
                                          height="24">
                                     <p>smazat</p>
                                 </a>
-                                <a class="c-ico-btn" href="{% url "update_employee" employee.id %}">
+                                <a class="c-ico-btn" href="{% url "update_employee" employee.slug %}">
                                     <img class="list__action-icon"
                                          src="{% static 'images/icons8-update-blue.png' %}"
                                          alt="update icon"

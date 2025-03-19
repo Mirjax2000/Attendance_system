@@ -62,7 +62,7 @@ app_dashboard_urls: list = [
         name="save_vector_to_db",
     ),
     path(
-        "dashboard/take_vector/<int:pk>/",
+        "dashboard/take_vector/<slug:slug>/",
         TakeVectorView.as_view(),
         name="take_vector",
     ),
@@ -71,17 +71,17 @@ app_dashboard_urls: list = [
     path("dashboard/main_panel", MainPanelView.as_view(), name="main_panel"),
     path("dashboard/employees", EmployeesView.as_view(), name="employees"),
     path(
-        "dashboard/detail_employee/<int:pk>/",
+        "dashboard/detail_employee/<slug:slug>/",
         EmployeeDetailView.as_view(),
         name="detail_employee",
     ),
     path(
-        "dashboard/delete_employee/<int:pk>/",
+        "dashboard/delete_employee/<slug:slug>/",
         EmployeeDeleteView.as_view(),
         name="delete_employee",
     ),
     path(
-        "dashboard/update_employee/<int:pk>/",
+        "dashboard/update_employee/<slug:slug>/",
         EmployeeUpdateView.as_view(),
         name="update_employee",
     ),

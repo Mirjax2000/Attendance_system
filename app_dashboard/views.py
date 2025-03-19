@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count
 from django.http import JsonResponse
-from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import (
     CreateView,
@@ -315,6 +315,10 @@ class EmployeeDeleteView(LoginRequiredMixin, DeleteView):
     template_name = "app_dashboard/delete_employee.html"
     success_url = reverse_lazy("employees")
 
+    def get_object(self, queryset=None):
+        slug = self.kwargs.get("slug")  # Získání slugu z URL
+        return get_object_or_404(Employee, slug=slug)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["user_name"] = get_user_name(self)
@@ -334,6 +338,10 @@ class EmployeeUpdateView(LoginRequiredMixin, UpdateView):
     template_name = "includes/create_emp_form.html"
     success_url = reverse_lazy("employees")
 
+    def get_object(self, queryset=None):
+        slug = self.kwargs.get("slug")  # Získání slugu z URL
+        return get_object_or_404(Employee, slug=slug)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["user_name"] = get_user_name(self)
@@ -352,6 +360,10 @@ class EmployeeDetailView(LoginRequiredMixin, DetailView):
     model = Employee
     template_name = "app_dashboard/employee_detail.html"
     context_object_name = "employee"
+
+    def get_object(self, queryset=None):
+        slug = self.kwargs.get("slug")  # Získání slugu z URL
+        return get_object_or_404(Employee, slug=slug)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
