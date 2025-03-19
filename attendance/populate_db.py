@@ -10,8 +10,20 @@ cons: Console = Console()
 class DefaultFillTables:
     """defaultni zaplneni tabulek"""
 
-    def __init__(self):
-        self.working_statuses = [
+    def checking_db(self) -> bool:
+        """Vrátí True, pokud tabulky obsahují záznamy, jinak False."""
+        return Department.objects.exists() or EmployeeStatus.objects.exists()
+
+    def default_department(self):
+        """Zaplnění tabulky Department, pokud je prázdná."""
+        departments = [Department(name="nezarazeno")]
+        if not Department.objects.exists():
+            Department.objects.bulk_create(departments)
+            cons.log("Tabulka Department byla naplněna.")
+
+    def default_employee_status(self):
+        """Zaplnění tabulky EmployeeStatus, pokud je prázdná."""
+        working_statuses = [
             EmployeeStatus(name="working"),
             EmployeeStatus(name="sick_leave"),
             EmployeeStatus(name="vacation"),
@@ -19,29 +31,21 @@ class DefaultFillTables:
             EmployeeStatus(name="free"),
         ]
 
-        self.departments = [Department(name="nezarazeno")]
-
-    def default_department(self):
-        """Zaplnění tabulky Department, pokud je prázdná."""
-        if not Department.objects.exists():
-            Department.objects.bulk_create(self.departments)
-            cons.log("Tabulka Department byla naplněna.")
-
-    def default_employee_status(self):
-        """Zaplnění tabulky EmployeeStatus, pokud je prázdná."""
-
         if not EmployeeStatus.objects.exists():
-            EmployeeStatus.objects.bulk_create(self.working_statuses)
+            EmployeeStatus.objects.bulk_create(working_statuses)
             cons.log("Tabulka EmployeeStatus byla naplněna.")
 
     def run_all_default(self):
         """spusteni vsech funkci"""
+        if self.checking_db():
+            cons.log("Tabulky už obsahují data. Není potřeba nic přidávat.")
+            return
         self.default_department()
         self.default_employee_status()
+        cons.log("Tabulky byly naplněny.")
 
 
 fill_tables: DefaultFillTables = DefaultFillTables()
 
-if not Department.objects.exists() and not EmployeeStatus.objects.exists():
+if __name__ == "__main__":
     fill_tables.run_all_default()
-    cons.log("Tabulky byly naplněny.")
