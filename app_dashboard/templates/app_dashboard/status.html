@@ -6,15 +6,30 @@
 {% block content %}
     <h1>status view</h1>
     <hr>
-    <p>
-        department nezarazeno: <span class="c-info-highlight {% if department_nezarazeno == True %}u-text-success {% else %} u-text-warning {% endif %}">{{ department_nezarazeno }}</span>
-    </p>
-    <p>
-        EmployeeStatus: <span class="c-info-highlight {% if employee_status_table == True %} u-text-success {% else %} u-text-warning {% endif %}">{{ employee_status_table }}</span>
-    </p>
-    <p>
-        Department: <span class="c-info-highlight {% if department_table == True %} u-text-success {% else %} u-text-warning {% endif %}">{{ department_table }}</span>
-    </p>
+    <div>
+        <h3>tabulka pro Department</h3>
+        <p>
+            department tabulka "nezarazeno": <span class="c-info-highlight {% if department_nezarazeno == True %}u-text-success {% else %} u-text-warning {% endif %}">{{ department_nezarazeno }}</span>
+        </p>
+    </div>
+    <hr>
+    <div>
+        <h3>tabulky pro EmployeeStatus:</h3>
+        {% for existing_status in existing_statuses %}
+            <p class="u-text-success c-info-highlight">{{ existing_status }}</p>
+        {% empty %}
+            <p class="u-text-warning c-info-highlight">nejsou zadne tabulky</p>
+        {% endfor %}
+    </div>
+    <hr>
+    <div>
+        <h3>chybejici tabulky:</h3>
+        {% for mising_status in missing_statuses %}
+            <p class="u-text-warning c-info-highlight">{{ missing_status }}</p>
+        {% empty %}
+            <p class="u-text-success c-info-highlight">nic nechybi</p>
+        {% endfor %}
+    </div>
     <hr>
     <ul>
         <li>

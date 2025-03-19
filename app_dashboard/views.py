@@ -351,13 +351,26 @@ class StatusView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
+        statuses = [
+            "working",
+            "sick_leave",
+            "business_trip",
+            "vacation",
+            "free",
+        ]
+
+        existing_statuses = [
+            status.name
+            for status in EmployeeStatus.objects.filter(name__in=statuses)
+        ]
+
+        missing_statuses = set(statuses) - set(existing_statuses)
+
+        context["existing_statuses"] = existing_statuses
+        context["missing_statuses"] = missing_statuses
         context["department_nezarazeno"] = Department.objects.filter(
             name="nezarazeno"
         ).exists()
-
-        EmployeeStatus.objects.filter(status="working")
-
-        context["employee_status_table"] = EmployeeStatus.objects.exists()
-        context["department_table"] = Department.objects.exists()
         context["active_link"] = "status"
         return context
