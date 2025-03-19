@@ -226,7 +226,7 @@ class DepartmentListView(ListView):
     """Vypis users"""
 
     model = Department
-    template_name = "app_dashboard/main_panel.html"
+    template_name = "app_dashboard/department_list.html"
     context_object_name = "departments"
 
     def get_context_data(self, **kwargs):

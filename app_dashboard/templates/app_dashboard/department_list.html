@@ -4,5 +4,17 @@
     deaprtement list
 {% endblock title %}
 {% block content %}
+    <h1>Deartemtn list</h1>
     {% for department in departments %}<p>{{ department.name }}</p>{% endfor %}
+    <ul>
+        <li class="c-info-highlight">
+            <a href="#">create</a>
+        </li>
+        <li class="c-info-highlight">
+            <a href="#">update</a>
+        </li>
+        <li class="c-info-highlight">
+            <a href="#">delejte</a>
+        </li>
+    </ul>
 {% endblock content %}

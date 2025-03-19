@@ -11,10 +11,12 @@
         <ul class="L-departments__list c-count">
             {% for department in departments %}
                 <li class="L-departments__item c-count__card">
-                    <div class="L-departments__info c-count__card__content">
-                        <p class="c-count__card__content__info">{{ department.employee_count }}</p>
-                    </div>
-                    <p class="c-count-card__name">{{ department.name }}</p>
+                    <a href="#" class="L-departments__link">
+                        <div class="c-count__card__content">
+                            <p class="c-count__card__content__info">{{ department.employee_count }}</p>
+                        </div>
+                        <p class="c-count-card__name">{{ department.name }}</p>
+                    </a>
                 </li>
             {% empty %}
                 <p>empty</p>

@@ -481,7 +481,7 @@ body {
     transform: rotateY(10deg);
   }
   100% {
-    transform: rotate(0deg); /* Pauza na konci */
+    transform: rotateY(0deg); /* Pauza na konci */
     opacity: 1;
   }
 }
