@@ -29,7 +29,15 @@
                                 {{ employee.employee_status }}
                             </p>
                             <p class="c-emp-card__content--name">{{ employee.name }} {{ employee.surname }}</p>
-                            <p class="c-emp-card__content--email">{{ employee.email }}</p>
+                            <p class="c-emp-card__content--email">
+                                <span class="title">email:</span>
+                                <br>
+                                <span class="content">{{ employee.email }}</span>
+                            </p>
+                            <p class="c-emp-card__content--phone">
+                                <span class="title">tel:</span>
+                                <span class="content">{{ employee.phone_number }}</span>
+                            </p>
                         </div>
                     </a>
                 </li>

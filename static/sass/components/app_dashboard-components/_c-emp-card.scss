@@ -13,7 +13,7 @@
     box-shadow: 1px 1px 2px #00000072;
     transition: all 0.1s ease-in-out;
     opacity: 0.7;
-    padding: 0.3em;
+    padding: 0.5em;
 
     &:hover {
         background-image: none;
@@ -40,7 +40,17 @@
 
     &__content {
         color: var(--scheme-default);
-        font-size: 0.9rem;
+        font-size: 0.8rem;
+
+        .title {
+            font-style: normal;
+            color: white;
+            font-weight: bolder;
+        }
+
+        .content {
+            font-style: italic;
+        }
 
         &--status {
             text-align: right;
@@ -56,7 +66,11 @@
 
         &--email {
             text-align: left;
-            font-style: italic;
+            padding-block: 0.3em;
+        }
+
+        &--phone {
+            text-align: left;
             padding-block: 0.3em;
         }
     }
