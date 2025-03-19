@@ -783,7 +783,7 @@ body {
   aspect-ratio: 1;
   font-size: 0.875rem;
   text-align: center;
-  background-image: var(--background-clr-gradient-quartery);
+  background-color: var(--scheme-clr-1);
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.462745098);
   transform: rotate(0deg);
   transition: all 0.1s ease-in-out;
@@ -791,7 +791,7 @@ body {
   animation: card-rotation 0.5s ease-in-out 0.1s forwards;
 }
 .c-count__card:hover {
-  background-image: var(--background-clr-gradient-ternary);
+  background-color: var(--scheme-clr-3);
 }
 .c-count__card:active {
   transform: scale(0.95) !important;
@@ -804,8 +804,31 @@ body {
   font-size: 1.3rem;
   background-color: var(--scheme-clr-3);
   color: #d2d2d2;
-  box-shadow: 0 0 10px rgba(210, 210, 210, 0.3);
   width: 50%;
+}
+.c-count__card__content[data-color=clr_1] {
+  color: #2cb67d;
+  box-shadow: 0 0 10px rgba(44, 182, 125, 0.3);
+}
+.c-count__card__content[data-color=clr_2] {
+  color: #87ff65;
+  box-shadow: 0 0 10px rgba(135, 255, 101, 0.3);
+}
+.c-count__card__content[data-color=clr_3] {
+  color: #aceb98;
+  box-shadow: 0 0 10px rgba(172, 235, 152, 0.3);
+}
+.c-count__card__content[data-color=clr_4] {
+  color: #a4c2a8;
+  box-shadow: 0 0 10px rgba(164, 194, 168, 0.3);
+}
+.c-count__card__content[data-color=clr_5] {
+  color: #307fc0;
+  box-shadow: 0 0 10px rgba(48, 127, 192, 0.3);
+}
+.c-count__card__content[data-color=clr_6] {
+  color: #569dd7;
+  box-shadow: 0 0 10px rgba(86, 157, 215, 0.3);
 }
 .c-count__card__content__info {
   overflow: auto;
@@ -821,24 +844,6 @@ body {
 }
 .c-count__card__content__info::-webkit-scrollbar-track {
   background: transparent;
-}
-.c-count__card__content__info[data-color=clr_1] {
-  color: #2cb67d;
-}
-.c-count__card__content__info[data-color=clr_2] {
-  color: #87ff65;
-}
-.c-count__card__content__info[data-color=clr_3] {
-  color: #aceb98;
-}
-.c-count__card__content__info[data-color=clr_4] {
-  color: #a4c2a8;
-}
-.c-count__card__content__info[data-color=clr_5] {
-  color: #307fc0;
-}
-.c-count__card__content__info[data-color=clr_6] {
-  color: #569dd7;
 }
 .c-count__name {
   color: var(--scheme-default);

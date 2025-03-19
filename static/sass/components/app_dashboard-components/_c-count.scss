@@ -16,7 +16,7 @@
         aspect-ratio: 1;
         font-size: 0.875rem;
         text-align: center;
-        background-image: var(--background-clr-gradient-quartery);
+        background-color: var(--scheme-clr-1);
         box-shadow: 1px 1px 5px #00000076;
         transform: rotate(0deg);
         transition: all 0.1s ease-in-out;
@@ -24,7 +24,7 @@
         animation: card-rotation 0.5s ease-in-out 0.1s forwards;
 
         &:hover {
-            background-image: var(--background-clr-gradient-ternary);
+            background-color: var(--scheme-clr-3);
         }
 
         &:active {
@@ -39,38 +39,43 @@
             font-size: 1.3rem;
             background-color: var(--scheme-clr-3);
             color: #d2d2d2;
-            box-shadow: 0 0 10px rgba(#d2d2d2, 0.3);
             width: 50%;
+
+            &[data-color="clr_1"] {
+                color: #2cb67d;
+                box-shadow: 0 0 10px rgba(#2cb67d, 0.3);
+            }
+
+            &[data-color="clr_2"] {
+                color: #87ff65ff;
+                box-shadow: 0 0 10px rgba(#87ff65ff, 0.3);
+            }
+
+            &[data-color="clr_3"] {
+                color: #aceb98ff;
+                box-shadow: 0 0 10px rgba(#aceb98ff, 0.3);
+            }
+
+            &[data-color="clr_4"] {
+                color: #a4c2a8ff;
+                box-shadow: 0 0 10px rgba(#a4c2a8ff, 0.3);
+            }
+
+            &[data-color="clr_5"] {
+                color: #307fc0;
+                box-shadow: 0 0 10px rgba(#307fc0, 0.3);
+            }
+
+            &[data-color="clr_6"] {
+                color: #569dd7;
+                box-shadow: 0 0 10px rgba(#569dd7, 0.3);
+            }
 
             &__info {
                 @include scroll(2px);
 
                 padding-block: 0.3em;
                 overflow: auto;
-
-                &[data-color="clr_1"] {
-                    color: #2cb67d;
-                }
-
-                &[data-color="clr_2"] {
-                    color: #87ff65ff;
-                }
-
-                &[data-color="clr_3"] {
-                    color: #aceb98ff;
-                }
-
-                &[data-color="clr_4"] {
-                    color: #a4c2a8ff;
-                }
-
-                &[data-color="clr_5"] {
-                    color: #307fc0;
-                }
-
-                &[data-color="clr_6"] {
-                    color: #569dd7;
-                }
             }
         }
     }

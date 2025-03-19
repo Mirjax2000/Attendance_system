@@ -13,7 +13,7 @@
                 <li class="L-departments__item c-count">
                     <a href="{% url "department_detail_list" department.id %}"
                        class="L-departments__link c-count__card">
-                        <div class="c-count__card__content">
+                        <div class="c-count__card__content" data-color="clr_1">
                             <p class="c-count__card__content__info" data-color="clr_1">{{ department.employee_count }}</p>
                         </div>
                         <p class="c-count-card__name">{{ department.name }}</p>
