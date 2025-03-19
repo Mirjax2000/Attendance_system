@@ -13,12 +13,8 @@
                  alt="login"
                  width="25"
                  height="25">
-            <p class="L-header__text u-text-success">
-                {% if user.is_superuser == True %}
-                    {{ user.username }}&nbsp; <span class="u-text-warning c-info-highlight">Superuser</span>
-                {% elif user.is_staff == True %}
-                    {{ user.username }}&nbsp; <span class="u-text-warning c-info-highlight">Admin</span>
-                {% endif %}
+            <p class="L-header__text">
+                <span class="c-info-highlight u-text-success">{{ username }}</span> <span class="c-info-highlight u-text-warning">{{ status }}</span>
             </p>
         </a>
     </li>

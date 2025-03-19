@@ -29,13 +29,18 @@ cons: Console = Console()
 # instance CamSystems
 
 
-def get_user(view_instance) -> str:
+def get_user(view_instance) -> dict:
     """Získej jméno přihlášeného uživatele"""
-    result: str = str(view_instance.request.user)
-    return result
+    status: str = ""
+    current_user = view_instance.request.user
+    name: str = str(current_user.username)
 
+    if current_user.is_superuser:
+        status = "SuperUser"
+    elif current_user.is_staff:
+        status = "admin"
 
-
+    return {"username": name, "status": status}
 
 
 class RedirectDashboard(RedirectView):
@@ -57,8 +62,11 @@ class MainPanelView(LoginRequiredMixin, ListView):
         return queryset
 
     def get_context_data(self, **kwargs):
+        user: dict = get_user(self)
+
         context = super().get_context_data(**kwargs)
-        context["user_name"] = get_user(self)
+        context["username"] = user["username"]
+        context["status"] = user["status"]
         context["active_link"] = "main-panel"
 
         return context

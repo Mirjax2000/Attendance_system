@@ -6,7 +6,7 @@
 {% block content %}
     <section class="L-departments">
         <p class="L-departments__header">
-            výpis organizačních struktur: <i>nalezeno: {{ departments.count }}</i>
+            výpis organizačních struktur: &nbsp;<i class="c-info-highlight">nalezeno: {{ departments.count }}</i>
         </p>
         <ul class="L-departments__list ">
             {% for department in departments %}
