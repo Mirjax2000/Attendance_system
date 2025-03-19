@@ -20,10 +20,10 @@ from django.views.generic import (
 from rich.console import Console
 
 from app_main.models import Department, Employee, EmployeeStatus, FaceVector
-from attendance.populate_db import fill_tables
 
 # importuju instanci tridy Camsystems
-from cam_systems import cam_systems_instance as csi
+from attendance.cam_systems import cam_systems_instance as csi
+from attendance.populate_db import fill_tables
 
 from .forms import EmployeeForm
 
@@ -38,9 +38,9 @@ def get_user_name(view_instance) -> str:
 
 
 class RedirectDashboard(RedirectView):
-    """Redirect na /dashboard"""
+    """Redirect na /dashboard/main_panel"""
 
-    url = "dashboard"
+    url = "dashboard/main_panel"
 
 
 class DashboardView(LoginRequiredMixin, TemplateView):
@@ -61,11 +61,8 @@ class MainPanelView(LoginRequiredMixin, ListView):
 
     template_name = "app_dashboard/main_panel.html"
     model = Department
-    context_object_name = "departments"  # = Department.objects.all()
-    # zpristupni Department.name a Department.count
+    context_object_name = "departments"
 
-    # takze toto jsou dva ruzne Querysety ale sortovany podle META orderingu
-    # v modelu Department
     def get_queryset(self):
         # Získání querysetu a přidání počtu zaměstnanců pomocí annotate
         queryset = Department.objects.annotate(employee_count=Count("employee"))
@@ -288,18 +285,20 @@ class TakeVectorView(LoginRequiredMixin, DetailView):
 
 
 class SaveVectorToDbView(LoginRequiredMixin, View):
-    """Volání z formuláře"""
+    """Volání z employee detail.html z tlacitka
+    take vector
+    """
 
-    def post(self, request, *args, **kwargs):
-        """post metoda"""
+    def get(self, request, *args, **kwargs):
+        """Získá slug zaměstnance z URL a uloží vektor do databáze."""
         employee_slug = self.kwargs.get("slug")
 
         if not employee_slug:
-            messages.error(request, "Chybí slug zaměstnance!")
+            messages.error(request, "Chybí jmeno zaměstnance!")
             return redirect("employees")
 
         result = csi.database.save_vector_to_db(employee_slug)
-        cons.log(result, style="green")
+        cons.log(result["message"], style="green")
 
         if result["success"]:
             messages.success(request, result["message"])

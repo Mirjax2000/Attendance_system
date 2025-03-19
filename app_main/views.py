@@ -12,7 +12,7 @@ from django.views.generic import (
 from rich.console import Console
 
 # importuju instanci tridy Camsystems
-from cam_systems import cam_systems_instance as csi
+from attendance.cam_systems import cam_systems_instance as csi
 
 from .models import Employee
 

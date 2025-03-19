@@ -54,7 +54,7 @@ urlpatterns = [
 ]
 
 app_dashboard_urls: list = [
-    path("dashboard/", DashboardView.as_view(), name="dashboard"),
+    # path("dashboard/", DashboardView.as_view(), name="dashboard"),
     path("dashboard/status", StatusView.as_view(), name="status"),
     path(
         "dashboard/save_vector_to_db/<slug:slug>",
