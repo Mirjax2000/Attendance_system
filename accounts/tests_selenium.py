@@ -14,9 +14,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 cons: Console = Console()
-
 User = get_user_model()
-
 
 def get_available_driver():
     """Zkusí postupně inicializovat webdriver pro Chrome, Edge a Firefox.
