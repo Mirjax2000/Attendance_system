@@ -5,7 +5,26 @@
 {% endblock title %}
 {% block content %}
     <h1>status view</h1>
-    <p>department nezarazen: {{ department_nezarazeno }}</p>
-    <p>EmployeeStatus: {{ employee_status_table }}</p>
-    <p>Department: {{ department_table }}</p>
+    <hr>
+    <p>
+        department nezarazeno: <span class="c-info-highlight {% if department_nezarazeno == True %}u-text-success {% else %} u-text-warning {% endif %}">{{ department_nezarazeno }}</span>
+    </p>
+    <p>
+        EmployeeStatus: <span class="c-info-highlight {% if employee_status_table == True %} u-text-success {% else %} u-text-warning {% endif %}">{{ employee_status_table }}</span>
+    </p>
+    <p>
+        Department: <span class="c-info-highlight {% if department_table == True %} u-text-success {% else %} u-text-warning {% endif %}">{{ department_table }}</span>
+    </p>
+    <hr>
+    <ul>
+        <li>
+            <a href="#">zaplnit databazy</a>
+        </li>
+        <li>
+            <a href="#">vymazat databazy</a>
+        </li>
+        <li>
+            <a href="#">zkontrolovat databazy</a>
+        </li>
+    </ul>
 {% endblock content %}

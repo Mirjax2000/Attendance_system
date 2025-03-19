@@ -20,7 +20,6 @@ from app_dashboard.views import (
     CamView,
     ChartsView,
     CreateEmpView,
-    DashboardView,
     DepartmentListView,
     EmailView,
     EmployeeDeleteView,

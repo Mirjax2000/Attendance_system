@@ -3,14 +3,12 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count
-from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import (
     CreateView,
     DeleteView,
     DetailView,
-    FormView,
     ListView,
     RedirectView,
     TemplateView,
@@ -19,11 +17,11 @@ from django.views.generic import (
 )
 from rich.console import Console
 
-from app_main.models import Department, Employee, EmployeeStatus, FaceVector
+from app_main.models import Department, Employee, EmployeeStatus
 
 # importuju instanci tridy Camsystems
 from attendance.cam_systems import cam_systems_instance as csi
-from attendance.populate_db import fill_tables
+from attendance.settings import DEBUG
 
 from .forms import EmployeeForm
 
@@ -43,17 +41,17 @@ class RedirectDashboard(RedirectView):
     url = "dashboard/main_panel"
 
 
-class DashboardView(LoginRequiredMixin, TemplateView):
-    """Homepage"""
+# class DashboardView(LoginRequiredMixin, TemplateView):
+#     """Homepage"""
 
-    template_name = "app_dashboard/main_panel.html"
+#     template_name = "app_dashboard/main_panel.html"
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["user_name"] = get_user_name(self)
-        context["active_link"] = "main-panel"
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context["user_name"] = get_user_name(self)
+#         context["active_link"] = "main-panel"
 
-        return context
+#         return context
 
 
 class MainPanelView(LoginRequiredMixin, ListView):
@@ -243,7 +241,6 @@ class DepartmentListView(ListView):
     model = Department
     template_name = "app_dashboard/main_panel.html"
     context_object_name = "departments"
-    # paginate_by = 20
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -268,22 +265,6 @@ class TakeVectorView(LoginRequiredMixin, DetailView):
         return context
 
 
-# class SaveVectorToDbView(LoginRequiredMixin, View):
-#     """Volání funkce z cam_system.py"""
-
-#     def post(self, request, *args, **kwargs):
-#         """post metoda"""
-#         employee_slug = self.kwargs.get("slug", None)
-
-#         return JsonResponse(csi.database.save_vector_to_db(employee_slug))
-
-#     def get(self, request, *args, **kwargs):
-#         """to je kdyby nebylo post"""
-#         return JsonResponse(
-#             {"message": "Špatná metoda u get_result"}, status=400
-#         )
-
-
 class SaveVectorToDbView(LoginRequiredMixin, View):
     """Volání z employee detail.html z tlacitka
     take vector
@@ -298,7 +279,8 @@ class SaveVectorToDbView(LoginRequiredMixin, View):
             return redirect("employees")
 
         result = csi.database.save_vector_to_db(employee_slug)
-        cons.log(result["message"], style="green")
+        if DEBUG:
+            cons.log(result["message"], style="green")
 
         if result["success"]:
             messages.success(request, result["message"])
@@ -375,20 +357,17 @@ class EmployeeDetailView(LoginRequiredMixin, DetailView):
 
 class StatusView(TemplateView):
     """
-    docstring
+    stav databaze, ruzne vypisy do contextu
     """
 
     template_name = "app_dashboard/status.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        try:
-            Department.objects.get(name="nezarazeno")
-            context["department_nezarazeno"] = "nezarazeno existuje"
-        except Department.DoesNotExist:
-            context["department_nezarazeno"] = "nezarazeno neexistuje"
-            context["employee_status_table"] = EmployeeStatus.objects.exists()
-            context["department_table"] = Department.objects.exists()
-            context["active_link"] = "status"
-
+        context["department_nezarazeno"] = Department.objects.filter(
+            name="nezarazeno"
+        ).exists()
+        context["employee_status_table"] = EmployeeStatus.objects.exists()
+        context["department_table"] = Department.objects.exists()
+        context["active_link"] = "status"
         return context
