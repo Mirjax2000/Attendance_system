@@ -8,13 +8,13 @@
         <p class="L-departments__header">
             výpis organizačních struktur: <i>nalezeno: {{ departments.count }}</i>
         </p>
-        <ul class="L-departments__list c-count">
+        <ul class="L-departments__list ">
             {% for department in departments %}
-                <li class="L-departments__item c-count__card">
+                <li class="L-departments__item c-count">
                     <a href="{% url "department_detail_list" department.id %}"
-                       class="L-departments__link">
+                       class="L-departments__link c-count__card">
                         <div class="c-count__card__content">
-                            <p class="c-count__card__content__info">{{ department.employee_count }}</p>
+                            <p class="c-count__card__content__info" data-color="clr_1">{{ department.employee_count }}</p>
                         </div>
                         <p class="c-count-card__name">{{ department.name }}</p>
                     </a>

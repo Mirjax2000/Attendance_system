@@ -25,7 +25,9 @@
                                  height="50">
                         </div>
                         <div class="c-emp-card__content">
-                            <p class="c-emp-card__content--status">{{ employee.employee_status }}</p>
+                            <p class="c-emp-card__content--status {% if employee.employee_status|lower == "vacation" %}u-text-info {% elif employee.employee_status|lower == "working" %}u-text-success {% elif employee.employee_status|lower == "sick_leave" %}u-text-warning  {% endif %}">
+                                {{ employee.employee_status }}
+                            </p>
                             <p class="c-emp-card__content--name">{{ employee.name }} {{ employee.surname }}</p>
                             <p class="c-emp-card__content--email">{{ employee.email }}</p>
                         </div>

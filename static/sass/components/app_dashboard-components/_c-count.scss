@@ -6,66 +6,71 @@
     &__card {
         @extend %select-none;
         @extend %border-radius;
+        @include flex(center, center, 1em);
 
+        flex-direction: column;
         perspective: 1000px;
         transform-style: preserve-3d;
         backface-visibility: hidden;
         width: 7rem;
-        font-size: 0.875rem;
         aspect-ratio: 1;
+        font-size: 0.875rem;
         text-align: center;
-        background-color: var(--scheme-clr-2);
+        background-image: var(--background-clr-gradient-quartery);
         box-shadow: 1px 1px 5px #00000076;
         transform: rotate(0deg);
         transition: all 0.1s ease-in-out;
-        opacity: 1;
-        animation: card-rotation 0.5s ease-in-out 0.1s;
+        opacity: 0;
+        animation: card-rotation 0.5s ease-in-out 0.1s forwards;
 
         &:hover {
-            background-color: var(--scheme-accent);
+            background-image: var(--background-clr-gradient-ternary);
         }
 
         &:active {
-            transform: scale(0.95);
+            transform: scale(0.95) !important;
         }
 
         &__content {
             @extend %border-radius;
+            @extend %margin-in;
             @include flex;
 
             font-size: 1.3rem;
-            margin: 1em;
             background-color: var(--scheme-clr-3);
             color: #d2d2d2;
             box-shadow: 0 0 10px rgba(#d2d2d2, 0.3);
+            width: 50%;
 
             &__info {
                 @include scroll(2px);
 
                 padding-block: 0.3em;
                 overflow: auto;
-            }
-        }
 
-        $clr-set: (
-            #2cb67d,
-            #87ff65ff,
-            #aceb98ff,
-            #a4c2a8ff,
-            #ff0,
-            #ddb673,
-            #ffdea6,
-            #339af0,
-            #5fb3f8,
-            #8dccff
-        );
+                &[data-color="clr_1"] {
+                    color: #2cb67d;
+                }
 
-        @for $i from 1 through list.length($clr-set) {
-            $shadow-color: list.nth($clr-set, $i);
+                &[data-color="clr_2"] {
+                    color: #87ff65ff;
+                }
 
-            &:nth-child(#{$i}) &__content {
-                color: $shadow-color;
-                box-shadow: 0 0 10px rgba($shadow-color, 0.2);
+                &[data-color="clr_3"] {
+                    color: #aceb98ff;
+                }
+
+                &[data-color="clr_4"] {
+                    color: #a4c2a8ff;
+                }
+
+                &[data-color="clr_5"] {
+                    color: #307fc0;
+                }
+
+                &[data-color="clr_6"] {
+                    color: #569dd7;
+                }
             }
         }
     }
