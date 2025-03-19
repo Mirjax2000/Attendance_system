@@ -31,7 +31,7 @@ cons: Console = Console()
 
 def get_user_name(view_instance) -> str:
     """Získej jméno přihlášeného uživatele"""
-    result: str = str(view_instance.request.user.username)
+    result: str = str(view_instance.request.user)
     return result
 
 
