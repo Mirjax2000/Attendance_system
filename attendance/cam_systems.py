@@ -7,13 +7,14 @@ from time import sleep
 import cv2
 import face_recognition
 import numpy as np
-from cryptography.fernet import Fernet
 from django.conf import settings
 from django.db.utils import OperationalError
 from django.http.response import HttpResponse, StreamingHttpResponse
 from rich.console import Console
 
 from app_main.models import Employee, FaceVector, fernet
+
+from .settings import DEBUG
 
 cons = Console()
 
@@ -122,9 +123,11 @@ class CamSystems:
     ) -> HttpResponse | StreamingHttpResponse:
         """video stream na endpointu"""
         if not self.cap.isOpened():
-            cons.log(
-                "Kamera neni dostupna, zrejme neni nainstalovana", style="red"
-            )
+            if DEBUG:
+                cons.log(
+                    "Kamera neni dostupna, zrejme neni nainstalovana",
+                    style="red",
+                )
             return HttpResponse(
                 "Kamera není dostupná, zrejme neni naistalovana", status=500
             )
@@ -143,7 +146,8 @@ class CamSystems:
 
         for name, stored_vector in vectors.items():
             distance = self.utility.porovnani(vektor1, stored_vector)
-            cons.log(f"{name}: {distance:.4f}", style="green")
+            if DEBUG:
+                cons.log(f"{name}: {distance:.4f}", style="green")
 
             if distance < min_distance:
                 min_distance = distance
@@ -151,19 +155,22 @@ class CamSystems:
 
         # Vyhodnocení výsledku
         if min_distance < threshold:
-            cons.log(
-                f"Employee Rozpoznán: {best_match} (Vzdálenost: {min_distance:.4f})",
-                style="blue",
-            )
+            if DEBUG:
+                cons.log(
+                    f"Employee Rozpoznán: {best_match} (Vzdálenost: {min_distance:.4f})",
+                    style="blue",
+                )
             return {"message": "found", "success": True, "name": best_match}
-        cons.log("Neznámý obličej!", style="red")
+        if DEBUG:
+            cons.log("Neznámý obličej!", style="red")
         return {"message": "neznamy oblicej", "success": False}
 
     def get_result(self) -> dict:
         """posli vysledek porovnani"""
 
         if self.face_rgb is None:
-            cons.log("face rgb je None, protoze neni rectangle")
+            if DEBUG:
+                cons.log("face rgb je None, protoze neni rectangle")
             return {"message": "no-face-detected", "success": False}
 
         # toto vraci face vektor jako numpy array
@@ -173,7 +180,8 @@ class CamSystems:
 
         if len(face_encoding) > 0:
             new_face_vector = face_encoding[0]
-            cons.log("Vektor sejmut!", style="blue")
+            if DEBUG:
+                cons.log("Vektor sejmut!", style="blue")
             result = self.face_recon(new_face_vector, self.face_vectors)
 
         else:
@@ -181,11 +189,13 @@ class CamSystems:
                 "message": "no-face-detected",
                 "success": False,
             }
-            cons.log("Face vektor nesejmut")
+            if DEBUG:
+                cons.log("Face vektor nesejmut")
 
         # je treba to resetovat
         self.face_rgb = None
-        cons.log(result)
+        if DEBUG:
+            cons.log(result)
         return result
 
     def release_camera(self):
@@ -228,7 +238,10 @@ class Database:
     def save_vector_to_db(self, employee_slug) -> dict:
         """uloz sejmuty vektor do db"""
         if self.parent.face_rgb is None:
-            cons.log("face rgb je None, protoze neni rectangle", style="green")
+            if DEBUG:
+                cons.log(
+                    "face rgb je None, protoze neni rectangle", style="green"
+                )
             return {"message": "no-face-detected", "success": False}
 
         face_encoding = face_recognition.face_encodings(
@@ -237,48 +250,57 @@ class Database:
 
         if len(face_encoding) > 0:
             new_face_vector = face_encoding[0]
-            cons.log("Vektor sejmut!", style="blue")
+            if DEBUG:
+                cons.log("Vektor sejmut!", style="blue")
 
             self.parent.face_rgb = None
 
             try:
                 employee = Employee.objects.get(slug=employee_slug)
-                cons.log(f"zamestnanec {employee_slug} nalezen", style="blue")
+                if DEBUG:
+                    cons.log(
+                        f"zamestnanec {employee_slug} nalezen", style="blue"
+                    )
                 _, created = FaceVector.objects.update_or_create(
                     employee=employee,
                     defaults={"face_vector": new_face_vector.tolist()},
                 )
                 if created:
-                    cons.log(
-                        f"FaceVector vytvořen pro {employee_slug}",
-                        style="blue",
-                    )
+                    if DEBUG:
+                        cons.log(
+                            f"FaceVector vytvořen pro {employee_slug}",
+                            style="blue",
+                        )
                     return {
                         "message": f"zaznam vytvoren pro {employee_slug}",
                         "success": True,
                     }
-
-                cons.log(
-                    f"FaceVector aktualizován pro {employee_slug}", style="blue"
-                )
+                if DEBUG:
+                    cons.log(
+                        f"FaceVector aktualizován pro {employee_slug}",
+                        style="blue",
+                    )
                 return {
                     "message": f"zaznam aktualizovan pro {employee_slug}",
                     "success": True,
                 }
 
             except Employee.DoesNotExist as e:
-                cons.log(
-                    f"Zaměstnanec {employee_slug} nebyl nalezen. {str(e)}",
-                    style="red",
-                )
+                if DEBUG:
+                    cons.log(
+                        f"Zaměstnanec {employee_slug} nebyl nalezen. {str(e)}",
+                        style="red",
+                    )
                 return {
                     "message": f"Zaměstnanec {employee_slug} nebyl nalezen. {(str(e),)}",
                     "success": False,
                 }
             except Exception as e:
-                cons.log(
-                    f"Chyba při ukládání face vectoru: {str(e)}", style="red"
-                )
+                if DEBUG:
+                    cons.log(
+                        f"Chyba při ukládání face vectoru: {str(e)}",
+                        style="red",
+                    )
                 return {
                     "message": f"Chyba při ukládání face vectoru: {str(e)}",
                     "success": False,
@@ -312,13 +334,15 @@ class Utility:
             decrypted_vector_np = np.array(decrypted_vector_list)
             return decrypted_vector_np
         except Exception as e:
-            print(f"Chyba při dešifrování vektoru: {e}")
+            if DEBUG:
+                cons.log(f"Chyba při dešifrování vektoru: {e}", style="red")
             return None
 
 
 # globalni instance kamery na kterou se muze napojit kazda aplikace
 cam_systems_instance: CamSystems = CamSystems()
-cons.log(f"instance camsystems vytvorena {cam_systems_instance}")
+if DEBUG:
+    cons.log(f"instance camsystems vytvorena {cam_systems_instance}")
 
 if __name__ == "__main__":
     ...

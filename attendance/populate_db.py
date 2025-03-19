@@ -4,6 +4,8 @@ from rich.console import Console
 
 from app_main.models import Department, EmployeeStatus
 
+from .settings import DEBUG
+
 cons: Console = Console()
 
 
@@ -19,7 +21,8 @@ class DefaultFillTables:
         departments = [Department(name="nezarazeno")]
         if not Department.objects.exists():
             Department.objects.bulk_create(departments)
-            cons.log("Tabulka Department byla naplněna.")
+            if DEBUG:
+                cons.log("Tabulka Department byla naplněna.")
 
     def default_employee_status(self):
         """Zaplnění tabulky EmployeeStatus, pokud je prázdná."""
@@ -33,16 +36,19 @@ class DefaultFillTables:
 
         if not EmployeeStatus.objects.exists():
             EmployeeStatus.objects.bulk_create(working_statuses)
-            cons.log("Tabulka EmployeeStatus byla naplněna.")
+            if DEBUG:
+                cons.log("Tabulka EmployeeStatus byla naplněna.")
 
     def run_all_default(self):
         """spusteni vsech funkci"""
         if self.checking_db():
-            cons.log("Tabulky už obsahují data. Není potřeba nic přidávat.")
+            if DEBUG:
+                cons.log("Tabulky už obsahují data. Není potřeba nic přidávat.")
             return
         self.default_department()
         self.default_employee_status()
-        cons.log("Tabulky byly naplněny.")
+        if DEBUG:
+            cons.log("Tabulky byly naplněny.")
 
 
 fill_tables: DefaultFillTables = DefaultFillTables()
