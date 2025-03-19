@@ -22,5 +22,7 @@ $light-theme-dashboard: (
 
     "background-clr": (
         "gradient-primary": linear-gradient(to right, #2a2b2eff, #2c2e32),
+        "gradient-secondary": linear-gradient(to bottom right, #262729, #273042),
+        "gradient-ternary": linear-gradient(to top left, #262729, #273042),
     ),
 );

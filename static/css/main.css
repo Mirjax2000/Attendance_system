@@ -18,7 +18,7 @@
   --scheme-info: #54da54;
   --scheme-warning: #ff3c00;
   --background-clr-gradient-primary: linear-gradient(to right bottom, #2a2b2e, #2f3542);
-  --background-clr-gradient-secondary: linear-gradient(to right bottom, #2a2b2e, #2f3542);
+  --background-clr-gradient-secondary: linear-gradient(to right bottom, rgb(24, 81, 251), #0a1f4e);
 }
 
 /* --- normalize --- */
