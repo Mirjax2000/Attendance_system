@@ -41,19 +41,6 @@ class RedirectDashboard(RedirectView):
     url = "dashboard/main_panel"
 
 
-# class DashboardView(LoginRequiredMixin, TemplateView):
-#     """Homepage"""
-
-#     template_name = "app_dashboard/main_panel.html"
-
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context["user_name"] = get_user_name(self)
-#         context["active_link"] = "main-panel"
-
-#         return context
-
-
 class MainPanelView(LoginRequiredMixin, ListView):
     """homepage"""
 
@@ -367,6 +354,9 @@ class StatusView(TemplateView):
         context["department_nezarazeno"] = Department.objects.filter(
             name="nezarazeno"
         ).exists()
+
+        EmployeeStatus.objects.filter(status="working")
+
         context["employee_status_table"] = EmployeeStatus.objects.exists()
         context["department_table"] = Department.objects.exists()
         context["active_link"] = "status"
