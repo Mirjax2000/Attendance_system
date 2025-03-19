@@ -156,7 +156,7 @@ class CustomLoginView(LoginView):
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect("dashboard")
+            return redirect("main_panel")
         return super().get(request, *args, **kwargs)
 
     def form_invalid(self, form):

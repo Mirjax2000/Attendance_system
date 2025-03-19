@@ -60,4 +60,7 @@ class EmployeeForm(forms.ModelForm):
     def clean_email(self):
         """Kontrola emailu a převod na lowercase"""
         email = self.cleaned_data.get("email").lower()
+        # TODO zde chyba pri updatu zamestanace
+        if Employee.objects.filter(email__iexact=email).exists():
+            raise ValidationError("Tento e-mail je již používán. Zvolte jiný.")
         return email
