@@ -88,21 +88,14 @@ class UserDeleteView(LoginRequiredMixin, DeleteView):
         context["active_link"] = "main-panel"
         return context
 
-    def control(self):
+    def form_valid(self, form):
         """Self protection"""
         current_user = get_user_name(self)
         user_to_delete = str(self.get_object())
         if current_user == user_to_delete:
             messages.error(self.request, "Nemuzes smazat sam sebe")
-            return True
-        return False
-
-    def get(self, request, *args, **kwargs):
-        if self.control():
             return redirect("user_list")
-        return super().get(request, *args, **kwargs)
 
-    def form_valid(self, form):
         messages.success(self.request, f"{self.get_object()} smazan")
         return super().form_valid(form)
 
