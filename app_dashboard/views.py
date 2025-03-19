@@ -29,10 +29,13 @@ cons: Console = Console()
 # instance CamSystems
 
 
-def get_user_name(view_instance) -> str:
+def get_user(view_instance) -> str:
     """Získej jméno přihlášeného uživatele"""
     result: str = str(view_instance.request.user)
     return result
+
+
+
 
 
 class RedirectDashboard(RedirectView):
@@ -55,7 +58,7 @@ class MainPanelView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["user_name"] = get_user_name(self)
+        context["user_name"] = get_user(self)
         context["active_link"] = "main-panel"
 
         return context
@@ -70,7 +73,7 @@ class EmployeesView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["user_name"] = get_user_name(self)
+        context["user_name"] = get_user(self)
         context["active_link"] = "employees"
 
         return context
@@ -89,7 +92,7 @@ class VacationView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["user_name"] = get_user_name(self)
+        context["user_name"] = get_user(self)
         context["active_link"] = "vacations"
 
         return context
@@ -108,7 +111,7 @@ class WorkingView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["user_name"] = get_user_name(self)
+        context["user_name"] = get_user(self)
         context["active_link"] = "works"
 
         return context
@@ -127,7 +130,7 @@ class SickView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["user_name"] = get_user_name(self)
+        context["user_name"] = get_user(self)
         context["active_link"] = "sick"
 
         return context
@@ -140,7 +143,7 @@ class OtherView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["user_name"] = get_user_name(self)
+        context["user_name"] = get_user(self)
         context["active_link"] = "others"
 
         return context
@@ -153,7 +156,7 @@ class EmailView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["user_name"] = get_user_name(self)
+        context["user_name"] = get_user(self)
         context["active_link"] = "emails"
 
         return context
@@ -166,7 +169,7 @@ class ChartsView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["user_name"] = get_user_name(self)
+        context["user_name"] = get_user(self)
         context["active_link"] = "charts"
 
         return context
@@ -179,7 +182,7 @@ class AttendanceView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["user_name"] = get_user_name(self)
+        context["user_name"] = get_user(self)
         context["active_link"] = "attendances"
 
         return context
@@ -193,7 +196,7 @@ class CamView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["speed"] = self.kwargs.get("speed", 10)
-        context["user_name"] = get_user_name(self)
+        context["user_name"] = get_user(self)
         context["active_link"] = "cams"
         return context
 
@@ -208,7 +211,7 @@ class CreateEmpView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["user_name"] = get_user_name(self)
+        context["user_name"] = get_user(self)
         return context
 
     def form_valid(self, form):
@@ -231,7 +234,7 @@ class DepartmentListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["user_name"] = get_user_name(self)
+        context["user_name"] = get_user(self)
         context["active_link"] = "main-panel"
 
         return context
@@ -246,7 +249,7 @@ class TakeVectorView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["user_name"] = get_user_name(self)
+        context["user_name"] = get_user(self)
         context["active_link"] = "employees"
 
         return context
@@ -290,7 +293,7 @@ class EmployeeDeleteView(LoginRequiredMixin, DeleteView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["user_name"] = get_user_name(self)
+        context["user_name"] = get_user(self)
         context["active_link"] = "employees"
         return context
 
@@ -313,7 +316,7 @@ class EmployeeUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["user_name"] = get_user_name(self)
+        context["user_name"] = get_user(self)
         context["active_link"] = "employees"
 
         return context
@@ -336,7 +339,7 @@ class EmployeeDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["user_name"] = get_user_name(self)
+        context["user_name"] = get_user(self)
         context["active_link"] = "employees"
 
         return context
@@ -392,7 +395,7 @@ class DepartmentDetailList(LoginRequiredMixin, ListView):
         department_id = self.kwargs.get("pk")
         department = get_object_or_404(Department, pk=department_id)
         context["department"] = department
-        context["user_name"] = get_user_name(self)
+        context["user_name"] = get_user(self)
         context["active_link"] = "main-panel"
 
         return context
