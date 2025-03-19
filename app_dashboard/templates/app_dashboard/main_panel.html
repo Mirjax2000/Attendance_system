@@ -11,7 +11,8 @@
         <ul class="L-departments__list c-count">
             {% for department in departments %}
                 <li class="L-departments__item c-count__card">
-                    <a href="#" class="L-departments__link">
+                    <a href="{% url "department_detail_list" department.id %}"
+                       class="L-departments__link">
                         <div class="c-count__card__content">
                             <p class="c-count__card__content__info">{{ department.employee_count }}</p>
                         </div>

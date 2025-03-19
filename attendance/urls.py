@@ -20,6 +20,7 @@ from app_dashboard.views import (
     CamView,
     ChartsView,
     CreateEmpView,
+    DepartmentDetailList,
     DepartmentListView,
     EmailView,
     EmployeeDeleteView,
@@ -95,6 +96,11 @@ app_dashboard_urls: list = [
         "dashboard/department_list/",
         DepartmentListView.as_view(),
         name="department_list",
+    ),
+    path(
+        "dashboard/department_detail_list/<int:pk>",
+        DepartmentDetailList.as_view(),
+        name="department_detail_list",
     ),
 ]
 

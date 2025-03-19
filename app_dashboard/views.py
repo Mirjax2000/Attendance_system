@@ -374,3 +374,15 @@ class StatusView(TemplateView):
         ).exists()
         context["active_link"] = "status"
         return context
+
+
+class DepartmentDetailList(LoginRequiredMixin, ListView):
+    """seznam zamestnacu z FK department"""
+
+    template_name = "app_dashboard/department_detail_list.html"
+    model = Employee
+    context_object_name = "employees"
+
+    def get_queryset(self):
+        department_id = self.kwargs.get("pk")
+        return Employee.objects.filter(department_id=department_id)
