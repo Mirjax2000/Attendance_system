@@ -212,7 +212,17 @@ class Database:
     """Database methods"""
 
     def __init__(self, parent):
-        self.parent = parent
+        self.parent: CamSystems = parent
+
+    def face_vectors_reload(self):
+        """reload vectoru po uspesnem sejmuti facevectoru"""
+        self.parent.face_vectors.clear()
+        if DEBUG:
+            cons.log(f"pocet vectoru v pameti:{len(self.parent.face_vectors)}")
+        
+        self.parent.face_vectors = self.get_vectors_from_db()
+        if DEBUG:
+            cons.log(f"Novy pocet vectoru v pameti:{len(self.parent.face_vectors)}")
 
     def get_vectors_from_db(self) -> dict:
         """Get vectors from database"""
@@ -236,7 +246,7 @@ class Database:
         return face_vectors_
 
     def save_vector_to_db(self, employee_slug) -> dict:
-        """uloz sejmuty vektor do db"""
+        """uloz sejmuty vektor do db k employee"""
         if self.parent.face_rgb is None:
             if DEBUG:
                 cons.log(
@@ -244,8 +254,8 @@ class Database:
                 )
             return {"message": "no-face-detected", "success": False}
 
-        face_encoding = face_recognition.face_encodings(
-            self.parent.face_rgb, num_jitters=2, model="large"
+        face_encoding: list = face_recognition.face_encodings(
+            face_image=self.parent.face_rgb, num_jitters=2, model="large"
         )
 
         if len(face_encoding) > 0:
@@ -280,6 +290,8 @@ class Database:
                         f"FaceVector aktualizován pro {employee_slug}",
                         style="blue",
                     )
+                self.face_vectors_reload()
+
                 return {
                     "message": f"zaznam aktualizovan pro {employee_slug}",
                     "success": True,
@@ -292,7 +304,7 @@ class Database:
                         style="red",
                     )
                 return {
-                    "message": f"Zaměstnanec {employee_slug} nebyl nalezen. {(str(e),)}",
+                    "message": f"Zaměstnanec {employee_slug} nebyl nalezen. {str(e)}",
                     "success": False,
                 }
             except Exception as e:
