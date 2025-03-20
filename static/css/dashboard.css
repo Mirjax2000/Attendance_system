@@ -211,15 +211,15 @@ body.home {
   isolation: isolate;
 }
 
-.c-filter__item .form__wrapper, .c-count__card__content, .L-form {
+.c-filter__item .form__wrapper, .c-count__card__content, .L-take-vector__camstream img, .L-take-vector__scan, .L-form {
   margin-inline: auto;
 }
 
-.c-info-highlight, .c-filter, .c-emp-card, .c-count__card, .L-departments, .L-detail-list, .L-detail, .L-detail__item p strong, .L-detail__actions, .L-list__wrapper, .L-list__info, .L-list__actions, .L-form, .L-header, .L-navigation {
+.c-info-highlight, .c-filter, .c-emp-card, .c-count__card, .L-departments, .L-detail-list, .L-detail, .L-detail__item p strong, .L-detail__actions, .L-take-vector, .L-list__wrapper, .L-list__info, .L-list__actions, .L-form, .L-header, .L-navigation {
   user-select: none;
 }
 
-.c-info-highlight, .c-filter, .c-filter__item .form__wrapper, .c-filter__form select, .c-emp-card, .c-count__card, .c-count__card__content, .c-ico-btn, .L-departments, .L-detail-list__item, .L-form, .L-form__form input,
+.c-info-highlight, .c-filter, .c-filter__item .form__wrapper, .c-filter__form select, .c-emp-card, .c-count__card, .c-count__card__content, .c-ico-btn, .L-departments, .L-detail-list__item, .L-take-vector, .L-take-vector__camstream img, .L-take-vector__scan, .L-form, .L-form__form input,
 .L-form__form select, .L-form__submit, .L-content {
   border-radius: 5px;
 }
@@ -588,6 +588,44 @@ body {
 .L-list__actions .hide {
   opacity: 0.3;
   pointer-events: none;
+}
+
+.L-take-vector__header {
+  color: var(--scheme-default);
+  margin-bottom: 2em;
+}
+.L-take-vector__header h1 {
+  display: inline;
+  padding-bottom: 0.5em;
+  border-bottom: 1px solid var(--scheme-default);
+}
+.L-take-vector__camstream {
+  margin-bottom: 1em;
+}
+.L-take-vector__camstream div {
+  text-align: center;
+}
+.L-take-vector__camstream img {
+  border: 1px solid var(--scheme-clr-2);
+  box-shadow: 1px 1px 3px black;
+}
+.L-take-vector__scan {
+  display: block;
+  text-align: center;
+  font-size: 2rem;
+  padding-block: 0.5em;
+  color: var(--scheme-default);
+  width: clamp(12.5rem, 30%, 18.75rem);
+  background-color: var(--scheme-clr-8);
+  transition: all 0.1s ease-in-out;
+  box-shadow: 1px 1px 3px black;
+}
+.L-take-vector__scan:hover, .L-take-vector__scan:focus {
+  background-color: var(--scheme-success);
+}
+.L-take-vector__scan:active {
+  background-color: var(--scheme-warning);
+  transform: scale(0.95);
 }
 
 .L-detail {
