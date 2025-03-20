@@ -218,11 +218,14 @@ class Database:
         """reload vectoru po uspesnem sejmuti facevectoru"""
         self.parent.face_vectors.clear()
         if DEBUG:
-            cons.log(f"pocet vectoru v pameti:{len(self.parent.face_vectors)}")
-        
+            cons.log("Vektorova pamet resetovana", style="green")
+
         self.parent.face_vectors = self.get_vectors_from_db()
         if DEBUG:
-            cons.log(f"Novy pocet vectoru v pameti:{len(self.parent.face_vectors)}")
+            cons.log(
+                f"Novy pocet vectoru v pameti:{len(self.parent.face_vectors)}",
+                style="blue",
+            )
 
     def get_vectors_from_db(self) -> dict:
         """Get vectors from database"""
