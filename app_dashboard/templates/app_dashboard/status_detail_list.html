@@ -1,7 +1,7 @@
 {% extends "dashboard_base.html" %}
 {% load static %}
 {% block title %}
-    {{ department }}
+    {{ emp_status }}
 {% endblock title %}
 {% block content %}
     <section class="L-detail-list">
@@ -11,7 +11,7 @@
                      alt="delete icon"
                      width="24"
                      height="24">
-                Seznam zaměstnanců v: <span class="c-info-highlight">{{ department }}</span>
+                Seznam zaměstnanců v: <span class="c-info-highlight">{{ emp_status }}</span>
             </h2>
         </div>
         <ul class="L-detail-list__list">

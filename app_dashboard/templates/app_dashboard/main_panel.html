@@ -4,17 +4,37 @@
     main panel
 {% endblock title %}
 {% block content %}
-    <section class="L-departments">
+    <section class="L-departments status">
+        <p class="L-departments__header">
+            výpis stavu zaměstnanců: &nbsp;<i class="c-info-highlight">nalezeno: {{ emp_statuses.count }}</i>
+        </p>
+        <ul class="L-departments__list">
+            {% for emp_status in emp_statuses %}
+                <li class="L-departments__item c-count">
+                    <a href="{% url "emp_status_detail_list" emp_status.id %}"
+                       class="L-departments__link c-count__card">
+                        <div class="c-count__card__content">
+                            <p class="c-count__card__content__info">{{ emp_status.employee_count }}</p>
+                        </div>
+                        <p class="c-count-card__name">{{ emp_status.name }}</p>
+                    </a>
+                </li>
+            {% empty %}
+                <p>empty</p>
+            {% endfor %}
+        </ul>
+    </section>
+    <section class="L-departments department">
         <p class="L-departments__header">
             výpis organizačních struktur: &nbsp;<i class="c-info-highlight">nalezeno: {{ departments.count }}</i>
         </p>
-        <ul class="L-departments__list ">
+        <ul class="L-departments__list">
             {% for department in departments %}
                 <li class="L-departments__item c-count">
                     <a href="{% url "department_detail_list" department.id %}"
                        class="L-departments__link c-count__card">
-                        <div class="c-count__card__content" data-color="clr_1">
-                            <p class="c-count__card__content__info" data-color="clr_1">{{ department.employee_count }}</p>
+                        <div class="c-count__card__content">
+                            <p class="c-count__card__content__info">{{ department.employee_count }}</p>
                         </div>
                         <p class="c-count-card__name">{{ department.name }}</p>
                     </a>

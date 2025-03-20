@@ -1,4 +1,4 @@
-"""Napln FK tabulky one to many, Department, EmployeeStatus"""
+"""OOP trida pro kontrolu databaze"""
 
 from rich.console import Console
 
@@ -9,7 +9,7 @@ from .settings import DEBUG
 cons: Console = Console()
 
 
-class DefaultFillTables:
+class DatabaseControl:
     """defaultni zaplneni tabulek"""
 
     def checking_db(self) -> bool:
@@ -22,7 +22,7 @@ class DefaultFillTables:
         if not Department.objects.exists():
             Department.objects.bulk_create(departments)
             if DEBUG:
-                cons.log("Tabulka Department byla naplněna.")
+                cons.log("Tabulka Department byla naplněna.", style="green")
 
     def default_employee_status(self):
         """Zaplnění tabulky EmployeeStatus, pokud je prázdná."""
@@ -37,21 +37,26 @@ class DefaultFillTables:
         if not EmployeeStatus.objects.exists():
             EmployeeStatus.objects.bulk_create(working_statuses)
             if DEBUG:
-                cons.log("Tabulka EmployeeStatus byla naplněna.")
+                cons.log("Tabulka EmployeeStatus byla naplněna.", style="green")
 
     def run_all_default(self):
         """spusteni vsech funkci"""
         if self.checking_db():
             if DEBUG:
-                cons.log("Tabulky už obsahují data. Není potřeba nic přidávat.")
+                cons.log(
+                    "Tabulky už obsahují data. Není potřeba nic přidávat.",
+                    style="green",
+                )
             return
         self.default_department()
         self.default_employee_status()
         if DEBUG:
-            cons.log("Tabulky byly naplněny.")
+            cons.log("Tabulky byly naplněny.", style="green")
 
 
-fill_tables: DefaultFillTables = DefaultFillTables()
+# aktivace instance
+fill_tables: DatabaseControl = DatabaseControl()
+# nyni je instance vytovrena a je pripraven k importu
 
 if __name__ == "__main__":
     fill_tables.run_all_default()

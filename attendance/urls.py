@@ -27,6 +27,7 @@ from app_dashboard.views import (
     EmployeeDetailView,
     EmployeesView,
     EmployeeUpdateView,
+    EmpStatusDetailList,
     MainPanelView,
     OtherView,
     RedirectDashboard,
@@ -101,6 +102,11 @@ app_dashboard_urls: list = [
         "dashboard/department_detail_list/<int:pk>",
         DepartmentDetailList.as_view(),
         name="department_detail_list",
+    ),
+    path(
+        "dashboard/emp_status_detail_list/<int:pk>",
+        EmpStatusDetailList.as_view(),
+        name="emp_status_detail_list",
     ),
 ]
 

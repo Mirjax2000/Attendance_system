@@ -49,22 +49,23 @@ class RedirectDashboard(RedirectView):
     url = "dashboard/main_panel"
 
 
-class MainPanelView(LoginRequiredMixin, ListView):
+class MainPanelView(LoginRequiredMixin, TemplateView):
     """homepage"""
 
     template_name = "app_dashboard/main_panel.html"
-    model = Department
-    context_object_name = "departments"
-
-    def get_queryset(self):
-        # Získání querysetu a přidání počtu zaměstnanců pomocí annotate
-        queryset = Department.objects.annotate(employee_count=Count("employee"))
-        return queryset
 
     def get_context_data(self, **kwargs):
         user: dict = get_user(self)
-
         context = super().get_context_data(**kwargs)
+        departments = Department.objects.annotate(
+            employee_count=Count("employee")
+        )
+        emp_statuses = EmployeeStatus.objects.annotate(
+            employee_count=Count("employee")
+        )
+
+        context["departments"] = departments
+        context["emp_statuses"] = emp_statuses
         context["username"] = user["username"]
         context["status"] = user["status"]
         context["active_link"] = "main-panel"
@@ -404,6 +405,7 @@ class StatusView(TemplateView):
     stav databaze, ruzne vypisy do contextu
     """
 
+    # TODO rozsirit funkcnost o ovladaci prvky
     template_name = "app_dashboard/status.html"
 
     def get_context_data(self, **kwargs):
@@ -457,6 +459,33 @@ class DepartmentDetailList(LoginRequiredMixin, ListView):
         context["username"] = user["username"]
         context["status"] = user["status"]
         context["department"] = department
+        context["active_link"] = "main-panel"
+
+        return context
+
+
+class EmpStatusDetailList(LoginRequiredMixin, ListView):
+    """seznam zamestnacu z FK department"""
+
+    template_name = "app_dashboard/status_detail_list.html"
+    model = Employee
+    context_object_name = "employees"
+
+    def get_queryset(self):
+        employee_status_id = self.kwargs.get("pk")
+        return Employee.objects.filter(employee_status_id=employee_status_id)
+
+    def get_context_data(self, **kwargs):
+        user: dict = get_user(self)
+        employee_status_id = self.kwargs.get("pk")
+        employee_status = get_object_or_404(
+            EmployeeStatus, pk=employee_status_id
+        )
+
+        context = super().get_context_data(**kwargs)
+        context["username"] = user["username"]
+        context["status"] = user["status"]
+        context["emp_status"] = employee_status
         context["active_link"] = "main-panel"
 
         return context
