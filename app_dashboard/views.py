@@ -49,22 +49,21 @@ class RedirectDashboard(RedirectView):
     url = "dashboard/main_panel"
 
 
-class MainPanelView(LoginRequiredMixin, ListView):
+class MainPanelView(LoginRequiredMixin, TemplateView):
     """homepage"""
 
     template_name = "app_dashboard/main_panel.html"
-    model = Department
-    context_object_name = "departments"
-
-    def get_queryset(self):
-        # Získání querysetu a přidání počtu zaměstnanců pomocí annotate
-        queryset = Department.objects.annotate(employee_count=Count("employee"))
-        return queryset
 
     def get_context_data(self, **kwargs):
         user: dict = get_user(self)
-
         context = super().get_context_data(**kwargs)
+
+        context["departments"] = Department.objects.annotate(
+            employee_count=Count("employee")
+        )
+        context["employees"] = EmployeeStatus.objects.annotate(
+            employee_count=Count("employee")
+        )
         context["username"] = user["username"]
         context["status"] = user["status"]
         context["active_link"] = "main-panel"
@@ -403,7 +402,7 @@ class StatusView(TemplateView):
     """
     stav databaze, ruzne vypisy do contextu
     """
-
+    # TODO rozsirit funkcnost o ovladaci prvky
     template_name = "app_dashboard/status.html"
 
     def get_context_data(self, **kwargs):

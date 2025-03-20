@@ -16,6 +16,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 cons: Console = Console()
 User = get_user_model()
 
+
 def get_available_driver():
     """Zkusí postupně inicializovat webdriver pro Chrome, Edge a Firefox.
     Použije první dostupný webdriver. Pokud žádný není nalezen, vyhodí výjimku
@@ -79,7 +80,9 @@ class LoginLogoutSeleniumTest(StaticLiveServerTestCase):
         try:
             if cls.driver:
                 cls.driver.quit()
-                cons.log("[LOG] Webdriver byl úspěšně ukončen.", style="green")
+                cons.log(
+                    "[LOG] Webdriver byl úspěšně ukončen.", style="magenta bold"
+                )
         except Exception as e:
             cons.log("[LOG] Chyba při ukončování webdriveru:", e, style="red")
         super().tearDownClass()
