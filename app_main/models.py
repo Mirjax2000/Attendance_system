@@ -11,6 +11,7 @@ from django.db import models
 from django.db import transaction as tran
 from django.forms import ValidationError
 from django.utils.text import slugify
+from django.utils.timezone import now
 from dotenv import load_dotenv
 from rich.console import Console
 
@@ -168,14 +169,35 @@ class Employee(models.Model):
         """Kontrola pin_code"""
         return check_password(pin_code, self.pin_code_hash)
 
-    def save(self, *args, **kwargs):
-        self.set_slug()
-        self.set_pin_hash()
+    def status_change(self):
+        """pri zmene statusu vytovri novy zaznam v tabulce EmployeeStatusHistory"""
+        if self.pk:
+            old_status = Employee.objects.get(pk=self.pk).employee_status
+            if old_status != self.employee_status:
+                EmployeeStatusHistory.objects.create(
+                    employee=self,
+                    previous_status=old_status,
+                    new_status=self.employee_status,
+                    timestamp=now(),
+                )
+
+    def default_tables(self):
+        """defaultni zaplneni tabulek"""
         # pokud v FK nic neni tak tam dej hodnotu PK klice z default
         if not self.employee_status:
-            self.employee_status = EmployeeStatus.objects.get(name="free")
+            self.employee_status = EmployeeStatus.objects.get_or_create(
+                name="free"
+            )
         if not self.department:
-            self.department = Department.objects.get(name="nezarazeno")
+            self.department = Department.objects.get_or_create(
+                name="nezarazeno"
+            )
+
+    def save(self, *args, **kwargs):
+        self.set_slug()  # nastav slug
+        self.set_pin_hash()  # novy pinhash
+        self.default_tables()  # kontrola tabulek
+        self.status_change()  # zmena stavu na na history
 
         with tran.atomic():
             super().save(*args, **kwargs)
@@ -305,3 +327,39 @@ class EmployeeStatus(models.Model):
 
     def __repr__(self) -> str:
         return f"EmployeeStatus: {self.name}"
+
+
+from datetime import datetime
+
+from django.db import models
+
+
+class EmployeeStatusHistory(models.Model):
+    """Historie stavů zaměstnance."""
+
+    employee = models.ForeignKey(
+        "Employee", on_delete=models.CASCADE, related_name="status_history"
+    )
+    previous_status = models.ForeignKey(
+        "EmployeeStatus",
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name="previous_statuses",
+        verbose_name="predesly status",
+    )
+    new_status = models.ForeignKey(
+        "EmployeeStatus",
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name="new_statuses",
+        verbose_name="novy status",
+    )
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return f"Historie stavu {self.employee.slug} - {self.timestamp.strftime('%d.%m.%Y - %H:%M:%S')}"
+
+    class Meta:
+        """ordering"""
+
+        ordering = ["-timestamp"]
