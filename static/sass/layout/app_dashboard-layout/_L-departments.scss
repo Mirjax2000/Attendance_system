@@ -2,11 +2,14 @@
 @use "../../base/placeholders" as *;
 
 .L-departments {
+    @extend %select-none;
+    @extend %border-radius;
+
     width: 100%;
     padding: 1em;
-    border-bottom: 1px solid black;
+    border: 1px solid #00000039;
     box-shadow: 1px 1px 2px #00000039;
-    margin-bottom: 2em;
+    margin-bottom: 1rem;
 
     &__header {
         color: var(--scheme-default);

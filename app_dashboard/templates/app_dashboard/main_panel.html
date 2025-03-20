@@ -6,16 +6,17 @@
 {% block content %}
     <section class="L-departments">
         <p class="L-departments__header">
-            výpis stavu zaměstnanců: &nbsp;<i class="c-info-highlight">nalezeno: {{ employees.count }}</i>
+            výpis stavu zaměstnanců: &nbsp;<i class="c-info-highlight">nalezeno: {{ emp_statuses.count }}</i>
         </p>
         <ul class="L-departments__list">
-            {% for employee in employees %}
+            {% for emp_status in emp_statuses %}
                 <li class="L-departments__item c-count">
-                    <a href="#" class="L-departments__link c-count__card">
+                    <a href="{% url "emp_status_detail_list" emp_status.id %}"
+                       class="L-departments__link c-count__card">
                         <div class="c-count__card__content" data-color="clr_1">
-                            <p class="c-count__card__content__info" data-color="clr_1">{{ employee.employee_count }}</p>
+                            <p class="c-count__card__content__info" data-color="clr_1">{{ emp_status.employee_count }}</p>
                         </div>
-                        <p class="c-count-card__name">{{ employee.name }}</p>
+                        <p class="c-count-card__name">{{ emp_status.name }}</p>
                     </a>
                 </li>
             {% empty %}

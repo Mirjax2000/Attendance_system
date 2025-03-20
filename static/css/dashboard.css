@@ -214,11 +214,11 @@ body.home {
   margin-inline: auto;
 }
 
-.c-info-highlight, .c-filter, .c-emp-card, .c-count__card, .L-detail-list, .L-detail, .L-detail__item p strong, .L-detail__actions, .L-list__wrapper, .L-list__info, .L-list__actions, .L-form, .L-header, .L-navigation {
+.c-info-highlight, .c-filter, .c-emp-card, .c-count__card, .L-departments, .L-detail-list, .L-detail, .L-detail__item p strong, .L-detail__actions, .L-list__wrapper, .L-list__info, .L-list__actions, .L-form, .L-header, .L-navigation {
   user-select: none;
 }
 
-.c-info-highlight, .c-filter, .c-filter__item .form__wrapper, .c-filter__form select, .c-emp-card, .c-count__card, .c-count__card__content, .c-ico-btn, .L-detail-list__item, .L-form, .L-form__form input,
+.c-info-highlight, .c-filter, .c-filter__item .form__wrapper, .c-filter__form select, .c-emp-card, .c-count__card, .c-count__card__content, .c-ico-btn, .L-departments, .L-detail-list__item, .L-form, .L-form__form input,
 .L-form__form select, .L-form__submit, .L-content {
   border-radius: 5px;
 }
@@ -651,9 +651,9 @@ body {
 .L-departments {
   width: 100%;
   padding: 1em;
-  border-bottom: 1px solid black;
+  border: 1px solid rgba(0, 0, 0, 0.2235294118);
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2235294118);
-  margin-bottom: 2em;
+  margin-bottom: 1rem;
 }
 .L-departments__header {
   color: var(--scheme-default);
