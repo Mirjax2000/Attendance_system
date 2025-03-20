@@ -1,0 +1,86 @@
+@use "../../utils/" as *;
+@use "../../base/placeholders" as *;
+@use "sass:list";
+
+.c-count {
+    &__card {
+        @extend %select-none;
+        @extend %border-radius;
+        @include flex(center, center, 1em);
+
+        flex-direction: column;
+        perspective: 1000px;
+        transform-style: preserve-3d;
+        backface-visibility: hidden;
+        width: 7rem;
+        aspect-ratio: 1;
+        font-size: 0.875rem;
+        text-align: center;
+        background-color: var(--scheme-clr-1);
+        box-shadow: 1px 1px 5px #00000076;
+        transform: rotate(0deg);
+        transition: all 0.1s ease-in-out;
+        opacity: 0;
+        animation: card-rotation 0.5s ease-in-out 0.1s forwards;
+
+        &:hover {
+            background-color: var(--scheme-clr-10);
+        }
+
+        &:active {
+            transform: scale(0.95) !important;
+        }
+
+        &__content {
+            @extend %border-radius;
+            @extend %margin-in;
+            @include flex;
+
+            font-size: 1.3rem;
+            background-color: var(--scheme-clr-3);
+            color: #d2d2d2;
+            width: 50%;
+
+            &[data-color="clr_1"] {
+                color: #2cb67d;
+                box-shadow: 0 0 10px rgba(#2cb67d, 0.3);
+            }
+
+            &[data-color="clr_2"] {
+                color: #87ff65ff;
+                box-shadow: 0 0 10px rgba(#87ff65ff, 0.3);
+            }
+
+            &[data-color="clr_3"] {
+                color: #aceb98ff;
+                box-shadow: 0 0 10px rgba(#aceb98ff, 0.3);
+            }
+
+            &[data-color="clr_4"] {
+                color: #a4c2a8ff;
+                box-shadow: 0 0 10px rgba(#a4c2a8ff, 0.3);
+            }
+
+            &[data-color="clr_5"] {
+                color: #307fc0;
+                box-shadow: 0 0 10px rgba(#307fc0, 0.3);
+            }
+
+            &[data-color="clr_6"] {
+                color: #569dd7;
+                box-shadow: 0 0 10px rgba(#569dd7, 0.3);
+            }
+
+            &__info {
+                @include scroll(2px);
+
+                padding-block: 0.3em;
+                overflow: auto;
+            }
+        }
+    }
+
+    &__name {
+        color: var(--scheme-default);
+    }
+}

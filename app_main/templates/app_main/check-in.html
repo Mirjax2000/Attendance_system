@@ -1,61 +1,24 @@
 {% load static %}
-{% include "includes/app_main_header.html" %}
-<main class="l-check-in-container">
-    <section class="c-camera-frame">
-        <div class="front-side side" id="frontSide">
+<main class="L-check-in">
+    <section class="face-scan">
+        <div class="c-camera">
             <img src="{% url "camstream" speed=speed %}"
-                 class="c-camera-frame__video"
+                 class="c-camera__video"
                  alt="camstream">
-            <p class="c-button btn" id="captureBtn">SCAN</p>
-            <p id="captureInfo">info</p>
-            <p class="front-side__info" id="frontSideInfo"></p>
         </div>
-        {% comment %} <div class="back-side side" id="backSide">
-            <section class="c-numpad">
-                <div class="c-info">
-                    <h3 class="c-info__heading">
-                        PIN: <span class="c-info__digits" id="pin">****</span>
-                    </h3>
-                </div>
-                <ul class="c-numpad__list">
-                    <li class="c-numpad__item">
-                        <p class="c-numpad__text">1</p>
-                    </li>
-                    <li class="c-numpad__item">
-                        <p class="c-numpad__text">2</p>
-                    </li>
-                    <li class="c-numpad__item">
-                        <p class="c-numpad__text">3</p>
-                    </li>
-                    <li class="c-numpad__item">
-                        <p class="c-numpad__text">4</p>
-                    </li>
-                    <li class="c-numpad__item">
-                        <p class="c-numpad__text">5</p>
-                    </li>
-                    <li class="c-numpad__item">
-                        <p class="c-numpad__text">6</p>
-                    </li>
-                    <li class="c-numpad__item">
-                        <p class="c-numpad__text">7</p>
-                    </li>
-                    <li class="c-numpad__item">
-                        <p class="c-numpad__text">8</p>
-                    </li>
-                    <li class="c-numpad__item">
-                        <p class="c-numpad__text">9</p>
-                    </li>
-                    <li class="c-numpad__item">
-                        <p class="c-numpad__text">Del</p>
-                    </li>
-                    <li class="c-numpad__item">
-                        <p class="c-numpad__text">0</p>
-                    </li>
-                    <li class="c-numpad__item">
-                        <p class="c-numpad__text" id="sendPin">Enter</p>
-                    </li>
-                </ul>
-            </section>
-        </div> {% endcomment %}
+        <div class="L-check-in__error-frame">
+            {% for message in messages %}
+                <p class="L-check-in__error-frame__text">{{ message }} - Try again</p>
+            {% empty %}
+                <p class="L-check-in__error-frame__text">&nbsp;</p>
+            {% endfor %}
+        </div>
+        <div class="c-scan">
+            <form action="{% url "get_result" %}" class="c-scan__form" method="post">
+                {% csrf_token %}
+                <button class="c-scan__submit">SCAN</button>
+            </form>
+        </div>
     </section>
 </main>
+

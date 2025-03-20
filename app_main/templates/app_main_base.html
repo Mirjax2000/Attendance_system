@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+    Application
+{% endblock title %}
+<!-- css stylesheet -->
+<!-- css  -->
+{% block css %}
+    <link rel="preload"
+          href="{% static 'css/main.css' %}"
+          as="style"
+          onload="this.onload=null;this.rel='stylesheet'">
+{% endblock css %}
+<!-- no js -->
+<noscript>
+    {% block nojs %}
+        <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    {% endblock nojs %}
+</noscript>
+<!-- end -->
+<!-- main content -->
+{% block body %}
+    <div class="P-container">
+        {% block content %}
+        {% endblock content %}
+    </div>
+{% endblock body %}
+{% block js %}
+    <script src="{% static 'js/main.js' %}"></script>
+{% endblock js %}
+<!-- javascript-->

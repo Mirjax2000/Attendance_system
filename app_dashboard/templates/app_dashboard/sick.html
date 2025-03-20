@@ -5,6 +5,8 @@
 {% endblock title %}
 {% block content %}
     <div class="content__container">
-        <h1>Sick</h1>
+        <h1>nemocenska</h1>
+        <p>prave ted je : {{ sick_employees.count }} nemocnych</p>
+        {% for sick_employee in sick_employees %}<p>manik co marodi: {{ sick_employee.slug }}</p>{% endfor %}
     </div>
 {% endblock content %}

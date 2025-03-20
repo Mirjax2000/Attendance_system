@@ -79,9 +79,34 @@ class EmployeeModelTest(TestCase):
             employee=employee2, face_vector={"vector": face_vektor_list_2}
         )
 
-    def test_employee_creation(self):
+    def test_employee_count(self):
+        """Test na počet záznamů v tabulce Employee"""
+        expected_count = 2
+        self.assertEqual(Employee.objects.count(), expected_count)
+
+    def test_employees_status_count(self):
+        """Test na počet záznamů v tabulce EmployeeStatus"""
+        expected_count = 5
+        self.assertEqual(EmployeeStatus.objects.count(), expected_count)
+
+    def test_employees_in_department(self):
+        """kolik lidi je departments v nezarazeno"""
+        expected_count = 2
+        nezarazeno = Department.objects.get(name="nezarazeno")
+        count = Employee.objects.filter(department=nezarazeno).count()
+        self.assertEqual(count, expected_count)
+
+    def test_employee_creation(
+        self,
+    ):
         """Z tabulky employee"""
+        free_id = EmployeeStatus.objects.get(name="free")
+        nezarazeno_id = Department.objects.get(name="nezarazeno")
+        # instance jan-novak
         employee_jan = Employee.objects.get(slug="jan-novak")
+        self.assertIsNotNone(employee_jan)
+        self.assertTrue(employee_jan)
+        self.assertIsInstance(employee_jan, Employee)
         self.assertEqual(employee_jan.name, "Jan")
         self.assertEqual(employee_jan.surname, "Novák")
         self.assertEqual(employee_jan.city, "Praha")
@@ -90,10 +115,9 @@ class EmployeeModelTest(TestCase):
         self.assertEqual(employee_jan.email, "jan.novak@example.com")
         self.assertEqual(employee_jan.date_of_birth, date(1985, 5, 10))
         self.assertEqual(employee_jan.age(), (39))
-        self.assertTrue(employee_jan.check_pin_code("1234"))
-        self.assertTrue(employee_jan.department, "nezarazeno")
-        self.assertEqual(employee_jan.employee_status.name, "free")
-        self.assertNotEqual(employee_jan.employee_status.name, "vacation")
+        self.assertEqual(employee_jan.check_pin_code("1234"), True)
+        self.assertEqual(employee_jan.department, nezarazeno_id)
+        self.assertEqual(employee_jan.employee_status, free_id)
         self.assertEqual(employee_jan.is_valid, True)
         # propojeni pres FK na tabulku FaceVector
         self.assertEqual(
@@ -113,6 +137,26 @@ class EmployeeModelTest(TestCase):
             expected_vector_2,
         )
         self.assertFalse(face_vector_jan.face_vector)
+
+    def test_departments_creation(self):
+        """z tabulky department"""
+        department_uklid = Department.objects.get(name="uklid")
+        uklid_id = Department.objects.get(name="uklid")
+        self.assertTrue(department_uklid)
+        self.assertIsInstance(department_uklid, Department)
+        self.assertEqual(department_uklid, uklid_id)
+
+    def test_employee_status_creation(self):
+        """z tabulky EmployeeStatus"""
+        employee_status_work = EmployeeStatus.objects.get(name="working")
+        employee_status_free = EmployeeStatus.objects.get(name="free")
+        work_id = EmployeeStatus.objects.get(name="working")
+        free_id = EmployeeStatus.objects.get(name="free")
+        self.assertTrue(employee_status_work)
+        self.assertIsInstance(employee_status_work, EmployeeStatus)
+        self.assertIsInstance(employee_status_free, EmployeeStatus)
+        self.assertEqual(employee_status_work, work_id)
+        self.assertEqual(employee_status_free, free_id)
 
 
 class EmployeeFormTests(TestCase):

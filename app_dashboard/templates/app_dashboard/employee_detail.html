@@ -67,14 +67,14 @@
             </li>
             <li class="L-detail__item">
                 <div class="L-detail__actions">
-                    <a class="c-ico-btn" href="{% url 'delete_employee' employee.pk %}">
+                    <a class="c-ico-btn" href="{% url 'delete_employee' employee.slug %}">
                         <img src="{% static 'images/icons8-delete-48-red.png' %}"
                              alt="delete icon"
                              width="24"
                              height="24">
                         <p>smazat</p>
                     </a>
-                    <a class="c-ico-btn" href="{% url 'update_employee' employee.pk %}">
+                    <a class="c-ico-btn" href="{% url 'update_employee' employee.slug %}">
                         <img class="list__action-icon"
                              src="{% static 'images/icons8-update-blue.png' %}"
                              alt="update icon"
@@ -82,7 +82,7 @@
                              height="24">
                         <p class="list__action-text">update</p>
                     </a>
-                    <a class="c-ico-btn" href="{% url 'take_vector' employee.pk %}">
+                    <a class="c-ico-btn" href="{% url 'take_vector' employee.slug %}">
                         <img class="list__action-icon"
                              src="{% static 'images/icons8-vector.png' %}"
                              alt="facevektor icon"

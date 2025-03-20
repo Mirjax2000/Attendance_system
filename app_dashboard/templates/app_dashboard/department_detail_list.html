@@ -1,0 +1,51 @@
+{% extends "dashboard_base.html" %}
+{% load static %}
+{% block title %}
+    Department {{ department }}
+{% endblock title %}
+{% block content %}
+    <section class="L-detail-list">
+        <div class="L-detail-list__wrapper">
+            <h2 class="L-detail-list__header">
+                <img src="{% static 'images/icons8-list.png' %}"
+                     alt="delete icon"
+                     width="24"
+                     height="24">
+                Seznam zaměstnanců v: <span class="c-info-highlight">{{ department }}</span>
+            </h2>
+        </div>
+        <ul class="L-detail-list__list">
+            {% for employee in employees %}
+                <li class="L-detail-list__item">
+                    <a href="#" class="c-emp-card">
+                        <div class="c-emp-card__avatar">
+                            <img src="{% static "images/avatars/avatar_01.webp" %}"
+                                 alt="avatar"
+                                 width="50"
+                                 height="50">
+                        </div>
+                        <div class="c-emp-card__content">
+                            <p class="c-emp-card__content--status {% if employee.employee_status|lower == "vacation" %}u-text-info {% elif employee.employee_status|lower == "working" %}u-text-success {% elif employee.employee_status|lower == "sick_leave" %}u-text-warning  {% endif %}">
+                                {{ employee.employee_status }}
+                            </p>
+                            <p class="c-emp-card__content--name">{{ employee.name }} {{ employee.surname }}</p>
+                            <p class="c-emp-card__content--email">
+                                <span class="title">email:</span>
+                                <br>
+                                <span class="content">{{ employee.email }}</span>
+                            </p>
+                            <p class="c-emp-card__content--phone">
+                                <span class="title">tel:</span>
+                                <span class="content">{{ employee.phone_number }}</span>
+                            </p>
+                        </div>
+                    </a>
+                </li>
+            {% empty %}
+                <li class="L-detail-list__item">
+                    <div class="c-emp-card">Zadny zamestanec</div>
+                </li>
+            {% endfor %}
+        </ul>
+    </section>
+{% endblock content %}

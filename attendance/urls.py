@@ -20,7 +20,7 @@ from app_dashboard.views import (
     CamView,
     ChartsView,
     CreateEmpView,
-    DashboardView,
+    DepartmentDetailList,
     DepartmentListView,
     EmailView,
     EmployeeDeleteView,
@@ -32,14 +32,19 @@ from app_dashboard.views import (
     RedirectDashboard,
     SaveVectorToDbView,
     SickView,
+    StatusView,
     TakeVectorView,
     VacationView,
     WorkingView,
 )
 from app_main.views import (
     CamStreamView,
+    CheckPinView,
+    ComparePinView,
+    EmpLoginView,
     GetResultView,
     MainPageView,
+    SetStatusView,
 )
 
 urlpatterns = [
@@ -49,14 +54,15 @@ urlpatterns = [
 ]
 
 app_dashboard_urls: list = [
-    path("dashboard/", DashboardView.as_view(), name="dashboard"),
+    # path("dashboard/", DashboardView.as_view(), name="dashboard"),
+    path("dashboard/status", StatusView.as_view(), name="status"),
     path(
         "dashboard/save_vector_to_db/<slug:slug>",
         SaveVectorToDbView.as_view(),
         name="save_vector_to_db",
     ),
     path(
-        "dashboard/take_vector/<int:pk>/",
+        "dashboard/take_vector/<slug:slug>/",
         TakeVectorView.as_view(),
         name="take_vector",
     ),
@@ -65,17 +71,17 @@ app_dashboard_urls: list = [
     path("dashboard/main_panel", MainPanelView.as_view(), name="main_panel"),
     path("dashboard/employees", EmployeesView.as_view(), name="employees"),
     path(
-        "dashboard/detail_employee/<int:pk>/",
+        "dashboard/detail_employee/<slug:slug>/",
         EmployeeDetailView.as_view(),
         name="detail_employee",
     ),
     path(
-        "dashboard/delete_employee/<int:pk>/",
+        "dashboard/delete_employee/<slug:slug>/",
         EmployeeDeleteView.as_view(),
         name="delete_employee",
     ),
     path(
-        "dashboard/update_employee/<int:pk>/",
+        "dashboard/update_employee/<slug:slug>/",
         EmployeeUpdateView.as_view(),
         name="update_employee",
     ),
@@ -91,11 +97,28 @@ app_dashboard_urls: list = [
         DepartmentListView.as_view(),
         name="department_list",
     ),
+    path(
+        "dashboard/department_detail_list/<int:pk>",
+        DepartmentDetailList.as_view(),
+        name="department_detail_list",
+    ),
 ]
 
 app_main_urls: list = [
     path("app_main/<int:speed>", MainPageView.as_view(), name="mainpage"),
     path("app_main/get_result", GetResultView.as_view(), name="get_result"),
+    path(
+        "app_main/check_pin/<slug:slug>",
+        CheckPinView.as_view(),
+        name="check_pin",
+    ),
+    path("app_main/compare_pin", ComparePinView.as_view(), name="compare_pin"),
+    path(
+        "app_main/emp_login/<slug:slug>",
+        EmpLoginView.as_view(),
+        name="emp_login",
+    ),
+    path("app_main/set_status", SetStatusView.as_view(), name="set_status"),
 ]
 
 app_accounts_urls: list = [

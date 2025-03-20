@@ -1,0 +1,15 @@
+@use "../../utils/" as *;
+@use "../../base/placeholders" as *;
+
+.L-check-in {
+    &__error-frame {
+        @extend %margin-in;
+
+        width: 50%;
+
+        &__text {
+            padding: 0.3em 0.5em;
+            color: var(--scheme-warning);
+        }
+    }
+}

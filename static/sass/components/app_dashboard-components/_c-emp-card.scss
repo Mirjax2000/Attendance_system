@@ -1,0 +1,77 @@
+@use "../../utils/" as *;
+@use "../../base/placeholders" as *;
+
+.c-emp-card {
+    @extend %select-none;
+    @extend %border-radius;
+    @extend %pos-rel;
+
+    width: 100%;
+    min-height: 100px;
+    background-image: var(--background-clr-gradient-secondary);
+    border: 1px solid black;
+    box-shadow: 1px 1px 2px #00000072;
+    transition: all 0.1s ease-in-out;
+    opacity: 0.7;
+    padding: 0.5em;
+
+    &:hover {
+        background-image: none;
+        background-image: var(--background-clr-gradient-ternary);
+        transform: scale(1.1);
+        box-shadow: 2px 2px 5px black;
+        opacity: 1;
+    }
+
+    &__avatar {
+        position: absolute;
+        width: 40px;
+        aspect-ratio: 1;
+        top: -10px;
+        left: 15px;
+        border-radius: 50%;
+        border: 2px solid #0059ff80;
+        box-shadow: 1px 1px 5px #000;
+
+        img {
+            border-radius: 50%;
+        }
+    }
+
+    &__content {
+        color: var(--scheme-default);
+        font-size: 0.8rem;
+
+        .title {
+            font-style: normal;
+            color: white;
+            font-weight: bolder;
+        }
+
+        .content {
+            font-style: italic;
+        }
+
+        &--status {
+            text-align: right;
+            font-size: 1.1rem;
+            text-decoration: underline;
+        }
+
+        &--name {
+            margin-top: 0.5em;
+            text-align: left;
+            padding-block: 0.3em;
+        }
+
+        &--email {
+            text-align: left;
+            padding-block: 0.3em;
+        }
+
+        &--phone {
+            text-align: left;
+            padding-block: 0.3em;
+        }
+    }
+}

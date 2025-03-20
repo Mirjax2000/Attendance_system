@@ -1,13 +1,12 @@
 @use "../../utils/" as *;
 @use "../../base/placeholders" as *;
 
-.l-header {
-    position: relative;
-    isolation: isolate;
+.L-header {
+    @extend %pos-rel;
 
     .c-logo {
-        position: absolute;
-        z-index: 100;
+        @extend %pos-abs;
+
         top: 0;
         left: 0;
     }

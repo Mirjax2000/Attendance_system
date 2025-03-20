@@ -1,0 +1,29 @@
+{% extends "app_main_base.html" %}
+{% load static %}
+{% block content %}
+    <!-- header -->
+    {% include "includes/app_main_header.html" %}
+    {% for message in messages %}<p class="u-text-success">{{ message }}</p>{% endfor %}
+    <h1>Moznosti pro: {{ name }}</h1>
+    <section class="L-choose">
+        <form action="{% url "set_status" %}" method="post">
+            {% csrf_token %}
+            <input type="text" name="statusVal" id="statusVal">
+            <input type="text" name="name" value="{{ name }}" />
+            <ul class="L-choose__list">
+                <li class="L-choose__item" data-value="working">
+                    <button type="submit">Odeslat-do práce</button>
+                </li>
+                <li class="L-choose__item" data-value="free">
+                    <button type="submit">Odeslat-z práce</button>
+                </li>
+                <li class="L-choose__item" data-value="business_trip">
+                    <button type="submit">Odeslat-služební cesta</button>
+                </li>
+            </ul>
+        </form>
+    </section>
+{% endblock content %}
+{% block js %}
+    <script src="{% static 'js/emp_login.js' %}"></script>
+{% endblock js %}

@@ -1,72 +1,95 @@
 @use "../../base/placeholders" as *;
+@use "../../utils/" as *;
 
 .c-numpad {
-    width: 100%;
-
     @extend %margin-in;
+    @extend %border-radius;
 
-    background-image: var(--background-clr-gradient-primary);
+    width: 50%;
     box-shadow: 1px 1px 5px #0000008d;
     border: 1px solid black;
-    border-radius: 4px;
     padding: 0.5em;
 
+    &__pin-block {
+        @extend %margin-in;
+        @extend %border-radius;
+
+        width: 33%;
+        background-color: #3b4453;
+        min-height: 2rem;
+        text-align: center;
+        margin-bottom: 0.3em;
+    }
+
+    &__star {
+        font-size: 3rem;
+        line-height: 0;
+        padding-top: 0.45em;
+    }
+
     &__list {
-        width: 70%;
+        @extend %border-radius;
+        @extend %margin-in;
+        @include flex(center, center);
+
+        width: 80%;
         padding: 0.5em;
-        margin-top: 1em;
         margin-bottom: 1em;
-        border-radius: 4px;
-        margin-inline: auto;
-        display: flex;
-        justify-content: center;
-        align-items: center;
         flex-wrap: wrap;
         border: 1px solid #48484887;
-
-        @extend %select-none;
     }
 
     &__item {
+        @include flex(center, center);
+        @extend %border-radius;
+
         flex-basis: 33%;
         text-align: center;
-        padding: 0.25em;
-    }
-
-    &__text {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 1.7rem;
-        font-weight: bold;
-        text-shadow: 1px 1px 1px black;
-        margin-inline: auto;
         aspect-ratio: 1;
-        border-radius: 5px;
-        box-shadow:
-            1px 3px 5px #0000004e,
-            0 0 2px 1px rgba(0 136 255 / 49.1%);
-        background-image: radial-gradient(
-                circle at 10%,
-                #ffffff0a 10%,
-                #00000008 50%
-            ),
-            var(--background-clr-gradient-ternary);
-        cursor: pointer;
-        opacity: 0.9;
+        background-image: var(--background-clr-gradient-primary);
+        opacity: 0.8;
+        transform: scale(0.9);
+        box-shadow: 0 0 1px 1px #40657d57;
         transition: all 0.1s ease-in-out;
+        border: 1px solid #2929295f;
+        cursor: pointer;
+        backface-visibility: hidden;
 
-        &:hover {
-            opacity: 1;
+        &:hover,
+        &:focus {
+            box-shadow: 0 0 1px 1px #40657d;
         }
 
         &:active {
-            backface-visibility: hidden;
-            transform: translateY(1px) scale(0.98);
-            box-shadow:
-                1px 1px 1px #0000004e,
-                0 0 2px 1px var(--secondary-clr-secondary-2);
-            color: var(--text-clr-secondary);
+            transform: scale(0.85);
+            color: var(--scheme-success);
+        }
+
+        &[data-show="hide"] {
+            opacity: 0.3;
+            pointer-events: none;
+        }
+    }
+
+    &__text {
+        @include flex(center, center);
+
+        font-size: 2rem;
+        font-weight: bold;
+        text-shadow: 1px 1px 5px #0062ff;
+        cursor: pointer;
+
+        &.enter,
+        &.del {
+            font-size: 1.3rem;
+        }
+
+        &.enter {
+            appearance: none;
+            width: 100%;
+            aspect-ratio: 1;
+            border: none;
+            background-color: transparent;
         }
     }
 }
