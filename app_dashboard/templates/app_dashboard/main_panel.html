@@ -4,7 +4,7 @@
     main panel
 {% endblock title %}
 {% block content %}
-    <section class="L-departments">
+    <section class="L-departments status">
         <p class="L-departments__header">
             výpis stavu zaměstnanců: &nbsp;<i class="c-info-highlight">nalezeno: {{ emp_statuses.count }}</i>
         </p>
@@ -24,7 +24,7 @@
             {% endfor %}
         </ul>
     </section>
-    <section class="L-departments">
+    <section class="L-departments department">
         <p class="L-departments__header">
             výpis organizačních struktur: &nbsp;<i class="c-info-highlight">nalezeno: {{ departments.count }}</i>
         </p>

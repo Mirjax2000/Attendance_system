@@ -18,6 +18,7 @@
   --scheme-info: #54da54;
   --scheme-warning: #ff3c00;
   --background-clr-gradient-primary: linear-gradient(to right, #2a2b2e, #2c2e32);
+  --background-clr-gradient-secondary-darker: linear-gradient(to bottom right, #262729, #212631);
   --background-clr-gradient-secondary: linear-gradient(to bottom right, #262729, #273042);
   --background-clr-gradient-ternary: linear-gradient(to top left, #262729, #273042);
   --background-clr-gradient-quartery: linear-gradient(to top left, #2e2e2e, #353535);
@@ -654,6 +655,12 @@ body {
   border: 1px solid rgba(0, 0, 0, 0.2235294118);
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2235294118);
   margin-bottom: 1rem;
+}
+.L-departments.status {
+  background-image: var(--background-clr-gradient-secondary);
+}
+.L-departments.department {
+  background-image: var(--background-clr-gradient-secondary);
 }
 .L-departments__header {
   color: var(--scheme-default);
