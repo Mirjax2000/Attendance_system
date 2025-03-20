@@ -820,16 +820,32 @@ body {
   box-shadow: 0 0 10px rgba(172, 235, 152, 0.3);
 }
 .c-count__card__content[data-color=clr_4] {
-  color: #a4c2a8;
-  box-shadow: 0 0 10px rgba(164, 194, 168, 0.3);
+  color: #eaff00;
+  box-shadow: 0 0 10px rgba(234, 255, 0, 0.3);
 }
 .c-count__card__content[data-color=clr_5] {
+  color: #d0fa4f;
+  box-shadow: 0 0 10px rgba(208, 250, 79, 0.3);
+}
+.c-count__card__content[data-color=clr_6] {
+  color: #e2f99d;
+  box-shadow: 0 0 10px rgba(226, 249, 157, 0.3);
+}
+.c-count__card__content[data-color=clr_7] {
   color: #307fc0;
   box-shadow: 0 0 10px rgba(48, 127, 192, 0.3);
 }
-.c-count__card__content[data-color=clr_6] {
+.c-count__card__content[data-color=clr_8] {
   color: #569dd7;
   box-shadow: 0 0 10px rgba(86, 157, 215, 0.3);
+}
+.c-count__card__content[data-color=clr_9] {
+  color: #fe4ec3;
+  box-shadow: 0 0 10px rgba(254, 78, 195, 0.3);
+}
+.c-count__card__content[data-color=clr_10] {
+  color: #f878c9;
+  box-shadow: 0 0 10px rgba(248, 120, 201, 0.3);
 }
 .c-count__card__content__info {
   overflow: auto;

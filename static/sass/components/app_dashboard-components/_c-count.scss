@@ -41,34 +41,24 @@
             color: #d2d2d2;
             width: 50%;
 
-            &[data-color="clr_1"] {
-                color: #2cb67d;
-                box-shadow: 0 0 10px rgba(#2cb67d, 0.3);
-            }
+            $color-map: (
+                clr_1: #2cb67d,
+                clr_2: #87ff65ff,
+                clr_3: #aceb98ff,
+                clr_4: #eaff00,
+                clr_5: #d0fa4f,
+                clr_6: #e2f99d,
+                clr_7: #307fc0,
+                clr_8: #569dd7,
+                clr_9: #fe4ec3,
+                clr_10: #f878c9,
+            );
 
-            &[data-color="clr_2"] {
-                color: #87ff65ff;
-                box-shadow: 0 0 10px rgba(#87ff65ff, 0.3);
-            }
-
-            &[data-color="clr_3"] {
-                color: #aceb98ff;
-                box-shadow: 0 0 10px rgba(#aceb98ff, 0.3);
-            }
-
-            &[data-color="clr_4"] {
-                color: #a4c2a8ff;
-                box-shadow: 0 0 10px rgba(#a4c2a8ff, 0.3);
-            }
-
-            &[data-color="clr_5"] {
-                color: #307fc0;
-                box-shadow: 0 0 10px rgba(#307fc0, 0.3);
-            }
-
-            &[data-color="clr_6"] {
-                color: #569dd7;
-                box-shadow: 0 0 10px rgba(#569dd7, 0.3);
+            @each $key, $color in $color-map {
+                &[data-color="#{$key}"] {
+                    color: $color;
+                    box-shadow: 0 0 10px rgba($color, 0.3);
+                }
             }
 
             &__info {

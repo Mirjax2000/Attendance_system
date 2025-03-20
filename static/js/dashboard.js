@@ -22,7 +22,7 @@ $(function () {
         cards.forEach(function (card) {
             card.dataset.color = `clr_${num}`
             num += 1
-            if (num > 6) {
+            if (num > 10) {
                 num = 1
             }
         })
