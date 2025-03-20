@@ -2,7 +2,8 @@
 // IIFE - izolace promennych GlobeScope pouze v teto noname funkci
 $(function () {
     console.log('dashboard.js');
-    let filterJQ = $(".c-filter");
+    const filterJQ = $(".c-filter");
+
 
     filterJQ.children(".c-filter__container").hide(1)
 
