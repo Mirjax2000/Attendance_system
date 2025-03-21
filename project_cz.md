@@ -54,5 +54,11 @@ Tento projekt je založen na dvou aplikacích:
 - tabulka: oblicejovych vektoru
 - tabulka: zaznam casu v praci
 
+**pridano restAPI rozhrani:**
+- Employees
+- Departmetns
+- EmployeeStatus
+- EmployeeDetail
+
 
 

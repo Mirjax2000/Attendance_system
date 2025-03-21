@@ -1,4 +1,6 @@
 """Forms"""
+import re
+from datetime import date
 
 from django import forms
 from django.core.exceptions import ValidationError
@@ -60,7 +62,62 @@ class EmployeeForm(forms.ModelForm):
     def clean_email(self):
         """Kontrola emailu a převod na lowercase"""
         email = self.cleaned_data.get("email").lower()
-        # TODO zde chyba pri updatu zamestanace
-        if Employee.objects.filter(email__iexact=email).exists():
+        existing_emails = Employee.objects.filter(email__iexact=email)
+        if self.instance.pk:
+            existing_emails = existing_emails.exclude(pk=self.instance.pk)
+        if existing_emails.exists():
             raise ValidationError("Tento e-mail je již používán. Zvolte jiný.")
         return email
+
+    def clean_postal_code(self):
+        """Kontrola formátu a délky psč, odstranění mezer"""
+        postal_code = self.cleaned_data.get('postal_code', '').strip()
+        postal_code_no_spaces = postal_code.replace(' ', '')
+        if len(
+            postal_code_no_spaces) != 5 or not postal_code_no_spaces.isdigit():
+            raise ValidationError(
+                "PSČ musí obsahovat přesně 5 číslic bez mezer.")
+        return postal_code_no_spaces
+
+    def clean_phone_number(self):
+        """Kontrola formátu tel. čísla"""
+        phone_number = self.cleaned_data.get('phone_number')
+        pattern = r'^\+420\s?(\d{3}\s?\d{3}\s?\d{3})$|^\d{9}$'
+        if not phone_number:
+            raise ValidationError("Telefonní číslo je povinné.")
+        if not re.match(pattern, phone_number):
+            raise ValidationError(
+                "Zadejte platné české telefonní číslo (+420 XXX XXX XXX nebo "
+                "XXXXXXXXX).")
+        return phone_number
+
+    def clean_pin_code(self):
+        """Kontrola formátu pin kódu"""
+        pin_code = self.cleaned_data.get('pin_code')
+        if not pin_code.isdigit() or len(pin_code) != 4:
+            raise ValidationError("PIN kód musí obsahovat přesně 4 číslice.")
+        return pin_code
+
+    def clean_date_of_birth(self):
+        """Kontrola data narození (nesmí být v budoucnu)"""
+        date_of_birth = self.cleaned_data.get('date_of_birth')
+        if not date_of_birth:
+            raise ValidationError("Datum narození je povinné.")
+        if date_of_birth > date.today():
+            raise ValidationError("Datum narození nemůže být v budoucnosti.")
+        return date_of_birth
+
+    def clean_name(self):
+        """Kontrola jména (velké písmeno a znaky)"""
+        name = self.cleaned_data.get('name').strip().capitalize()
+        if not name.isalpha():
+            raise ValidationError("Jméno smí obsahovat pouze znaky abecedy.")
+        return name
+
+    def clean_surname(self):
+        """Kontrola příjmení (velké písmeno a znaky)"""
+        surname = self.cleaned_data.get('surname').strip().capitalize()
+        if not surname.isalpha():
+            raise ValidationError(
+                "Příjmení smí obsahovat pouze znaky abecedy.")
+        return surname

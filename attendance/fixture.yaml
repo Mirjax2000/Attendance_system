@@ -1,0 +1,748 @@
+- model: app_main.department
+  pk: 1
+  fields:
+    name: Prodej
+- model: app_main.department
+  pk: 2
+  fields:
+    name: IT
+- model: app_main.department
+  pk: 3
+  fields:
+    name: Lidské zdroje
+- model: app_main.department
+  pk: 4
+  fields:
+    name: Marketing
+- model: app_main.department
+  pk: 5
+  fields:
+    name: Finance
+
+- model: app_main.employeestatus
+  pk: 1
+  fields:
+    name: Aktivní
+- model: app_main.employeestatus
+  pk: 2
+  fields:
+    name: Neaktivní
+
+- model: app_main.employee
+  pk: 1
+  fields:
+    name: Jaromír
+    surname: Jágr
+    street_number: "12 Ulice"
+    city: Praha
+    postal_code: "11000"
+    phone_number: "123456789"
+    email: jaromir.jagr@hokej.cz
+    date_of_birth: "1972-02-15"
+    is_valid: true
+    pin_code: "1234"
+    pin_code_hash: "hashjaromir1"
+    department: 1
+    employee_status: 1
+    slug: jaromir-jagr-1
+- model: app_main.facevector
+  pk: 1
+  fields:
+    employee: 1
+    face_vector: "facevector1"
+    face_vector_fernet: "facevectorfernet1"
+
+- model: app_main.employee
+  pk: 2
+  fields:
+    name: Dominik
+    surname: Hašek
+    street_number: "34 Třída"
+    city: Brno
+    postal_code: "60200"
+    phone_number: "987654321"
+    email: dominik.hasek@hokej.cz
+    date_of_birth: "1965-01-29"
+    is_valid: false
+    pin_code: "5678"
+    pin_code_hash: "hashdominik2"
+    department: 2
+    employee_status: 2
+    slug: dominik-hasek-2
+- model: app_main.facevector
+  pk: 2
+  fields:
+    employee: 2
+    face_vector: "facevector2"
+    face_vector_fernet: "facevectorfernet2"
+
+- model: app_main.employee
+  pk: 3
+  fields:
+    name: Patrik
+    surname: Eliáš
+    street_number: "56 Ulice"
+    city: Ostrava
+    postal_code: "70030"
+    phone_number: "456789123"
+    email: patrik.elias@hokej.cz
+    date_of_birth: "1976-05-15"
+    is_valid: true
+    pin_code: "9012"
+    pin_code_hash: "hashpatrik3"
+    department: 3
+    employee_status: 1
+    slug: patrik-elias-3
+- model: app_main.facevector
+  pk: 3
+  fields:
+    employee: 3
+    face_vector: "facevector3"
+    face_vector_fernet: "facevectorfernet3"
+
+- model: app_main.employee
+  pk: 4
+  fields:
+    name: Petr
+    surname: Čajánek
+    street_number: "78 Ulice"
+    city: Plzeň
+    postal_code: "30100"
+    phone_number: "321654987"
+    email: petr.cajanek@hokej.cz
+    date_of_birth: "1978-11-05"
+    is_valid: true
+    pin_code: "3456"
+    pin_code_hash: "hashpetr4"
+    department: 4
+    employee_status: 1
+    slug: petr-cajanek-4
+- model: app_main.facevector
+  pk: 4
+  fields:
+    employee: 4
+    face_vector: "facevector4"
+    face_vector_fernet: "facevectorfernet4"
+
+- model: app_main.employee
+  pk: 5
+  fields:
+    name: Martin
+    surname: Straka
+    street_number: "90 Ulice"
+    city: Liberec
+    postal_code: "46001"
+    phone_number: "789123456"
+    email: martin.straka@hokej.cz
+    date_of_birth: "1980-09-17"
+    is_valid: false
+    pin_code: "7890"
+    pin_code_hash: "hashmartin5"
+    department: 5
+    employee_status: 2
+    slug: martin-straka-5
+- model: app_main.facevector
+  pk: 5
+  fields:
+    employee: 5
+    face_vector: "facevector5"
+    face_vector_fernet: "facevectorfernet5"
+
+- model: app_main.employee
+  pk: 6
+  fields:
+    name: Roman
+    surname: Hamrlík
+    street_number: "33 Ulice"
+    city: Praha
+    postal_code: "12000"
+    phone_number: "222333444"
+    email: roman.hamrlik@hokej.cz
+    date_of_birth: "1968-12-12"
+    is_valid: true
+    pin_code: "1122"
+    pin_code_hash: "hashroman6"
+    department: 1
+    employee_status: 1
+    slug: roman-hamrlik-6
+- model: app_main.facevector
+  pk: 6
+  fields:
+    employee: 6
+    face_vector: "facevector6"
+    face_vector_fernet: "facevectorfernet6"
+
+- model: app_main.employee
+  pk: 7
+  fields:
+    name: Ivan
+    surname: Hlinka
+    street_number: "44 Ulice"
+    city: Brno
+    postal_code: "60210"
+    phone_number: "333444555"
+    email: ivan.hlinka@hokej.cz
+    date_of_birth: "1970-04-22"
+    is_valid: false
+    pin_code: "3344"
+    pin_code_hash: "hashivan7"
+    department: 2
+    employee_status: 2
+    slug: ivan-hlinka-7
+- model: app_main.facevector
+  pk: 7
+  fields:
+    employee: 7
+    face_vector: "facevector7"
+    face_vector_fernet: "facevectorfernet7"
+
+- model: app_main.employee
+  pk: 8
+  fields:
+    name: Robert
+    surname: Reichel
+    street_number: "55 Ulice"
+    city: Ostrava
+    postal_code: "70100"
+    phone_number: "444555666"
+    email: robert.reichel@hokej.cz
+    date_of_birth: "1982-07-19"
+    is_valid: true
+    pin_code: "5566"
+    pin_code_hash: "hashrobert8"
+    department: 3
+    employee_status: 1
+    slug: robert-reichel-8
+- model: app_main.facevector
+  pk: 8
+  fields:
+    employee: 8
+    face_vector: "facevector8"
+    face_vector_fernet: "facevectorfernet8"
+
+- model: app_main.employee
+  pk: 9
+  fields:
+    name: Tomáš
+    surname: Kaberle
+    street_number: "66 Ulice"
+    city: Plzeň
+    postal_code: "30110"
+    phone_number: "555666777"
+    email: tomas.kaberle@hokej.cz
+    date_of_birth: "1985-03-03"
+    is_valid: true
+    pin_code: "7788"
+    pin_code_hash: "hashtomas9"
+    department: 4
+    employee_status: 1
+    slug: tomas-kaberle-9
+- model: app_main.facevector
+  pk: 9
+  fields:
+    employee: 9
+    face_vector: "facevector9"
+    face_vector_fernet: "facevectorfernet9"
+
+- model: app_main.employee
+  pk: 10
+  fields:
+    name: Patrik
+    surname: Sýkora
+    street_number: "77 Ulice"
+    city: Liberec
+    postal_code: "46002"
+    phone_number: "666777888"
+    email: patrik.sykora@hokej.cz
+    date_of_birth: "1987-08-08"
+    is_valid: false
+    pin_code: "9900"
+    pin_code_hash: "hashpatrik10"
+    department: 5
+    employee_status: 2
+    slug: patrik-sykora-10
+- model: app_main.facevector
+  pk: 10
+  fields:
+    employee: 10
+    face_vector: "facevector10"
+    face_vector_fernet: "facevectorfernet10"
+- model: app_main.employee
+  pk: 11
+  fields:
+    name: Libor
+    surname: Doležal
+    street_number: "21 Ulice"
+    city: Praha
+    postal_code: "11011"
+    phone_number: "700000011"
+    email: libor.dolezal@hokej.cz
+    date_of_birth: "1978-02-02"
+    is_valid: true
+    pin_code: "1111"
+    pin_code_hash: "hashlibor11"
+    department: 1
+    employee_status: 1
+    slug: libor-dolezal-11
+- model: app_main.facevector
+  pk: 11
+  fields:
+    employee: 11
+    face_vector: "facevector11"
+    face_vector_fernet: "facevectorfernet11"
+
+- model: app_main.employee
+  pk: 12
+  fields:
+    name: Pavel
+    surname: Černý
+    street_number: "22 Ulice"
+    city: Brno
+    postal_code: "12012"
+    phone_number: "700000012"
+    email: pavel.cerny@hokej.cz
+    date_of_birth: "1980-03-03"
+    is_valid: false
+    pin_code: "2222"
+    pin_code_hash: "hashpavel12"
+    department: 2
+    employee_status: 2
+    slug: pavel-cerny-12
+- model: app_main.facevector
+  pk: 12
+  fields:
+    employee: 12
+    face_vector: "facevector12"
+    face_vector_fernet: "facevectorfernet12"
+
+- model: app_main.employee
+  pk: 13
+  fields:
+    name: Ondřej
+    surname: Svoboda
+    street_number: "23 Ulice"
+    city: Ostrava
+    postal_code: "13013"
+    phone_number: "700000013"
+    email: ondrej.svoboda@hokej.cz
+    date_of_birth: "1975-04-04"
+    is_valid: true
+    pin_code: "3333"
+    pin_code_hash: "hashondrej13"
+    department: 3
+    employee_status: 1
+    slug: ondrej-svoboda-13
+- model: app_main.facevector
+  pk: 13
+  fields:
+    employee: 13
+    face_vector: "facevector13"
+    face_vector_fernet: "facevectorfernet13"
+
+- model: app_main.employee
+  pk: 14
+  fields:
+    name: David
+    surname: Vacek
+    street_number: "24 Ulice"
+    city: Plzeň
+    postal_code: "14014"
+    phone_number: "700000014"
+    email: david.vacek@hokej.cz
+    date_of_birth: "1982-05-05"
+    is_valid: false
+    pin_code: "4444"
+    pin_code_hash: "hashdavid14"
+    department: 4
+    employee_status: 2
+    slug: david-vacek-14
+- model: app_main.facevector
+  pk: 14
+  fields:
+    employee: 14
+    face_vector: "facevector14"
+    face_vector_fernet: "facevectorfernet14"
+
+- model: app_main.employee
+  pk: 15
+  fields:
+    name: Milan
+    surname: Hruška
+    street_number: "25 Ulice"
+    city: Liberec
+    postal_code: "15015"
+    phone_number: "700000015"
+    email: milan.hruska@hokej.cz
+    date_of_birth: "1979-06-06"
+    is_valid: true
+    pin_code: "5555"
+    pin_code_hash: "hashmilan15"
+    department: 5
+    employee_status: 1
+    slug: milan-hruska-15
+- model: app_main.facevector
+  pk: 15
+  fields:
+    employee: 15
+    face_vector: "facevector15"
+    face_vector_fernet: "facevectorfernet15"
+
+- model: app_main.employee
+  pk: 16
+  fields:
+    name: Michal
+    surname: Kovář
+    street_number: "26 Ulice"
+    city: Praha
+    postal_code: "16016"
+    phone_number: "700000016"
+    email: michal.kovar@hokej.cz
+    date_of_birth: "1981-07-07"
+    is_valid: false
+    pin_code: "6666"
+    pin_code_hash: "hashmichal16"
+    department: 1
+    employee_status: 2
+    slug: michal-kovar-16
+- model: app_main.facevector
+  pk: 16
+  fields:
+    employee: 16
+    face_vector: "facevector16"
+    face_vector_fernet: "facevectorfernet16"
+
+- model: app_main.employee
+  pk: 17
+  fields:
+    name: Aleš
+    surname: Urbánek
+    street_number: "27 Ulice"
+    city: Brno
+    postal_code: "17017"
+    phone_number: "700000017"
+    email: ales.urbanek@hokej.cz
+    date_of_birth: "1977-08-08"
+    is_valid: true
+    pin_code: "7777"
+    pin_code_hash: "hashales17"
+    department: 2
+    employee_status: 1
+    slug: ales-urbanek-17
+- model: app_main.facevector
+  pk: 17
+  fields:
+    employee: 17
+    face_vector: "facevector17"
+    face_vector_fernet: "facevectorfernet17"
+
+- model: app_main.employee
+  pk: 18
+  fields:
+    name: Lukáš
+    surname: Mareš
+    street_number: "28 Ulice"
+    city: Ostrava
+    postal_code: "18018"
+    phone_number: "700000018"
+    email: lukas.mares@hokej.cz
+    date_of_birth: "1983-09-09"
+    is_valid: false
+    pin_code: "8888"
+    pin_code_hash: "hashlukas18"
+    department: 3
+    employee_status: 2
+    slug: lukas-mares-18
+- model: app_main.facevector
+  pk: 18
+  fields:
+    employee: 18
+    face_vector: "facevector18"
+    face_vector_fernet: "facevectorfernet18"
+
+- model: app_main.employee
+  pk: 19
+  fields:
+    name: Vladimír
+    surname: Konečný
+    street_number: "29 Ulice"
+    city: Plzeň
+    postal_code: "19019"
+    phone_number: "700000019"
+    email: vladimir.konecny@hokej.cz
+    date_of_birth: "1976-10-10"
+    is_valid: true
+    pin_code: "9999"
+    pin_code_hash: "hashvladimir19"
+    department: 4
+    employee_status: 1
+    slug: vladimir-konecny-19
+- model: app_main.facevector
+  pk: 19
+  fields:
+    employee: 19
+    face_vector: "facevector19"
+    face_vector_fernet: "facevectorfernet19"
+
+- model: app_main.employee
+  pk: 20
+  fields:
+    name: Radek
+    surname: Procházka
+    street_number: "30 Ulice"
+    city: Liberec
+    postal_code: "20020"
+    phone_number: "700000020"
+    email: radek.prochazka@hokej.cz
+    date_of_birth: "1980-11-11"
+    is_valid: false
+    pin_code: "0000"
+    pin_code_hash: "hashradek20"
+    department: 5
+    employee_status: 2
+    slug: radek-prochazka-20
+- model: app_main.facevector
+  pk: 20
+  fields:
+    employee: 20
+    face_vector: "facevector20"
+    face_vector_fernet: "facevectorfernet20"
+
+- model: app_main.employee
+  pk: 21
+  fields:
+    name: Jiří
+    surname: Sedláček
+    street_number: "31 Ulice"
+    city: Praha
+    postal_code: "21021"
+    phone_number: "700000021"
+    email: jiri.sedlacek@hokej.cz
+    date_of_birth: "1974-12-12"
+    is_valid: true
+    pin_code: "1111"
+    pin_code_hash: "hashjiri21"
+    department: 1
+    employee_status: 1
+    slug: jiri-sedlacek-21
+- model: app_main.facevector
+  pk: 21
+  fields:
+    employee: 21
+    face_vector: "facevector21"
+    face_vector_fernet: "facevectorfernet21"
+
+- model: app_main.employee
+  pk: 22
+  fields:
+    name: Miroslav
+    surname: Adam
+    street_number: "32 Ulice"
+    city: Brno
+    postal_code: "22022"
+    phone_number: "700000022"
+    email: miroslav.adam@hokej.cz
+    date_of_birth: "1982-01-13"
+    is_valid: false
+    pin_code: "2222"
+    pin_code_hash: "hashmiroslav22"
+    department: 2
+    employee_status: 2
+    slug: miroslav-adam-22
+- model: app_main.facevector
+  pk: 22
+  fields:
+    employee: 22
+    face_vector: "facevector22"
+    face_vector_fernet: "facevectorfernet22"
+
+- model: app_main.employee
+  pk: 23
+  fields:
+    name: Lubomír
+    surname: Němec
+    street_number: "33 Ulice"
+    city: Ostrava
+    postal_code: "23023"
+    phone_number: "700000023"
+    email: lubomir.nemec@hokej.cz
+    date_of_birth: "1978-02-14"
+    is_valid: true
+    pin_code: "3333"
+    pin_code_hash: "hashlubomir23"
+    department: 3
+    employee_status: 1
+    slug: lubomir-nemec-23
+- model: app_main.facevector
+  pk: 23
+  fields:
+    employee: 23
+    face_vector: "facevector23"
+    face_vector_fernet: "facevectorfernet23"
+
+- model: app_main.employee
+  pk: 24
+  fields:
+    name: Bohumil
+    surname: Kříž
+    street_number: "34 Ulice"
+    city: Plzeň
+    postal_code: "24024"
+    phone_number: "700000024"
+    email: bohumil.kriz@hokej.cz
+    date_of_birth: "1981-03-15"
+    is_valid: false
+    pin_code: "4444"
+    pin_code_hash: "hashbohumil24"
+    department: 4
+    employee_status: 2
+    slug: bohumil-kriz-24
+- model: app_main.facevector
+  pk: 24
+  fields:
+    employee: 24
+    face_vector: "facevector24"
+    face_vector_fernet: "facevectorfernet24"
+
+- model: app_main.employee
+  pk: 25
+  fields:
+    name: Stanislav
+    surname: Novotný
+    street_number: "35 Ulice"
+    city: Liberec
+    postal_code: "25025"
+    phone_number: "700000025"
+    email: stanislav.novotny@hokej.cz
+    date_of_birth: "1975-04-16"
+    is_valid: true
+    pin_code: "5555"
+    pin_code_hash: "hashstanislav25"
+    department: 5
+    employee_status: 1
+    slug: stanislav-novotny-25
+- model: app_main.facevector
+  pk: 25
+  fields:
+    employee: 25
+    face_vector: "facevector25"
+    face_vector_fernet: "facevectorfernet25"
+
+- model: app_main.employee
+  pk: 26
+  fields:
+    name: Karel
+    surname: Dvořák
+    street_number: "36 Ulice"
+    city: Praha
+    postal_code: "26026"
+    phone_number: "700000026"
+    email: karel.dvorak@hokej.cz
+    date_of_birth: "1983-05-17"
+    is_valid: false
+    pin_code: "6666"
+    pin_code_hash: "hashkarel26"
+    department: 1
+    employee_status: 2
+    slug: karel-dvorak-26
+- model: app_main.facevector
+  pk: 26
+  fields:
+    employee: 26
+    face_vector: "facevector26"
+    face_vector_fernet: "facevectorfernet26"
+
+- model: app_main.employee
+  pk: 27
+  fields:
+    name: Vlastimil
+    surname: Pokorný
+    street_number: "37 Ulice"
+    city: Brno
+    postal_code: "27027"
+    phone_number: "700000027"
+    email: vlastimil.pokorny@hokej.cz
+    date_of_birth: "1979-06-18"
+    is_valid: true
+    pin_code: "7777"
+    pin_code_hash: "hashvlastimil27"
+    department: 2
+    employee_status: 1
+    slug: vlastimil-pokorny-27
+- model: app_main.facevector
+  pk: 27
+  fields:
+    employee: 27
+    face_vector: "facevector27"
+    face_vector_fernet: "facevectorfernet27"
+
+- model: app_main.employee
+  pk: 28
+  fields:
+    name: Martin
+    surname: Šimek
+    street_number: "38 Ulice"
+    city: Ostrava
+    postal_code: "28028"
+    phone_number: "700000028"
+    email: martin.simek@hokej.cz
+    date_of_birth: "1980-07-19"
+    is_valid: false
+    pin_code: "8888"
+    pin_code_hash: "hashmartin28"
+    department: 3
+    employee_status: 2
+    slug: martin-simek-28
+- model: app_main.facevector
+  pk: 28
+  fields:
+    employee: 28
+    face_vector: "facevector28"
+    face_vector_fernet: "facevectorfernet28"
+
+- model: app_main.employee
+  pk: 29
+  fields:
+    name: Josef
+    surname: Horák
+    street_number: "39 Ulice"
+    city: Plzeň
+    postal_code: "29029"
+    phone_number: "700000029"
+    email: josef.horak@hokej.cz
+    date_of_birth: "1977-08-20"
+    is_valid: true
+    pin_code: "9999"
+    pin_code_hash: "hashjosef29"
+    department: 4
+    employee_status: 1
+    slug: josef-horak-29
+- model: app_main.facevector
+  pk: 29
+  fields:
+    employee: 29
+    face_vector: "facevector29"
+    face_vector_fernet: "facevectorfernet29"
+
+- model: app_main.employee
+  pk: 30
+  fields:
+    name: František
+    surname: Blažek
+    street_number: "40 Ulice"
+    city: Liberec
+    postal_code: "30030"
+    phone_number: "700000030"
+    email: frantisek.blazek@hokej.cz
+    date_of_birth: "1982-09-21"
+    is_valid: false
+    pin_code: "0000"
+    pin_code_hash: "hashfrantisek30"
+    department: 5
+    employee_status: 2
+    slug: frantisek-blazek-30
+- model: app_main.facevector
+  pk: 30
+  fields:
+    employee: 30
+    face_vector: "facevector30"
+    face_vector_fernet: "facevectorfernet30"

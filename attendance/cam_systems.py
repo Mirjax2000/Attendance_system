@@ -198,6 +198,19 @@ class CamSystems:
             cons.log(result)
         return result
 
+    def face_vectors_reload(self):
+        """reload vectoru po uspesnem sejmuti facevectoru"""
+        self.face_vectors.clear()
+        if DEBUG:
+            cons.log("Vektorova pamet resetovana", style="green")
+
+        self.face_vectors = self.database.get_vectors_from_db()
+        if DEBUG:
+            cons.log(
+                f"Novy pocet vectoru v pameti:{len(self.face_vectors)}",
+                style="blue",
+            )
+
     def release_camera(self):
         """Uvolní kameru při ukončení"""
         if self.cap.isOpened():
@@ -213,19 +226,6 @@ class Database:
 
     def __init__(self, parent):
         self.parent: CamSystems = parent
-
-    def face_vectors_reload(self):
-        """reload vectoru po uspesnem sejmuti facevectoru"""
-        self.parent.face_vectors.clear()
-        if DEBUG:
-            cons.log("Vektorova pamet resetovana", style="green")
-
-        self.parent.face_vectors = self.get_vectors_from_db()
-        if DEBUG:
-            cons.log(
-                f"Novy pocet vectoru v pameti:{len(self.parent.face_vectors)}",
-                style="blue",
-            )
 
     def get_vectors_from_db(self) -> dict:
         """Get vectors from database"""
@@ -288,12 +288,13 @@ class Database:
                         "message": f"zaznam vytvoren pro {employee_slug}",
                         "success": True,
                     }
+
                 if DEBUG:
                     cons.log(
                         f"FaceVector aktualizován pro {employee_slug}",
                         style="blue",
                     )
-                self.face_vectors_reload()
+                self.parent.face_vectors_reload()
 
                 return {
                     "message": f"zaznam aktualizovan pro {employee_slug}",
