@@ -1,4 +1,5 @@
 """Forms"""
+import re
 
 from django import forms
 from django.core.exceptions import ValidationError
@@ -66,3 +67,14 @@ class EmployeeForm(forms.ModelForm):
         if existing_emails.exists():
             raise ValidationError("Tento e-mail je již používán. Zvolte jiný.")
         return email
+
+    def clean_phone_number(self):
+        phone_number = self.cleaned_data.get('phone_number')
+        pattern = r'^\+420\s?(\d{3}\s?\d{3}\s?\d{3})$|^\d{9}$'
+        if not phone_number:
+            raise ValidationError("Telefonní číslo je povinné.")
+        if not re.match(pattern, phone_number):
+            raise ValidationError(
+                "Zadejte platné české telefonní číslo (+420 XXX XXX XXX nebo XXXXXXXXX).")
+        return phone_number
+
