@@ -278,8 +278,8 @@ class EmployeeFormTests(TestCase):
         self.assertFalse(form.is_valid())
         self.assertIn("postal_code", form.errors)
         self.assertIn(
-            "PSČ musí obsahovat 5 číslic.", form.errors["postal_code"]
-        )
+            "PSČ musí obsahovat přesně 5 číslic bez mezer.", 
+            form.errors["postal_code"])
 
     def test_invalid_pin_code(self):
         """
