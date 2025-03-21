@@ -1,5 +1,6 @@
 """Forms"""
 import re
+from datetime import date
 
 from django import forms
 from django.core.exceptions import ValidationError
@@ -86,3 +87,12 @@ class EmployeeForm(forms.ModelForm):
         if not pin_code.isdigit() or len(pin_code) != 4:
             raise ValidationError("PIN kód musí obsahovat přesně 4 číslice.")
         return pin_code
+
+    def clean_date_of_birth(self):
+        """Kontrola data narození (nesmí být v budoucnu)"""
+        date_of_birth = self.cleaned_data.get('date_of_birth')
+        if not date_of_birth:
+            raise ValidationError("Datum narození je povinné.")
+        if date_of_birth > date.today():
+            raise ValidationError("Datum narození nemůže být v budoucnosti.")
+        return date_of_birth
