@@ -96,3 +96,18 @@ class EmployeeForm(forms.ModelForm):
         if date_of_birth > date.today():
             raise ValidationError("Datum narození nemůže být v budoucnosti.")
         return date_of_birth
+
+    def clean_name(self):
+        """Kontrola jména (velké písmeno a znaky)"""
+        name = self.cleaned_data.get('name').strip().capitalize()
+        if not name.isalpha():
+            raise ValidationError("Jméno smí obsahovat pouze znaky abecedy.")
+        return name
+
+    def clean_surname(self):
+        """Kontrola příjmení (velké písmeno a znaky)"""
+        surname = self.cleaned_data.get('surname').strip().capitalize()
+        if not surname.isalpha():
+            raise ValidationError(
+                "Příjmení smí obsahovat pouze znaky abecedy.")
+        return surname
