@@ -2,7 +2,7 @@
 
 from rest_framework.serializers import ModelSerializer
 
-from app_main.models import Employee
+from app_main.models import Department, Employee, EmployeeStatus
 
 
 class EmployeeSerializer(ModelSerializer):
@@ -20,3 +20,23 @@ class EmployeeSerializer(ModelSerializer):
             "department": "department",
             "employee_status": "stav",
         }
+
+
+class DepartmentSerializer(ModelSerializer):
+    """API serializer"""
+
+    class Meta:
+        """Meta class"""
+
+        model = Department
+        fields = "__all__"
+
+
+class EmployeeStatusSerializer(ModelSerializer):
+    """API serializer"""
+
+    class Meta:
+        """Meta class"""
+
+        model = EmployeeStatus
+        fields = "__all__"
