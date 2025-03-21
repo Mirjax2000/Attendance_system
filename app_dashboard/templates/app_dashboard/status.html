@@ -4,13 +4,24 @@
     attendance
 {% endblock title %}
 {% block content %}
-    <h1>status view</h1>
+    <h1>
+        status view:
+        {% if db_good_condition == True %}
+            <span class="u-text-success c-info-highlight">Good condition</span>
+        {% else %}
+            <span class="u-text-warning c-info-highlight">Bad condition!!!</span>
+        {% endif %}
+    </h1>
     <hr>
     <div>
-        <h3>tabulka pro Department</h3>
-        <p>
-            department tabulka "nezarazeno": <span class="c-info-highlight {% if department_nezarazeno == True %}u-text-success {% else %} u-text-warning {% endif %}">{{ department_nezarazeno }}</span>
-        </p>
+        <h3>tabulky pro Department</h3>
+        {% for dep in department_nezarazeno %}
+            <p>
+                <span class="c-info-highlight u-text-success">{{ dep }}</span>
+            </p>
+        {% empty %}
+            <p class="u-text-warning c-info-highlight">nejsou zadne tabulky</p>
+        {% endfor %}
     </div>
     <hr>
     <div>

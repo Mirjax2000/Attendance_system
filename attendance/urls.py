@@ -29,6 +29,7 @@ from app_dashboard.views import (
     EmployeesView,
     EmployeeUpdateView,
     EmpStatusDetailList,
+    FillDbView,
     MainPanelView,
     RedirectDashboard,
     SaveVectorToDbView,
@@ -100,6 +101,7 @@ app_dashboard_urls: list = [
     ),
     path("dashboard/cam<int:speed>", CamView.as_view(), name="cam"),
     path("dashboard/status", StatusView.as_view(), name="status"),
+    # path("dashboard/filldb", FillDbView.as_view(), name="filldb"),
 ]
 
 app_main_urls: list = [

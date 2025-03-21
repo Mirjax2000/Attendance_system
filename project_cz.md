@@ -68,5 +68,13 @@ Tento projekt je založen na dvou aplikacích:
 - EmployeeDetail
     - detail zamestnance
 
+**pridano Rozhrani pro prehled databaze**
+- informuje zdali databaze je zaplnena dafaultnimy hodnotamy
+- nabizi moznosti
+    - zaplnit databazy
+    - vymazat databazy
+    - zkontrolovat databazy
+    - zalohovat databazi do fixtures
+    - nahrat databazy z fixtures
 
 

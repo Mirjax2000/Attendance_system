@@ -21,6 +21,7 @@ from app_main.models import Department, Employee, EmployeeStatus
 
 # importuju instanci tridy Camsystems
 from attendance.cam_systems import cam_systems_instance as csi
+from attendance.populate_db import db_control
 from attendance.settings import DEBUG
 
 from .forms import EmployeeForm
@@ -341,20 +342,30 @@ class StatusView(TemplateView):
             "free",
         ]
 
-        existing_statuses = [
+        existing_statuses: list = [
             status.name
             for status in EmployeeStatus.objects.filter(name__in=statuses)
         ]
 
-        missing_statuses = set(statuses) - set(existing_statuses)
+        missing_statuses: set = set(statuses) - set(existing_statuses)
 
         context["existing_statuses"] = existing_statuses
         context["missing_statuses"] = missing_statuses
         context["department_nezarazeno"] = Department.objects.filter(
             name="nezarazeno"
-        ).exists()
+        )
         context["active_link"] = "status"
+        context["db_good_condition"] = (
+            Department.objects.filter(name="nezarazeno").exists()
+            and not missing_statuses
+        )
         return context
+
+
+class FillDbView(LoginRequiredMixin):
+    """spustit funkci na zaplneni databaze"""
+
+    pass
 
 
 class DepartmentDetailList(LoginRequiredMixin, ListView):
