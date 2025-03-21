@@ -69,12 +69,20 @@ class EmployeeForm(forms.ModelForm):
         return email
 
     def clean_phone_number(self):
+        """Kontrola formátu tel. čísla"""
         phone_number = self.cleaned_data.get('phone_number')
         pattern = r'^\+420\s?(\d{3}\s?\d{3}\s?\d{3})$|^\d{9}$'
         if not phone_number:
             raise ValidationError("Telefonní číslo je povinné.")
         if not re.match(pattern, phone_number):
             raise ValidationError(
-                "Zadejte platné české telefonní číslo (+420 XXX XXX XXX nebo XXXXXXXXX).")
+                "Zadejte platné české telefonní číslo (+420 XXX XXX XXX nebo "
+                "XXXXXXXXX).")
         return phone_number
 
+    def clean_pin_code(self):
+        """Kontrola formátu pin kódu"""
+        pin_code = self.cleaned_data.get('pin_code')
+        if not pin_code.isdigit() or len(pin_code) != 4:
+            raise ValidationError("PIN kód musí obsahovat přesně 4 číslice.")
+        return pin_code
