@@ -410,6 +410,7 @@ class StatusView(LoginRequiredMixin, TemplateView):
         context["employee_count"] = Employee.objects.aggregate(
             total=Count("name")
         )["total"]
+
         return context
 
 

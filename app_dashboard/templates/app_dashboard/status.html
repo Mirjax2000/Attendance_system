@@ -22,7 +22,7 @@
                     <span class="c-info-highlight u-text-success">{{ dep }}</span>
                 </p>
             {% empty %}
-                <p class="u-text-warning c-info-highlight">tabulky chybi</p>
+                <p class="u-text-warning c-info-highlight">tabulky chybí</p>
             {% endfor %}
         </div>
         <div class="L-status__content-box">
@@ -30,21 +30,21 @@
             {% for existing_status in existing_statuses %}
                 <p class="u-text-success c-info-highlight">{{ existing_status }}</p>
             {% empty %}
-                <p class="u-text-warning c-info-highlight">tabulky chybi</p>
+                <p class="u-text-warning c-info-highlight">tabulky chybí</p>
             {% endfor %}
-            <h3>chybejici tabulky:</h3>
+            <h3>chybějící tabulky:</h3>
             {% for missing_status in missing_statuses %}
                 <p class="u-text-warning c-info-highlight">{{ missing_status }}</p>
             {% empty %}
-                <p class="u-text-success c-info-highlight">nic nechybi</p>
+                <p class="u-text-success c-info-highlight">nic nechybí</p>
             {% endfor %}
         </div>
         <div class="L-status__content-box">
             <p>
-                {% if employee_counts %}
-                    celkovy pocet zaznamu: <span class="c-info-highlight u-text-success">{{ employee_counts }}</span>
+                {% if employee_count %}
+                    celkový počet zaměstnanců: <span class="c-info-highlight u-text-success">{{ employee_count }}</span>
                 {% else %}
-                    celkovy pocet zaznamu:
+                    celkový počet zaměstnanců:
                     <span class="c-info-highlight u-text-warning">0</span>
                 {% endif %}
             </p>
