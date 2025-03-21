@@ -367,7 +367,7 @@ class EmployeeDetailView(LoginRequiredMixin, DetailView):
         return context
 
 
-class StatusView(TemplateView):
+class StatusView(LoginRequiredMixin, TemplateView):
     """
     stav databaze, ruzne vypisy do contextu
     """
@@ -416,7 +416,11 @@ class StatusView(TemplateView):
 class FillDbView(LoginRequiredMixin, View):
     """spustit funkci na zaplneni databaze"""
 
-    pass
+    def get(self, request, *args, **kwargs):
+        """spusti akci"""
+        db_control.run_all_default()
+        messages.success(request, "databaze zaplnena")
+        return redirect("status")
 
 
 class DepartmentDetailList(LoginRequiredMixin, ListView):
