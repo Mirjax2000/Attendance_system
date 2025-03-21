@@ -69,6 +69,16 @@ class EmployeeForm(forms.ModelForm):
             raise ValidationError("Tento e-mail je již používán. Zvolte jiný.")
         return email
 
+    def clean_postal_code(self):
+        """Kontrola formátu a délky psč, odstranění mezer"""
+        postal_code = self.cleaned_data.get('postal_code', '').strip()
+        postal_code_no_spaces = postal_code.replace(' ', '')
+        if len(
+            postal_code_no_spaces) != 5 or not postal_code_no_spaces.isdigit():
+            raise ValidationError(
+                "PSČ musí obsahovat přesně 5 číslic bez mezer.")
+        return postal_code_no_spaces
+
     def clean_phone_number(self):
         """Kontrola formátu tel. čísla"""
         phone_number = self.cleaned_data.get('phone_number')
