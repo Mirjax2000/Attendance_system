@@ -198,6 +198,19 @@ class CamSystems:
             cons.log(result)
         return result
 
+    def face_vectors_reload(self):
+        """reload vectoru po uspesnem sejmuti facevectoru"""
+        self.face_vectors.clear()
+        if DEBUG:
+            cons.log("Vektorova pamet resetovana", style="green")
+
+        self.face_vectors = self.database.get_vectors_from_db()
+        if DEBUG:
+            cons.log(
+                f"Novy pocet vectoru v pameti:{len(self.face_vectors)}",
+                style="blue",
+            )
+
     def release_camera(self):
         """Uvolní kameru při ukončení"""
         if self.cap.isOpened():
@@ -212,7 +225,7 @@ class Database:
     """Database methods"""
 
     def __init__(self, parent):
-        self.parent = parent
+        self.parent: CamSystems = parent
 
     def get_vectors_from_db(self) -> dict:
         """Get vectors from database"""
@@ -236,7 +249,7 @@ class Database:
         return face_vectors_
 
     def save_vector_to_db(self, employee_slug) -> dict:
-        """uloz sejmuty vektor do db"""
+        """uloz sejmuty vektor do db k employee"""
         if self.parent.face_rgb is None:
             if DEBUG:
                 cons.log(
@@ -244,8 +257,8 @@ class Database:
                 )
             return {"message": "no-face-detected", "success": False}
 
-        face_encoding = face_recognition.face_encodings(
-            self.parent.face_rgb, num_jitters=2, model="large"
+        face_encoding: list = face_recognition.face_encodings(
+            face_image=self.parent.face_rgb, num_jitters=2, model="large"
         )
 
         if len(face_encoding) > 0:
@@ -275,11 +288,14 @@ class Database:
                         "message": f"zaznam vytvoren pro {employee_slug}",
                         "success": True,
                     }
+
                 if DEBUG:
                     cons.log(
                         f"FaceVector aktualizován pro {employee_slug}",
                         style="blue",
                     )
+                self.parent.face_vectors_reload()
+
                 return {
                     "message": f"zaznam aktualizovan pro {employee_slug}",
                     "success": True,
@@ -292,7 +308,7 @@ class Database:
                         style="red",
                     )
                 return {
-                    "message": f"Zaměstnanec {employee_slug} nebyl nalezen. {(str(e),)}",
+                    "message": f"Zaměstnanec {employee_slug} nebyl nalezen. {str(e)}",
                     "success": False,
                 }
             except Exception as e:

@@ -4,16 +4,18 @@
     take vektor
 {% endblock title %}
 {% block content %}
-    <section>
-        <header>
-            <h1>update vektoru zamestnance: {{ employee.id }}, {{ employee.slug }}</h1>
+    <section class="L-take-vector">
+        <header class="L-take-vector__header">
+            <h1>
+                update vektoru zamestnance: <span class="c-info-highlight u-text-success">{{ employee.name }} {{ employee.surname }}</span>
+            </h1>
         </header>
-        <hr>
-        <main>
+        <main class="L-take-vector__camstream">
             <div>
                 <img src="{% url "camstream" 12 %}" alt="">
             </div>
-            <a href="{% url "save_vector_to_db" employee.slug %}">Odeslat</a>
         </main>
+        <a href="{% url "save_vector_to_db" employee.slug %}"
+           class="L-take-vector__scan">SCAN</a>
     </section>
 {% endblock content %}

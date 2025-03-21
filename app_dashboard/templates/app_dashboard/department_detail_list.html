@@ -17,7 +17,7 @@
         <ul class="L-detail-list__list">
             {% for employee in employees %}
                 <li class="L-detail-list__item">
-                    <a href="#" class="c-emp-card">
+                    <a href="{% url "detail_employee" employee.slug %}" class="c-emp-card">
                         <div class="c-emp-card__avatar">
                             <img src="{% static "images/avatars/avatar_01.webp" %}"
                                  alt="avatar"

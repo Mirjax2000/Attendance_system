@@ -29,14 +29,10 @@ from app_dashboard.views import (
     EmployeeUpdateView,
     EmpStatusDetailList,
     MainPanelView,
-    OtherView,
     RedirectDashboard,
     SaveVectorToDbView,
-    SickView,
     StatusView,
     TakeVectorView,
-    VacationView,
-    WorkingView,
 )
 from app_main.views import (
     CamStreamView,
@@ -55,8 +51,7 @@ urlpatterns = [
 ]
 
 app_dashboard_urls: list = [
-    # path("dashboard/", DashboardView.as_view(), name="dashboard"),
-    path("dashboard/status", StatusView.as_view(), name="status"),
+    path("dashboard/main_panel", MainPanelView.as_view(), name="main_panel"),
     path(
         "dashboard/save_vector_to_db/<slug:slug>",
         SaveVectorToDbView.as_view(),
@@ -67,9 +62,7 @@ app_dashboard_urls: list = [
         TakeVectorView.as_view(),
         name="take_vector",
     ),
-    path("dashboard/attendance", AttendanceView.as_view(), name="attendance"),
     path("dashboard/create_emp", CreateEmpView.as_view(), name="create_emp"),
-    path("dashboard/main_panel", MainPanelView.as_view(), name="main_panel"),
     path("dashboard/employees", EmployeesView.as_view(), name="employees"),
     path(
         "dashboard/detail_employee/<slug:slug>/",
@@ -86,13 +79,9 @@ app_dashboard_urls: list = [
         EmployeeUpdateView.as_view(),
         name="update_employee",
     ),
-    path("dashboard/vacation", VacationView.as_view(), name="vacation"),
-    path("dashboard/working", WorkingView.as_view(), name="working"),
-    path("dashboard/cam<int:speed>", CamView.as_view(), name="cam"),
-    path("dashboard/charts", ChartsView.as_view(), name="charts"),
     path("dashboard/emails", EmailView.as_view(), name="emails"),
-    path("dashboard/other", OtherView.as_view(), name="other"),
-    path("dashboard/sick", SickView.as_view(), name="sick"),
+    path("dashboard/attendance", AttendanceView.as_view(), name="attendance"),
+    path("dashboard/charts", ChartsView.as_view(), name="charts"),
     path(
         "dashboard/department_list/",
         DepartmentListView.as_view(),
@@ -108,6 +97,8 @@ app_dashboard_urls: list = [
         EmpStatusDetailList.as_view(),
         name="emp_status_detail_list",
     ),
+    path("dashboard/cam<int:speed>", CamView.as_view(), name="cam"),
+    path("dashboard/status", StatusView.as_view(), name="status"),
 ]
 
 app_main_urls: list = [

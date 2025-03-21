@@ -19,10 +19,18 @@ from django.views.generic import (
 from accounts.forms import SignUpForm, UserUpdateForm
 
 
-def get_user_name(view_instance) -> str:
+def get_user(view_instance) -> dict:
     """Získej jméno přihlášeného uživatele"""
-    result: str = str(view_instance.request.user.username)
-    return result
+    status: str = ""
+    current_user = view_instance.request.user
+    name: str = str(current_user.username)
+
+    if current_user.is_superuser:
+        status = "SuperUser"
+    elif current_user.is_staff:
+        status = "admin"
+
+    return {"username": name, "status": status}
 
 
 class UserListView(LoginRequiredMixin, ListView):
@@ -33,8 +41,11 @@ class UserListView(LoginRequiredMixin, ListView):
     context_object_name = "users"
 
     def get_context_data(self, **kwargs):
+        user: dict = get_user(self)
+
         context = super().get_context_data(**kwargs)
-        context["user_name"] = get_user_name(self)
+        context["username"] = user["username"]
+        context["status"] = user["status"]
         context["active_link"] = "main-panel"
 
         return context
@@ -48,8 +59,11 @@ class UserDetailView(LoginRequiredMixin, DetailView):
     context_object_name = "user"
 
     def get_context_data(self, **kwargs):
+        user: dict = get_user(self)
+
         context = super().get_context_data(**kwargs)
-        context["user_name"] = get_user_name(self)
+        context["username"] = user["username"]
+        context["status"] = user["status"]
         context["active_link"] = "main-panel"
 
         return context
@@ -64,8 +78,11 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy("user_list")
 
     def get_context_data(self, **kwargs):
+        user: dict = get_user(self)
+
         context = super().get_context_data(**kwargs)
-        context["user_name"] = get_user_name(self)
+        context["username"] = user["username"]
+        context["status"] = user["status"]
         context["active_link"] = "main-panel"
 
         return context
@@ -83,14 +100,18 @@ class UserDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy("user_list")
 
     def get_context_data(self, **kwargs):
+        user: dict = get_user(self)
+
         context = super().get_context_data(**kwargs)
-        context["user_name"] = get_user_name(self)
+        context["username"] = user["username"]
+        context["status"] = user["status"]
         context["active_link"] = "main-panel"
         return context
 
     def form_valid(self, form):
         """Self protection"""
-        current_user = get_user_name(self)
+        user: dict = get_user(self)
+        current_user = user["username"]
         user_to_delete = str(self.get_object())
         if current_user == user_to_delete:
             messages.error(self.request, "Nemuzes smazat sam sebe")
@@ -108,8 +129,11 @@ class SignUpView(CreateView):
     success_url = reverse_lazy("user_list")
 
     def get_context_data(self, **kwargs):
+        user: dict = get_user(self)
+
         context = super().get_context_data(**kwargs)
-        context["user_name"] = get_user_name(self)
+        context["username"] = user["username"]
+        context["status"] = user["status"]
         context["active_link"] = "main-panel"
 
         return context

@@ -1,0 +1,59 @@
+@use "../../utils/" as *;
+@use "../../base/placeholders" as *;
+
+.L-take-vector {
+    @extend %select-none;
+    @extend %border-radius;
+
+    &__header {
+        color: var(--scheme-default);
+        margin-bottom: 2em;
+
+        h1 {
+            display: inline;
+            padding-bottom: 0.5em;
+            border-bottom: 1px solid var(--scheme-default);
+        }
+    }
+
+    &__camstream {
+        margin-bottom: 1em;
+
+        div {
+            text-align: center;
+        }
+
+        img {
+            @extend %margin-in;
+            @extend %border-radius;
+
+            border: 1px solid var(--scheme-clr-2);
+            box-shadow: 1px 1px 3px black;
+        }
+    }
+
+    &__scan {
+        @extend %margin-in;
+        @extend %border-radius;
+
+        display: block;
+        text-align: center;
+        font-size: 2rem;
+        padding-block: 0.5em;
+        color: var(--scheme-default);
+        width: clamp(12.5rem, 30%, 18.75rem);
+        background-color: var(--scheme-clr-8);
+        transition: all 0.1s ease-in-out;
+        box-shadow: 1px 1px 3px black;
+
+        &:hover,
+        &:focus {
+            background-color: var(--scheme-success);
+        }
+
+        &:active {
+            background-color: var(--scheme-warning);
+            transform: scale(0.95);
+        }
+    }
+}
