@@ -70,6 +70,10 @@ class MainPanelView(LoginRequiredMixin, TemplateView):
         context["username"] = user["username"]
         context["status"] = user["status"]
         context["active_link"] = "main-panel"
+        context["db_good_condition"] = (
+            Department.objects.filter(name="nezarazeno").exists()
+            and len(EmployeeStatus.objects.all()) >= 5
+        )
 
         return context
 
@@ -88,6 +92,10 @@ class EmployeesView(LoginRequiredMixin, ListView):
         context["username"] = user["username"]
         context["status"] = user["status"]
         context["active_link"] = "employees"
+        context["db_good_condition"] = (
+            Department.objects.filter(name="nezarazeno").exists()
+            and len(EmployeeStatus.objects.all()) >= 5
+        )
 
         return context
 
@@ -104,6 +112,10 @@ class EmailView(LoginRequiredMixin, TemplateView):
         context["username"] = user["username"]
         context["status"] = user["status"]
         context["active_link"] = "emails"
+        context["db_good_condition"] = (
+            Department.objects.filter(name="nezarazeno").exists()
+            and len(EmployeeStatus.objects.all()) >= 5
+        )
 
         return context
 
@@ -120,6 +132,10 @@ class ChartsView(LoginRequiredMixin, TemplateView):
         context["username"] = user["username"]
         context["status"] = user["status"]
         context["active_link"] = "charts"
+        context["db_good_condition"] = (
+            Department.objects.filter(name="nezarazeno").exists()
+            and len(EmployeeStatus.objects.all()) >= 5
+        )
 
         return context
 
@@ -136,6 +152,10 @@ class AttendanceView(LoginRequiredMixin, TemplateView):
         context["username"] = user["username"]
         context["status"] = user["status"]
         context["active_link"] = "attendances"
+        context["db_good_condition"] = (
+            Department.objects.filter(name="nezarazeno").exists()
+            and len(EmployeeStatus.objects.all()) >= 5
+        )
 
         return context
 
@@ -153,6 +173,10 @@ class CamView(LoginRequiredMixin, TemplateView):
         context["status"] = user["status"]
         context["speed"] = self.kwargs.get("speed", 10)
         context["active_link"] = "cams"
+        context["db_good_condition"] = (
+            Department.objects.filter(name="nezarazeno").exists()
+            and len(EmployeeStatus.objects.all()) >= 5
+        )
         return context
 
 
@@ -171,6 +195,10 @@ class CreateEmpView(CreateView):
         context["username"] = user["username"]
         context["status"] = user["status"]
         context["user_name"] = get_user(self)
+        context["db_good_condition"] = (
+            Department.objects.filter(name="nezarazeno").exists()
+            and len(EmployeeStatus.objects.all()) >= 5
+        )
         return context
 
     def form_valid(self, form):
@@ -198,6 +226,10 @@ class DepartmentListView(ListView):
         context["username"] = user["username"]
         context["status"] = user["status"]
         context["active_link"] = "main-panel"
+        context["db_good_condition"] = (
+            Department.objects.filter(name="nezarazeno").exists()
+            and len(EmployeeStatus.objects.all()) >= 5
+        )
 
         return context
 
@@ -216,6 +248,10 @@ class TakeVectorView(LoginRequiredMixin, DetailView):
         context["username"] = user["username"]
         context["status"] = user["status"]
         context["active_link"] = "employees"
+        context["db_good_condition"] = (
+            Department.objects.filter(name="nezarazeno").exists()
+            and len(EmployeeStatus.objects.all()) >= 5
+        )
 
         return context
 
@@ -263,6 +299,10 @@ class EmployeeDeleteView(LoginRequiredMixin, DeleteView):
         context["username"] = user["username"]
         context["status"] = user["status"]
         context["active_link"] = "employees"
+        context["db_good_condition"] = (
+            Department.objects.filter(name="nezarazeno").exists()
+            and len(EmployeeStatus.objects.all()) >= 5
+        )
         return context
 
     def form_valid(self, form):
@@ -289,6 +329,10 @@ class EmployeeUpdateView(LoginRequiredMixin, UpdateView):
         context["username"] = user["username"]
         context["status"] = user["status"]
         context["active_link"] = "employees"
+        context["db_good_condition"] = (
+            Department.objects.filter(name="nezarazeno").exists()
+            and len(EmployeeStatus.objects.all()) >= 5
+        )
 
         return context
 
@@ -315,6 +359,10 @@ class EmployeeDetailView(LoginRequiredMixin, DetailView):
         context["username"] = user["username"]
         context["status"] = user["status"]
         context["active_link"] = "employees"
+        context["db_good_condition"] = (
+            Department.objects.filter(name="nezarazeno").exists()
+            and len(EmployeeStatus.objects.all()) >= 5
+        )
 
         return context
 
@@ -357,12 +405,15 @@ class StatusView(TemplateView):
         context["active_link"] = "status"
         context["db_good_condition"] = (
             Department.objects.filter(name="nezarazeno").exists()
-            and not missing_statuses
+            and len(EmployeeStatus.objects.all()) >= 5
         )
+        context["employee_count"] = Employee.objects.aggregate(
+            total=Count("name")
+        )["total"]
         return context
 
 
-class FillDbView(LoginRequiredMixin):
+class FillDbView(LoginRequiredMixin, View):
     """spustit funkci na zaplneni databaze"""
 
     pass

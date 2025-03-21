@@ -92,7 +92,13 @@
                  alt="chart icon"
                  width="24"
                  height="24">
-            <p>DB status</p>
+            {% if db_good_condition == True %}
+                <p>DB status</p>
+            {% else %}
+                <p>
+                    DB status <span class="u-text-warning u-text-smaller c-info-highlight anim">error</span>
+                </p>
+            {% endif %}
         </a>
     </li>
 </ul>

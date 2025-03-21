@@ -15,4 +15,8 @@
     &__item:not(:last-child) {
         margin-bottom: 0.5em;
     }
+
+    .anim {
+        animation: logo-rotation 1s linear 1s infinite;
+    }
 }

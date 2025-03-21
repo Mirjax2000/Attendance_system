@@ -273,6 +273,10 @@ body.home {
   margin-left: -0.1em;
 }
 
+.u-text-smaller {
+  font-size: 80%;
+}
+
 /* --- typography --- */
 @font-face {
   font-family: "jet brains";
