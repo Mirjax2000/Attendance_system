@@ -72,8 +72,11 @@ INSTALLED_APPS = [
     "accounts",
     "app_main",
     "app_dashboard",
+    "API",
     # --- znakova sada pro dump/load
     "django_dump_load_utf8",
+    # --- restframework
+    "rest_framework",
 ]
 
 MIDDLEWARE = [

@@ -44,6 +44,7 @@ dependencies = [
     { name = "cryptography" },
     { name = "django" },
     { name = "django-dump-load-utf8" },
+    { name = "djangorestframework" },
     { name = "djlint" },
     { name = "dlib" },
     { name = "face-recognition" },
@@ -68,6 +69,7 @@ requires-dist = [
     { name = "cryptography", specifier = ">=44.0.1" },
     { name = "django", specifier = ">=5.1.6" },
     { name = "django-dump-load-utf8", specifier = ">=0.0.4" },
+    { name = "djangorestframework", specifier = ">=3.15.2" },
     { name = "djlint", specifier = ">=1.36.4" },
     { name = "dlib", specifier = ">=19.24.6" },
     { name = "face-recognition", specifier = ">=1.3.0" },
@@ -292,6 +294,18 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/d8/a1/ac6e535660fb6aa3864c1e7360856590cc04170a58bbab573ea833b017c6/django-dump-load-utf8-0.0.4.tar.gz", hash = "sha256:963b8428803551007a53770aa60ceb9b02a59ec22c7a56b7aacda811772f2d17", size = 3694 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/20/ff/faa95c7ac8ae44ae511b81e5ca04f87d70731c1b81300b5755fc6a6fbec5/django_dump_load_utf8-0.0.4-py3-none-any.whl", hash = "sha256:9f2002ab5eba55b5c4230667b6a7144a5a6aad9da89ee6f5b8bd323b00548110", size = 5305 },
+]
+
+[[package]]
+name = "djangorestframework"
+version = "3.15.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/2c/ce/31482eb688bdb4e271027076199e1aa8d02507e530b6d272ab8b4481557c/djangorestframework-3.15.2.tar.gz", hash = "sha256:36fe88cd2d6c6bec23dca9804bab2ba5517a8bb9d8f47ebc68981b56840107ad", size = 1067420 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/7c/b6/fa99d8f05eff3a9310286ae84c4059b08c301ae4ab33ae32e46e8ef76491/djangorestframework-3.15.2-py3-none-any.whl", hash = "sha256:2b8871b062ba1aefc2de01f773875441a961fefbf79f5eed1e32b2f096944b20", size = 1071235 },
 ]
 
 [[package]]
