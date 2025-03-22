@@ -92,12 +92,16 @@
                  alt="chart icon"
                  width="24"
                  height="24">
-            {% if db_good_condition == True %}
+            {% if request.user.is_anonymous %}
                 <p>DB status</p>
             {% else %}
-                <p>
-                    DB status <span class="u-text-warning u-text-smaller c-info-highlight anim">error</span>
-                </p>
+                {% if db_good_condition %}
+                    <p>DB status</p>
+                {% else %}
+                    <p>
+                        DB status <span class="u-text-warning u-text-smaller c-info-highlight anim">error</span>
+                    </p>
+                {% endif %}
             {% endif %}
         </a>
     </li>

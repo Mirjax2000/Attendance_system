@@ -1,5 +1,7 @@
 """dashboard views CBVs"""
 
+from time import sleep
+
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count
@@ -420,7 +422,8 @@ class FillDbView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         """spusti akci"""
         db_control.run_all_default()
-        messages.success(request, "databaze zaplnena")
+        sleep(1)
+        messages.success(request, "databáze zaplněna")
         return redirect("status")
 
 
