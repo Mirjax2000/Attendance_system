@@ -2,7 +2,6 @@
 
 from typing import Type
 
-from django.core.management import call_command
 from django.db import models
 from rich.console import Console
 
@@ -65,8 +64,6 @@ class DatabaseControl:
 
     def delete_db(self) -> bool:
         """Smaže DB jako truncate a zkontroluje prázdnost tabulek"""
-        call_command("flush", "--noinput")
-
         db_status: list[bool] = []
         db_tables: list[Type[models.Model]] = [
             Employee,
@@ -77,7 +74,11 @@ class DatabaseControl:
         ]
 
         for db_table in db_tables:
-            if not db_table.objects.exists():
+            # Smaže všechny záznamy v tabulce
+            deleted_count, _ = db_table.objects.all().delete()
+
+            # Kontrola prázdnosti tabulky po smazání
+            if deleted_count == 0:
                 if DEBUG:
                     cons.log(
                         f"Tabulka: {db_table.__name__} je prázdná.",
@@ -92,6 +93,7 @@ class DatabaseControl:
                     )
                 db_status.append(False)
 
+        # Kontrola, zda všechny tabulky byly úspěšně vymazány
         if all(db_status):
             if DEBUG:
                 cons.log("Všechny tabulky jsou prázdné.", style="green")
@@ -104,7 +106,7 @@ class DatabaseControl:
 
 # aktivace instance
 db_control: DatabaseControl = DatabaseControl()
-# nyni je instance vytovrena a je pripraven k importu
+# nyni je instance vytovrena a je pripravena k importu
 
 if __name__ == "__main__":
     db_control.run_all_default()
