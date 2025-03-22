@@ -50,12 +50,17 @@ Tento projekt je založen na dvou aplikacích:
 **Databáze:**
 - Tabulky:
     - Employee
+        - jmeno, tel, email, slug, vek, adresa
         - Obsahuje hash metodu na PIN
     - Department
+        - nazvy oddeleni: IT, Management, Housekeeping
     - EmployeeStatus
+        - stavy: volno, nemoc, dovolena, v praci, sluzebni cesta
     - FaceVector
         - Obsahuje šifrování face vektorů šifrovacím klíčem
     - Záznam času v práci
+
+![ER diagram]({A45C5F3B-B5CB-4B0E-A615-2A52276D4780}.png)
 
 
 **pridano restAPI rozhrani:**

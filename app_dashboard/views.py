@@ -427,6 +427,25 @@ class FillDbView(LoginRequiredMixin, View):
         return redirect("status")
 
 
+class ResetDbView(LoginRequiredMixin, View):
+    """spustit funkci na zaplneni databaze"""
+
+    def get(self, request, *args, **kwargs):
+        """spusti akci"""
+        try:
+            result = db_control.delete_db()
+            if result:
+                messages.success(request, "databáze vymazana")
+            else:
+                messages.error(request, "databáze nebyla vymazana")
+        except Exception as e:
+            messages.error(
+                request, f"Došlo k chybě při vymazávání databáze: {str(e)}"
+            )
+
+        return redirect("status")
+
+
 class DepartmentDetailList(LoginRequiredMixin, ListView):
     """seznam zamestnacu z FK department"""
 
