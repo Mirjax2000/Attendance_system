@@ -128,7 +128,7 @@ class Employee(models.Model):
     def __repr__(self) -> str:
         return f"Employee: {self.name} {self.surname} {self.status()}"
 
-    def set_slug(self):
+    def set_slug(self) -> None:
         """Vytvor slug"""
         self.slug = slugify(f"{self.name}-{self.surname}")
 
@@ -138,13 +138,13 @@ class Employee(models.Model):
             return "is valid"
         return "is invalid"
 
-    def date_of_birth_format(self):
+    def date_of_birth_format(self) -> str:
         """Datum narozeni formatovani"""
         if self.date_of_birth:
             return self.date_of_birth.strftime("%Y-%m-%d")
-        return None
+        return "N/A"
 
-    def age(self):
+    def age(self) -> int:
         """Vypocet veku"""
         if self.date_of_birth:
             today = date.today()
@@ -157,19 +157,19 @@ class Employee(models.Model):
                 )
             )
             return age
-        return None
+        return 0
 
-    def set_pin_hash(self):
+    def set_pin_hash(self) -> None:
         """nastav hash na pin_hash a smaz pin"""
         if self.pin_code != "":
             self.pin_code_hash = make_password(self.pin_code)
         self.pin_code = ""
 
-    def check_pin_code(self, pin_code):
+    def check_pin_code(self, pin_code) -> bool:
         """Kontrola pin_code"""
         return check_password(pin_code, self.pin_code_hash)
 
-    def status_change(self):
+    def status_change(self) -> None:
         """pri zmene statusu vytovri novy zaznam v tabulce EmployeeStatusHistory"""
         if self.pk:
             old_status = Employee.objects.get(pk=self.pk).employee_status
@@ -181,7 +181,7 @@ class Employee(models.Model):
                     timestamp=now(),
                 )
 
-    def default_tables(self):
+    def default_tables(self) -> None:
         """defaultni zaplneni tabulek"""
         # pokud v FK nic neni tak tam dej hodnotu PK klice z default
         if not self.employee_status:
@@ -193,7 +193,7 @@ class Employee(models.Model):
                 name="nezarazeno"
             )[0]
 
-    def save(self, *args, **kwargs):
+    def save(self, *args, **kwargs) -> None:
         self.set_slug()  # nastav slug
         self.set_pin_hash()  # novy pinhash
         self.default_tables()  # kontrola tabulek
@@ -262,7 +262,7 @@ class FaceVector(models.Model):
                 return False
         return False
 
-    def clean(self):
+    def clean(self) -> None:
         """Validace dat"""
         if not self.face_vector_fernet or not self.employee.pin_code_hash:
             raise ValidationError("Face vector nebo pin hash neni v poradku")
@@ -329,11 +329,6 @@ class EmployeeStatus(models.Model):
         return f"EmployeeStatus: {self.name}"
 
 
-from datetime import datetime
-
-from django.db import models
-
-
 class EmployeeStatusHistory(models.Model):
     """Historie stavů zaměstnance."""
 
@@ -357,7 +352,10 @@ class EmployeeStatusHistory(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
-        return f"Historie stavu {self.employee.slug} - {self.timestamp.strftime('%d.%m.%Y - %H:%M:%S')}"
+        return (
+            f"Historie stavu {self.employee.slug} - "
+            f"{self.timestamp.strftime('%d.%m.%Y - %H:%M:%S')}"
+        )
 
     class Meta:
         """ordering"""
