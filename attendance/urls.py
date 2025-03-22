@@ -15,6 +15,7 @@ from accounts.views import (
     UserUpdateView,
     user_logout,
 )
+from API.views import DepartmentApi, EmployeeDetail, EmployeesApi
 from app_dashboard.views import (
     AttendanceView,
     CamView,
@@ -28,6 +29,7 @@ from app_dashboard.views import (
     EmployeesView,
     EmployeeUpdateView,
     EmpStatusDetailList,
+    FillDbView,
     MainPanelView,
     RedirectDashboard,
     SaveVectorToDbView,
@@ -99,6 +101,7 @@ app_dashboard_urls: list = [
     ),
     path("dashboard/cam<int:speed>", CamView.as_view(), name="cam"),
     path("dashboard/status", StatusView.as_view(), name="status"),
+    path("dashboard/filldb", FillDbView.as_view(), name="filldb"),
 ]
 
 app_main_urls: list = [
@@ -138,8 +141,18 @@ app_accounts_urls: list = [
     ),
     path("accounts/", include("django.contrib.auth.urls")),
 ]
-
+api_urls: list = [
+    path("api/employees/", EmployeesApi.as_view(), name="api_employees"),
+    path("api/departments/", DepartmentApi.as_view(), name="api_departments"),
+    path("api/emp_status/", DepartmentApi.as_view(), name="api_emp_status"),
+    path(
+        "api/emp_detail/<slug:slug>/",
+        EmployeeDetail.as_view(),
+        name="api_emp_detail",
+    ),
+]
 urlpatterns += app_dashboard_urls
 urlpatterns += app_main_urls
 urlpatterns += app_accounts_urls
+urlpatterns += api_urls
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

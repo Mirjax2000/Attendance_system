@@ -1,5 +1,7 @@
 """dashboard views CBVs"""
 
+from time import sleep
+
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count
@@ -21,6 +23,7 @@ from app_main.models import Department, Employee, EmployeeStatus
 
 # importuju instanci tridy Camsystems
 from attendance.cam_systems import cam_systems_instance as csi
+from attendance.populate_db import db_control
 from attendance.settings import DEBUG
 
 from .forms import EmployeeForm
@@ -69,6 +72,10 @@ class MainPanelView(LoginRequiredMixin, TemplateView):
         context["username"] = user["username"]
         context["status"] = user["status"]
         context["active_link"] = "main-panel"
+        context["db_good_condition"] = (
+            Department.objects.filter(name="nezarazeno").exists()
+            and len(EmployeeStatus.objects.all()) >= 5
+        )
 
         return context
 
@@ -87,6 +94,10 @@ class EmployeesView(LoginRequiredMixin, ListView):
         context["username"] = user["username"]
         context["status"] = user["status"]
         context["active_link"] = "employees"
+        context["db_good_condition"] = (
+            Department.objects.filter(name="nezarazeno").exists()
+            and len(EmployeeStatus.objects.all()) >= 5
+        )
 
         return context
 
@@ -103,6 +114,10 @@ class EmailView(LoginRequiredMixin, TemplateView):
         context["username"] = user["username"]
         context["status"] = user["status"]
         context["active_link"] = "emails"
+        context["db_good_condition"] = (
+            Department.objects.filter(name="nezarazeno").exists()
+            and len(EmployeeStatus.objects.all()) >= 5
+        )
 
         return context
 
@@ -119,6 +134,10 @@ class ChartsView(LoginRequiredMixin, TemplateView):
         context["username"] = user["username"]
         context["status"] = user["status"]
         context["active_link"] = "charts"
+        context["db_good_condition"] = (
+            Department.objects.filter(name="nezarazeno").exists()
+            and len(EmployeeStatus.objects.all()) >= 5
+        )
 
         return context
 
@@ -135,6 +154,10 @@ class AttendanceView(LoginRequiredMixin, TemplateView):
         context["username"] = user["username"]
         context["status"] = user["status"]
         context["active_link"] = "attendances"
+        context["db_good_condition"] = (
+            Department.objects.filter(name="nezarazeno").exists()
+            and len(EmployeeStatus.objects.all()) >= 5
+        )
 
         return context
 
@@ -152,6 +175,10 @@ class CamView(LoginRequiredMixin, TemplateView):
         context["status"] = user["status"]
         context["speed"] = self.kwargs.get("speed", 10)
         context["active_link"] = "cams"
+        context["db_good_condition"] = (
+            Department.objects.filter(name="nezarazeno").exists()
+            and len(EmployeeStatus.objects.all()) >= 5
+        )
         return context
 
 
@@ -170,6 +197,10 @@ class CreateEmpView(CreateView):
         context["username"] = user["username"]
         context["status"] = user["status"]
         context["user_name"] = get_user(self)
+        context["db_good_condition"] = (
+            Department.objects.filter(name="nezarazeno").exists()
+            and len(EmployeeStatus.objects.all()) >= 5
+        )
         return context
 
     def form_valid(self, form):
@@ -197,6 +228,10 @@ class DepartmentListView(ListView):
         context["username"] = user["username"]
         context["status"] = user["status"]
         context["active_link"] = "main-panel"
+        context["db_good_condition"] = (
+            Department.objects.filter(name="nezarazeno").exists()
+            and len(EmployeeStatus.objects.all()) >= 5
+        )
 
         return context
 
@@ -215,6 +250,10 @@ class TakeVectorView(LoginRequiredMixin, DetailView):
         context["username"] = user["username"]
         context["status"] = user["status"]
         context["active_link"] = "employees"
+        context["db_good_condition"] = (
+            Department.objects.filter(name="nezarazeno").exists()
+            and len(EmployeeStatus.objects.all()) >= 5
+        )
 
         return context
 
@@ -262,6 +301,10 @@ class EmployeeDeleteView(LoginRequiredMixin, DeleteView):
         context["username"] = user["username"]
         context["status"] = user["status"]
         context["active_link"] = "employees"
+        context["db_good_condition"] = (
+            Department.objects.filter(name="nezarazeno").exists()
+            and len(EmployeeStatus.objects.all()) >= 5
+        )
         return context
 
     def form_valid(self, form):
@@ -288,6 +331,10 @@ class EmployeeUpdateView(LoginRequiredMixin, UpdateView):
         context["username"] = user["username"]
         context["status"] = user["status"]
         context["active_link"] = "employees"
+        context["db_good_condition"] = (
+            Department.objects.filter(name="nezarazeno").exists()
+            and len(EmployeeStatus.objects.all()) >= 5
+        )
 
         return context
 
@@ -314,11 +361,15 @@ class EmployeeDetailView(LoginRequiredMixin, DetailView):
         context["username"] = user["username"]
         context["status"] = user["status"]
         context["active_link"] = "employees"
+        context["db_good_condition"] = (
+            Department.objects.filter(name="nezarazeno").exists()
+            and len(EmployeeStatus.objects.all()) >= 5
+        )
 
         return context
 
 
-class StatusView(TemplateView):
+class StatusView(LoginRequiredMixin, TemplateView):
     """
     stav databaze, ruzne vypisy do contextu
     """
@@ -341,20 +392,39 @@ class StatusView(TemplateView):
             "free",
         ]
 
-        existing_statuses = [
+        existing_statuses: list = [
             status.name
             for status in EmployeeStatus.objects.filter(name__in=statuses)
         ]
 
-        missing_statuses = set(statuses) - set(existing_statuses)
+        missing_statuses: set = set(statuses) - set(existing_statuses)
 
         context["existing_statuses"] = existing_statuses
         context["missing_statuses"] = missing_statuses
         context["department_nezarazeno"] = Department.objects.filter(
             name="nezarazeno"
-        ).exists()
+        )
         context["active_link"] = "status"
+        context["db_good_condition"] = (
+            Department.objects.filter(name="nezarazeno").exists()
+            and len(EmployeeStatus.objects.all()) >= 5
+        )
+        context["employee_count"] = Employee.objects.aggregate(
+            total=Count("name")
+        )["total"]
+
         return context
+
+
+class FillDbView(LoginRequiredMixin, View):
+    """spustit funkci na zaplneni databaze"""
+
+    def get(self, request, *args, **kwargs):
+        """spusti akci"""
+        db_control.run_all_default()
+        sleep(1)
+        messages.success(request, "databáze zaplněna")
+        return redirect("status")
 
 
 class DepartmentDetailList(LoginRequiredMixin, ListView):

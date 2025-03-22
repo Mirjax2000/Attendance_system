@@ -55,8 +55,8 @@ class DatabaseControl:
 
 
 # aktivace instance
-fill_tables: DatabaseControl = DatabaseControl()
+db_control: DatabaseControl = DatabaseControl()
 # nyni je instance vytovrena a je pripraven k importu
 
 if __name__ == "__main__":
-    fill_tables.run_all_default()
+    db_control.run_all_default()

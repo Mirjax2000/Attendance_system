@@ -44,15 +44,37 @@ Tento projekt je založen na dvou aplikacích:
 - Rozesílání informačních emailů
 
 **Permisions:**
-- omezeni pro create/delete  zamestnance
-- Prehledy - default
-- rozesilani emailu - HR
+- omezeni pro create/delete uzivatele
 
-**databaze:**
-- tabulka: employee
-- tabulka: department
-- tabulka: oblicejovych vektoru
-- tabulka: zaznam casu v praci
 
+**Databáze:**
+- Tabulky:
+    - Employee
+        - Obsahuje hash metodu na PIN
+    - Department
+    - EmployeeStatus
+    - FaceVector
+        - Obsahuje šifrování face vektorů šifrovacím klíčem
+    - Záznam času v práci
+
+
+**pridano restAPI rozhrani:**
+- Employees
+    - seznam zamestnancu
+- Departments
+    - seznam departments
+- EmployeeStatus
+    - vypis vsech statusu pro zamestnance
+- EmployeeDetail
+    - detail zamestnance
+
+**pridano Rozhrani pro prehled databaze**
+- informuje zdali databaze je zaplnena dafaultnimy hodnotamy
+- nabizi moznosti
+    - zaplnit databazy
+    - vymazat databazy
+    - zkontrolovat databazy
+    - zalohovat databazi do fixtures
+    - nahrat databazy z fixtures
 
 

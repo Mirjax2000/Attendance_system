@@ -1,51 +1,100 @@
 {% extends "dashboard_base.html" %}
 {% load static %}
 {% block title %}
-    attendance
+    DB status
 {% endblock title %}
 {% block content %}
-    <h1>status view</h1>
-    <hr>
-    <div>
-        <h3>tabulka pro Department</h3>
-        <p>
-            department tabulka "nezarazeno": <span class="c-info-highlight {% if department_nezarazeno == True %}u-text-success {% else %} u-text-warning {% endif %}">{{ department_nezarazeno }}</span>
-        </p>
-    </div>
-    <hr>
-    <div>
-        <h3>tabulky pro EmployeeStatus:</h3>
-        {% for existing_status in existing_statuses %}
-            <p class="u-text-success c-info-highlight">{{ existing_status }}</p>
-        {% empty %}
-            <p class="u-text-warning c-info-highlight">nejsou zadne tabulky</p>
-        {% endfor %}
-    </div>
-    <hr>
-    <div>
-        <h3>chybejici tabulky:</h3>
-        {% for missing_status in missing_statuses %}
-            <p class="u-text-warning c-info-highlight">{{ missing_status }}</p>
-        {% empty %}
-            <p class="u-text-success c-info-highlight">nic nechybi</p>
-        {% endfor %}
-    </div>
-    <hr>
-    <ul>
-        <li>
-            <a href="#">zaplnit databazy</a>
-        </li>
-        <li>
-            <a href="#">vymazat databazy</a>
-        </li>
-        <li>
-            <a href="#">zkontrolovat databazy</a>
-        </li>
-        <li>
-            <a href="#">zalohovat databzy</a>
-        </li>
-        <li>
-            <a href="#">nahrat databzy</a>
-        </li>
-    </ul>
+    <section class="L-status">
+        <header class="L-status__header">
+            <h1>
+                status view:
+                {% if db_good_condition == True %}
+                    <span class="u-text-success c-info-highlight">Good condition</span>
+                {% else %}
+                    <span class="u-text-warning c-info-highlight">Bad condition !!!</span>
+                {% endif %}
+            </h1>
+        </header>
+        <div class="L-status__content-box">
+            <h3>tabulky pro Department:</h3>
+            {% for dep in department_nezarazeno %}
+                <p>
+                    <span class="c-info-highlight u-text-success">{{ dep }}</span>
+                </p>
+            {% empty %}
+                <p class="u-text-warning c-info-highlight">tabulky chybí</p>
+            {% endfor %}
+        </div>
+        <div class="L-status__content-box">
+            <h3>tabulky pro EmployeeStatus:</h3>
+            {% for existing_status in existing_statuses %}
+                <p class="u-text-success c-info-highlight">{{ existing_status }}</p>
+            {% empty %}
+                <p class="u-text-warning c-info-highlight">tabulky chybí</p>
+            {% endfor %}
+            <h3>chybějící tabulky:</h3>
+            {% for missing_status in missing_statuses %}
+                <p class="u-text-warning c-info-highlight">{{ missing_status }}</p>
+            {% empty %}
+                <p class="u-text-success c-info-highlight">nic nechybí</p>
+            {% endfor %}
+        </div>
+        <div class="L-status__content-box">
+            <p>
+                {% if employee_count %}
+                    celkový počet zaměstnanců: <span class="c-info-highlight u-text-success">{{ employee_count }}</span>
+                {% else %}
+                    celkový počet zaměstnanců:
+                    <span class="c-info-highlight u-text-warning">0</span>
+                {% endif %}
+            </p>
+        </div>
+        <ul class="L-status__list">
+            <li class="L-status__item">
+                <a class="c-ico-btn" href="{% url "filldb" %}">
+                    <img src="{% static "images/icons8-update-blue.png" %}"
+                         alt="camera icon"
+                         width="24"
+                         height="24">
+                    <p>zaplnit databazy</p>
+                </a>
+            </li>
+            <li class="L-status__list">
+                <a class="c-ico-btn" href="#">
+                    <img src="{% static "images/icons8-delete-48-red.png" %}"
+                         alt="camera icon"
+                         width="24"
+                         height="24">
+                    <p>vymazat databazy</p>
+                </a>
+            </li>
+            <li class="L-status__list">
+                <a class="c-ico-btn" href="#">
+                    <img src="{% static "images/icons8-save.png" %}"
+                         alt="camera icon"
+                         width="24"
+                         height="24">
+                    <p>zalohovat databazy</p>
+                </a>
+            </li>
+            <li class="L-status__list">
+                <a class="c-ico-btn" href="#">
+                    <img src="{% static "images/icons8-load.png" %}"
+                         alt="camera icon"
+                         width="24"
+                         height="24">
+                    <p>nahrat databazy</p>
+                </a>
+            </li>
+            <li class="L-status__list">
+                <a class="c-ico-btn" href="#">
+                    <img src="{% static "images/icons8-refresh.png" %}"
+                         alt="camera icon"
+                         width="24"
+                         height="24">
+                    <p>refresh</p>
+                </a>
+            </li>
+        </ul>
+    </section>
 {% endblock content %}

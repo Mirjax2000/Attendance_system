@@ -215,11 +215,11 @@ body.home {
   margin-inline: auto;
 }
 
-.c-info-highlight, .c-filter, .c-emp-card, .c-count__card, .L-departments, .L-detail-list, .L-detail, .L-detail__item p strong, .L-detail__actions, .L-take-vector, .L-list__wrapper, .L-list__info, .L-list__actions, .L-form, .L-header, .L-navigation {
+.c-info-highlight, .c-filter, .c-emp-card, .c-count__card, .L-departments, .L-detail-list, .L-detail, .L-detail__item p strong, .L-detail__actions, .L-take-vector, .L-status, .L-list__wrapper, .L-list__info, .L-list__actions, .L-form, .L-header, .L-navigation {
   user-select: none;
 }
 
-.c-info-highlight, .c-filter, .c-filter__item .form__wrapper, .c-filter__form select, .c-emp-card, .c-count__card, .c-count__card__content, .c-ico-btn, .L-departments, .L-detail-list__item, .L-take-vector, .L-take-vector__camstream img, .L-take-vector__scan, .L-form, .L-form__form input,
+.c-info-highlight, .c-filter, .c-filter__item .form__wrapper, .c-filter__form select, .c-emp-card, .c-count__card, .c-count__card__content, .c-ico-btn, .L-departments, .L-detail-list__item, .L-take-vector, .L-take-vector__camstream img, .L-take-vector__scan, .L-status__content-box, .L-form, .L-form__form input,
 .L-form__form select, .L-form__submit, .L-content {
   border-radius: 5px;
 }
@@ -271,6 +271,10 @@ body.home {
 
 .u-neg-merge-sml-left {
   margin-left: -0.1em;
+}
+
+.u-text-smaller {
+  font-size: 80%;
 }
 
 /* --- typography --- */
@@ -342,6 +346,9 @@ body {
 }
 .L-navigation__item:not(:last-child) {
   margin-bottom: 0.5em;
+}
+.L-navigation .anim {
+  animation: logo-rotation 1s linear 1s infinite;
 }
 
 .L-header {
@@ -588,6 +595,39 @@ body {
 .L-list__actions .hide {
   opacity: 0.3;
   pointer-events: none;
+}
+
+.L-status {
+  padding-block: 0.5em;
+  color: var(--scheme-default);
+}
+.L-status__header {
+  margin-bottom: 0.5em;
+}
+.L-status__header h1 {
+  padding-bottom: 0.3em;
+  display: inline;
+  border-bottom: 1px solid var(--scheme-default);
+}
+.L-status__content-box {
+  padding: 0.5em;
+  border: 1px solid black;
+  margin-bottom: 0.5em;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5411764706);
+}
+.L-status__content-box h3 {
+  margin-bottom: 0.3em;
+}
+.L-status__content-box p {
+  margin-bottom: 0.5em;
+}
+.L-status__list {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.5em;
+  font-size: 0.75rem;
+  flex-wrap: wrap;
 }
 
 .L-take-vector__header {
