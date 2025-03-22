@@ -32,6 +32,7 @@ from app_dashboard.views import (
     FillDbView,
     MainPanelView,
     RedirectDashboard,
+    ResetDbView,
     SaveVectorToDbView,
     StatusView,
     TakeVectorView,
@@ -102,6 +103,7 @@ app_dashboard_urls: list = [
     path("dashboard/cam<int:speed>", CamView.as_view(), name="cam"),
     path("dashboard/status", StatusView.as_view(), name="status"),
     path("dashboard/filldb", FillDbView.as_view(), name="filldb"),
+    path("dashboard/resetdb", ResetDbView.as_view(), name="resetdb"),
 ]
 
 app_main_urls: list = [
