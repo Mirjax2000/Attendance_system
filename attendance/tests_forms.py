@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase
 
 from accounts.forms import SignUpForm, UserUpdateForm
-from app_dashboard.forms import EmployeeForm
+from app_dashboard.forms import EmployeeForm, EmailForm
 from app_main.models import Department, Employee, EmployeeStatus
 
 User = get_user_model()
@@ -415,3 +415,140 @@ class EmployeeFormTests(TestCase):
             form.errors["email"],
             ["Tento e-mail je již používán. Zvolte jiný."]
         )
+
+
+class EmailFormTests(TestCase):
+    def test_valid_single_email(self):
+        """
+        Testuje validní jeden e-mail se správným formátem, tématem a zprávou.
+        """
+        data = {
+            'recipient_email': 'user@seznam.cz',
+            'subject': 'Pozdrav',
+            'message': 'Toto je platná zpráva, která obsahuje '
+                       'více jak 10 znaků.'
+        }
+        form = EmailForm(data=data)
+        self.assertTrue(form.is_valid())
+        # Očekáváme seznam s jedním e-mailem
+        self.assertEqual(form.cleaned_data['recipient_email'],
+                         ['user@seznam.cz'])
+
+    def test_valid_multiple_emails(self):
+        """Testuje validní více e-mailových adres oddělených čárkou."""
+        data = {
+            'recipient_email': 'user1@seznam.cz, user2@seznam.cz, '
+                               'user3@seznam.cz',
+            'subject': 'Informace',
+            'message': 'Kompletní zpráva bez chyb, splňující délku a '
+                       'ostatní podmínky.'
+        }
+        form = EmailForm(data=data)
+        self.assertTrue(form.is_valid())
+        self.assertEqual(form.cleaned_data['recipient_email'],
+                         ['user1@seznam.cz', 'user2@seznam.cz',
+                          'user3@seznam.cz'])
+
+    def test_invalid_email_format(self):
+        """Testuje neplatný formát e-mailové adresy."""
+        data = {
+            'recipient_email': 'invalid-email',
+            'subject': 'Test',
+            'message': 'Toto je dostatečně dlouhá zpráva.'
+        }
+        form = EmailForm(data=data)
+        self.assertFalse(form.is_valid())
+        self.assertIn("má neplatný formát",
+                      str(form.errors['recipient_email']))
+
+    def test_banned_domain(self):
+        """Testuje e-mailovou adresu s nepovolenou doménou."""
+        data = {
+            'recipient_email': 'user@spam.com',
+            'subject': 'Upozornění',
+            'message': 'Plně validní zpráva, která splňuje všechny '
+                       'ostatní podmínky.'
+        }
+        form = EmailForm(data=data)
+        self.assertFalse(form.is_valid())
+        self.assertIn("není povolena", 
+                      str(form.errors['recipient_email']))
+
+    def test_empty_recipient_email(self):
+        """Testuje prázdné pole pro příjemce."""
+        data = {
+            'recipient_email': '',
+            'subject': 'Něco',
+            'message': 'Tato zpráva je dostatečně dlouhá.'
+        }
+        form = EmailForm(data=data)
+        self.assertFalse(form.is_valid())
+        self.assertIn("Toto pole je vyžadováno.",
+                      str(form.errors['recipient_email']))
+
+    def test_subject_in_message(self):
+        """Testuje případ, kdy se předmět nachází v textu zprávy."""
+        data = {
+            'recipient_email': 'user@seznam.cz',
+            'subject': 'Test',
+            'message': 'Toto je test zprávy, která obsahuje i slovo test.'
+        }
+        form = EmailForm(data=data)
+        self.assertFalse(form.is_valid())
+        self.assertIn("Předmět by neměl být obsažen ve zprávě.",
+                      str(form.errors['subject']))
+
+    def test_message_too_short(self):
+        """Testuje případ, kdy je zpráva příliš krátká."""
+        data = {
+            'recipient_email': 'user@seznam.cz',
+            'subject': 'Zpráva',
+            'message': 'krátká'
+        }
+        form = EmailForm(data=data)
+        self.assertFalse(form.is_valid())
+        self.assertIn("Zpráva je příliš krátká", 
+                      str(form.errors['message']))
+
+    def test_valid_when_subject_not_in_message(self):
+        """Test, kdy je předmět odlišný od obsahu zprávy."""
+        data = {
+            'recipient_email': 'user@seznam.cz',
+            'subject': 'Pozdrav',
+            'message': 'Toto je zpráva, která nezmiňuje daný předmět a '
+                       'je dostatečně dlouhá.'
+        }
+        form = EmailForm(data=data)
+        self.assertTrue(form.is_valid())
+
+    def test_both_subject_and_message_errors(self):
+        """
+        Testuje případ, kdy zároveň selže kontrola předmětu 
+        (je součástí zprávy) a zpráva je příliš krátká.
+        """
+        data = {
+            'recipient_email': 'user@seznam.cz',
+            'subject': 'Chyba',
+            'message': 'chyba'  # příliš krátká a obsahuje předmět
+        }
+        form = EmailForm(data=data)
+        self.assertFalse(form.is_valid())
+        self.assertIn("Předmět by neměl být obsažen ve zprávě.",
+                      str(form.errors['subject']))
+        self.assertIn("Zpráva je příliš krátká", 
+                      str(form.errors['message']))
+
+    def test_recipient_email_with_extra_whitespace(self):
+        """
+        Testuje situaci, kdy jsou e-mailové adresy zadány s 
+        přebytečnými mezerami.
+        """
+        data = {
+            'recipient_email': '  user@seznam.cz  ,   user2@seznam.cz   ',
+            'subject': 'Info',
+            'message': 'Zpráva je dostatečně dlouhá a bez chyb.'
+        }
+        form = EmailForm(data=data)
+        self.assertTrue(form.is_valid())
+        self.assertEqual(form.cleaned_data['recipient_email'],
+                         ['user@seznam.cz', 'user2@seznam.cz'])
