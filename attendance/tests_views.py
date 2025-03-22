@@ -1,3 +1,5 @@
+"""View tests"""
+
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
@@ -36,8 +38,7 @@ class UserViewsTests(TestCase):
         response = self.client.get(reverse("user_list"))
 
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response,
-                                "accounts/user_list_detail.html")
+        self.assertTemplateUsed(response, "accounts/user_list_detail.html")
         self.assertIn("users", response.context)
         users_list = response.context["users"]
         self.assertIn(self.user1, users_list)
@@ -49,8 +50,7 @@ class UserViewsTests(TestCase):
         url = reverse("user_detail", args=[self.user2.pk])
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response,
-                                "accounts/user_detail.html")
+        self.assertTemplateUsed(response, "accounts/user_detail.html")
         self.assertEqual(response.context.get("user"), self.user2)
         self.assertContains(response, self.user2.username)
         self.assertContains(response, self.user2.email)
@@ -91,14 +91,11 @@ class UserViewsTests(TestCase):
         }
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response,
-                                "registration/user_update.html")
+        self.assertTemplateUsed(response, "registration/user_update.html")
         form = response.context.get("form")
         self.assertTrue(form.errors)
         self.assertIn("username", form.errors)
-        self.assertIn(
-            "Toto pole je vyžadováno.", str(form.errors["username"])
-        )
+        self.assertIn("Toto pole je vyžadováno.", str(form.errors["username"]))
 
     def test_user_delete_view_confirmation(self):
         """Stránka pro potvrzení smazání uživatele je přístupná.
@@ -106,8 +103,7 @@ class UserViewsTests(TestCase):
         url = reverse("delete-user", args=[self.user2.pk])
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response,
-                                "registration/delete_user.html")
+        self.assertTemplateUsed(response, "registration/delete_user.html")
         self.assertEqual(response.context.get("user"), self.user2)
         self.assertContains(response, self.user2.username)
 
@@ -162,8 +158,7 @@ class SignUpViewTest(TestCase):
         }
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response,
-                                "registration/signup.html")
+        self.assertTemplateUsed(response, "registration/signup.html")
         response = self.client.post(url, data)
         form = response.context.get("form")
         self.assertTrue(form.is_bound)
@@ -191,12 +186,10 @@ class CustomLoginViewTest(TestCase):
         data = {"username": "testuser", "password": "spatneheslo"}
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response,
-                                "registration/login.html")
+        self.assertTemplateUsed(response, "registration/login.html")
         form = response.context.get("form")
         self.assertTrue(form.errors)
-        self.assertIn("Nepodařilo se přihlásit",
-                      str(form.non_field_errors()))
+        self.assertIn("Nepodařilo se přihlásit", str(form.non_field_errors()))
 
     def test_custom_login_view_success(self):
         """Zadání správných údajů přihlásí uživatele.
