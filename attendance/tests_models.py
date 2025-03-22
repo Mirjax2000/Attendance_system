@@ -110,8 +110,7 @@ class EmployeeModelTest(TestCase):
         self.assertEqual(employee_jan.postal_code, "10000")
         self.assertEqual(employee_jan.phone_number, "+420123456789")
         self.assertEqual(employee_jan.email, "jan.novak@example.com")
-        self.assertEqual(employee_jan.date_of_birth, date(
-            1985, 5, 10))
+        self.assertEqual(employee_jan.date_of_birth, date(1985, 5, 10))
         self.assertEqual(employee_jan.age(), (39))
         self.assertEqual(employee_jan.check_pin_code("1234"), True)
         self.assertEqual(employee_jan.department, nezarazeno_id)
@@ -139,19 +138,14 @@ class EmployeeModelTest(TestCase):
     def test_departments_creation(self):
         """z tabulky department"""
         department_uklid = Department.objects.get(name="uklid")
-        uklid_id = Department.objects.get(name="uklid")
         self.assertTrue(department_uklid)
         self.assertIsInstance(department_uklid, Department)
-        self.assertEqual(department_uklid, uklid_id)
 
     def test_employee_status_creation(self):
         """z tabulky EmployeeStatus"""
         employee_status_work = EmployeeStatus.objects.get(name="working")
         employee_status_free = EmployeeStatus.objects.get(name="free")
-        work_id = EmployeeStatus.objects.get(name="working")
-        free_id = EmployeeStatus.objects.get(name="free")
         self.assertTrue(employee_status_work)
+        self.assertTrue(employee_status_free)
         self.assertIsInstance(employee_status_work, EmployeeStatus)
         self.assertIsInstance(employee_status_free, EmployeeStatus)
-        self.assertEqual(employee_status_work, work_id)
-        self.assertEqual(employee_status_free, free_id)
