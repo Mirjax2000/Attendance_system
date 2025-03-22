@@ -110,7 +110,8 @@ class EmployeeModelTest(TestCase):
         self.assertEqual(employee_jan.postal_code, "10000")
         self.assertEqual(employee_jan.phone_number, "+420123456789")
         self.assertEqual(employee_jan.email, "jan.novak@example.com")
-        self.assertEqual(employee_jan.date_of_birth, date(1985, 5, 10))
+        self.assertEqual(employee_jan.date_of_birth, date(
+            1985, 5, 10))
         self.assertEqual(employee_jan.age(), (39))
         self.assertEqual(employee_jan.check_pin_code("1234"), True)
         self.assertEqual(employee_jan.department, nezarazeno_id)

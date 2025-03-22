@@ -27,7 +27,8 @@ def get_available_driver():
         chrome_options.add_argument("--disable-dev-shm-usage")
         driver = webdriver.Chrome(options=chrome_options)
         cons.log(
-            "[LOG] Chrome webdriver byl úspěšně inicializován.", style="blue"
+            "[LOG] Chrome webdriver byl úspěšně inicializován.", 
+            style="blue"
         )
         return driver
     except Exception as e:
@@ -38,7 +39,8 @@ def get_available_driver():
         edge_options.use_chromium = True
         driver = webdriver.Edge(options=edge_options)
         cons.log(
-            "[LOG] Edge webdriver byl úspěšně inicializován.", style="blue"
+            "[LOG] Edge webdriver byl úspěšně inicializován.", 
+            style="blue"
         )
         return driver
     except Exception as e:
@@ -47,7 +49,8 @@ def get_available_driver():
     try:
         driver = webdriver.Firefox()
         cons.log(
-            "[LOG] Firefox webdriver byl úspěšně inicializován.", style="blue"
+            "[LOG] Firefox webdriver byl úspěšně inicializován.", 
+            style="blue"
         )
         return driver
     except Exception as e:
@@ -81,10 +84,12 @@ class LoginLogoutSeleniumTest(StaticLiveServerTestCase):
             if cls.driver:
                 cls.driver.quit()
                 cons.log(
-                    "[LOG] Webdriver byl úspěšně ukončen.", style="magenta bold"
+                    "[LOG] Webdriver byl úspěšně ukončen.",
+                    style="magenta bold"
                 )
         except Exception as e:
-            cons.log("[LOG] Chyba při ukončování webdriveru:", e, style="red")
+            cons.log("[LOG] Chyba při ukončování webdriveru:", e, 
+                     style="red")
         super().tearDownClass()
 
     def setUp(self):
@@ -96,7 +101,8 @@ class LoginLogoutSeleniumTest(StaticLiveServerTestCase):
             password=self.test_password,
             email="testbot@selenim.cz",
         )
-        cons.log("[LOG] Testovací uživatel byl vytvořen.", style="blue")
+        cons.log("[LOG] Testovací uživatel byl vytvořen.", 
+                 style="blue")
         time.sleep(1)
 
     def test_login_logout_flow(self):
@@ -106,20 +112,23 @@ class LoginLogoutSeleniumTest(StaticLiveServerTestCase):
         login_url = f"{self.live_server_url}/accounts/login/"
         self.driver.get(login_url)
         cons.log(
-            "[LOG] Otevřena přihlašovací stránka:", login_url, style="green"
+            "[LOG] Otevřena přihlašovací stránka:", login_url, 
+            style="green"
         )
         time.sleep(1)
 
         username_input = self.driver.find_element(By.ID, "id_username")
         password_input = self.driver.find_element(By.ID, "id_password")
-        cons.log("[LOG] Nalezena pole pro username a heslo.", style="green")
+        cons.log("[LOG] Nalezena pole pro username a heslo.", 
+                 style="green")
 
         username_input.send_keys(self.test_username)
         password_input.send_keys(self.test_password)
         cons.log("[LOG] Vyplněné přihlašovací údaje.", style="green")
         time.sleep(1)
         password_input.send_keys(Keys.RETURN)
-        cons.log("[LOG] Odeslán formulář pro přihlášení.", style="green")
+        cons.log("[LOG] Odeslán formulář pro přihlášení.", 
+                 style="green")
         time.sleep(1)
 
         WebDriverWait(self.driver, 10).until(
@@ -137,7 +146,8 @@ class LoginLogoutSeleniumTest(StaticLiveServerTestCase):
         self.assertIsNotNone(logout_link)
 
         logout_link.click()
-        cons.log("[LOG] Kliknuto na odkaz pro odhlášení.", style="green")
+        cons.log("[LOG] Kliknuto na odkaz pro odhlášení.", 
+                 style="green")
         time.sleep(1)
 
         WebDriverWait(self.driver, 10).until(
@@ -145,6 +155,8 @@ class LoginLogoutSeleniumTest(StaticLiveServerTestCase):
         )
         cons.log("[LOG] Odhlášení bylo úspěšné.", style="green")
 
-        login_form_username = self.driver.find_element(By.ID, "id_username")
+        login_form_username = self.driver.find_element(By.ID,
+                                                       "id_username")
         self.assertIsNotNone(login_form_username)
-        cons.log("[LOG] Přihlašovací formulář byl nalezen.", style="green")
+        cons.log("[LOG] Přihlašovací formulář byl nalezen.",
+                 style="green")

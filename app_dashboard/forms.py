@@ -87,8 +87,9 @@ class EmployeeForm(forms.ModelForm):
             raise ValidationError("Telefonní číslo je povinné.")
         if not re.match(pattern, phone_number):
             raise ValidationError(
-                "Zadejte platné české telefonní číslo (+420 XXX XXX XXX nebo "
-                "XXXXXXXXX).")
+                "Telefonní číslo musí být ve formátu +420 XXX XXX XXX nebo "
+                "9 číslic bez mezer."
+            )
         return phone_number
 
     def clean_pin_code(self) -> str:

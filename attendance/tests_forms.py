@@ -256,7 +256,7 @@ class EmployeeFormTests(TestCase):
     def test_duplicate_email(self):
         """
         Testuje, že při zadání e-mailu, který již existuje
-        (upraví i velikost písma),dojde k chybě.
+        (upraví i velikost písma), dojde k chybě.
         """
         form_data = self.get_valid_form_data()
         form_data["email"] = "TESTUSER@seznam.cz"
@@ -264,8 +264,21 @@ class EmployeeFormTests(TestCase):
         self.assertFalse(form.is_valid())
         self.assertIn("email", form.errors)
         self.assertEqual(
-            form.errors["email"], ["Tento e-mail je již používán. Zvolte jiný."]
+            form.errors["email"],
+            ["Tento e-mail je již používán. Zvolte jiný."]
         )
+
+    def test_invalid_email_format(self):
+        """
+        Testuje validaci e-mailu, pokud je zadán ve špatném formátu.
+        """
+        form_data = self.get_valid_form_data()
+        form_data["email"] = "invalid-email"
+        form = EmployeeForm(data=form_data)
+        self.assertFalse(form.is_valid())
+        self.assertIn("email", form.errors)
+        self.assertTrue(
+            any("platnou" in msg.lower() for msg in form.errors["email"]))
 
     def test_invalid_postal_code(self):
         """
@@ -278,8 +291,24 @@ class EmployeeFormTests(TestCase):
         self.assertFalse(form.is_valid())
         self.assertIn("postal_code", form.errors)
         self.assertIn(
-            "PSČ musí obsahovat přesně 5 číslic bez mezer.", 
-            form.errors["postal_code"])
+            "PSČ musí obsahovat přesně 5 číslic bez mezer.",
+            form.errors["postal_code"]
+        )
+
+    def test_invalid_phone_number(self):
+        """
+        Testuje, že je vyvolána chyba validace, 
+        pokud telefonní číslo obsahuje nepovolené znaky.
+        """
+        form_data = self.get_valid_form_data()
+        form_data["phone_number"] = "12345ABCD"
+        form = EmployeeForm(data=form_data)
+        self.assertFalse(form.is_valid())
+        self.assertIn("phone_number", form.errors)
+        self.assertTrue(
+            any("telefonní číslo musí" in msg.lower() and "formátu" in msg.lower() for
+                msg in form.errors["phone_number"])
+        )
 
     def test_invalid_pin_code(self):
         """
@@ -292,5 +321,96 @@ class EmployeeFormTests(TestCase):
         self.assertFalse(form.is_valid())
         self.assertIn("pin_code", form.errors)
         self.assertIn(
-            "PIN kód musí obsahovat přesně 4 číslice.", form.errors["pin_code"]
+            "PIN kód musí obsahovat přesně 4 číslice.",
+            form.errors["pin_code"]
+        )
+
+    def test_invalid_date_of_birth(self):
+        """
+        Testuje, že je vyvolána chyba validace, pokud
+        je datum narození zadané v budoucnosti.
+        """
+        form_data = self.get_valid_form_data()
+        form_data["date_of_birth"] = "3000-01-01"
+        form = EmployeeForm(data=form_data)
+        self.assertFalse(form.is_valid())
+        self.assertIn("date_of_birth", form.errors)
+        self.assertTrue(
+            any("budoucnosti" in msg.lower() for msg in
+                form.errors["date_of_birth"])
+        )
+
+    def test_name_trimming(self):
+        """
+        Testuje, že mezery na začátku a na konci pole 'name' jsou odstraněny.
+        """
+        form_data = self.get_valid_form_data()
+        form_data["name"] = "  Karel  "
+        form = EmployeeForm(data=form_data)
+        self.assertTrue(form.is_valid(), form.errors)
+        employee = form.save(commit=False)
+        self.assertEqual(employee.name, "Karel")
+
+    def test_surname_trimming(self):
+        """
+        Testuje, že mezery na začátku a na konci pole 'surname' jsou odstraněny.
+        """
+        form_data = self.get_valid_form_data()
+        form_data["surname"] = "  Tanker  "
+        form = EmployeeForm(data=form_data)
+        self.assertTrue(form.is_valid(), form.errors)
+        employee = form.save(commit=False)
+        self.assertEqual(employee.surname, "Tanker")
+
+    def test_update_employee_valid(self):
+        """
+        Testuje, že aktualizace existujícího zaměstnance 
+        s validními daty projde validací.
+        """
+        form_data = self.get_valid_form_data()
+        form = EmployeeForm(data=form_data, instance=self.existing_employee)
+        self.assertTrue(form.is_valid(), form.errors)
+        updated_employee = form.save()
+        self.assertEqual(updated_employee.name, form_data["name"])
+        self.assertEqual(updated_employee.surname, form_data["surname"])
+        self.assertEqual(updated_employee.email, form_data["email"].lower())
+
+    def test_update_employee_same_email(self):
+        """
+        Testuje, že aktualizace zaměstnance, kdy zůstane e-mail stejný
+        (i když je upraveno na jiné písmena),
+        projde validací.
+        """
+        form_data = self.get_valid_form_data()
+        form_data["email"] = self.existing_employee.email.upper()
+        form = EmployeeForm(data=form_data, instance=self.existing_employee)
+        self.assertTrue(form.is_valid(), form.errors)
+
+    def test_update_employee_duplicate_email(self):
+        """
+        Testuje, že při aktualizaci zaměstnance novým e-mailem, 
+        který je duplicitní (patří jinému zaměstnanci),
+        dojde k chybě.
+        """
+        another_employee = Employee.objects.create(
+            name="User",
+            surname="Novy",
+            street_number="Zelňák 1",
+            city="Brno",
+            postal_code="60200",
+            phone_number="111222333",
+            email="novy@user.cz",
+            date_of_birth="1990-01-01",
+            pin_code="0000",
+            department=self.department,
+            employee_status=self.employee_status,
+        )
+        form_data = self.get_valid_form_data()
+        form_data["email"] = self.existing_employee.email.upper()
+        form = EmployeeForm(data=form_data, instance=another_employee)
+        self.assertFalse(form.is_valid())
+        self.assertIn("email", form.errors)
+        self.assertEqual(
+            form.errors["email"],
+            ["Tento e-mail je již používán. Zvolte jiný."]
         )

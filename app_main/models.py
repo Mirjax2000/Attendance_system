@@ -187,11 +187,11 @@ class Employee(models.Model):
         if not self.employee_status:
             self.employee_status = EmployeeStatus.objects.get_or_create(
                 name="free"
-            )
+            )[0]
         if not self.department:
             self.department = Department.objects.get_or_create(
                 name="nezarazeno"
-            )
+            )[0]
 
     def save(self, *args, **kwargs):
         self.set_slug()  # nastav slug
