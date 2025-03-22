@@ -3,6 +3,7 @@
 from json import loads
 from pathlib import Path
 from time import sleep
+from typing import Generator
 
 import cv2
 import face_recognition
@@ -10,6 +11,7 @@ import numpy as np
 from django.conf import settings
 from django.db.utils import OperationalError
 from django.http.response import HttpResponse, StreamingHttpResponse
+from numpy._typing._array_like import NDArray
 from rich.console import Console
 
 from app_main.models import Employee, FaceVector, fernet
@@ -29,7 +31,7 @@ no_video_signal: str = "app_main/static/images/novideosignal.webp"
 class CamSystems:
     """kamerove funkce"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.cap = cv2.VideoCapture(0)
         # self.cap = cv2.VideoCapture(no_video_signal)
         self.utility = Utility()
@@ -41,7 +43,7 @@ class CamSystems:
     def __str__(self) -> str:
         return f"{len(self.face_vectors)} vektoru ulozeno v pameti"
 
-    def create_detector(self):
+    def create_detector(self) -> cv2.FaceDetectorYN:
         """Create face detector"""
         width: int = int(self.cap.get(3))
         height: int = int(self.cap.get(4))
@@ -57,7 +59,7 @@ class CamSystems:
         )
         return face_detector
 
-    def face_recon_rectangle(self, frame):
+    def face_recon_rectangle(self, frame) -> None:
         """Face detector a vykresleni ctverce okolo obliceje"""
 
         _, faces = self.face_detector.detect(frame)
@@ -85,7 +87,7 @@ class CamSystems:
         else:
             self.face_rgb = None
 
-    def cam_generator(self, speed: int = 12):
+    def cam_generator(self, speed: int = 12) -> Generator:
         """vytvari a pretvari 1 snimek z kamery jako jpeg"""
         while True:
             ret, frame = self.cap.read()
@@ -198,7 +200,7 @@ class CamSystems:
             cons.log(result)
         return result
 
-    def face_vectors_reload(self):
+    def face_vectors_reload(self) -> None:
         """reload vectoru po uspesnem sejmuti facevectoru"""
         self.face_vectors.clear()
         if DEBUG:
@@ -211,12 +213,12 @@ class CamSystems:
                 style="blue",
             )
 
-    def release_camera(self):
+    def release_camera(self) -> None:
         """Uvolní kameru při ukončení"""
         if self.cap.isOpened():
             self.cap.release()
 
-    def __del__(self):
+    def __del__(self) -> None:
         """uvolni kameru při zničení instance"""
         self.release_camera()
 
@@ -224,7 +226,7 @@ class CamSystems:
 class Database:
     """Database methods"""
 
-    def __init__(self, parent):
+    def __init__(self, parent) -> None:
         self.parent: CamSystems = parent
 
     def get_vectors_from_db(self) -> dict:
@@ -329,7 +331,7 @@ class Utility:
     """Utility classes"""
 
     @staticmethod
-    def porovnani(vektor1, vektor2):
+    def porovnani(vektor1, vektor2) -> np.floating:
         """Porovnávací algoritmus"""
         return np.linalg.norm(vektor1 - vektor2)
 
@@ -341,7 +343,7 @@ class Utility:
         return speed_
 
     @staticmethod
-    def decrypt_face_vector(encrypted_vector: bytes):
+    def decrypt_face_vector(encrypted_vector: bytes) -> NDArray | None:
         """Dešifruje šifrovaný vektor a vrací NumPy pole."""
         try:
             decrypted_vector_bytes = fernet.decrypt(encrypted_vector)
