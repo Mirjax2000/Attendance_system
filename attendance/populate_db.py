@@ -1,8 +1,18 @@
 """OOP trida pro kontrolu databaze"""
 
+from typing import Type
+
+from django.core.management import call_command
+from django.db import models
 from rich.console import Console
 
-from app_main.models import Department, EmployeeStatus
+from app_main.models import (
+    Department,
+    Employee,
+    EmployeeStatus,
+    EmployeeStatusHistory,
+    FaceVector,
+)
 
 from .settings import DEBUG
 
@@ -52,6 +62,44 @@ class DatabaseControl:
         self.default_employee_status()
         if DEBUG:
             cons.log("Tabulky byly naplněny.", style="green")
+
+    def delete_db(self) -> bool:
+        """Smaže DB jako truncate a zkontroluje prázdnost tabulek"""
+        call_command("flush", "--noinput")
+
+        db_status: list[bool] = []
+        db_tables: list[Type[models.Model]] = [
+            Employee,
+            EmployeeStatus,
+            EmployeeStatusHistory,
+            Department,
+            FaceVector,
+        ]
+
+        for db_table in db_tables:
+            if not db_table.objects.exists():
+                if DEBUG:
+                    cons.log(
+                        f"Tabulka: {db_table.__name__} je prázdná.",
+                        style="green",
+                    )
+                db_status.append(True)
+            else:
+                if DEBUG:
+                    cons.log(
+                        f"Tabulka: {db_table.__name__} není prázdná.",
+                        style="red",
+                    )
+                db_status.append(False)
+
+        if all(db_status):
+            if DEBUG:
+                cons.log("Všechny tabulky jsou prázdné.", style="green")
+            return True
+
+        if DEBUG:
+            cons.log("Některé tabulky nejsou prázdné.", style="red")
+        return False
 
 
 # aktivace instance
