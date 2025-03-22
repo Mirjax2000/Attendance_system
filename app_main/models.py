@@ -352,7 +352,10 @@ class EmployeeStatusHistory(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
-        return f"Historie stavu {self.employee.slug} - {self.timestamp.strftime('%d.%m.%Y - %H:%M:%S')}"
+        return (
+            f"Historie stavu {self.employee.slug} - "
+            f"{self.timestamp.strftime('%d.%m.%Y - %H:%M:%S')}"
+        )
 
     class Meta:
         """ordering"""
