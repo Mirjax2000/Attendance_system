@@ -1,9 +1,11 @@
 """Forms"""
 import re
 from datetime import date
+from typing import Dict, Any, List
 
 from django import forms
 from django.core.exceptions import ValidationError
+from django.core.validators import EmailValidator
 
 from app_main import models
 from app_main.models import Employee
@@ -139,6 +141,64 @@ class EmployeeForm(forms.ModelForm):
 
 
 class EmailForm(forms.Form):
-    recipient_email = forms.EmailField(label='Komu')
-    subject = forms.CharField(label='Předmět', max_length=100)
-    message = forms.CharField(label='Zpráva', widget=forms.Textarea)
+    """
+    Třída řeší formulář pro odesílaní mailů
+    """
+    recipient_email = forms.CharField(label='Komu', required=True)
+    subject = forms.CharField(label='Předmět', max_length=100, required=True)
+    message = forms.CharField(label='Zpráva', widget=forms.Textarea,
+                              required=True)
+
+    def clean_recipient_email(self) -> List[str]:
+        """
+        Validuje a čistí vstupy formuláře
+        """
+        value: str = self.cleaned_data['recipient_email']
+        # Rozdělení e-mailových adres oddělených čárkou
+        email_list: List[str] = [email.strip() for email in value.split(',') if
+                                 email.strip()]
+        if not email_list:
+            raise forms.ValidationError(
+                "Musíte zadat alespoň jednu platnou e-mailovou adresu.")
+
+        email_validator = EmailValidator()
+        banned_domains = ['spam.com', 'neplatna-domena.cz']
+        valid_emails: List[str] = []
+
+        for email in email_list:
+            # Validace formátu e-mailové adresy
+            try:
+                email_validator(email)
+            except forms.ValidationError:
+                raise forms.ValidationError(
+                    f"E-mailová adresa '{email}' má neplatný formát.")
+
+            # Ověření nepovolených domén
+            domain: str = email.split('@')[-1]
+            if domain in banned_domains:
+                raise forms.ValidationError(
+                    f"E-mailová adresa '{email}' z této domény není povolena.")
+
+            valid_emails.append(email)
+
+        return valid_emails
+
+    def clean(self) -> Dict[str, Any]:
+        """
+        Validuje a čistí vstupy formuláře
+        """
+        cleaned_data: Dict[str, Any] = super().clean()
+        # Jelikož jsou pole povinná, očekáváme, že hodnoty existují
+        subject: str = cleaned_data.get('subject', '')
+        message: str = cleaned_data.get('message', '')
+
+        if subject.lower() in message.lower():
+            self.add_error('subject',
+                           "Předmět by neměl být obsažen ve zprávě.")
+
+        if len(message.strip()) < 10:
+            self.add_error('message',
+                           "Zpráva je příliš krátká, "
+                           "musí obsahovat alespoň 10 znaků.")
+
+        return cleaned_data
