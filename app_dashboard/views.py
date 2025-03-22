@@ -74,7 +74,10 @@ class MainPanelView(LoginRequiredMixin, TemplateView):
         context["active_link"] = "main-panel"
         context["db_good_condition"] = (
             Department.objects.filter(name="nezarazeno").exists()
-            and len(EmployeeStatus.objects.all()) >= 5
+            and EmployeeStatus.objects.values_list("name", flat=True)
+            .distinct()
+            .count()
+            >= 5
         )
 
         return context
@@ -96,7 +99,10 @@ class EmployeesView(LoginRequiredMixin, ListView):
         context["active_link"] = "employees"
         context["db_good_condition"] = (
             Department.objects.filter(name="nezarazeno").exists()
-            and len(EmployeeStatus.objects.all()) >= 5
+            and EmployeeStatus.objects.values_list("name", flat=True)
+            .distinct()
+            .count()
+            >= 5
         )
 
         return context
@@ -116,7 +122,10 @@ class EmailView(LoginRequiredMixin, TemplateView):
         context["active_link"] = "emails"
         context["db_good_condition"] = (
             Department.objects.filter(name="nezarazeno").exists()
-            and len(EmployeeStatus.objects.all()) >= 5
+            and EmployeeStatus.objects.values_list("name", flat=True)
+            .distinct()
+            .count()
+            >= 5
         )
 
         return context
@@ -136,7 +145,10 @@ class ChartsView(LoginRequiredMixin, TemplateView):
         context["active_link"] = "charts"
         context["db_good_condition"] = (
             Department.objects.filter(name="nezarazeno").exists()
-            and len(EmployeeStatus.objects.all()) >= 5
+            and EmployeeStatus.objects.values_list("name", flat=True)
+            .distinct()
+            .count()
+            >= 5
         )
 
         return context
@@ -156,9 +168,11 @@ class AttendanceView(LoginRequiredMixin, TemplateView):
         context["active_link"] = "attendances"
         context["db_good_condition"] = (
             Department.objects.filter(name="nezarazeno").exists()
-            and len(EmployeeStatus.objects.all()) >= 5
+            and EmployeeStatus.objects.values_list("name", flat=True)
+            .distinct()
+            .count()
+            >= 5
         )
-
         return context
 
 
@@ -177,7 +191,10 @@ class CamView(LoginRequiredMixin, TemplateView):
         context["active_link"] = "cams"
         context["db_good_condition"] = (
             Department.objects.filter(name="nezarazeno").exists()
-            and len(EmployeeStatus.objects.all()) >= 5
+            and EmployeeStatus.objects.values_list("name", flat=True)
+            .distinct()
+            .count()
+            >= 5
         )
         return context
 
@@ -199,7 +216,10 @@ class CreateEmpView(CreateView):
         context["user_name"] = get_user(self)
         context["db_good_condition"] = (
             Department.objects.filter(name="nezarazeno").exists()
-            and len(EmployeeStatus.objects.all()) >= 5
+            and EmployeeStatus.objects.values_list("name", flat=True)
+            .distinct()
+            .count()
+            >= 5
         )
         return context
 
@@ -230,7 +250,10 @@ class DepartmentListView(ListView):
         context["active_link"] = "main-panel"
         context["db_good_condition"] = (
             Department.objects.filter(name="nezarazeno").exists()
-            and len(EmployeeStatus.objects.all()) >= 5
+            and EmployeeStatus.objects.values_list("name", flat=True)
+            .distinct()
+            .count()
+            >= 5
         )
 
         return context
@@ -252,7 +275,10 @@ class TakeVectorView(LoginRequiredMixin, DetailView):
         context["active_link"] = "employees"
         context["db_good_condition"] = (
             Department.objects.filter(name="nezarazeno").exists()
-            and len(EmployeeStatus.objects.all()) >= 5
+            and EmployeeStatus.objects.values_list("name", flat=True)
+            .distinct()
+            .count()
+            >= 5
         )
 
         return context
@@ -303,7 +329,10 @@ class EmployeeDeleteView(LoginRequiredMixin, DeleteView):
         context["active_link"] = "employees"
         context["db_good_condition"] = (
             Department.objects.filter(name="nezarazeno").exists()
-            and len(EmployeeStatus.objects.all()) >= 5
+            and EmployeeStatus.objects.values_list("name", flat=True)
+            .distinct()
+            .count()
+            >= 5
         )
         return context
 
@@ -333,7 +362,10 @@ class EmployeeUpdateView(LoginRequiredMixin, UpdateView):
         context["active_link"] = "employees"
         context["db_good_condition"] = (
             Department.objects.filter(name="nezarazeno").exists()
-            and len(EmployeeStatus.objects.all()) >= 5
+            and EmployeeStatus.objects.values_list("name", flat=True)
+            .distinct()
+            .count()
+            >= 5
         )
 
         return context
@@ -363,7 +395,10 @@ class EmployeeDetailView(LoginRequiredMixin, DetailView):
         context["active_link"] = "employees"
         context["db_good_condition"] = (
             Department.objects.filter(name="nezarazeno").exists()
-            and len(EmployeeStatus.objects.all()) >= 5
+            and EmployeeStatus.objects.values_list("name", flat=True)
+            .distinct()
+            .count()
+            >= 5
         )
 
         return context
@@ -407,7 +442,10 @@ class StatusView(LoginRequiredMixin, TemplateView):
         context["active_link"] = "status"
         context["db_good_condition"] = (
             Department.objects.filter(name="nezarazeno").exists()
-            and len(EmployeeStatus.objects.all()) >= 5
+            and EmployeeStatus.objects.values_list("name", flat=True)
+            .distinct()
+            .count()
+            >= 5
         )
         context["employee_count"] = Employee.objects.aggregate(
             total=Count("name")
@@ -467,6 +505,13 @@ class DepartmentDetailList(LoginRequiredMixin, ListView):
         context["status"] = user["status"]
         context["department"] = department
         context["active_link"] = "main-panel"
+        context["db_good_condition"] = (
+            Department.objects.filter(name="nezarazeno").exists()
+            and EmployeeStatus.objects.values_list("name", flat=True)
+            .distinct()
+            .count()
+            >= 5
+        )
 
         return context
 
@@ -494,5 +539,12 @@ class EmpStatusDetailList(LoginRequiredMixin, ListView):
         context["status"] = user["status"]
         context["emp_status"] = employee_status
         context["active_link"] = "main-panel"
+        context["db_good_condition"] = (
+            Department.objects.filter(name="nezarazeno").exists()
+            and EmployeeStatus.objects.values_list("name", flat=True)
+            .distinct()
+            .count()
+            >= 5
+        )
 
         return context
