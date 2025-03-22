@@ -16,7 +16,7 @@ class DatabaseControl:
         """Vrátí True, pokud tabulky obsahují záznamy, jinak False."""
         return Department.objects.exists() or EmployeeStatus.objects.exists()
 
-    def default_department(self):
+    def default_department(self) -> None:
         """Zaplnění tabulky Department, pokud je prázdná."""
         departments = [Department(name="nezarazeno")]
         if not Department.objects.exists():
@@ -24,7 +24,7 @@ class DatabaseControl:
             if DEBUG:
                 cons.log("Tabulka Department byla naplněna.", style="green")
 
-    def default_employee_status(self):
+    def default_employee_status(self) -> None:
         """Zaplnění tabulky EmployeeStatus, pokud je prázdná."""
         working_statuses = [
             EmployeeStatus(name="working"),
@@ -39,7 +39,7 @@ class DatabaseControl:
             if DEBUG:
                 cons.log("Tabulka EmployeeStatus byla naplněna.", style="green")
 
-    def run_all_default(self):
+    def run_all_default(self) -> None:
         """spusteni vsech funkci"""
         if self.checking_db():
             if DEBUG:
