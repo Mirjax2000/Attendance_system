@@ -136,3 +136,9 @@ class EmployeeForm(forms.ModelForm):
                     "Příjmení smí obsahovat pouze znaky abecedy.")
             return surname
         return None
+
+
+class EmailForm(forms.Form):
+    recipient_email = forms.EmailField(label='Komu')
+    subject = forms.CharField(label='Předmět', max_length=100)
+    message = forms.CharField(label='Zpráva', widget=forms.Textarea)
