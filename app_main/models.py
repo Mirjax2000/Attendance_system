@@ -1,7 +1,7 @@
 """app-main Models"""
 
 import os
-from datetime import date
+from datetime import date, datetime, timedelta
 from json import JSONDecodeError, dumps, loads
 
 from cryptography.fernet import Fernet
@@ -356,6 +356,7 @@ class EmployeeStatusHistory(models.Model):
             f"Historie stavu {self.employee.slug} - "
             f"{self.timestamp.strftime('%d.%m.%Y - %H:%M:%S')}"
         )
+
 
     class Meta:
         """ordering"""
