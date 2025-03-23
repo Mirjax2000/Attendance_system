@@ -1,9 +1,10 @@
 """Forms tests"""
+
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 
 from accounts.forms import SignUpForm, UserUpdateForm
-from app_dashboard.forms import EmployeeForm, EmailForm
+from app_dashboard.forms import EmailForm, EmployeeForm
 from app_main.models import Department, Employee, EmployeeStatus
 
 User = get_user_model()
@@ -138,6 +139,7 @@ class UserUpdateFormTests(TestCase):
             "first_name": "Jirik",
             "last_name": "Vasicek",
             "email": "zmena@menot.cz",
+            "pin_code": "2121",
         }
         form = UserUpdateForm(instance=self.user, data=form_data)
         self.assertTrue(form.is_valid(), form.errors)
@@ -254,6 +256,17 @@ class EmployeeFormTests(TestCase):
         self.assertIn("surname", form.errors)
         self.assertIn("Příjmení je povinné!", form.errors["surname"])
 
+    def test_required_field_pin_code(self):
+        """Testuje, že pole 'pin_code' je povinné."""
+        form_data = self.get_valid_form_data()
+        form_data["pin_code"] = ""
+        form = EmployeeForm(data=form_data)
+        self.assertFalse(form.is_valid())
+        self.assertIn("pin_code", form.errors)
+        self.assertIn(
+            "PIN musí obsahovat přesně 4 číslice.", form.errors["pin_code"]
+        )
+
     def test_duplicate_email(self):
         """
         Testuje, že při zadání e-mailu, který již existuje
@@ -265,8 +278,7 @@ class EmployeeFormTests(TestCase):
         self.assertFalse(form.is_valid())
         self.assertIn("email", form.errors)
         self.assertEqual(
-            form.errors["email"],
-            ["Tento e-mail je již používán. Zvolte jiný."]
+            form.errors["email"], ["Tento e-mail je již používán. Zvolte jiný."]
         )
 
     def test_invalid_email_format(self):
@@ -279,7 +291,8 @@ class EmployeeFormTests(TestCase):
         self.assertFalse(form.is_valid())
         self.assertIn("email", form.errors)
         self.assertTrue(
-            any("platnou" in msg.lower() for msg in form.errors["email"]))
+            any("platnou" in msg.lower() for msg in form.errors["email"])
+        )
 
     def test_invalid_postal_code(self):
         """
@@ -293,12 +306,12 @@ class EmployeeFormTests(TestCase):
         self.assertIn("postal_code", form.errors)
         self.assertIn(
             "PSČ musí obsahovat přesně 5 číslic bez mezer.",
-            form.errors["postal_code"]
+            form.errors["postal_code"],
         )
 
     def test_invalid_phone_number(self):
         """
-        Testuje, že je vyvolána chyba validace, 
+        Testuje, že je vyvolána chyba validace,
         pokud telefonní číslo obsahuje nepovolené znaky.
         """
         form_data = self.get_valid_form_data()
@@ -307,8 +320,11 @@ class EmployeeFormTests(TestCase):
         self.assertFalse(form.is_valid())
         self.assertIn("phone_number", form.errors)
         self.assertTrue(
-            any("telefonní číslo musí" in msg.lower() and "formátu" in msg.lower() for
-                msg in form.errors["phone_number"])
+            any(
+                "telefonní číslo musí" in msg.lower()
+                and "formátu" in msg.lower()
+                for msg in form.errors["phone_number"]
+            )
         )
 
     def test_invalid_pin_code(self):
@@ -322,8 +338,7 @@ class EmployeeFormTests(TestCase):
         self.assertFalse(form.is_valid())
         self.assertIn("pin_code", form.errors)
         self.assertIn(
-            "PIN kód musí obsahovat přesně 4 číslice.",
-            form.errors["pin_code"]
+            "PIN musí obsahovat přesně 4 číslice.", form.errors["pin_code"]
         )
 
     def test_invalid_date_of_birth(self):
@@ -337,8 +352,10 @@ class EmployeeFormTests(TestCase):
         self.assertFalse(form.is_valid())
         self.assertIn("date_of_birth", form.errors)
         self.assertTrue(
-            any("budoucnosti" in msg.lower() for msg in
-                form.errors["date_of_birth"])
+            any(
+                "budoucnosti" in msg.lower()
+                for msg in form.errors["date_of_birth"]
+            )
         )
 
     def test_name_trimming(self):
@@ -365,7 +382,7 @@ class EmployeeFormTests(TestCase):
 
     def test_update_employee_valid(self):
         """
-        Testuje, že aktualizace existujícího zaměstnance 
+        Testuje, že aktualizace existujícího zaměstnance
         s validními daty projde validací.
         """
         form_data = self.get_valid_form_data()
@@ -389,7 +406,7 @@ class EmployeeFormTests(TestCase):
 
     def test_update_employee_duplicate_email(self):
         """
-        Testuje, že při aktualizaci zaměstnance novým e-mailem, 
+        Testuje, že při aktualizaci zaměstnance novým e-mailem,
         který je duplicitní (patří jinému zaměstnanci),
         dojde k chybě.
         """
@@ -412,9 +429,33 @@ class EmployeeFormTests(TestCase):
         self.assertFalse(form.is_valid())
         self.assertIn("email", form.errors)
         self.assertEqual(
-            form.errors["email"],
-            ["Tento e-mail je již používán. Zvolte jiný."]
+            form.errors["email"], ["Tento e-mail je již používán. Zvolte jiný."]
         )
+
+    def test_update_pin_code(self):
+        """
+        testuje pin_code update
+        """
+        another_employee = Employee.objects.create(
+            name="User",
+            surname="Novy",
+            street_number="Zelňák 1",
+            city="Brno",
+            postal_code="60200",
+            phone_number="111222333",
+            email="novy@user.cz",
+            date_of_birth="1990-01-01",
+            pin_code="0000",
+            department=self.department,
+            employee_status=self.employee_status,
+        )
+        form_data = self.get_valid_form_data()
+        form_data["pin_code"] = "1111"
+        form = EmployeeForm(data=form_data, instance=another_employee)
+        self.assertTrue(form.is_valid())
+        updated_employee = form.save()
+        self.assertEqual(updated_employee.pin_code, "")
+        self.assertEqual(updated_employee.check_pin_code("1111"), True)
 
 
 class EmailFormTests(TestCase):
@@ -423,132 +464,137 @@ class EmailFormTests(TestCase):
         Testuje validní jeden e-mail se správným formátem, tématem a zprávou.
         """
         data = {
-            'recipient_email': 'user@seznam.cz',
-            'subject': 'Pozdrav',
-            'message': 'Toto je platná zpráva, která obsahuje '
-                       'více jak 10 znaků.'
+            "recipient_email": "user@seznam.cz",
+            "subject": "Pozdrav",
+            "message": "Toto je platná zpráva, která obsahuje "
+            "více jak 10 znaků.",
         }
         form = EmailForm(data=data)
         self.assertTrue(form.is_valid())
         # Očekáváme seznam s jedním e-mailem
-        self.assertEqual(form.cleaned_data['recipient_email'],
-                         ['user@seznam.cz'])
+        self.assertEqual(
+            form.cleaned_data["recipient_email"], ["user@seznam.cz"]
+        )
 
     def test_valid_multiple_emails(self):
         """Testuje validní více e-mailových adres oddělených čárkou."""
         data = {
-            'recipient_email': 'user1@seznam.cz, user2@seznam.cz, '
-                               'user3@seznam.cz',
-            'subject': 'Informace',
-            'message': 'Kompletní zpráva bez chyb, splňující délku a '
-                       'ostatní podmínky.'
+            "recipient_email": "user1@seznam.cz, user2@seznam.cz, "
+            "user3@seznam.cz",
+            "subject": "Informace",
+            "message": "Kompletní zpráva bez chyb, splňující délku a "
+            "ostatní podmínky.",
         }
         form = EmailForm(data=data)
         self.assertTrue(form.is_valid())
-        self.assertEqual(form.cleaned_data['recipient_email'],
-                         ['user1@seznam.cz', 'user2@seznam.cz',
-                          'user3@seznam.cz'])
+        self.assertEqual(
+            form.cleaned_data["recipient_email"],
+            ["user1@seznam.cz", "user2@seznam.cz", "user3@seznam.cz"],
+        )
 
     def test_invalid_email_format(self):
         """Testuje neplatný formát e-mailové adresy."""
         data = {
-            'recipient_email': 'invalid-email',
-            'subject': 'Test',
-            'message': 'Toto je dostatečně dlouhá zpráva.'
+            "recipient_email": "invalid-email",
+            "subject": "Test",
+            "message": "Toto je dostatečně dlouhá zpráva.",
         }
         form = EmailForm(data=data)
         self.assertFalse(form.is_valid())
-        self.assertIn("má neplatný formát",
-                      str(form.errors['recipient_email']))
+        self.assertIn("má neplatný formát", str(form.errors["recipient_email"]))
 
     def test_banned_domain(self):
         """Testuje e-mailovou adresu s nepovolenou doménou."""
         data = {
-            'recipient_email': 'user@spam.com',
-            'subject': 'Upozornění',
-            'message': 'Plně validní zpráva, která splňuje všechny '
-                       'ostatní podmínky.'
+            "recipient_email": "user@spam.com",
+            "subject": "Upozornění",
+            "message": "Plně validní zpráva, která splňuje všechny "
+            "ostatní podmínky.",
         }
         form = EmailForm(data=data)
         self.assertFalse(form.is_valid())
-        self.assertIn("není povolena", 
-                      str(form.errors['recipient_email']))
+        self.assertIn("není povolena", str(form.errors["recipient_email"]))
 
     def test_empty_recipient_email(self):
         """Testuje prázdné pole pro příjemce."""
         data = {
-            'recipient_email': '',
-            'subject': 'Něco',
-            'message': 'Tato zpráva je dostatečně dlouhá.'
+            "recipient_email": "",
+            "subject": "Něco",
+            "message": "Tato zpráva je dostatečně dlouhá.",
         }
         form = EmailForm(data=data)
         self.assertFalse(form.is_valid())
-        self.assertIn("Toto pole je vyžadováno.",
-                      str(form.errors['recipient_email']))
+        self.assertIn(
+            "Toto pole je vyžadováno.", str(form.errors["recipient_email"])
+        )
 
     def test_subject_in_message(self):
         """Testuje případ, kdy se předmět nachází v textu zprávy."""
         data = {
-            'recipient_email': 'user@seznam.cz',
-            'subject': 'Test',
-            'message': 'Toto je test zprávy, která obsahuje i slovo test.'
+            "recipient_email": "user@seznam.cz",
+            "subject": "Test",
+            "message": "Toto je test zprávy, která obsahuje i slovo test.",
         }
         form = EmailForm(data=data)
         self.assertFalse(form.is_valid())
-        self.assertIn("Předmět by neměl být obsažen ve zprávě.",
-                      str(form.errors['subject']))
+        self.assertIn(
+            "Předmět by neměl být obsažen ve zprávě.",
+            str(form.errors["subject"]),
+        )
 
     def test_message_too_short(self):
         """Testuje případ, kdy je zpráva příliš krátká."""
         data = {
-            'recipient_email': 'user@seznam.cz',
-            'subject': 'Zpráva',
-            'message': 'krátká'
+            "recipient_email": "user@seznam.cz",
+            "subject": "Zpráva",
+            "message": "krátká",
         }
         form = EmailForm(data=data)
         self.assertFalse(form.is_valid())
-        self.assertIn("Zpráva je příliš krátká", 
-                      str(form.errors['message']))
+        self.assertIn("Zpráva je příliš krátká", str(form.errors["message"]))
 
     def test_valid_when_subject_not_in_message(self):
         """Test, kdy je předmět odlišný od obsahu zprávy."""
         data = {
-            'recipient_email': 'user@seznam.cz',
-            'subject': 'Pozdrav',
-            'message': 'Toto je zpráva, která nezmiňuje daný předmět a '
-                       'je dostatečně dlouhá.'
+            "recipient_email": "user@seznam.cz",
+            "subject": "Pozdrav",
+            "message": "Toto je zpráva, která nezmiňuje daný předmět a "
+            "je dostatečně dlouhá.",
         }
         form = EmailForm(data=data)
         self.assertTrue(form.is_valid())
 
     def test_both_subject_and_message_errors(self):
         """
-        Testuje případ, kdy zároveň selže kontrola předmětu 
+        Testuje případ, kdy zároveň selže kontrola předmětu
         (je součástí zprávy) a zpráva je příliš krátká.
         """
         data = {
-            'recipient_email': 'user@seznam.cz',
-            'subject': 'Chyba',
-            'message': 'chyba'  # příliš krátká a obsahuje předmět
+            "recipient_email": "user@seznam.cz",
+            "subject": "Chyba",
+            "message": "chyba",  # příliš krátká a obsahuje předmět
         }
         form = EmailForm(data=data)
         self.assertFalse(form.is_valid())
-        self.assertIn("Předmět by neměl být obsažen ve zprávě.",
-                      str(form.errors['subject']))
-        self.assertIn("Zpráva je příliš krátká", 
-                      str(form.errors['message']))
+        self.assertIn(
+            "Předmět by neměl být obsažen ve zprávě.",
+            str(form.errors["subject"]),
+        )
+        self.assertIn("Zpráva je příliš krátká", str(form.errors["message"]))
 
     def test_recipient_email_with_extra_whitespace(self):
         """
-        Testuje situaci, kdy jsou e-mailové adresy zadány s 
+        Testuje situaci, kdy jsou e-mailové adresy zadány s
         přebytečnými mezerami.
         """
         data = {
-            'recipient_email': '  user@seznam.cz  ,   user2@seznam.cz   ',
-            'subject': 'Info',
-            'message': 'Zpráva je dostatečně dlouhá a bez chyb.'
+            "recipient_email": "  user@seznam.cz  ,   user2@seznam.cz   ",
+            "subject": "Info",
+            "message": "Zpráva je dostatečně dlouhá a bez chyb.",
         }
         form = EmailForm(data=data)
         self.assertTrue(form.is_valid())
-        self.assertEqual(form.cleaned_data['recipient_email'],
-                         ['user@seznam.cz', 'user2@seznam.cz'])
+        self.assertEqual(
+            form.cleaned_data["recipient_email"],
+            ["user@seznam.cz", "user2@seznam.cz"],
+        )

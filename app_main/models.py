@@ -52,7 +52,7 @@ class Employee(models.Model):
     )
 
     phone_number = models.CharField(
-        max_length=16,
+        max_length=13,
         unique=True,
         null=False,
         blank=False,
@@ -60,7 +60,7 @@ class Employee(models.Model):
         validators=[
             val.MinLengthValidator(5),
             val.RegexValidator(
-                regex=r"^\+?[0-9\s\-()]{5,16}$",
+                regex=r"^\+?[0-9\s\-()]{5,13}$",
                 message="Telefon musí být ve správném formátu.",
             ),
         ],
@@ -91,7 +91,7 @@ class Employee(models.Model):
         validators=[
             val.RegexValidator(
                 regex=r"^\d{4}$",
-                message="PIN kód musí obsahovat přesně 4 číslice.",
+                message="PIN musí obsahovat přesně 4 číslice.",
                 code="invalid_pin",
             )
         ],
