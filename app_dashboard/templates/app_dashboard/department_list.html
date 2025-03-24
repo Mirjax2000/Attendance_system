@@ -36,19 +36,18 @@
                     <tr class="L-list__table-row">
                         <td class="L-list__table-cell id">{{ department.id }}</td>
                         <td class="L-list__table-cell name">
-                            <a href="{% url "detail_employee" employee.slug %}"
-                               class="L-list__detail">{{ department.name }}</a>
+                            <a href="#" class="L-list__detail">{{ department.name }}</a>
                         </td>
                         <td class="L-list__table-cell CAT">
                             <div class="L-list__actions">
-                                <a class="c-ico-btn" href="{% url "delete_department" department.id %}">
+                                <a class="c-ico-btn" href="{% url "delete_dep" department.id %}">
                                     <img src="{% static 'images/icons8-delete-48-red.png' %}"
                                          alt="delete icon"
                                          width="24"
                                          height="24">
                                     <p>smazat</p>
                                 </a>
-                                <a class="c-ico-btn" href="{% url "update_department" department.id %}">
+                                <a class="c-ico-btn" href="{% url "update_dep" department.id %}">
                                     <img class="list__action-icon"
                                          src="{% static 'images/icons8-update-blue.png' %}"
                                          alt="update icon"

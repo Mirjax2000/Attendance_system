@@ -319,10 +319,62 @@ class TakeVectorView(LoginRequiredMixin, DetailView):
         return context
 
 
-class DeleteDepView(LoginRequiredMixin, DeleteView): ...
+class DeleteDepView(LoginRequiredMixin, DeleteView):
+    """Delete department"""
+
+    model = Department
+    template_name = "includes/delete_department.html"
+    success_url = reverse_lazy("department_list")
+
+    def get_context_data(self, **kwargs):
+        user: dict = get_user(self)
+
+        context = super().get_context_data(**kwargs)
+        context["username"] = user["username"]
+        context["status"] = user["status"]
+        context["active_link"] = "employees"
+        context["db_good_condition"] = (
+            Department.objects.filter(name="nezarazeno").exists()
+            and EmployeeStatus.objects.values_list("name", flat=True)
+            .distinct()
+            .count()
+            >= 5
+        )
+        return context
+
+    def form_valid(self, form):
+        messages.success(self.request, f"{self.get_object()} smazan")
+        return super().form_valid(form)
 
 
-class UpdateDepView(LoginRequiredMixin, UpdateView): ...
+class UpdateDepView(LoginRequiredMixin, UpdateView):
+    """Update Department"""
+
+    model = Department
+    form_class = DepartmentForm
+    template_name = "includes/create_dep_form.html"
+    success_url = reverse_lazy("department_list")
+
+    def get_context_data(self, **kwargs):
+        user: dict = get_user(self)
+
+        context = super().get_context_data(**kwargs)
+        context["username"] = user["username"]
+        context["status"] = user["status"]
+        context["active_link"] = "employees"
+        context["db_good_condition"] = (
+            Department.objects.filter(name="nezarazeno").exists()
+            and EmployeeStatus.objects.values_list("name", flat=True)
+            .distinct()
+            .count()
+            >= 5
+        )
+
+        return context
+
+    def form_valid(self, form):
+        messages.success(self.request, f"{self.get_object()}: Updated")
+        return super().form_valid(form)
 
 
 class SaveVectorToDbView(LoginRequiredMixin, View):
@@ -354,7 +406,7 @@ class EmployeeDeleteView(LoginRequiredMixin, DeleteView):
     """User Delete"""
 
     model = Employee
-    template_name = "app_dashboard/delete_employee.html"
+    template_name = "includes/delete_employee.html"
     success_url = reverse_lazy("employees")
 
     def get_object(self, queryset=None):

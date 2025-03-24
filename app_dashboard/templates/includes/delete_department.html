@@ -1,0 +1,16 @@
+{% extends "dashboard_base.html" %}
+{% load static %}
+{% block title %}
+    Delete {{ department.name }}
+{% endblock title %}
+{% block content %}
+    <div class="L-form u-text-center">
+        <h1 class="L-form__header">Opravdu chcete smazat?</h1>
+        <h2 class="L-form__user u-text-success c-info-highlight">"{{ department.name }}"</h2>
+        <form method="post" class="L-form__form">
+            {% csrf_token %}
+            <button type="submit" class="L-form__submit">Ano, smazat</button>
+            <a href="{% url 'department_list' %}" class="L-form__redirect">Zrušit</a>
+        </form>
+    </div>
+{% endblock content %}
