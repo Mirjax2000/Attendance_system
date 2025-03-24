@@ -6,10 +6,11 @@
 {% block content %}
     <div class="content__container">
         <h1>system dochazky</h1>
-        <p>zadej jmeno zamestance</p>
-        <p>vyhledavani a detail objectu</p>
-        <div>
-            <h1>{{ time }}</h1>
-        </div>
+        <h2>mesic brezen</h2>
+        <p>seznam zamestancu</p>
+        <hr>
+        {% for entry in employee_hours %}
+            <p>{{ entry.employee.name }} {{ entry.employee.surname }} - Odpracované hodiny: {{ entry.worked_hours }}</p>
+        {% endfor %}
     </div>
 {% endblock content %}

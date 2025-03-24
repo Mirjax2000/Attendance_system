@@ -30,37 +30,22 @@ class HistoryStatusManager:
         return f"HistoryStatusManager(employee_slug='{self.employee_slug}')"
 
     def get_worked_hours_on_day(self, day) -> str:
-        """jak dlouho pracoval v urcity den"""
+        """Jak dlouho pracoval v určený den"""
         try:
             if isinstance(day, str):
                 day = datetime.strptime(day, "%Y-%m-%d").date()
 
-            employee: Employee = Employee.objects.get(slug=self.employee_slug)
+            employee = Employee.objects.get(slug=self.employee_slug)
 
-            history: BaseManager[EmployeeStatusHistory] = (
-                EmployeeStatusHistory.objects.filter(
-                    employee=employee, timestamp__date=day
-                )
+            history = EmployeeStatusHistory.objects.filter(
+                employee=employee, timestamp__date=day
+            ).order_by("timestamp")
+
+            return self.utility.result_by_hours(
+                history=history, status="working"
             )
-            time_spent_minutes: int = 0
 
-            for record in history:
-                if record.new_status.name == "working":
-                    previous_record = history.filter(
-                        timestamp__lt=record.timestamp
-                    ).last()
-                    if previous_record:
-                        total_seconds = (
-                            record.timestamp - previous_record.timestamp
-                        ).seconds
-                        time_spent_minutes += total_seconds // 60
-
-            # Převedení na HH:MM formát
-            hours = time_spent_minutes // 60
-            minutes = time_spent_minutes % 60
-            return f"{hours:02}:{minutes:02}"
-
-        except ObjectDoesNotExist:
+        except Employee.DoesNotExist:
             return "00:00"
 
     def get_worked_hours_in_range(self, start_date, end_date) -> int:
@@ -108,20 +93,29 @@ class Utility:
     """pomocne metody"""
 
     @staticmethod
-    def result_by_hours(history: BaseManager[EmployeeStatusHistory]) -> int:
+    def result_by_hours(
+        history: BaseManager[EmployeeStatusHistory], status: str
+    ) -> str:
         """vysledek preveden na hodiny"""
-        time_spent = 0
-        for record in history:
-            if record.new_status.name == "working":
-                previous_record = history.filter(
-                    timestamp__lt=record.timestamp
-                ).last()
-                if previous_record:
-                    time_spent += (
-                        record.timestamp - previous_record.timestamp
-                    ).seconds // 3600  # V hodinách
+        time_spent_minutes: int = 0
+        start_time = None
 
-        return time_spent
+        for record in history:
+            if record.new_status.name == status:
+                start_time = record.timestamp  # Uložíme začátek práce
+
+            elif (
+                record.previous_status and record.previous_status.name == status
+            ):
+                if start_time:
+                    total_seconds: int = (record.timestamp - start_time).seconds
+                    time_spent_minutes += total_seconds // 60
+                    start_time = None  # Resetujeme začátek
+
+        # Převedení na HH:MM formát
+        hours = time_spent_minutes // 60
+        minutes = time_spent_minutes % 60
+        return f"{hours:02}:{minutes:02}"
 
 
 if __name__ == "__main__":
