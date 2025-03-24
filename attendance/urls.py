@@ -22,6 +22,7 @@ from app_dashboard.views import (
     ChartsView,
     CreateDepView,
     CreateEmpView,
+    DeleteDepView,
     DepartmentDetailList,
     DepartmentListView,
     EmailView,
@@ -37,6 +38,7 @@ from app_dashboard.views import (
     SaveVectorToDbView,
     StatusView,
     TakeVectorView,
+    UpdateDepView,
 )
 from app_main.views import (
     CamStreamView,
@@ -97,6 +99,8 @@ app_dashboard_urls: list = [
         name="department_detail_list",
     ),
     path("dashboard/create_dep", CreateDepView.as_view(), name="create_dep"),
+    path("dashboard/update_dep", UpdateDepView.as_view(), name="update_dep"),
+    path("dashboard/delete_dep", DeleteDepView.as_view(), name="delete_dep"),
     path(
         "dashboard/emp_status_detail_list/<int:pk>",
         EmpStatusDetailList.as_view(),

@@ -22,43 +22,33 @@
             </a>
         </div>
         <p class="L-list__info">
-            počet zaměstnanců:&nbsp;<span class="u-text-success c-info-highlight">{{ employees.count }}</span>
+            počet Departments:&nbsp;<span class="u-text-success c-info-highlight">{{ departments.count }}</span>
         </p>
         <table class="L-list__table">
             <thead class="L-list__table-header">
                 <tr class="L-list__table-row">
                     <th class="L-list__table-heading">ID</th>
                     <th class="L-list__table-heading">Jméno</th>
-                    <th class="L-list__table-heading">Příjmení</th>
-                    <th class="L-list__table-heading">Email</th>
-                    <th class="L-list__table-heading">Telefon</th>
-                    <th class="L-list__table-heading">Department</th>
-                    <th class="L-list__table-heading">status</th>
                 </tr>
             </thead>
             <tbody>
-                {% for employee in employees %}
+                {% for department in departments %}
                     <tr class="L-list__table-row">
-                        <td class="L-list__table-cell id">{{ employee.id }}</td>
+                        <td class="L-list__table-cell id">{{ department.id }}</td>
                         <td class="L-list__table-cell name">
                             <a href="{% url "detail_employee" employee.slug %}"
-                               class="L-list__detail">{{ employee.name }}</a>
+                               class="L-list__detail">{{ department.name }}</a>
                         </td>
-                        <td class="L-list__table-cell surname">{{ employee.surname }}</td>
-                        <td class="L-list__table-cell email">{{ employee.email }}</td>
-                        <td class="L-list__table-cell phone">{{ employee.phone_number }}</td>
-                        <td class="L-list__table-cell phone">{{ employee.department }}</td>
-                        <td class="L-list__table-cell phone">{{ employee.employee_status }}</td>
                         <td class="L-list__table-cell CAT">
                             <div class="L-list__actions">
-                                <a class="c-ico-btn" href="{% url "delete_employee" employee.slug %}">
+                                <a class="c-ico-btn" href="{% url "delete_department" department.id %}">
                                     <img src="{% static 'images/icons8-delete-48-red.png' %}"
                                          alt="delete icon"
                                          width="24"
                                          height="24">
                                     <p>smazat</p>
                                 </a>
-                                <a class="c-ico-btn" href="{% url "update_employee" employee.slug %}">
+                                <a class="c-ico-btn" href="{% url "update_department" department.id %}">
                                     <img class="list__action-icon"
                                          src="{% static 'images/icons8-update-blue.png' %}"
                                          alt="update icon"

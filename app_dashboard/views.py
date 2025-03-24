@@ -319,6 +319,12 @@ class TakeVectorView(LoginRequiredMixin, DetailView):
         return context
 
 
+class DeleteDepView(LoginRequiredMixin, DeleteView): ...
+
+
+class UpdateDepView(LoginRequiredMixin, UpdateView): ...
+
+
 class SaveVectorToDbView(LoginRequiredMixin, View):
     """Volání z employee detail.html z tlacitka
     take vector

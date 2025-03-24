@@ -174,7 +174,7 @@ class DepartmentForm(forms.ModelForm):
                 "unique": "Tento Department již existuje",
             },
         }
-        help_texts = {"name": "Zadejte jméno oddělení"}
+
         widgets = {
             "name": forms.TextInput(
                 attrs={
