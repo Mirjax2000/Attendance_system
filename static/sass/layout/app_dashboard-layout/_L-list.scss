@@ -68,6 +68,12 @@
             padding-inline: 0.3em;
         }
 
+        &.id-dep {
+            min-width: 2ch;
+            max-width: 2ch;
+            padding-inline: 0.3em;
+        }
+
         &.name,
         &.surname {
             min-width: 16ch;
@@ -127,7 +133,7 @@
     }
 
     &__actions {
-        @include flex(center, center);
+        @include flex(flex-start, center);
         @extend %select-none;
 
         .hide {

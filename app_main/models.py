@@ -300,7 +300,7 @@ class Department(models.Model):
     class Meta:
         """Tridit podle"""
 
-        ordering = ["name"]
+        ordering = ["id"]
 
 
 class EmployeeStatus(models.Model):
@@ -356,7 +356,6 @@ class EmployeeStatusHistory(models.Model):
             f"Historie stavu {self.employee.slug} - "
             f"{self.timestamp.strftime('%d.%m.%Y - %H:%M:%S')}"
         )
-
 
     class Meta:
         """ordering"""

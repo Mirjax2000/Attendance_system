@@ -34,9 +34,10 @@
             <tbody>
                 {% for department in departments %}
                     <tr class="L-list__table-row">
-                        <td class="L-list__table-cell id">{{ department.id }}</td>
+                        <td class="L-list__table-cell id-dep">{{ department.id }}</td>
                         <td class="L-list__table-cell name">
-                            <a href="#" class="L-list__detail">{{ department.name }}</a>
+                            <a href="{% url "department_detail_list" department.id %}"
+                               class="L-list__detail">{{ department.name }}</a>
                         </td>
                         <td class="L-list__table-cell CAT">
                             <div class="L-list__actions">

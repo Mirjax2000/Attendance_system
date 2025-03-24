@@ -543,6 +543,11 @@ body {
   max-width: 6ch;
   padding-inline: 0.3em;
 }
+.L-list__table-cell.id-dep {
+  min-width: 2ch;
+  max-width: 2ch;
+  padding-inline: 0.3em;
+}
 .L-list__table-cell.name, .L-list__table-cell.surname {
   min-width: 16ch;
   max-width: 20ch;
@@ -588,7 +593,7 @@ body {
 }
 .L-list__actions {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   gap: 0;
 }
