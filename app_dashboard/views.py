@@ -23,10 +23,11 @@ from app_main.models import Department, Employee, EmployeeStatus
 
 # importuju instanci tridy Camsystems
 from attendance.cam_systems import cam_systems_instance as csi
+from attendance.history_status_manager import HistoryStatusManager
 from attendance.populate_db import db_control
 from attendance.settings import DEBUG
 
-from .forms import EmployeeForm
+from .forms import DepartmentForm, EmployeeForm
 
 cons: Console = Console()
 # instance CamSystems
@@ -161,11 +162,12 @@ class AttendanceView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         user: dict = get_user(self)
-
+        manik = HistoryStatusManager("miroslav-viktorin")
         context = super().get_context_data(**kwargs)
         context["username"] = user["username"]
         context["status"] = user["status"]
         context["active_link"] = "attendances"
+        context["time"] = manik.get_worked_hours_on_day("2025-03-23")
         context["db_good_condition"] = (
             Department.objects.filter(name="nezarazeno").exists()
             and EmployeeStatus.objects.values_list("name", flat=True)
@@ -257,6 +259,39 @@ class DepartmentListView(ListView):
         )
 
         return context
+
+
+class CreateDepView(CreateView):
+    """Vytvor zamestance"""
+
+    model = Department
+    form_class = DepartmentForm
+    template_name = "includes/create_dep_form.html"
+    success_url = reverse_lazy("department_list")
+
+    def get_initial(self):
+        return {"name": ""}
+
+    def get_context_data(self, **kwargs):
+        user: dict = get_user(self)
+
+        context = super().get_context_data(**kwargs)
+        context["username"] = user["username"]
+        context["status"] = user["status"]
+        context["user_name"] = get_user(self)
+        context["db_good_condition"] = (
+            Department.objects.filter(name="nezarazeno").exists()
+            and EmployeeStatus.objects.values_list("name", flat=True)
+            .distinct()
+            .count()
+            >= 5
+        )
+        return context
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, "Department byl úspěšně vytvořen!")
+        return response
 
 
 class TakeVectorView(LoginRequiredMixin, DetailView):
@@ -409,7 +444,6 @@ class StatusView(LoginRequiredMixin, TemplateView):
     stav databaze, ruzne vypisy do contextu
     """
 
-    # TODO rozsirit funkcnost o ovladaci prvky
     template_name = "app_dashboard/status.html"
 
     def get_context_data(self, **kwargs):

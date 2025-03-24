@@ -1,20 +1,76 @@
 {% extends "dashboard_base.html" %}
 {% load static %}
 {% block title %}
-    deaprtement list
+    Prehled Oddeleni
 {% endblock title %}
 {% block content %}
-    <h1>Deartemtn list</h1>
-    {% for department in departments %}<p>{{ department.name }}</p>{% endfor %}
-    <ul>
-        <li class="c-info-highlight">
-            <a href="#">create</a>
-        </li>
-        <li class="c-info-highlight">
-            <a href="#">update</a>
-        </li>
-        <li class="c-info-highlight">
-            <a href="#">delejte</a>
-        </li>
-    </ul>
+    <section class="L-list">
+        <div class="L-list__wrapper">
+            <h2 class="L-list__title">
+                <img src="{% static 'images/icons8-list.png' %}"
+                     alt="delete icon"
+                     width="24"
+                     height="24">
+                Seznam Departments
+            </h2>
+            <a class="c-ico-btn" href="{% url 'create_dep' %}">
+                <img src="{% static 'images/icons8-login-blue.png' %}"
+                     alt="delete icon"
+                     width="24"
+                     height="24">
+                <p>Přidat Department</p>
+            </a>
+        </div>
+        <p class="L-list__info">
+            počet zaměstnanců:&nbsp;<span class="u-text-success c-info-highlight">{{ employees.count }}</span>
+        </p>
+        <table class="L-list__table">
+            <thead class="L-list__table-header">
+                <tr class="L-list__table-row">
+                    <th class="L-list__table-heading">ID</th>
+                    <th class="L-list__table-heading">Jméno</th>
+                    <th class="L-list__table-heading">Příjmení</th>
+                    <th class="L-list__table-heading">Email</th>
+                    <th class="L-list__table-heading">Telefon</th>
+                    <th class="L-list__table-heading">Department</th>
+                    <th class="L-list__table-heading">status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for employee in employees %}
+                    <tr class="L-list__table-row">
+                        <td class="L-list__table-cell id">{{ employee.id }}</td>
+                        <td class="L-list__table-cell name">
+                            <a href="{% url "detail_employee" employee.slug %}"
+                               class="L-list__detail">{{ employee.name }}</a>
+                        </td>
+                        <td class="L-list__table-cell surname">{{ employee.surname }}</td>
+                        <td class="L-list__table-cell email">{{ employee.email }}</td>
+                        <td class="L-list__table-cell phone">{{ employee.phone_number }}</td>
+                        <td class="L-list__table-cell phone">{{ employee.department }}</td>
+                        <td class="L-list__table-cell phone">{{ employee.employee_status }}</td>
+                        <td class="L-list__table-cell CAT">
+                            <div class="L-list__actions">
+                                <a class="c-ico-btn" href="{% url "delete_employee" employee.slug %}">
+                                    <img src="{% static 'images/icons8-delete-48-red.png' %}"
+                                         alt="delete icon"
+                                         width="24"
+                                         height="24">
+                                    <p>smazat</p>
+                                </a>
+                                <a class="c-ico-btn" href="{% url "update_employee" employee.slug %}">
+                                    <img class="list__action-icon"
+                                         src="{% static 'images/icons8-update-blue.png' %}"
+                                         alt="update icon"
+                                         width="24"
+                                         height="24">
+                                    <p class="list__action-text">update</p>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
 {% endblock content %}

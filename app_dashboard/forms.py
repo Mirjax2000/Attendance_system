@@ -158,6 +158,33 @@ class EmployeeForm(forms.ModelForm):
         return ""
 
 
+class DepartmentForm(forms.ModelForm):
+    """Formulář pro vytvoření Departments"""
+
+    class Meta:
+        """pole a widgety"""
+
+        model = models.Department
+        fields = ["name"]
+        labels = {"name": "jméno oddělení"}
+        error_messages = {
+            "name": {
+                "required": "Jméno je povinné!",
+                "max_length": "Jméno je příliš dlouhé! (max. 50 znaků)",
+                "unique": "Tento Department již existuje",
+            },
+        }
+        help_texts = {"name": "Zadejte jméno oddělení"}
+        widgets = {
+            "name": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Zadejte jméno oddělení",
+                }
+            ),
+        }
+
+
 class EmailForm(forms.Form):
     """
     Třída řeší formulář pro odesílaní mailů
