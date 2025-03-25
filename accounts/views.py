@@ -17,6 +17,7 @@ from django.views.generic import (
 )
 
 from accounts.forms import SignUpForm, UserUpdateForm
+from app_main.models import Department, EmployeeStatus
 
 
 def get_user(view_instance) -> dict:
@@ -47,7 +48,13 @@ class UserListView(LoginRequiredMixin, ListView):
         context["username"] = user["username"]
         context["status"] = user["status"]
         context["active_link"] = "main-panel"
-
+        context["db_good_condition"] = (
+            Department.objects.filter(name="nezarazeno").exists()
+            and EmployeeStatus.objects.values_list("name", flat=True)
+            .distinct()
+            .count()
+            >= 5
+        )
         return context
 
 
@@ -65,6 +72,13 @@ class UserDetailView(LoginRequiredMixin, DetailView):
         context["username"] = user["username"]
         context["status"] = user["status"]
         context["active_link"] = "main-panel"
+        context["db_good_condition"] = (
+            Department.objects.filter(name="nezarazeno").exists()
+            and EmployeeStatus.objects.values_list("name", flat=True)
+            .distinct()
+            .count()
+            >= 5
+        )
 
         return context
 
@@ -84,6 +98,13 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
         context["username"] = user["username"]
         context["status"] = user["status"]
         context["active_link"] = "main-panel"
+        context["db_good_condition"] = (
+            Department.objects.filter(name="nezarazeno").exists()
+            and EmployeeStatus.objects.values_list("name", flat=True)
+            .distinct()
+            .count()
+            >= 5
+        )
 
         return context
 
@@ -106,6 +127,13 @@ class UserDeleteView(LoginRequiredMixin, DeleteView):
         context["username"] = user["username"]
         context["status"] = user["status"]
         context["active_link"] = "main-panel"
+        context["db_good_condition"] = (
+            Department.objects.filter(name="nezarazeno").exists()
+            and EmployeeStatus.objects.values_list("name", flat=True)
+            .distinct()
+            .count()
+            >= 5
+        )
         return context
 
     def form_valid(self, form):
@@ -135,6 +163,13 @@ class SignUpView(CreateView):
         context["username"] = user["username"]
         context["status"] = user["status"]
         context["active_link"] = "main-panel"
+        context["db_good_condition"] = (
+            Department.objects.filter(name="nezarazeno").exists()
+            and EmployeeStatus.objects.values_list("name", flat=True)
+            .distinct()
+            .count()
+            >= 5
+        )
 
         return context
 
