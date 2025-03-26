@@ -44,6 +44,7 @@ dependencies = [
     { name = "cryptography" },
     { name = "django" },
     { name = "django-dump-load-utf8" },
+    { name = "django-simpleui" },
     { name = "djangorestframework" },
     { name = "djlint" },
     { name = "dlib" },
@@ -69,6 +70,7 @@ requires-dist = [
     { name = "cryptography", specifier = ">=44.0.1" },
     { name = "django", specifier = ">=5.1.6" },
     { name = "django-dump-load-utf8", specifier = ">=0.0.4" },
+    { name = "django-simpleui", specifier = ">=2025.1.13" },
     { name = "djangorestframework", specifier = ">=3.15.2" },
     { name = "djlint", specifier = ">=1.36.4" },
     { name = "dlib", specifier = ">=19.24.6" },
@@ -295,6 +297,15 @@ sdist = { url = "https://files.pythonhosted.org/packages/d8/a1/ac6e535660fb6aa38
 wheels = [
     { url = "https://files.pythonhosted.org/packages/20/ff/faa95c7ac8ae44ae511b81e5ca04f87d70731c1b81300b5755fc6a6fbec5/django_dump_load_utf8-0.0.4-py3-none-any.whl", hash = "sha256:9f2002ab5eba55b5c4230667b6a7144a5a6aad9da89ee6f5b8bd323b00548110", size = 5305 },
 ]
+
+[[package]]
+name = "django-simpleui"
+version = "2025.1.13"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/2c/71/de61a03c310f7b3cea3857c43bd5ba2c7457199bb45cbe550f2c5dedb753/django-simpleui-2025.1.13.tar.gz", hash = "sha256:13cca5200050e45d0ecd1d5d5a84a24d7e6acedf61fda11225c5176671c66609", size = 6392401 }
 
 [[package]]
 name = "djangorestframework"
