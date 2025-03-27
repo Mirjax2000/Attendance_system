@@ -16,6 +16,7 @@ from accounts.views import (
     user_logout,
 )
 from API.views import DepartmentApi, EmployeeDetail, EmployeesApi
+from app_dashboard import views
 from app_dashboard.views import (
     AttendanceView,
     CamView,
@@ -25,7 +26,6 @@ from app_dashboard.views import (
     DeleteDepView,
     DepartmentDetailList,
     DepartmentListView,
-    EmailView,
     EmployeeDeleteView,
     EmployeeDetailView,
     EmployeesView,
@@ -38,7 +38,7 @@ from app_dashboard.views import (
     SaveVectorToDbView,
     StatusView,
     TakeVectorView,
-    UpdateDepView, EmailModalView,
+    UpdateDepView,
 )
 from app_main.views import (
     CamStreamView,
@@ -85,8 +85,13 @@ app_dashboard_urls: list = [
         EmployeeUpdateView.as_view(),
         name="update_employee",
     ),
-    path("dashboard/emails", EmailView.as_view(), name="emails"),
-    path("dashboard/email/modal", EmailModalView.as_view(), name="modal"),
+    path('send_mail/', views.send_mail_view, name='send_mail'),
+    path('partials/mail_manual/', views.mail_manual_partial,
+         name='mail_manual_partial'),
+    path('partials/mail_employee/', views.mail_employee_partial,
+         name='mail_employee_partial'),
+    path('partials/mail_department/', views.mail_department_partial,
+         name='mail_department_partial'),
     path("dashboard/attendance", AttendanceView.as_view(), name="attendance"),
     path("dashboard/charts", ChartsView.as_view(), name="charts"),
     path(

@@ -4,8 +4,9 @@ from time import sleep
 
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.mail import send_mail
 from django.db.models import Count
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import (
     CreateView,
@@ -20,6 +21,7 @@ from django.views.generic import (
 from rich.console import Console
 
 from app_main.models import Department, Employee, EmployeeStatus
+from attendance import settings
 
 # importuju instanci tridy Camsystems
 from attendance.cam_systems import cam_systems_instance as csi
@@ -27,7 +29,7 @@ from attendance.history_status_manager import HistoryStatusManager
 from attendance.populate_db import db_control
 from attendance.settings import DEBUG
 
-from .forms import DepartmentForm, EmployeeForm
+from .forms import DepartmentForm, EmployeeForm, SendMailForm
 
 cons: Console = Console()
 # instance CamSystems
@@ -109,33 +111,62 @@ class EmployeesView(LoginRequiredMixin, ListView):
         return context
 
 
-class EmailView(LoginRequiredMixin, TemplateView):
-    """rozesilani emialu"""
+def send_mail_view(request):
+    if request.method == 'POST':
+        form = SendMailForm(request.POST)
+        if form.is_valid():
+            subject = form.cleaned_data['subject']
+            message = form.cleaned_data['message']
+            delivery_method = form.cleaned_data['delivery_method']
 
-    template_name = "app_dashboard/emails.html"
+            emails = []
 
-    def get_context_data(self, **kwargs):
-        user: dict = get_user(self)
+            if delivery_method == 'manual':
+                emails = [email.strip() for email in
+                          form.cleaned_data['emails'].split(',')]
 
-        context = super().get_context_data(**kwargs)
-        context["username"] = user["username"]
-        context["status"] = user["status"]
-        context["active_link"] = "emails"
-        context["db_good_condition"] = (
-            Department.objects.filter(name="nezarazeno").exists()
-            and EmployeeStatus.objects.values_list("name", flat=True)
-            .distinct()
-            .count()
-            >= 5
-        )
+            elif delivery_method == 'employee':
+                employees = form.cleaned_data['employee_ids']
+                emails = [emp.email for emp in employees]
 
-        return context
-    
+            elif delivery_method == 'department':
+                department = form.cleaned_data['department']
+                emails = [emp.email for emp in department.employee_set.all()]
 
-class EmailModalView(LoginRequiredMixin, TemplateView):
-    """rozesilani emialu"""
+            try:
+                send_mail(
+                    subject=subject,
+                    message=message,
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    recipient_list=emails,
+                    fail_silently=False)
+                return render(request, 'includes/success_mail.html',
+                              {'message': 'Email byl úspěšně odeslán!'})
 
-    template_name = "app_dashboard/modal.html"
+            except Exception as e:
+                form.add_error(None, f'Chyba při odesílání emailu: {str(e)}')
+
+    else:
+        form = SendMailForm()
+
+    return render(request, 'includes/mail_form.html', {
+        'form': form
+    })
+
+
+def mail_manual_partial(request):
+    form = SendMailForm()
+    return render(request, 'includes/mail_manual.html', {'form': form})
+
+
+def mail_employee_partial(request):
+    form = SendMailForm()
+    return render(request, 'includes/mail_employee.html', {'form': form})
+
+
+def mail_department_partial(request):
+    form = SendMailForm()
+    return render(request, 'includes/mail_department.html', {'form': form})
 
 
 class ChartsView(LoginRequiredMixin, TemplateView):

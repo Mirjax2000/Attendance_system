@@ -9,7 +9,7 @@ from django.core.exceptions import ValidationError
 from django.core.validators import EmailValidator
 
 from app_main import models
-from app_main.models import Employee
+from app_main.models import Employee, Department
 
 
 class EmployeeForm(forms.ModelForm):
@@ -185,71 +185,39 @@ class DepartmentForm(forms.ModelForm):
         }
 
 
-class EmailForm(forms.Form):
-    """
-    Třída řeší formulář pro odesílaní mailů
-    """
+DELIVERY_METHOD_CHOICES = (
+    ('manual', 'Manuální zadání'),
+    ('employee', 'Výběr zaměstnanců'),
+    ('department', 'Celé oddělení'),
+)
 
-    recipient_email = forms.CharField(label="Komu", required=True)
-    subject = forms.CharField(label="Předmět", max_length=100, required=True)
-    message = forms.CharField(
-        label="Zpráva", widget=forms.Textarea, required=True
+
+class SendMailForm(forms.Form):
+    subject = forms.CharField(label='Předmět', max_length=255)
+    message = forms.CharField(widget=forms.Textarea, label='Text zprávy')
+
+    delivery_method = forms.ChoiceField(choices=DELIVERY_METHOD_CHOICES, widget=forms.HiddenInput())
+
+    emails = forms.CharField(required=False, label='E-mailové adresy (oddělené čárkou)')
+
+    employee_ids = forms.ModelMultipleChoiceField(
+        queryset=Employee.objects.all(), required=False, label='Zaměstnanci'
     )
 
-    def clean_recipient_email(self) -> List[str]:
-        """
-        Validuje a čistí vstupy formuláře
-        """
-        value: str = self.cleaned_data["recipient_email"]
-        # Rozdělení e-mailových adres oddělených čárkou
-        email_list: List[str] = [
-            email.strip() for email in value.split(",") if email.strip()
-        ]
-        if not email_list:
-            raise forms.ValidationError(
-                "Musíte zadat alespoň jednu platnou e-mailovou adresu."
-            )
+    department = forms.ModelChoiceField(
+        queryset=Department.objects.all(), required=False, label='Oddělení'
+    )
 
-        email_validator = EmailValidator()
-        banned_domains = ["spam.com", "neplatna-domena.cz"]
-        valid_emails: List[str] = []
-
-        for email in email_list:
-            # Validace formátu e-mailové adresy
-            try:
-                email_validator(email)
-            except forms.ValidationError:
-                raise forms.ValidationError(
-                    f"E-mailová adresa '{email}' má neplatný formát."
-                )
-
-            # Ověření nepovolených domén
-            domain: str = email.split("@")[-1]
-            if domain in banned_domains:
-                raise forms.ValidationError(
-                    f"E-mailová adresa '{email}' z této domény není povolena."
-                )
-
-            valid_emails.append(email)
-
-        return valid_emails
-
-    def clean(self) -> Dict[str, Any]:
-        """
-        Validuje a čistí vstupy formuláře
-        """
-        cleaned_data: Dict[str, Any] = super().clean()
-        # Jelikož jsou pole povinná, očekáváme, že hodnoty existují
-        subject: str = cleaned_data.get("subject", "")
-        message: str = cleaned_data.get("message", "")
-
-        if subject.lower() in message.lower():
-            self.add_error("subject", "Předmět by neměl být obsažen ve zprávě.")
-
-        if len(message.strip()) < 10:
-            self.add_error(
-                "message",
-                "Zpráva je příliš krátká, musí obsahovat alespoň 10 znaků.",
-            )
-
+    def clean(self):
+        cleaned_data = super().clean()
+        method = cleaned_data.get('delivery_method')
+        if method == 'manual':
+            if not cleaned_data.get('emails'):
+                self.add_error('emails', 'Zadejte prosím e-mailové adresy.')
+        elif method == 'employee':
+            if not cleaned_data.get('employee_ids'):
+                self.add_error('employee_ids', 'Vyberte prosím alespoň jednoho zaměstnance.')
+        elif method == 'department':
+            if not cleaned_data.get('department'):
+                self.add_error('department', 'Vyberte prosím oddělení.')
         return cleaned_data
