@@ -168,12 +168,28 @@ class AttendanceView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         user: dict = get_user(self)
-        manik = HistoryStatusManager("miroslav-viktorin")
         context = super().get_context_data(**kwargs)
         context["username"] = user["username"]
         context["status"] = user["status"]
         context["active_link"] = "attendances"
-        context["time"] = manik.get_worked_hours_on_day("2025-03-23")
+
+        # Získání všech zaměstnanců
+        employees = Employee.objects.all()
+
+        # Pro každý zaměstnanec získat počet hodin, které odpracoval daný den
+        employee_hours = []
+        for employee in employees:
+            zamestnanec = HistoryStatusManager(
+                employee.slug
+            )  # Vytvoření instance pro každého zaměstnanca
+            worked_hours = zamestnanec.get_worked_hours_on_day("2025-03-24")
+            employee_hours.append(
+                {"employee": employee, "worked_hours": worked_hours}
+            )
+
+        context["employee_hours"] = employee_hours
+
+        # Zkontrolování stavu databáze
         context["db_good_condition"] = (
             Department.objects.filter(name="nezarazeno").exists()
             and EmployeeStatus.objects.values_list("name", flat=True)
@@ -181,6 +197,7 @@ class AttendanceView(LoginRequiredMixin, TemplateView):
             .count()
             >= 5
         )
+
         return context
 
 
