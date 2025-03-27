@@ -38,7 +38,7 @@ from app_dashboard.views import (
     SaveVectorToDbView,
     StatusView,
     TakeVectorView,
-    UpdateDepView,
+    UpdateDepView, EmailModalView,
 )
 from app_main.views import (
     CamStreamView,
@@ -86,6 +86,7 @@ app_dashboard_urls: list = [
         name="update_employee",
     ),
     path("dashboard/emails", EmailView.as_view(), name="emails"),
+    path("dashboard/email/modal", EmailModalView.as_view(), name="modal"),
     path("dashboard/attendance", AttendanceView.as_view(), name="attendance"),
     path("dashboard/charts", ChartsView.as_view(), name="charts"),
     path(

@@ -130,6 +130,12 @@ class EmailView(LoginRequiredMixin, TemplateView):
         )
 
         return context
+    
+
+class EmailModalView(LoginRequiredMixin, TemplateView):
+    """rozesilani emialu"""
+
+    template_name = "app_dashboard/modal.html"
 
 
 class ChartsView(LoginRequiredMixin, TemplateView):
