@@ -46,6 +46,7 @@ from app_main.views import (
     ComparePinView,
     EmpLoginView,
     GetResultView,
+    InfoView,
     MainPageView,
     SetStatusView,
 )
@@ -135,6 +136,7 @@ app_main_urls: list = [
         name="emp_login",
     ),
     path("app_main/set_status", SetStatusView.as_view(), name="set_status"),
+    path("app_main/info/<slug:slug>", InfoView.as_view(), name="info"),
 ]
 
 app_accounts_urls: list = [
@@ -142,9 +144,7 @@ app_accounts_urls: list = [
     path("accounts/logout/", user_logout, name="logout"),
     path("accounts/signup/", SignUpView.as_view(), name="signup"),
     path("accounts/user_list/", UserListView.as_view(), name="user_list"),
-    path(
-        "accounts/user/<int:pk>/", UserDetailView.as_view(), name="user_detail"
-    ),
+    path("accounts/user/<int:pk>/", UserDetailView.as_view(), name="user_detail"),
     path(
         "accounts/delete-user/<int:pk>/",
         UserDeleteView.as_view(),

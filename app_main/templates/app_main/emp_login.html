@@ -1,4 +1,7 @@
 {% extends "app_main_base.html" %}
+{% block title %}
+login
+{% endblock title %}
 {% load static %}
 {% block content %}
     <!-- header -->
@@ -13,8 +16,8 @@
         </p>
         <form action="{% url "set_status" %}" method="post">
             {% csrf_token %}
-            <input type="text" name="statusVal" id="statusVal" hidden />
-            <input type="text" name="name" value="{{ name }}" hidden />
+            <input type="hidden" name="statusVal" id="statusVal" />
+            <input type="hidden" name="name" value="{{ employee.slug }}" />
             <ul class="L-choose__list">
                 <li class="L-choose__item {% if employee.employee_status|lower == "working" %}L-choose__hide{% endif %}"
                     data-value="working">

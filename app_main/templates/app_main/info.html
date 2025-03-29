@@ -1,0 +1,17 @@
+{% extends "app_main_base.html" %}
+{% load static %}
+{% block title %}
+    info
+{% endblock title %}
+{% block content %}
+    <h1 class="u-mt-medium">Processing...</h1>
+    <hr>
+    <h2 class="u-mt-medium">
+        <span class="u-text-success c-info-highlight">{{ employee.slug }}</span> je nyni ve stavu <span class="u-text-success c-info-highlight">{{ employee.employee_status }}</span>
+    </h2>
+    <script>
+        setTimeout(function(){
+            window.location.href = "{% url 'mainpage' 15 %}";
+        }, 3000);
+    </script>
+{% endblock content %}
