@@ -2,7 +2,10 @@
 
 from django.contrib.auth import get_user_model
 from django.test import TestCase
+from django.test.client import Client
 from django.urls import reverse
+
+from app_main.models import Employee, Department
 
 User = get_user_model()
 
@@ -200,3 +203,73 @@ class CustomLoginViewTest(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse("main_panel"))
         self.assertTrue(self.client.session.get("_auth_user_id"))
+
+
+class SendMailViewTests(TestCase):
+    """Testy pro stránku rozesílání mailů (SendMailView)."""
+    def setUp(self):
+        """vytvoření objektů pro testování"""
+        self.user = User.objects.create_user('tester', 'tester@priklad.cz',
+                                             'bezpecneheslo123')
+        self.employee = Employee.objects.create(
+            name="Petra",
+            surname="Svobodová",
+            email="petra.svobodova@priklad.cz",
+            date_of_birth = "1985-04-01",
+        )
+        self.department = Department.objects.create(name="Marketing")
+
+    def test_send_mail_view_get_request(self):
+        """test odpovědi view"""
+        self.client.login(username='tester', password='bezpecneheslo123')
+        response = self.client.get(reverse("send_mail_view"))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "includes/mail_form.html")
+
+    def test_send_mail_view_post_valid_data(self):
+        """test odpovědi view pro validní data"""
+        self.client.login(username='tester', password='bezpecneheslo123')
+        response = self.client.post(reverse("send_mail_view"), data={
+            'subject': "Důležitá zpráva",
+            'message': "Obsah důležité zprávy.",
+            'delivery_method': 'manual',
+            'emails': 'platny.prejemce@priklad.cz',
+            'employee_ids': [self.employee.id],
+            'department': self.department.id
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "includes/success_mail.html")
+
+    def test_send_mail_view_post_invalid_data(self):
+        """test odpovědi view pro nevalidní data"""
+        self.client.login(username='tester', password='bezpecneheslo123')
+        response = self.client.post(reverse("send_mail_view"), data={
+            'subject': "",
+            'message': "",
+            'delivery_method': 'manual',
+            'emails': '',
+            'employee_ids': [],
+            'department': ''
+        })
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "includes/mail_form.html")
+
+        form = response.context.get('form')
+        self.assertIsNotNone(form, "Formulář nebyl nalezen v kontextu.")
+
+        self.assertTrue(form.errors)
+        self.assertIn('subject', form.errors)
+        self.assertIn('message', form.errors)
+        self.assertIn('emails', form.errors)
+
+        self.assertEqual(form.errors['subject'], ['Toto pole je vyžadováno.'])
+        self.assertEqual(form.errors['message'], ['Toto pole je vyžadováno.'])
+        self.assertEqual(form.errors['emails'],
+                         ['Zadejte prosím e-mailové adresy.'])
+
+    def test_send_mail_unauthenticated_redirect(self):
+        """test view odpovědi pro nepřihlášeného uživatele"""
+        response = self.client.get(reverse("send_mail_view"))
+        self.assertRedirects(response,
+                             f'/accounts/login/?next={reverse("send_mail_view")}')

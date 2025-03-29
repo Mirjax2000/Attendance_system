@@ -111,9 +111,18 @@ class EmployeesView(LoginRequiredMixin, ListView):
         return context
 
 
-def send_mail_view(request):
-    if request.method == 'POST':
+class SendMailView(LoginRequiredMixin, View):
+    """view pro rozesilani e-mailů"""
+    template_name_success = 'includes/success_mail.html'
+    template_name_form = 'includes/mail_form.html'
+
+    def get(self, request):
+        form = SendMailForm()
+        return render(request, self.template_name_form, {'form': form})
+
+    def post(self, request):
         form = SendMailForm(request.POST)
+
         if form.is_valid():
             subject = form.cleaned_data['subject']
             message = form.cleaned_data['message']
@@ -124,11 +133,9 @@ def send_mail_view(request):
             if delivery_method == 'manual':
                 emails = [email.strip() for email in
                           form.cleaned_data['emails'].split(',')]
-
             elif delivery_method == 'employee':
                 employees = form.cleaned_data['employee_ids']
                 emails = [emp.email for emp in employees]
-
             elif delivery_method == 'department':
                 department = form.cleaned_data['department']
                 emails = [emp.email for emp in department.employee_set.all()]
@@ -139,39 +146,48 @@ def send_mail_view(request):
                     message=message,
                     from_email=settings.DEFAULT_FROM_EMAIL,
                     recipient_list=emails,
-                    fail_silently=False)
-                return render(request, 'includes/success_mail.html',
+                    fail_silently=False
+                )
+                return render(request, self.template_name_success,
                               {'message': 'Email byl úspěšně odeslán!'})
 
             except Exception as e:
                 form.add_error(None, f'Chyba při odesílání emailu: {str(e)}')
 
-    else:
+        return render(request, self.template_name_form, {'form': form})
+
+
+class MailManualPartialView(LoginRequiredMixin, View):
+    """Partial pro manuální zadání mailových adres"""
+    template_name = 'includes/mail_manual.html'
+
+    def get(self, request):
         form = SendMailForm()
-
-    return render(request, 'includes/mail_form.html', {
-        'form': form
-    })
+        return render(request, self.template_name, {'form': form})
 
 
-def mail_manual_partial(request):
-    form = SendMailForm()
-    return render(request, 'includes/mail_manual.html', {'form': form})
+class MailEmployeePartialView(LoginRequiredMixin, View):
+    """Partial pro výběr mailových adres zaměstnanců"""
+    template_name = 'includes/mail_employee.html'
+
+    def get(self, request):
+        form = SendMailForm()
+        return render(request, self.template_name, {'form': form})
 
 
-def mail_employee_partial(request):
-    form = SendMailForm()
-    return render(request, 'includes/mail_employee.html', {'form': form})
+class MailDepartmentPartialView(LoginRequiredMixin, View):
+    """Partial pro výběr mailových celého oddělení"""
+    template_name = 'includes/mail_department.html'
 
-
-def mail_department_partial(request):
-    form = SendMailForm()
-    return render(request, 'includes/mail_department.html', {'form': form})
+    def get(self, request):
+        form = SendMailForm()
+        return render(request, self.template_name, {'form': form})
 
 
 class ChartsView(LoginRequiredMixin, TemplateView):
-    """rozesilani emialu"""
-
+    """
+    webové zobrazení pro vizualizaci.
+    """
     template_name = "app_dashboard/charts.html"
 
     def get_context_data(self, **kwargs):

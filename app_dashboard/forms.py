@@ -6,7 +6,7 @@ from typing import Any, Dict, List
 
 from django import forms
 from django.core.exceptions import ValidationError
-from django.core.validators import EmailValidator
+from django.core.validators import EmailValidator, validate_email
 
 from app_main import models
 from app_main.models import Employee, Department
@@ -185,39 +185,68 @@ class DepartmentForm(forms.ModelForm):
         }
 
 
-DELIVERY_METHOD_CHOICES = (
-    ('manual', 'Manuální zadání'),
-    ('employee', 'Výběr zaměstnanců'),
-    ('department', 'Celé oddělení'),
-)
-
-
 class SendMailForm(forms.Form):
-    subject = forms.CharField(label='Předmět', max_length=255)
-    message = forms.CharField(widget=forms.Textarea, label='Text zprávy')
-
-    delivery_method = forms.ChoiceField(choices=DELIVERY_METHOD_CHOICES, widget=forms.HiddenInput())
-
-    emails = forms.CharField(required=False, label='E-mailové adresy (oddělené čárkou)')
-
+    """Formulář pro odesílání e-mailů"""
+    DELIVERY_METHODS = (
+        ('manual', 'Manual'),
+        ('employee', 'Employee'),
+        ('department', 'Department'),
+    )
+    subject = forms.CharField(required=True)
+    message = forms.CharField(widget=forms.Textarea, required=True)
+    delivery_method = forms.ChoiceField(choices=DELIVERY_METHODS)
+    emails = forms.CharField(required=False, widget=forms.Textarea)
     employee_ids = forms.ModelMultipleChoiceField(
-        queryset=Employee.objects.all(), required=False, label='Zaměstnanci'
+        required=False, queryset=Employee.objects.all()
     )
+    department = forms.ModelChoiceField(required=False,
+                                        queryset=Department.objects.all())
 
-    department = forms.ModelChoiceField(
-        queryset=Department.objects.all(), required=False, label='Oddělení'
-    )
+    def clean_emails(self):
+        """
+        Ověří a vyčistí seznam e-mailových adres zadaných 
+        jako řetězec oddělený čárkou.
+        """
+        emails_raw = self.cleaned_data.get('emails', '').strip()
+
+        if not emails_raw:
+            return emails_raw
+
+        emails_list = [email.strip() for email in emails_raw.split(",") if
+                       email.strip()]
+        invalid_emails = []
+        for email in emails_list:
+            try:
+                validate_email(email)
+            except ValidationError:
+                invalid_emails.append(email)
+
+        if invalid_emails:
+            raise ValidationError(
+                f"Následující e-mailové adresy mají neplatný formát: "
+                f"{', '.join(invalid_emails)}")
+
+        return ', '.join(emails_list)
 
     def clean(self):
+        """
+        Provádí dodatečné ověření na základě pole „delivery_method“ 
+        a zajišťuje, že povinná pole jsou vyplněna v závislosti na zvoleném 
+        způsobu doručení.
+        """
         cleaned_data = super().clean()
         method = cleaned_data.get('delivery_method')
         if method == 'manual':
             if not cleaned_data.get('emails'):
-                self.add_error('emails', 'Zadejte prosím e-mailové adresy.')
+                self.add_error(
+                    'emails', 'Zadejte prosím e-mailové adresy.')
         elif method == 'employee':
             if not cleaned_data.get('employee_ids'):
-                self.add_error('employee_ids', 'Vyberte prosím alespoň jednoho zaměstnance.')
+                self.add_error(
+                    'employee_ids',
+                    'Vyberte prosím alespoň jednoho zaměstnance.')
         elif method == 'department':
             if not cleaned_data.get('department'):
-                self.add_error('department', 'Vyberte prosím oddělení.')
+                self.add_error(
+                    'department', 'Vyberte prosím oddělení.')
         return cleaned_data

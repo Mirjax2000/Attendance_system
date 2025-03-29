@@ -11,7 +11,7 @@
     <button type="button" hx-get="{% url 'mail_department_partial' %}" hx-target="#email-method-fields" hx-swap="innerHTML">Celé oddělení</button>
   </div>
 
-  <form hx-post="{% url 'send_mail' %}" hx-target="#email-result" hx-swap="innerHTML">
+  <form hx-post="{% url 'send_mail_view' %}" hx-target="#email-result" hx-swap="innerHTML">
     {% csrf_token %}
     
     <div id="email-method-fields">
