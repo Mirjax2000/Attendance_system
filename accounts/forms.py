@@ -1,16 +1,10 @@
 """Acounts formulare"""
 
+from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
-from django.db.transaction import atomic
 from django.forms import (
-    CharField,
-    DateField,
-    EmailField,
     ModelForm,
-    NumberInput,
-    PasswordInput,
-    Textarea,
     ValidationError,
 )
 
@@ -19,6 +13,16 @@ User = get_user_model()
 
 class SignUpForm(UserCreationForm):
     """Formulář pro nového uživatele"""
+
+    is_staff = forms.BooleanField(
+        required=False,
+        label="Je administrátor",
+    )
+
+    is_superuser = forms.BooleanField(
+        required=False,
+        label="Je superuživatel",
+    )
 
     class Meta(UserCreationForm.Meta):
         model = User
@@ -29,6 +33,8 @@ class SignUpForm(UserCreationForm):
             "last_name",
             "password1",
             "password2",
+            "is_staff",
+            "is_superuser",
         ]
         labels = {
             "username": "Uživatelské jméno",
@@ -61,6 +67,7 @@ class UserUpdateForm(ModelForm):
             "last_name": "Příjmení",
             "email": "E-mail",
         }
+
     # kdyz ji zapnes tak neulozis , proste neulozis, ne, nejde to
     # def clean_email(self):
     #     """Kontrola emailu"""
