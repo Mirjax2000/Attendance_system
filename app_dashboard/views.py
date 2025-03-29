@@ -111,14 +111,32 @@ class EmployeesView(LoginRequiredMixin, ListView):
         return context
 
 
-class SendMailView(LoginRequiredMixin, View):
-    """view pro rozesílání mailů"""
+class CommonContextMixin:
+    def get_context_data(self, **extra_context):
+        user: dict = get_user(self)
+
+        common_context = {
+            "username": user["username"],
+            "status": user["status"],
+            "active_link": "send_mail_view",
+            "db_good_condition": (
+                    Department.objects.filter(name="nezarazeno").exists()
+                    and EmployeeStatus.objects.values_list("name",
+                                                           flat=True).distinct().count() >= 5
+            ),
+        }
+        common_context.update(extra_context)
+        return common_context
+
+
+class SendMailView(LoginRequiredMixin, CommonContextMixin, View):
     template_name_success = 'includes/success_mail.html'
     template_name_form = 'includes/mail_form.html'
 
     def get(self, request):
         form = SendMailForm()
-        return render(request, self.template_name_form, {'form': form})
+        context = self.get_context_data(form=form)
+        return render(request, self.template_name_form, context)
 
     def post(self, request):
         form = SendMailForm(request.POST)
@@ -148,14 +166,15 @@ class SendMailView(LoginRequiredMixin, View):
                     recipient_list=emails,
                     fail_silently=False
                 )
-                return render(request, self.template_name_success,
-                              {'message': 'Email byl úspěšně odeslán!'})
+                context = self.get_context_data(
+                    message='Email byl úspěšně odeslán!')
+                return render(request, self.template_name_success, context)
 
             except Exception as e:
                 form.add_error(None, f'Chyba při odesílání emailu: {str(e)}')
 
-        return render(request, 'includes/mail_form_partial.html',
-                      {'form': form})
+        context = self.get_context_data(form=form)
+        return render(request, 'includes/mail_form_partial.html', context)
 
 
 class MailManualPartialView(LoginRequiredMixin, View):
