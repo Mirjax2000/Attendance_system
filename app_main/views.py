@@ -90,9 +90,7 @@ class ComparePinView(View):
 
             # kontrola pinhash vs form pin
             if employee.check_pin_code(form_pin):
-                messages.success(
-                    request, f"zamestnanec potvrzen: {employee.slug}"
-                )
+                messages.success(request, f"zamestnanec potvrzen: {employee.slug}")
                 return redirect("emp_login", employee.slug)
 
             messages.error(request, "nespravny PIN")
@@ -111,7 +109,11 @@ class EmpLoginView(TemplateView):
 
     def get_context_data(self, **kwargs) -> dict:
         context = super().get_context_data(**kwargs)
-        context["name"] = self.kwargs.get("slug")
+        employee = self.kwargs.get("slug")
+        this_employee = Employee.objects.filter(slug=employee).first()
+        if this_employee:
+            cons.log(this_employee)
+            context["employee"] = this_employee
         return context
 
 
