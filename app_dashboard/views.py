@@ -112,7 +112,7 @@ class EmployeesView(LoginRequiredMixin, ListView):
 
 
 class SendMailView(LoginRequiredMixin, View):
-    """view pro rozesilani e-mailů"""
+    """view pro rozesílání mailů"""
     template_name_success = 'includes/success_mail.html'
     template_name_form = 'includes/mail_form.html'
 
@@ -154,7 +154,8 @@ class SendMailView(LoginRequiredMixin, View):
             except Exception as e:
                 form.add_error(None, f'Chyba při odesílání emailu: {str(e)}')
 
-        return render(request, self.template_name_form, {'form': form})
+        return render(request, 'includes/mail_form_partial.html',
+                      {'form': form})
 
 
 class MailManualPartialView(LoginRequiredMixin, View):

@@ -253,7 +253,7 @@ class SendMailViewTests(TestCase):
         })
 
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "includes/mail_form.html")
+        self.assertTemplateUsed(response, "includes/mail_form_partial.html")
 
         form = response.context.get('form')
         self.assertIsNotNone(form, "Formulář nebyl nalezen v kontextu.")

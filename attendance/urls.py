@@ -38,8 +38,11 @@ from app_dashboard.views import (
     SaveVectorToDbView,
     StatusView,
     TakeVectorView,
-    UpdateDepView, MailDepartmentPartialView, MailEmployeePartialView,
-    MailManualPartialView, SendMailView,
+    UpdateDepView, 
+    MailDepartmentPartialView, 
+    MailEmployeePartialView,
+    MailManualPartialView, 
+    SendMailView,
 )
 from app_main.views import (
     CamStreamView,
