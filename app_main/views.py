@@ -13,8 +13,9 @@ from rich.console import Console
 
 # importuju instanci tridy Camsystems
 from attendance.cam_systems import cam_systems_instance as csi
+from attendance.settings import DEBUG
 
-from .models import Employee
+from .models import Employee, EmployeeStatus
 
 cons: Console = Console()
 
@@ -90,9 +91,7 @@ class ComparePinView(View):
 
             # kontrola pinhash vs form pin
             if employee.check_pin_code(form_pin):
-                messages.success(
-                    request, f"zamestnanec potvrzen: {employee.slug}"
-                )
+                messages.success(request, f"zamestnanec potvrzen: {employee.slug}")
                 return redirect("emp_login", employee.slug)
 
             messages.error(request, "nespravny PIN")
@@ -111,7 +110,11 @@ class EmpLoginView(TemplateView):
 
     def get_context_data(self, **kwargs) -> dict:
         context = super().get_context_data(**kwargs)
-        context["name"] = self.kwargs.get("slug")
+        employee = self.kwargs.get("slug")
+        this_employee = Employee.objects.filter(slug=employee).first()
+        if this_employee:
+            cons.log(this_employee)
+            context["employee"] = this_employee
         return context
 
 
@@ -127,12 +130,37 @@ class SetStatusView(View):
         emp_name = request.POST.get("name", None)
 
         status: dict = {
-            "working": f"pan {emp_name} jde do prace.",
-            "free": f"pan {emp_name} jde z prace.",
-            "business_trip": f"pan {emp_name} jede na sluzebni cestu",
+            "working": f"{emp_name} jde do prace.",
+            "free": f"{emp_name} jde z prace.",
+            "business_trip": f"{emp_name} jede na sluzebni cestu",
         }
 
-        cons.log(status[emp_status])
+        try:
+            employee: Employee = Employee.objects.get(slug=emp_name)
+            emp_status_instance: EmployeeStatus = EmployeeStatus.objects.get(
+                name=emp_status
+            )
+            employee.employee_status = emp_status_instance
+            employee.save()
+        except Employee.DoesNotExist:
+            messages.error(request, f"Zaměstnanec s jménem {emp_name} nebyl nalezen.")
+            return redirect("mainpage", 15)
+
+        if DEBUG:
+            cons.log(status[emp_status])
 
         time.sleep(1)
-        return redirect("mainpage", 15)
+        return redirect("info", employee.slug)
+
+
+class InfoView(TemplateView):
+    template_name = "app_main/info.html"
+
+    def get_context_data(self, **kwargs) -> dict:
+        context = super().get_context_data(**kwargs)
+        employee = self.kwargs.get("slug")
+        this_employee = Employee.objects.filter(slug=employee).first()
+        if this_employee:
+            cons.log(this_employee)
+            context["employee"] = this_employee
+        return context
