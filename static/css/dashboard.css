@@ -837,6 +837,9 @@ body {
   outline: 1px solid var(--scheme-clr-8);
   cursor: text;
 }
+.L-emails__form__manual textarea {
+  height: 100px;
+}
 .L-emails__form textarea {
   display: block;
   line-height: 1.7;

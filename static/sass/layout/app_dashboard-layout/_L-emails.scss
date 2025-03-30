@@ -76,6 +76,12 @@
             }
         }
 
+        &__manual {
+            textarea {
+                height: 100px;
+            }
+        }
+
         textarea {
             @extend %border-radius;
             @extend %margin-in;
