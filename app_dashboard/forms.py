@@ -2,14 +2,13 @@
 
 import re
 from datetime import date
-from typing import Any, Dict, List
 
 from django import forms
 from django.core.exceptions import ValidationError
-from django.core.validators import EmailValidator, validate_email
+from django.core.validators import validate_email
 
 from app_main import models
-from app_main.models import Employee, Department
+from app_main.models import Department, Employee
 
 
 class EmployeeForm(forms.ModelForm):
@@ -57,9 +56,7 @@ class EmployeeForm(forms.ModelForm):
             },
         }
         widgets = {
-            "date_of_birth": forms.DateInput(
-                attrs={"type": "date"}, format="%Y-%m-%d"
-            ),
+            "date_of_birth": forms.DateInput(attrs={"type": "date"}, format="%Y-%m-%d"),
             "pin_code": forms.PasswordInput(attrs={"maxlength": 4}),
         }
 
@@ -71,26 +68,17 @@ class EmployeeForm(forms.ModelForm):
             if self.instance.pk:
                 existing_emails = existing_emails.exclude(pk=self.instance.pk)
             if existing_emails.exists():
-                raise ValidationError(
-                    "Tento e-mail je již používán. Zvolte jiný."
-                )
+                raise ValidationError("Tento e-mail je již používán. Zvolte jiný.")
             return email
         return ""
 
     def clean_postal_code(self) -> str:
         """Kontrola formátu a délky psč, odstranění mezer"""
         if self.cleaned_data.get("postal_code") is not None:
-            postal_code: str = str(
-                self.cleaned_data.get("postal_code", "")
-            ).strip()
+            postal_code: str = str(self.cleaned_data.get("postal_code", "")).strip()
             postal_code_no_spaces = postal_code.replace(" ", "")
-            if (
-                len(postal_code_no_spaces) != 5
-                or not postal_code_no_spaces.isdigit()
-            ):
-                raise ValidationError(
-                    "PSČ musí obsahovat přesně 5 číslic bez mezer."
-                )
+            if len(postal_code_no_spaces) != 5 or not postal_code_no_spaces.isdigit():
+                raise ValidationError("PSČ musí obsahovat přesně 5 číslic bez mezer.")
             return postal_code_no_spaces
         return ""
 
@@ -127,9 +115,7 @@ class EmployeeForm(forms.ModelForm):
             if not date_of_birth:
                 raise ValidationError("Datum narození je povinné.")
             if date_of_birth > date.today():
-                raise ValidationError(
-                    "Datum narození nemůže být v budoucnosti."
-                )
+                raise ValidationError("Datum narození nemůže být v budoucnosti.")
             return date_of_birth
         return None
 
@@ -138,22 +124,16 @@ class EmployeeForm(forms.ModelForm):
         if self.cleaned_data.get("name") is not None:
             name: str = str(self.cleaned_data.get("name")).strip().capitalize()
             if not name.isalpha():
-                raise ValidationError(
-                    "Jméno smí obsahovat pouze znaky abecedy."
-                )
+                raise ValidationError("Jméno smí obsahovat pouze znaky abecedy.")
             return name
         return ""
 
     def clean_surname(self) -> str:
         """Kontrola příjmení (velké písmeno a znaky)"""
         if self.cleaned_data.get("surname") is not None:
-            surname: str = (
-                str(self.cleaned_data.get("surname")).strip().capitalize()
-            )
+            surname: str = str(self.cleaned_data.get("surname")).strip().capitalize()
             if not surname.isalpha():
-                raise ValidationError(
-                    "Příjmení smí obsahovat pouze znaky abecedy."
-                )
+                raise ValidationError("Příjmení smí obsahovat pouze znaky abecedy.")
             return surname
         return ""
 
@@ -187,33 +167,40 @@ class DepartmentForm(forms.ModelForm):
 
 class SendMailForm(forms.Form):
     """Formulář pro odesílání e-mailů"""
+
     DELIVERY_METHODS = (
-        ('manual', 'Manual'),
-        ('employee', 'Employee'),
-        ('department', 'Department'),
+        ("manual", "Manual"),
+        ("employee", "Employee"),
+        ("department", "Department"),
     )
-    subject = forms.CharField(required=True)
-    message = forms.CharField(widget=forms.Textarea, required=True)
+    subject = forms.CharField(
+        required=True, widget=forms.TextInput(attrs={"placeholder": "Enter Subject ..."})
+    )
+    message = forms.CharField(
+        widget=forms.Textarea(attrs={"placeholder": "Enter message ..."}), required=True
+    )
     delivery_method = forms.ChoiceField(choices=DELIVERY_METHODS)
     emails = forms.CharField(required=False, widget=forms.Textarea)
     employee_ids = forms.ModelMultipleChoiceField(
         required=False, queryset=Employee.objects.all()
     )
-    department = forms.ModelChoiceField(required=False,
-                                        queryset=Department.objects.all())
+    department = forms.ModelChoiceField(
+        required=False, queryset=Department.objects.all()
+    )
 
     def clean_emails(self):
         """
-        Ověří a vyčistí seznam e-mailových adres zadaných 
+        Ověří a vyčistí seznam e-mailových adres zadaných
         jako řetězec oddělený čárkou.
         """
-        emails_raw = self.cleaned_data.get('emails', '').strip()
+        emails_raw = self.cleaned_data.get("emails", "").strip()
 
         if not emails_raw:
             return emails_raw
 
-        emails_list = [email.strip() for email in emails_raw.split(",") if
-                       email.strip()]
+        emails_list = [
+            email.strip() for email in emails_raw.split(",") if email.strip()
+        ]
         invalid_emails = []
         for email in emails_list:
             try:
@@ -224,29 +211,28 @@ class SendMailForm(forms.Form):
         if invalid_emails:
             raise ValidationError(
                 f"Následující e-mailové adresy mají neplatný formát: "
-                f"{', '.join(invalid_emails)}")
+                f"{', '.join(invalid_emails)}"
+            )
 
-        return ', '.join(emails_list)
+        return ", ".join(emails_list)
 
     def clean(self):
         """
-        Provádí dodatečné ověření na základě pole „delivery_method“ 
-        a zajišťuje, že povinná pole jsou vyplněna v závislosti na zvoleném 
+        Provádí dodatečné ověření na základě pole „delivery_method“
+        a zajišťuje, že povinná pole jsou vyplněna v závislosti na zvoleném
         způsobu doručení.
         """
         cleaned_data = super().clean()
-        method = cleaned_data.get('delivery_method')
-        if method == 'manual':
-            if not cleaned_data.get('emails'):
+        method = cleaned_data.get("delivery_method")
+        if method == "manual":
+            if not cleaned_data.get("emails"):
+                self.add_error("emails", "Zadejte prosím e-mailové adresy.")
+        elif method == "employee":
+            if not cleaned_data.get("employee_ids"):
                 self.add_error(
-                    'emails', 'Zadejte prosím e-mailové adresy.')
-        elif method == 'employee':
-            if not cleaned_data.get('employee_ids'):
-                self.add_error(
-                    'employee_ids',
-                    'Vyberte prosím alespoň jednoho zaměstnance.')
-        elif method == 'department':
-            if not cleaned_data.get('department'):
-                self.add_error(
-                    'department', 'Vyberte prosím oddělení.')
+                    "employee_ids", "Vyberte prosím alespoň jednoho zaměstnance."
+                )
+        elif method == "department":
+            if not cleaned_data.get("department"):
+                self.add_error("department", "Vyberte prosím oddělení.")
         return cleaned_data

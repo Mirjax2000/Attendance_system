@@ -1,0 +1,120 @@
+@use "../../utils/" as *;
+@use "../../base/placeholders" as *;
+
+.L-emails {
+    margin-top: 1em;
+
+    &__list {
+        @include flex(center, center, 1em);
+    }
+
+    &__btn {
+        @extend %border-radius;
+
+        padding: 0.5em;
+        border: none;
+        box-shadow: 1px 1px 5px #00000087;
+        color: var(--scheme-default);
+        background-color: var(--scheme-clr-3);
+        transition: 0.1s all ease-in-out;
+        cursor: pointer;
+
+        &:hover {
+            background-color: var(--scheme-accent-darker);
+        }
+    }
+
+    &__form {
+        @extend %margin-in;
+
+        width: 60%;
+        margin-top: 1em;
+
+        label {
+            display: block;
+            margin-bottom: 0.5em;
+            color: var(--scheme-default);
+            font-weight: bolder;
+        }
+
+        select {
+            @extend %border-radius;
+
+            width: 50%;
+            padding: 0.5em;
+            border: none;
+            box-shadow: 1px 1px 5px black;
+            margin-bottom: 1em;
+            color: var(--scheme-default);
+            background-color: var(--scheme-clr-3);
+            outline: 1px solid #3d3d3d;
+            transition: 0.1s all ease-in-out;
+
+            &:hover {
+                color: white;
+                background-color: var(--scheme-clr-1);
+            }
+
+            &:focus {
+                outline: 1px solid var(--scheme-clr-8);
+            }
+        }
+
+        input {
+            @extend %border-radius;
+
+            width: 50%;
+            margin-bottom: 0.5em;
+            padding: 0.5em 1em;
+            transition: 0.1s all ease-in-out;
+            background-color: var(--scheme-clr-3);
+            outline: 1px solid #3d3d3d;
+
+            &:focus {
+                outline: 1px solid var(--scheme-clr-8);
+                cursor: text;
+            }
+        }
+
+        textarea {
+            @extend %border-radius;
+            @extend %margin-in;
+
+            display: block;
+            line-height: 1.7;
+            margin-bottom: 0.5em;
+            width: 100%;
+            padding: 1em;
+            color: var(--scheme-default);
+            resize: none;
+            border: none;
+            box-shadow: 1px 1px 5px #000000ba;
+            outline: 1px solid #3d3d3d;
+            background-color: var(--scheme-clr-3);
+
+            &:focus {
+                outline: 1px solid var(--scheme-clr-8);
+            }
+        }
+
+        &__submit {
+            @extend %margin-in;
+            @extend %border-radius;
+
+            width: 50%;
+            margin-top: 1em;
+            display: block;
+            padding-block: 0.5em;
+            border: none;
+            transition:
+                0.1s all,
+                ease-in-out;
+            background-color: var(--scheme-accent);
+            box-shadow: 1px 1px 5px #000000cf;
+
+            &:hover {
+                background-color: var(--scheme-accent-darker);
+            }
+        }
+    }
+}

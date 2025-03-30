@@ -1,33 +1,23 @@
-<form hx-post="{% url 'send_mail_view' %}" hx-target="#email-result" hx-swap="innerHTML">
-  {% csrf_token %}
-  
-  <div id="email-method-fields">
-    {% include 'includes/mail_manual.html' %}
-  </div>
-  
-  <div>
-    {{ form.subject.label_tag }}<br>
-    {{ form.subject }}
-    {% for error in form.subject.errors %}
-      <p>{{ error }}</p>
-    {% endfor %}
-  </div>
-
-  <div>
-    {{ form.message.label_tag }}<br>
-    {{ form.message }}
-    {% for error in form.message.errors %}
-      <p>{{ error }}</p>
-    {% endfor %}
-  </div>
-
-  {% if form.non_field_errors %}
+<form class="L-emails__form"
+      hx-post="{% url 'send_mail_view' %}"
+      hx-target="#email-result"
+      hx-swap="innerHTML">
+    {% csrf_token %}
+    <div id="email-method-fields">{% include "includes/mail_manual.html" %}</div>
     <div>
-      {% for error in form.non_field_errors %}
-        <p>{{ error }}</p>
-      {% endfor %}
+        {{ form.subject.label_tag }}
+        {{ form.subject }}
+        {% for error in form.subject.errors %}<p>{{ error }}</p>{% endfor %}
     </div>
-  {% endif %}
-
-  <button type="submit" class="L-form__submit">Odeslat</button>
+    <div>
+        {{ form.message.label_tag }}
+        {{ form.message }}
+        {% for error in form.message.errors %}<p>{{ error }}</p>{% endfor %}
+    </div>
+    {% if form.non_field_errors %}
+        <div>
+            {% for error in form.non_field_errors %}<p>{{ error }}</p>{% endfor %}
+        </div>
+    {% endif %}
+    <button type="submit" class="L-form__submit">Odeslat</button>
 </form>

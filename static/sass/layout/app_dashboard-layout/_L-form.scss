@@ -24,6 +24,16 @@
     &__form {
         font-size: 0.875rem;
 
+        textarea {
+            @extend %border-radius;
+
+            resize: none;
+            border: none;
+            box-shadow: 1px 1px 3px black;
+            background-color: var(--scheme-clr-2);
+            outline: none;
+        }
+
         input,
         select {
             @extend %border-radius;
