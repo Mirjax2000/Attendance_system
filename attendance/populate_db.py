@@ -2,7 +2,6 @@
 
 from typing import Type
 
-from django.core.management import call_command
 from django.db import models
 from rich.console import Console
 
@@ -80,7 +79,7 @@ class DatabaseControl:
                 if DEBUG:
                     cons.log(
                         f"Tabulka: {db_table.__name__} je prázdná.",
-                        style="green",
+                        style="bright_yellow",
                     )
                 db_status.append(True)
             else:
@@ -93,7 +92,7 @@ class DatabaseControl:
 
         if all(db_status):
             if DEBUG:
-                cons.log("Všechny tabulky jsou prázdné.", style="green")
+                cons.log("Všechny tabulky jsou prázdné.", style="orange")
             return True
 
         if DEBUG:
