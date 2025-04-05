@@ -65,8 +65,10 @@ class MainPanelView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         user: dict = get_user(self)
         context = super().get_context_data(**kwargs)
-        departments = Department.objects.annotate(employee_count=Count("employee"))
-        emp_statuses = EmployeeStatus.objects.annotate(employee_count=Count("employee"))
+        departments = Department.objects.annotate(
+            employee_count=Count("employee"))
+        emp_statuses = EmployeeStatus.objects.annotate(
+            employee_count=Count("employee"))
 
         context["departments"] = departments
         context["emp_statuses"] = emp_statuses
@@ -75,7 +77,8 @@ class MainPanelView(LoginRequiredMixin, TemplateView):
         context["active_link"] = "main-panel"
         context["db_good_condition"] = (
             Department.objects.filter(name="nezarazeno").exists()
-            and EmployeeStatus.objects.values_list("name", flat=True).distinct().count()
+            and EmployeeStatus.objects.values_list(
+            "name", flat=True).distinct().count()
             >= 5
         )
 
@@ -98,7 +101,8 @@ class EmployeesView(LoginRequiredMixin, ListView):
         context["active_link"] = "employees"
         context["db_good_condition"] = (
             Department.objects.filter(name="nezarazeno").exists()
-            and EmployeeStatus.objects.values_list("name", flat=True).distinct().count()
+            and EmployeeStatus.objects.values_list(
+            "name", flat=True).distinct().count()
             >= 5
         )
 
@@ -106,6 +110,8 @@ class EmployeesView(LoginRequiredMixin, ListView):
 
 
 class CommonContextMixin:
+    """Common context for views"""
+    
     def get_context_data(self, **extra_context):
         user: dict = get_user(self)
 
@@ -127,6 +133,7 @@ class CommonContextMixin:
 
 class SendMailView(LoginRequiredMixin, CommonContextMixin, View):
     """Odesílání mailů"""
+    
     template_name_success = 'includes/success_mail.html'
     template_name_form = 'includes/mail_form.html'
 
@@ -154,7 +161,8 @@ class SendMailView(LoginRequiredMixin, CommonContextMixin, View):
 
             if delivery_method == "manual":
                 emails = [
-                    email.strip() for email in form.cleaned_data["emails"].split(",")
+                    email.strip(
+                    ) for email in form.cleaned_data["emails"].split(",")
                 ]
             elif delivery_method == "employee":
                 employees = form.cleaned_data["employee_ids"]
@@ -166,20 +174,24 @@ class SendMailView(LoginRequiredMixin, CommonContextMixin, View):
             try:
                 send_mail(
                     subject=subject,
-                    message='Pro zobrazení emailu použijte klienta podporující HTML.',
+                    message=
+                    'Pro zobrazení emailu použijte klienta podporující HTML.',
                     html_message=html_message,
                     from_email=settings.DEFAULT_FROM_EMAIL,
                     recipient_list=emails,
                     fail_silently=False,
                 )
-                context = self.get_context_data(message="Email byl úspěšně odeslán!")
+                context = self.get_context_data(
+                    message="Email byl úspěšně odeslán!")
                 return render(request, self.template_name_success, context)
 
             except Exception as e:
-                form.add_error(None, f"Chyba při odesílání emailu: {str(e)}")
+                form.add_error(
+                    None, f"Chyba při odesílání emailu: {str(e)}")
 
         context = self.get_context_data(form=form)
-        return render(request, "includes/mail_form_partial.html", context)
+        return render(
+            request, "includes/mail_form_partial.html", context)
 
 
 class MailManualPartialView(LoginRequiredMixin, View):
@@ -204,6 +216,7 @@ class MailEmployeePartialView(LoginRequiredMixin, View):
 
 class MailDepartmentPartialView(LoginRequiredMixin, View):
     """Partial pro výběr mailových adres celého oddělení"""
+    
     template_name = 'includes/mail_department.html'
 
     def get(self, request):
@@ -213,6 +226,7 @@ class MailDepartmentPartialView(LoginRequiredMixin, View):
 
 class MailTemplatePartialView(View):
     """Partial pro aktualizaci výběru templates v mailovém klientu"""
+    
     template_name = "includes/mail_template.html"
 
     def get_email_templates(self):
@@ -229,12 +243,17 @@ class MailTemplatePartialView(View):
     
 
 class LoadMailTemplateContentView(View):
-    """response pro AJAX volání k načtení HTML mailové templaty a doplnění do message"""
+    """
+    response pro AJAX volání k načtení HTML mailové 
+    templaty a doplnění do message
+    """
+    
     def get(self, request, *args, **kwargs):
         template_name = request.GET.get("template_name")
 
         if not template_name:
-            return JsonResponse({"error": "Chybí název šablony."}, status=400)
+            return JsonResponse(
+                {"error": "Chybí název šablony."}, status=400)
 
         full_template_name = f'emails/{template_name}.html'
 
@@ -262,7 +281,8 @@ class ChartsView(LoginRequiredMixin, TemplateView):
         context["active_link"] = "charts"
         context["db_good_condition"] = (
             Department.objects.filter(name="nezarazeno").exists()
-            and EmployeeStatus.objects.values_list("name", flat=True).distinct().count()
+            and EmployeeStatus.objects.values_list(
+            "name", flat=True).distinct().count()
             >= 5
         )
 
@@ -291,14 +311,16 @@ class AttendanceView(LoginRequiredMixin, TemplateView):
                 employee.slug
             )  # Vytvoření instance pro každého zaměstnanca
             worked_hours = zamestnanec.get_worked_hours_on_day("2025-03-24")
-            employee_hours.append({"employee": employee, "worked_hours": worked_hours})
+            employee_hours.append(
+                {"employee": employee, "worked_hours": worked_hours})
 
         context["employee_hours"] = employee_hours
 
         # Zkontrolování stavu databáze
         context["db_good_condition"] = (
             Department.objects.filter(name="nezarazeno").exists()
-            and EmployeeStatus.objects.values_list("name", flat=True).distinct().count()
+            and EmployeeStatus.objects.values_list(
+            "name", flat=True).distinct().count()
             >= 5
         )
 
@@ -320,7 +342,8 @@ class CamView(LoginRequiredMixin, TemplateView):
         context["active_link"] = "cams"
         context["db_good_condition"] = (
             Department.objects.filter(name="nezarazeno").exists()
-            and EmployeeStatus.objects.values_list("name", flat=True).distinct().count()
+            and EmployeeStatus.objects.values_list(
+            "name", flat=True).distinct().count()
             >= 5
         )
         return context
@@ -344,14 +367,16 @@ class CreateEmpView(PermissionRequiredMixin, CreateView):
         context["user_name"] = get_user(self)
         context["db_good_condition"] = (
             Department.objects.filter(name="nezarazeno").exists()
-            and EmployeeStatus.objects.values_list("name", flat=True).distinct().count()
+            and EmployeeStatus.objects.values_list(
+            "name", flat=True).distinct().count()
             >= 5
         )
         return context
 
     def form_valid(self, form):
         response = super().form_valid(form)
-        messages.success(self.request, "Zaměstnanec byl úspěšně vytvořen!")
+        messages.success(self.request,
+                         "Zaměstnanec byl úspěšně vytvořen!")
         return response
 
     def form_invalid(self, form):
@@ -376,7 +401,8 @@ class DepartmentListView(ListView):
         context["active_link"] = "main-panel"
         context["db_good_condition"] = (
             Department.objects.filter(name="nezarazeno").exists()
-            and EmployeeStatus.objects.values_list("name", flat=True).distinct().count()
+            and EmployeeStatus.objects.values_list(
+            "name", flat=True).distinct().count()
             >= 5
         )
 
@@ -403,14 +429,16 @@ class CreateDepView(CreateView):
         context["user_name"] = get_user(self)
         context["db_good_condition"] = (
             Department.objects.filter(name="nezarazeno").exists()
-            and EmployeeStatus.objects.values_list("name", flat=True).distinct().count()
+            and EmployeeStatus.objects.values_list(
+            "name", flat=True).distinct().count()
             >= 5
         )
         return context
 
     def form_valid(self, form):
         response = super().form_valid(form)
-        messages.success(self.request, "Department byl úspěšně vytvořen!")
+        messages.success(
+            self.request, "Department byl úspěšně vytvořen!")
         return response
 
 
@@ -430,7 +458,8 @@ class TakeVectorView(LoginRequiredMixin, DetailView):
         context["active_link"] = "employees"
         context["db_good_condition"] = (
             Department.objects.filter(name="nezarazeno").exists()
-            and EmployeeStatus.objects.values_list("name", flat=True).distinct().count()
+            and EmployeeStatus.objects.values_list(
+            "name", flat=True).distinct().count()
             >= 5
         )
 
@@ -453,7 +482,8 @@ class DeleteDepView(LoginRequiredMixin, DeleteView):
         context["active_link"] = "employees"
         context["db_good_condition"] = (
             Department.objects.filter(name="nezarazeno").exists()
-            and EmployeeStatus.objects.values_list("name", flat=True).distinct().count()
+            and EmployeeStatus.objects.values_list(
+            "name", flat=True).distinct().count()
             >= 5
         )
         return context
@@ -480,7 +510,8 @@ class UpdateDepView(LoginRequiredMixin, UpdateView):
         context["active_link"] = "employees"
         context["db_good_condition"] = (
             Department.objects.filter(name="nezarazeno").exists()
-            and EmployeeStatus.objects.values_list("name", flat=True).distinct().count()
+            and EmployeeStatus.objects.values_list(
+            "name", flat=True).distinct().count()
             >= 5
         )
 
@@ -538,7 +569,8 @@ class EmployeeDeleteView(PermissionRequiredMixin, DeleteView):
         context["active_link"] = "employees"
         context["db_good_condition"] = (
             Department.objects.filter(name="nezarazeno").exists()
-            and EmployeeStatus.objects.values_list("name", flat=True).distinct().count()
+            and EmployeeStatus.objects.values_list(
+            "name", flat=True).distinct().count()
             >= 5
         )
         return context
@@ -570,7 +602,8 @@ class EmployeeUpdateView(PermissionRequiredMixin, UpdateView):
         context["active_link"] = "employees"
         context["db_good_condition"] = (
             Department.objects.filter(name="nezarazeno").exists()
-            and EmployeeStatus.objects.values_list("name", flat=True).distinct().count()
+            and EmployeeStatus.objects.values_list(
+            "name", flat=True).distinct().count()
             >= 5
         )
 
@@ -602,7 +635,8 @@ class EmployeeDetailView(PermissionRequiredMixin, DetailView):
         context["active_link"] = "employees"
         context["db_good_condition"] = (
             Department.objects.filter(name="nezarazeno").exists()
-            and EmployeeStatus.objects.values_list("name", flat=True).distinct().count()
+            and EmployeeStatus.objects.values_list(
+            "name", flat=True).distinct().count()
             >= 5
         )
 
@@ -632,21 +666,25 @@ class StatusView(LoginRequiredMixin, TemplateView):
         ]
 
         existing_statuses: list = [
-            status.name for status in EmployeeStatus.objects.filter(name__in=statuses)
+            status.name for status in EmployeeStatus.objects.filter(
+                name__in=statuses)
         ]
 
         missing_statuses: set = set(statuses) - set(existing_statuses)
 
         context["existing_statuses"] = existing_statuses
         context["missing_statuses"] = missing_statuses
-        context["department_nezarazeno"] = Department.objects.filter(name="nezarazeno")
+        context["department_nezarazeno"] = Department.objects.filter(
+            name="nezarazeno")
         context["active_link"] = "status"
         context["db_good_condition"] = (
             Department.objects.filter(name="nezarazeno").exists()
-            and EmployeeStatus.objects.values_list("name", flat=True).distinct().count()
+            and EmployeeStatus.objects.values_list(
+            "name", flat=True).distinct().count()
             >= 5
         )
-        context["employee_count"] = Employee.objects.aggregate(total=Count("name"))[
+        context["employee_count"] = Employee.objects.aggregate(
+            total=Count("name"))[
             "total"
         ]
 
@@ -676,7 +714,9 @@ class ResetDbView(LoginRequiredMixin, View):
             else:
                 messages.error(request, "databáze nebyla vymazana")
         except Exception as e:
-            messages.error(request, f"Došlo k chybě při vymazávání databáze: {str(e)}")
+            messages.error(
+                request,
+                f"Došlo k chybě při vymazávání databáze: {str(e)}")
 
         return redirect("status")
 
@@ -704,7 +744,8 @@ class DepartmentDetailList(LoginRequiredMixin, ListView):
         context["active_link"] = "main-panel"
         context["db_good_condition"] = (
             Department.objects.filter(name="nezarazeno").exists()
-            and EmployeeStatus.objects.values_list("name", flat=True).distinct().count()
+            and EmployeeStatus.objects.values_list(
+            "name", flat=True).distinct().count()
             >= 5
         )
 
@@ -725,7 +766,8 @@ class EmpStatusDetailList(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         user: dict = get_user(self)
         employee_status_id = self.kwargs.get("pk")
-        employee_status = get_object_or_404(EmployeeStatus, pk=employee_status_id)
+        employee_status = get_object_or_404(
+            EmployeeStatus, pk=employee_status_id)
 
         context = super().get_context_data(**kwargs)
         context["username"] = user["username"]
@@ -734,7 +776,8 @@ class EmpStatusDetailList(LoginRequiredMixin, ListView):
         context["active_link"] = "main-panel"
         context["db_good_condition"] = (
             Department.objects.filter(name="nezarazeno").exists()
-            and EmployeeStatus.objects.values_list("name", flat=True).distinct().count()
+            and EmployeeStatus.objects.values_list(
+            "name", flat=True).distinct().count()
             >= 5
         )
 
