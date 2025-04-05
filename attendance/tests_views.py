@@ -33,6 +33,14 @@ class UserViewsTests(TestCase):
             last_name="Two",
             is_superuser=True,
         )
+        self.user3 = User.objects.create_user(
+            username="user3",
+            password="pass12345",
+            email="user3@seznam.cz",
+            first_name="Pepik",
+            last_name="Testik",
+            is_staff=True,
+        )
 
         self.client.login(username="user1", password="pass12345")
 
@@ -119,6 +127,22 @@ class UserViewsTests(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse("user_list"))
         self.assertFalse(User.objects.filter(pk=self.user2.pk).exists())
+
+    def test_delete_user_by_normal_user(self):
+        """
+        Test na pokus o smazání uživatele běžným uživatelem.
+        """
+        self.client.login(username="user3", password="pass12345")
+
+        # Pokus o smazání uživatele
+        url = reverse("delete-user", args=[self.user3.pk])
+        response = self.client.post(url, {})
+
+        # Ověření, že běžný uživatel nemá přístup k smazání
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(
+            User.objects.filter(pk=self.user3.pk).exists()
+        )  # Uživatel stále existuje
 
 
 class SignUpViewTest(TestCase):
