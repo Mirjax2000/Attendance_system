@@ -1,7 +1,7 @@
 """app-main Models"""
 
 import os
-from datetime import date, datetime, timedelta
+from datetime import date
 from json import JSONDecodeError, dumps, loads
 
 from cryptography.fernet import Fernet
@@ -117,9 +117,7 @@ class Employee(models.Model):
     )
 
     slug = models.SlugField(
-        blank=True,
-        unique=True,
-        verbose_name="slug:",
+        blank=True, unique=True, verbose_name="slug:", editable=False
     )
 
     def __str__(self) -> str:
@@ -185,13 +183,9 @@ class Employee(models.Model):
         """defaultni zaplneni tabulek"""
         # pokud v FK nic neni tak tam dej hodnotu PK klice z default
         if not self.employee_status:
-            self.employee_status = EmployeeStatus.objects.get_or_create(
-                name="free"
-            )[0]
+            self.employee_status = EmployeeStatus.objects.get_or_create(name="free")[0]
         if not self.department:
-            self.department = Department.objects.get_or_create(
-                name="nezarazeno"
-            )[0]
+            self.department = Department.objects.get_or_create(name="nezarazeno")[0]
 
     def save(self, *args, **kwargs) -> None:
         self.set_slug()  # nastav slug
@@ -223,6 +217,7 @@ class FaceVector(models.Model):
         blank=True,
         null=False,
         verbose_name="Face vector:",
+        editable=False
     )
 
     face_vector_fernet = models.BinaryField(
@@ -231,6 +226,7 @@ class FaceVector(models.Model):
         null=True,
         db_index=True,
         verbose_name="vector fernet:",
+        editable=False
     )
 
     def __str__(self) -> str:
