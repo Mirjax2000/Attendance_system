@@ -46,21 +46,24 @@
             </div>
         
             <!-- Přepínací tlačítka -->    
-            <div class="template-switch">
-                <button type="button"
-                        hx-get="{% url 'mail_manual_partial' %}"
-                        hx-target="#message-area"
-                        hx-swap="innerHTML"
-                        class="L-emails__btn">Ruční zadání zprávy
-                </button>
-        
-                <button type="button"
-                        hx-get="{% url 'mail_template_partial' %}"
-                        hx-target="#message-area"
-                        hx-swap="innerHTML"
-                        class="L-emails__btn">Výběr šablony zprávy
-                </button>
-            </div>
+            <ul class="L-emails__list">
+                <li class="L-emails__item">
+                    <button type="button"
+                            hx-get="{% url 'mail_manual_partial' %}"
+                            hx-target="#message-area"
+                            hx-swap="innerHTML"
+                            class="L-emails__btn">Ruční zadání zprávy
+                    </button>
+                </li>
+                <li class="L-emails__item">
+                    <button type="button"
+                            hx-get="{% url 'mail_template_partial' %}"
+                            hx-target="#message-area"
+                            hx-swap="innerHTML"
+                            class="L-emails__btn">Výběr šablony zprávy
+                    </button>
+                </li>
+            </ul>
         
             <!-- Dynamicky zaměňovaná část pro zadání zprávy -->
             <div id="message-area">
