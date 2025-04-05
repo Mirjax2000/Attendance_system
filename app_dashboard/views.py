@@ -3,7 +3,7 @@
 from time import sleep
 
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.core.mail import send_mail
 from django.db.models import Count
 from django.shortcuts import get_object_or_404, redirect, render
@@ -281,13 +281,14 @@ class CamView(LoginRequiredMixin, TemplateView):
         return context
 
 
-class CreateEmpView(CreateView):
+class CreateEmpView(PermissionRequiredMixin, CreateView):
     """Vytvor zamestance"""
 
     model = Employee
     form_class = EmployeeForm
     template_name = "includes/create_emp_form.html"
     success_url = reverse_lazy("employees")
+    permission_required = "app_main.add_employee"
 
     def get_context_data(self, **kwargs):
         user: dict = get_user(self)
@@ -470,12 +471,14 @@ class SaveVectorToDbView(LoginRequiredMixin, View):
         return redirect("employees")
 
 
-class EmployeeDeleteView(LoginRequiredMixin, DeleteView):
+class EmployeeDeleteView(PermissionRequiredMixin, DeleteView):
     """User Delete"""
 
     model = Employee
     template_name = "includes/delete_employee.html"
     success_url = reverse_lazy("employees")
+    permission_required = "app_main.delete_employee"
+    permission_denied_message = "nemas opravneni"
 
     def get_object(self, queryset=None):
         slug = self.kwargs.get("slug")  # Získání slugu z URL
@@ -500,13 +503,14 @@ class EmployeeDeleteView(LoginRequiredMixin, DeleteView):
         return super().form_valid(form)
 
 
-class EmployeeUpdateView(LoginRequiredMixin, UpdateView):
+class EmployeeUpdateView(PermissionRequiredMixin, UpdateView):
     """Update user"""
 
     model = Employee
     form_class = EmployeeForm
     template_name = "includes/create_emp_form.html"
     success_url = reverse_lazy("employees")
+    permission_required = "app_main.change_employee"
 
     def get_object(self, queryset=None):
         slug = self.kwargs.get("slug")  # Získání slugu z URL
@@ -532,12 +536,13 @@ class EmployeeUpdateView(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
 
-class EmployeeDetailView(LoginRequiredMixin, DetailView):
+class EmployeeDetailView(PermissionRequiredMixin, DetailView):
     """Detail user"""
 
     model = Employee
     template_name = "app_dashboard/employee_detail.html"
     context_object_name = "employee"
+    permission_required = "app_main.view_employee"
 
     def get_object(self, queryset=None):
         slug = self.kwargs.get("slug")  # Získání slugu z URL
