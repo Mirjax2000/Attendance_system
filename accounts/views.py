@@ -5,7 +5,6 @@ from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
-from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import (
@@ -13,6 +12,7 @@ from django.views.generic import (
     DeleteView,
     DetailView,
     ListView,
+    TemplateView,
     UpdateView,
 )
 
@@ -50,9 +50,7 @@ class UserListView(LoginRequiredMixin, ListView):
         context["active_link"] = "main-panel"
         context["db_good_condition"] = (
             Department.objects.filter(name="nezarazeno").exists()
-            and EmployeeStatus.objects.values_list("name", flat=True)
-            .distinct()
-            .count()
+            and EmployeeStatus.objects.values_list("name", flat=True).distinct().count()
             >= 5
         )
         return context
@@ -74,9 +72,7 @@ class UserDetailView(LoginRequiredMixin, DetailView):
         context["active_link"] = "main-panel"
         context["db_good_condition"] = (
             Department.objects.filter(name="nezarazeno").exists()
-            and EmployeeStatus.objects.values_list("name", flat=True)
-            .distinct()
-            .count()
+            and EmployeeStatus.objects.values_list("name", flat=True).distinct().count()
             >= 5
         )
 
@@ -100,9 +96,7 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
         context["active_link"] = "main-panel"
         context["db_good_condition"] = (
             Department.objects.filter(name="nezarazeno").exists()
-            and EmployeeStatus.objects.values_list("name", flat=True)
-            .distinct()
-            .count()
+            and EmployeeStatus.objects.values_list("name", flat=True).distinct().count()
             >= 5
         )
 
@@ -120,6 +114,12 @@ class UserDeleteView(LoginRequiredMixin, DeleteView):
     template_name = "registration/delete_user.html"
     success_url = reverse_lazy("user_list")
 
+    def dispatch(self, request, *args, **kwargs):
+        # Ověření, že uživatel je superuživatel
+        if not request.user.is_superuser:
+            return redirect("no_permision")
+        return super().dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         user: dict = get_user(self)
 
@@ -129,9 +129,7 @@ class UserDeleteView(LoginRequiredMixin, DeleteView):
         context["active_link"] = "main-panel"
         context["db_good_condition"] = (
             Department.objects.filter(name="nezarazeno").exists()
-            and EmployeeStatus.objects.values_list("name", flat=True)
-            .distinct()
-            .count()
+            and EmployeeStatus.objects.values_list("name", flat=True).distinct().count()
             >= 5
         )
         return context
@@ -165,9 +163,7 @@ class SignUpView(CreateView):
         context["active_link"] = "main-panel"
         context["db_good_condition"] = (
             Department.objects.filter(name="nezarazeno").exists()
-            and EmployeeStatus.objects.values_list("name", flat=True)
-            .distinct()
-            .count()
+            and EmployeeStatus.objects.values_list("name", flat=True).distinct().count()
             >= 5
         )
 
@@ -218,3 +214,21 @@ class CustomLoginView(LoginView):
     def form_valid(self, form):
         messages.success(self.request, "Přihlášení bylo úspěšné!")
         return super().form_valid(form)
+
+
+class NoPermisionView(TemplateView):
+    template_name = "registration/no_permission.html"
+
+    def get_context_data(self, **kwargs):
+        user: dict = get_user(self)
+
+        context = super().get_context_data(**kwargs)
+        context["username"] = user["username"]
+        context["status"] = user["status"]
+        context["active_link"] = "main-panel"
+        context["db_good_condition"] = (
+            Department.objects.filter(name="nezarazeno").exists()
+            and EmployeeStatus.objects.values_list("name", flat=True).distinct().count()
+            >= 5
+        )
+        return context
