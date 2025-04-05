@@ -92,7 +92,7 @@ class DatabaseControl:
 
         if all(db_status):
             if DEBUG:
-                cons.log("Všechny tabulky jsou prázdné.", style="orange")
+                cons.log("Všechny tabulky jsou prázdné.", style="bright_yellow")
             return True
 
         if DEBUG:
