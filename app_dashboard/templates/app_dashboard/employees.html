@@ -48,7 +48,7 @@
                         <td class="L-list__table-cell email">{{ employee.email }}</td>
                         <td class="L-list__table-cell phone">{{ employee.phone_number }}</td>
                         <td class="L-list__table-cell phone">{{ employee.department }}</td>
-                        <td class="L-list__table-cell phone">{{ employee.employee_status }}</td>
+                        <td class="L-list__table-cell phone">{{ employee.employee_status.get_name_display }}</td>
                         <td class="L-list__table-cell CAT">
                             <div class="L-list__actions">
                                 <a class="c-ico-btn" href="{% url "delete_employee" employee.slug %}">
