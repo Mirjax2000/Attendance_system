@@ -169,15 +169,15 @@ class SendMailForm(forms.Form):
     """Formulář pro odesílání e-mailů"""
 
     DELIVERY_METHODS = (
-        ("manual", "Manual"),
-        ("employee", "Employee"),
-        ("department", "Department"),
+        ("manual", "Manuální zadání"),
+        ("employee", "Výběr zaměstnanců"),
+        ("department", "Výběr oddělení"),
     )
     subject = forms.CharField(
         required=True, widget=forms.TextInput(attrs={"placeholder": "Enter Subject ..."})
     )
     message = forms.CharField(
-        widget=forms.Textarea(attrs={"placeholder": "Enter message ..."}), required=True
+        widget=forms.Textarea(attrs={"placeholder": "Enter message ..."}), required=False
     )
     delivery_method = forms.ChoiceField(choices=DELIVERY_METHODS)
     emails = forms.CharField(required=False, widget=forms.Textarea)
@@ -187,6 +187,8 @@ class SendMailForm(forms.Form):
     department = forms.ModelChoiceField(
         required=False, queryset=Department.objects.all()
     )
+    use_template = forms.BooleanField(required=False)
+    selected_template = forms.CharField(required=False)
 
     def clean_emails(self):
         """
@@ -223,6 +225,22 @@ class SendMailForm(forms.Form):
         způsobu doručení.
         """
         cleaned_data = super().clean()
+        use_template = cleaned_data.get('use_template')
+        selected_template = cleaned_data.get('selected_template')
+        message = cleaned_data.get('message')
+
+        if use_template:
+            if not selected_template:
+                raise ValidationError(
+                    'Vybrali jste použití šablony, ale nezvolili jste žádnou šablonu.')
+            # Pokud je použitá šablona, nepotřebujeme message formuláře
+            cleaned_data[
+                'message'] = ''  # Zajistíme, že "message" není potřeba
+        else:
+            if not message.strip():
+                self.add_error('message',
+                               'Toto pole je povinné, pokud nepoužíváte šablonu!')
+
         method = cleaned_data.get("delivery_method")
         if method == "manual":
             if not cleaned_data.get("emails"):

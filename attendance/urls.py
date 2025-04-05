@@ -38,11 +38,11 @@ from app_dashboard.views import (
     SaveVectorToDbView,
     StatusView,
     TakeVectorView,
-    UpdateDepView, 
-    MailDepartmentPartialView, 
+    UpdateDepView,
+    MailDepartmentPartialView,
     MailEmployeePartialView,
-    MailManualPartialView, 
-    SendMailView,
+    MailManualPartialView,
+    SendMailView, MailTemplatePartialView, LoadMailTemplateContentView,
 )
 from app_main.views import (
     CamStreamView,
@@ -97,6 +97,11 @@ app_dashboard_urls: list = [
          name='mail_employee_partial'),
     path('dashboeard/mail-department-partial/', MailDepartmentPartialView.as_view(),
          name='mail_department_partial'),
+    path('dashboard/mail-template-partial/', MailTemplatePartialView.as_view(),
+         name='mail_template_partial'),
+    path('dashboard/ajax/load-mail-template-content/',
+        LoadMailTemplateContentView.as_view(),
+        name='load_mail_template_content'),
     path("dashboard/attendance", AttendanceView.as_view(), name="attendance"),
     path("dashboard/charts", ChartsView.as_view(), name="charts"),
     path(

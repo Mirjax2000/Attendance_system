@@ -1,12 +1,14 @@
 """dashboard views CBVs"""
-
+from pathlib import Path
 from time import sleep
 
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
 from django.db.models import Count
+from django.http.response import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.views.generic import (
     CreateView,
@@ -130,6 +132,7 @@ class CommonContextMixin:
 
 
 class SendMailView(LoginRequiredMixin, CommonContextMixin, View):
+    """Odesílání mailů"""
     template_name_success = 'includes/success_mail.html'
     template_name_form = 'includes/mail_form.html'
 
@@ -143,8 +146,15 @@ class SendMailView(LoginRequiredMixin, CommonContextMixin, View):
 
         if form.is_valid():
             subject = form.cleaned_data['subject']
-            message = form.cleaned_data['message']
             delivery_method = form.cleaned_data['delivery_method']
+
+            if form.cleaned_data.get('use_template'):
+                selected_template = form.cleaned_data.get('selected_template')
+                template_path = f'emails/{selected_template}.html'
+                html_message = render_to_string(template_path)
+            else:
+                plain_message = form.cleaned_data['message']
+                html_message = plain_message.replace('\n', '<br>')
 
             emails = []
 
@@ -161,7 +171,8 @@ class SendMailView(LoginRequiredMixin, CommonContextMixin, View):
             try:
                 send_mail(
                     subject=subject,
-                    message=message,
+                    message='Pro zobrazení emailu použijte klienta podporující HTML.',
+                    html_message=html_message,
                     from_email=settings.DEFAULT_FROM_EMAIL,
                     recipient_list=emails,
                     fail_silently=False
@@ -179,7 +190,7 @@ class SendMailView(LoginRequiredMixin, CommonContextMixin, View):
 
 class MailManualPartialView(LoginRequiredMixin, View):
     """Partial pro manuální zadání mailových adres"""
-    template_name = 'includes/mail_manual.html'
+    template_name = 'includes/message_manual.html'
 
     def get(self, request):
         form = SendMailForm()
@@ -196,12 +207,47 @@ class MailEmployeePartialView(LoginRequiredMixin, View):
 
 
 class MailDepartmentPartialView(LoginRequiredMixin, View):
-    """Partial pro výběr mailových celého oddělení"""
+    """Partial pro výběr mailových adres celého oddělení"""
     template_name = 'includes/mail_department.html'
 
     def get(self, request):
         form = SendMailForm()
         return render(request, self.template_name, {'form': form})
+
+
+class MailTemplatePartialView(View):
+    """Partial pro aktualizaci výběru templates v mailovém klientu"""
+    template_name = "includes/mail_template.html"
+
+    def get_email_templates(self):
+        template_dir = Path("app_dashboard/templates/emails/").resolve()
+        templates = [f.stem for f in template_dir.glob("*.html") if
+                     f.is_file()]
+        return templates
+
+    def get(self, request, *args, **kwargs):
+        context = {
+            "templates": self.get_email_templates()
+        }
+        return render(request, self.template_name, context)
+    
+
+class LoadMailTemplateContentView(View):
+    """response pro AJAX volání k načtení HTML mailové templaty a doplnění do message"""
+    def get(self, request, *args, **kwargs):
+        template_name = request.GET.get("template_name")
+
+        if not template_name:
+            return JsonResponse({"error": "Chybí název šablony."}, status=400)
+
+        full_template_name = f'emails/{template_name}.html'
+
+        try:
+            content = render_to_string(full_template_name,
+                                       request=request)
+            return JsonResponse({"content": content.strip()})
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=404)
 
 
 class ChartsView(LoginRequiredMixin, TemplateView):
