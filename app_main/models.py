@@ -217,7 +217,7 @@ class FaceVector(models.Model):
         blank=True,
         null=False,
         verbose_name="Face vector:",
-        editable=False
+        editable=False,
     )
 
     face_vector_fernet = models.BinaryField(
@@ -226,7 +226,7 @@ class FaceVector(models.Model):
         null=True,
         db_index=True,
         verbose_name="vector fernet:",
-        editable=False
+        editable=False,
     )
 
     def __str__(self) -> str:
@@ -319,7 +319,7 @@ class EmployeeStatus(models.Model):
     )
 
     def __str__(self) -> str:
-        return str(self.name)
+        return self.get_name_display()
 
     def __repr__(self) -> str:
         return f"EmployeeStatus: {self.name}"
