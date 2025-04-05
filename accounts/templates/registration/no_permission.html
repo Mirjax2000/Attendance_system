@@ -1,0 +1,10 @@
+{% extends "dashboard_base.html" %}
+{% load static %}
+{% block title %}
+    user detail
+{% endblock title %}
+{% block content %}
+    <h1>No Permission</h1>
+    <p>Na tuto akci nemate opravneni</p>
+    <a href="{% url "user_list" %}">zpet</a>
+{% endblock content %}

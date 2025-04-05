@@ -8,6 +8,7 @@ from django.urls.conf import include
 
 from accounts.views import (
     CustomLoginView,
+    NoPermisionView,
     SignUpView,
     UserDeleteView,
     UserDetailView,
@@ -16,7 +17,6 @@ from accounts.views import (
     user_logout,
 )
 from API.views import DepartmentApi, EmployeeDetail, EmployeesApi
-from app_dashboard import views
 from app_dashboard.views import (
     AttendanceView,
     CamView,
@@ -32,10 +32,14 @@ from app_dashboard.views import (
     EmployeeUpdateView,
     EmpStatusDetailList,
     FillDbView,
+    MailDepartmentPartialView,
+    MailEmployeePartialView,
+    MailManualPartialView,
     MainPanelView,
     RedirectDashboard,
     ResetDbView,
     SaveVectorToDbView,
+    SendMailView,
     StatusView,
     TakeVectorView,
     UpdateDepView,
@@ -43,6 +47,7 @@ from app_dashboard.views import (
     MailEmployeePartialView,
     MailManualPartialView,
     SendMailView, MailTemplatePartialView, LoadMailTemplateContentView,
+    UpdateDepView,
 )
 from app_main.views import (
     CamStreamView,
@@ -89,6 +94,22 @@ app_dashboard_urls: list = [
         "dashboard/update_employee/<slug:slug>/",
         EmployeeUpdateView.as_view(),
         name="update_employee",
+    ),
+    path("dashboard/send-mail/", SendMailView.as_view(), name="send_mail_view"),
+    path(
+        "dashboard/mail-manual-partial/",
+        MailManualPartialView.as_view(),
+        name="mail_manual_partial",
+    ),
+    path(
+        "dashboard/mail-employee-partial/",
+        MailEmployeePartialView.as_view(),
+        name="mail_employee_partial",
+    ),
+    path(
+        "dashboeard/mail-department-partial/",
+        MailDepartmentPartialView.as_view(),
+        name="mail_department_partial",
     ),
     path('dashboard/send-mail/', SendMailView.as_view(), name='send_mail_view'),
     path('dashboard/mail-manual-partial/', MailManualPartialView.as_view(),
@@ -170,8 +191,10 @@ app_accounts_urls: list = [
         UserUpdateView.as_view(),
         name="update-user",
     ),
+    path("accounts/no_permission", NoPermisionView.as_view(), name="no_permision"),
     path("accounts/", include("django.contrib.auth.urls")),
 ]
+
 api_urls: list = [
     path("api/employees/", EmployeesApi.as_view(), name="api_employees"),
     path("api/departments/", DepartmentApi.as_view(), name="api_departments"),
