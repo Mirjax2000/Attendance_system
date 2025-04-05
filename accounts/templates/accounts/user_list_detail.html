@@ -197,7 +197,7 @@
                         </td>
                         <td data-cell="group" class="L-list__table-cell group">
                             {% for group in user.groups.all %}
-                                {{ group.name|join:", " }}
+                                {{ group.name}}
                             {% empty %}
                                 <p>
                                     <i>no value</i>
