@@ -40,6 +40,8 @@
         @extend %select-none;
 
         margin-bottom: 1em;
+        caption-side: top;
+        text-align: left;
     }
 
     &__table {
@@ -48,6 +50,13 @@
 
     &__table-header {
         color: var(--scheme-default);
+        background-color: black;
+        font-size: 0.9rem;
+
+        th {
+            padding: 0.5em 0.3em;
+            text-align: left;
+        }
     }
 
     &__table-row {
