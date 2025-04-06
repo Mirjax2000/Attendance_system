@@ -1,8 +1,10 @@
 """dashboard views CBVs"""
 
+import calendar
+from datetime import date
 from pathlib import Path
 from time import sleep
-from datetime import date
+
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.core.mail import send_mail
@@ -28,6 +30,7 @@ from attendance import settings
 
 # importuju instanci tridy Camsystems
 from attendance.cam_systems import cam_systems_instance as csi
+from attendance.history_status_manager import HistoryStatusManager
 from attendance.populate_db import db_control
 from attendance.settings import DEBUG
 
@@ -260,7 +263,6 @@ class ChartsView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         user: dict = get_user(self)
-
         context = super().get_context_data(**kwargs)
         context["username"] = user["username"]
         context["status"] = user["status"]
@@ -279,40 +281,54 @@ class AttendanceView(LoginRequiredMixin, TemplateView):
 
     def post(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
-
         selected_month = request.POST.get("month")
-        context["result"] = f"Zvolený měsíc je: {selected_month}"
+
+        month_number = int(selected_month)
+        year = date.today().year
+        start_date = date(year, month_number, 1)
+        last_day = calendar.monthrange(year, month_number)[1]
+        end_date = date(year, month_number, last_day)
+
+        # Výpočet hodin
+        employee_hours = []
+        employees = Employee.objects.all()
+
+        for employee in employees:
+            zamestnanec = HistoryStatusManager(employee.slug)
+            worked_hours = zamestnanec.get_worked_hours_in_range(start_date, end_date)
+            employee_hours.append({"employee": employee, "worked_hours": worked_hours})
+
+        months: list[str] = [
+            "leden",
+            "únor",
+            "březen",
+            "duben",
+            "květen",
+            "červen",
+            "červenec",
+            "srpen",
+            "září",
+            "říjen",
+            "listopad",
+            "prosinec",
+        ]
+        context["employee_hours"] = employee_hours
+        context["result"] = months[month_number - 1]
 
         return self.render_to_response(context)
-    
+
     def get_context_data(self, **kwargs):
+        user: dict = get_user(self)
         context = super().get_context_data(**kwargs)
-        user = get_user(self)
         context["username"] = user["username"]
         context["status"] = user["status"]
         context["active_link"] = "attendances"
-
         context["db_good_condition"] = (
             Department.objects.filter(name="nezarazeno").exists()
             and EmployeeStatus.objects.values_list("name", flat=True).distinct().count()
             >= 5
         )
-
         return context
-
-
-    start_date = date(2025, 3, 1)  # Počáteční datum
-    end_date = date(2025, 3, 31)  # Koncové datum
-
-    employee_hours = []
-    for employee in employees:
-        zamestnanec = HistoryStatusManager(
-            employee.slug
-        )  # Vytvoření instance pro každého zaměstnanca
-        worked_hours = zamestnanec.get_worked_hours_in_range(start_date, end_date)
-        employee_hours.append({"employee": employee, "worked_hours": worked_hours})
-
-    context["employee_hours"] = employee_hours
 
 
 class CamView(LoginRequiredMixin, TemplateView):

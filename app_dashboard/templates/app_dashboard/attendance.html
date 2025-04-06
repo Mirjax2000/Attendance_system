@@ -10,24 +10,38 @@
         <form action="{% url "attendance" %}" method="post">
             {% csrf_token %}
             <select name="month">
-                <option value="leden">Leden</option>
-                <option value="unor">Únor</option>
-                <option value="brezen">Březen</option>
-                <option value="duben">Duben</option>
-                <option value="kveten">Květen</option>
-                <option value="cerven">Červen</option>
-                <option value="cervenec">Červenec</option>
-                <option value="srpen">Srpen</option>
-                <option value="zari">Září</option>
-                <option value="rijen">Říjen</option>
-                <option value="listopad">Listopad</option>
-                <option value="prosinec">Prosinec</option>
+                <option value="1">Leden</option>
+                <option value="2">Únor</option>
+                <option value="3">Březen</option>
+                <option value="4">Duben</option>
+                <option value="5">Květen</option>
+                <option value="6">Červen</option>
+                <option value="7">Červenec</option>
+                <option value="8">Srpen</option>
+                <option value="9">Září</option>
+                <option value="10">Říjen</option>
+                <option value="11">Listopad</option>
+                <option value="12">Prosinec</option>
             </select>
             <button type="submit">Odeslat</button>
         </form>
     </div>
     <hr>
     <section>
-        <p>{{ result }}</p>
+        <p>
+            Zvoleny mesic:
+            {% if result %}
+                <span class="c-info-highlight u-text-success">{{ result }}</span>
+            {% else %}
+                <span class="c-info-highlight u-text-success">nezvoleno</span>
+            {% endif %}
+        </p>
+    </section>
+    <section>
+        {% for employee_hour in employee_hours %}
+            <p>
+                {{ employee_hour.employee }} <span class="c-info-highlight u-text-success">{{ employee_hour.worked_hours }}</span>
+            </p>
+        {% endfor %}
     </section>
 {% endblock content %}
