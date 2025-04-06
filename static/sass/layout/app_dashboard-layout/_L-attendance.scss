@@ -36,7 +36,6 @@
         padding: 0.3em 1em;
         background-color: var(--scheme-accent);
         cursor: pointer;
-
         transition: 0.1s all ease-in-out;
 
         &:hover {
@@ -64,7 +63,21 @@
     }
 
     &__tdata {
-        padding: 0.3em;
+        box-sizing: border-box;
+        padding: 0.3em 0.5em;
+        margin-left: 10px;
         border: 1px solid gray;
+        cursor: pointer;
+        transition: 0.1s all ease-in-out;
+
+        a {
+            color: var(--scheme-default);
+            display: inline-block;
+        }
+
+        &:hover {
+            border-left: 1px solid var(--scheme-success);
+            background-color: black;
+        }
     }
 }

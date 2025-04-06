@@ -52,7 +52,9 @@
                     <tbody>
                         {% for employee_hour in employee_hours %}
                             <tr>
-                                <td class="L-attendance__tdata">{{ employee_hour.employee }}</td>
+                                <td class="L-attendance__tdata">
+                                    <a href="{% url "detail_employee" employee_hour.employee.slug %}">{{ employee_hour.employee }}</a>
+                                </td>
                                 <td class="L-attendance__tdata u-text-success u-text-center">{{ employee_hour.worked_hours }}</td>
                             </tr>
                         {% endfor %}

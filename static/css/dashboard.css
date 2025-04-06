@@ -557,6 +557,14 @@ body {
 .L-list__table-cell::-webkit-scrollbar-track {
   background: transparent;
 }
+.L-list__table-cell:not(.CAT) {
+  transition: 0.1s all ease-in-out;
+}
+.L-list__table-cell:not(.CAT):hover {
+  border-left: 1px solid var(--scheme-success);
+  background-color: black;
+  transform: scale(1.2);
+}
 .L-list__table-cell.id {
   min-width: 5ch;
   max-width: 6ch;
@@ -929,8 +937,20 @@ body {
   background-color: black;
 }
 .L-attendance__tdata {
-  padding: 0.3em;
+  box-sizing: border-box;
+  padding: 0.3em 0.5em;
+  margin-left: 10px;
   border: 1px solid gray;
+  cursor: pointer;
+  transition: 0.1s all ease-in-out;
+}
+.L-attendance__tdata a {
+  color: var(--scheme-default);
+  display: inline-block;
+}
+.L-attendance__tdata:hover {
+  border-left: 1px solid var(--scheme-success);
+  background-color: black;
 }
 
 .c-ico-btn {
