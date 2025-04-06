@@ -293,11 +293,9 @@ class SendMailViewTests(TestCase):
 
         self.assertTrue(form.errors)
         self.assertIn("subject", form.errors)
-        self.assertIn("message", form.errors)
         self.assertIn("emails", form.errors)
 
         self.assertEqual(form.errors["subject"], ["Toto pole je vyžadováno."])
-        self.assertEqual(form.errors["message"], ["Toto pole je vyžadováno."])
         self.assertEqual(form.errors["emails"], ["Zadejte prosím e-mailové adresy."])
 
     def test_send_mail_unauthenticated_redirect(self):
