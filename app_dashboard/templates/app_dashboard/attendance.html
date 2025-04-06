@@ -5,12 +5,29 @@
 {% endblock title %}
 {% block content %}
     <div class="content__container">
-        <h1>system dochazky</h1>
-        <h2>mesic brezen</h2>
-        <p>seznam zamestancu</p>
-        <hr>
-        {% for entry in employee_hours %}
-            <p>{{ entry.employee.name }} {{ entry.employee.surname }} - Odpracované hodiny: {{ entry.worked_hours }}</p>
-        {% endfor %}
+        <h1>Formular dochazky</h1>
+        <p>Vyber mesice</p>
+        <form action="{% url "attendance" %}" method="post">
+            {% csrf_token %}
+            <select name="month">
+                <option value="leden">Leden</option>
+                <option value="unor">Únor</option>
+                <option value="brezen">Březen</option>
+                <option value="duben">Duben</option>
+                <option value="kveten">Květen</option>
+                <option value="cerven">Červen</option>
+                <option value="cervenec">Červenec</option>
+                <option value="srpen">Srpen</option>
+                <option value="zari">Září</option>
+                <option value="rijen">Říjen</option>
+                <option value="listopad">Listopad</option>
+                <option value="prosinec">Prosinec</option>
+            </select>
+            <button type="submit">Odeslat</button>
+        </form>
     </div>
+    <hr>
+    <section>
+        <p>{{ result }}</p>
+    </section>
 {% endblock content %}

@@ -1,15 +1,12 @@
-"""OOP history status manager"""
-
-from datetime import datetime
+from datetime import date, datetime
+from typing import Union
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models.manager import BaseManager
 from rich.console import Console
 
 from app_main.models import (
-    Department,
     Employee,
-    EmployeeStatus,
     EmployeeStatusHistory,
 )
 
@@ -29,7 +26,7 @@ class HistoryStatusManager:
     def __repr__(self) -> str:
         return f"HistoryStatusManager(employee_slug='{self.employee_slug}')"
 
-    def get_worked_hours_on_day(self, day) -> str:
+    def get_worked_hours_on_day(self, day: Union[str, date]) -> str:
         """Jak dlouho pracoval v určený den"""
         try:
             if isinstance(day, str):
@@ -41,52 +38,61 @@ class HistoryStatusManager:
                 employee=employee, timestamp__date=day
             ).order_by("timestamp")
 
-            return self.utility.result_by_hours(
-                history=history, status="working"
-            )
+            return self.utility.result_by_hours(history=history, status="working")
 
         except Employee.DoesNotExist:
             return "00:00"
 
-    def get_worked_hours_in_range(self, start_date, end_date) -> int:
+    def get_worked_hours_in_range(
+        self, start_date: Union[str, date], end_date: Union[str, date]
+    ) -> str:
         """jak dlouho pracoval v urcitem obdoby"""
         try:
+            if isinstance(start_date, str):
+                start_date = datetime.strptime(start_date, "%Y-%m-%d").date()
+            if isinstance(end_date, str):
+                end_date = datetime.strptime(end_date, "%Y-%m-%d").date()
+
             employee: Employee = Employee.objects.get(slug=self.employee_slug)
 
             history: BaseManager[EmployeeStatusHistory] = (
                 EmployeeStatusHistory.objects.filter(
                     employee=employee,
-                    timestamp__gte=start_date,
-                    timestamp__lte=end_date,
-                )
+                    timestamp__date__gte=start_date,
+                    timestamp__date__lte=end_date,
+                ).order_by("timestamp")
             )
 
-            return self.utility.result_by_hours(history)
+            return self.utility.result_by_hours(history, "working")
 
         except ObjectDoesNotExist:
-            return 0
+            return "00:00"
 
     def get_time_in_status_and_range(
-        self, status_name, start_date, end_date
-    ) -> int:
+        self, status_name: str, start_date: Union[str, date], end_date: Union[str, date]
+    ) -> str:
         """jak dlouho byl ve statusu"""
         try:
+            if isinstance(start_date, str):
+                start_date = datetime.strptime(start_date, "%Y-%m-%d").date()
+            if isinstance(end_date, str):
+                end_date = datetime.strptime(end_date, "%Y-%m-%d").date()
+
             employee: Employee = Employee.objects.get(slug=self.employee_slug)
 
-            # Získání historie pro daný status a dané časové období
             history: BaseManager[EmployeeStatusHistory] = (
                 EmployeeStatusHistory.objects.filter(
                     employee=employee,
                     new_status__name=status_name,
-                    timestamp__gte=start_date,
-                    timestamp__lte=end_date,
-                )
+                    timestamp__date__gte=start_date,
+                    timestamp__date__lte=end_date,
+                ).order_by("timestamp")
             )
 
-            return self.utility.result_by_hours(history)
+            return self.utility.result_by_hours(history, status_name)
 
         except ObjectDoesNotExist:
-            return 0
+            return "00:00"
 
 
 class Utility:
@@ -104,9 +110,7 @@ class Utility:
             if record.new_status.name == status:
                 start_time = record.timestamp  # Uložíme začátek práce
 
-            elif (
-                record.previous_status and record.previous_status.name == status
-            ):
+            elif record.previous_status and record.previous_status.name == status:
                 if start_time:
                     total_seconds: int = (record.timestamp - start_time).seconds
                     time_spent_minutes += total_seconds // 60
