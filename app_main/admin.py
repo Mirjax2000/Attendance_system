@@ -15,16 +15,18 @@ class EmployeeAdmin(admin.ModelAdmin):
 
 
 class DepartmentAdmin(admin.ModelAdmin):
-    search_fields = ["name"]
+    # search_fields = ["name"]
+    list_filter = ("name",)
 
 
 class EmployeeStatusAdmin(admin.ModelAdmin):
-    search_fields = ["name"]
+    # search_fields = ["name"]
+    list_filter = ("name",)
 
 
 class EmployeeStatusHistoryAdmin(admin.ModelAdmin):
     search_fields = ["timestamp"]
-    list_display = ["previous_status", "new_status", "timestamp"]
+    list_display = ("previous_status", "new_status", "timestamp")
 
 
 admin.site.register(Employee, EmployeeAdmin)
