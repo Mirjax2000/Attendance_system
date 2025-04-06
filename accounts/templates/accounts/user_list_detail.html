@@ -188,7 +188,7 @@
                         </td>
                         <td data-cell="permission" class="L-list__table-cell permission">
                             {% for perm in user.user_permissions.all %}
-                                {{ perm.name|join:", " }}
+                                {{ perm.name }}
                             {% empty %}
                                 <p>
                                     <i>no value</i>
