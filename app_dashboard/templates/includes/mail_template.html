@@ -1,0 +1,31 @@
+{% load custom_filters %}
+
+<input type="hidden" name="use_template" value="true">
+<div class="L-emails__form__template">
+    <label for="template-select">Vyberte šablonu emailu:</label>
+    <select name="selected_template" id="template-select">
+        {% for template in templates %}
+            <option value="{{ template }}">{{ template|capfirst }}</option>
+        {% endfor %}
+    </select>
+</div>
+
+<textarea name="message" id="message-field" style="display:none;"></textarea>
+
+<script>
+document.getElementById('template-select').addEventListener('change', function() {
+    const selectedTemplate = this.value;
+    fetch(`/dashboard/ajax/load-mail-template-content/?template_name=${selectedTemplate}`)
+        .then(response => response.json())
+        .then(data => {
+            if(data.content) {
+                document.getElementById('message-field').value = data.content;
+            } else {
+                console.error('Error loading content:', data.error);
+            }
+        })
+        .catch(err => {
+            console.error('AJAX error:', err);
+        });
+});
+</script>

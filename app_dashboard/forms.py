@@ -169,15 +169,17 @@ class SendMailForm(forms.Form):
     """Formulář pro odesílání e-mailů"""
 
     DELIVERY_METHODS = (
-        ("manual", "Manual"),
-        ("employee", "Employee"),
-        ("department", "Department"),
+        ("manual", "Manuální zadání"),
+        ("employee", "Výběr zaměstnanců"),
+        ("department", "Výběr oddělení"),
     )
-    subject = forms.CharField(
-        required=True, widget=forms.TextInput(attrs={"placeholder": "Enter Subject ..."})
+    subject = forms.CharField(max_length=255,
+        required=True, 
+        widget=forms.TextInput(attrs={"placeholder": "Enter Subject ..."})
     )
-    message = forms.CharField(
-        widget=forms.Textarea(attrs={"placeholder": "Enter message ..."}), required=True
+    message = forms.CharField(max_length=5000,
+        widget=forms.Textarea(attrs={"placeholder": "Enter message ..."}), 
+        required=False
     )
     delivery_method = forms.ChoiceField(choices=DELIVERY_METHODS)
     emails = forms.CharField(required=False, widget=forms.Textarea)
@@ -187,12 +189,15 @@ class SendMailForm(forms.Form):
     department = forms.ModelChoiceField(
         required=False, queryset=Department.objects.all()
     )
+    use_template = forms.BooleanField(required=False)
+    selected_template = forms.CharField(required=False)
 
     def clean_emails(self):
         """
         Ověří a vyčistí seznam e-mailových adres zadaných
         jako řetězec oddělený čárkou.
         """
+        
         emails_raw = self.cleaned_data.get("emails", "").strip()
 
         if not emails_raw:
@@ -223,6 +228,37 @@ class SendMailForm(forms.Form):
         způsobu doručení.
         """
         cleaned_data = super().clean()
+        use_template = cleaned_data.get('use_template')
+        selected_template = cleaned_data.get('selected_template')
+        subject = cleaned_data.get('subject') or ''
+        message = cleaned_data.get('message') or ''
+
+        if len(subject) > 255:
+            self.add_error('subject',
+                           'Předmět překročil maximální délku 255 znaků.')
+
+        if len(message) > 5000:
+            self.add_error('message',
+                           'Obsah zprávy překročil maximální délku 5000 znaků.')
+
+        if not subject.strip():
+            self.add_error('subject', 'Předmět nemůže být prázdný.')
+
+        if not message.strip():
+            self.add_error('message', 'Zpráva nemůže být prázdná.')
+
+        if use_template:
+            if not selected_template:
+                raise ValidationError(
+                    'Vybrali jste použití šablony, ale nezvolili jste žádnou šablonu.')
+            # Pokud je použitá šablona, nepotřebujeme message formuláře
+            cleaned_data[
+                'message'] = ''  # Zajistíme, že "message" není potřeba
+        else:
+            if not message.strip():
+                self.add_error('message',
+                               'Toto pole je povinné, pokud nepoužíváte šablonu!')
+
         method = cleaned_data.get("delivery_method")
         if method == "manual":
             if not cleaned_data.get("emails"):

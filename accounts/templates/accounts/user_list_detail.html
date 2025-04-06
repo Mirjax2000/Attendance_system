@@ -128,10 +128,8 @@
                 <p>Přidat uživatele</p>
             </a>
         </div>
-        <p class="L-list__info">
-            počet uživatelů:&nbsp;<span class="u-text-success c-info-highlight">{{ users.count }}</span>
-        </p>
         <table class="L-list__table">
+            <caption class="L-list__info">počet uživatelů:&nbsp;<span class="u-text-success c-info-highlight">{{ users.count }}</span></caption>
             <thead class="L-list__table-header">
                 <tr class="L-list__table-row">
                     <th class="L-list__table-heading">ID</th>
@@ -149,19 +147,19 @@
             <tbody>
                 {% for user in users %}
                     <tr class="L-list__table-row">
-                        <td class="L-list__table-cell id">{{ user.id }}</td>
-                        <td class="L-list__table-cell username">
+                        <td data-cell="id" class="L-list__table-cell id">{{ user.id }}</td>
+                        <td data-cell="username" class="L-list__table-cell username">
                             <a href="{% url "user_detail" user.pk %}"
                                class="L-list__detail {% if request.user.username == user.username %}current{% endif %}">{{ user.username }}</a>
                         </td>
-                        <td class="L-list__table-cell email">
+                        <td data-cell="email" class="L-list__table-cell email">
                             {% if user.email %}
                                 {{ user.email }}
                             {% else %}
                                 <small class="u-text-success">No value</small>
                             {% endif %}
                         </td>
-                        <td class="L-list__table-cell suser">
+                        <td data-cell="suser" class="L-list__table-cell suser">
                             {% if user.is_superuser %}
                                 <p class="u-text-success">Ano</p>
                             {% else %}
@@ -170,7 +168,7 @@
                                 </p>
                             {% endif %}
                         </td>
-                        <td class="L-list__table-cell admin">
+                        <td data-cell="admin" class="L-list__table-cell admin">
                             {% if user.is_staff %}
                                 <p class="u-text-success">Ano</p>
                             {% else %}
@@ -179,7 +177,7 @@
                                 </p>
                             {% endif %}
                         </td>
-                        <td class="L-list__table-cell active">
+                        <td data-cell="active" class="L-list__table-cell active">
                             {% if user.is_active %}
                                 <p class="u-text-success">Ano</p>
                             {% else %}
@@ -188,7 +186,7 @@
                                 </p>
                             {% endif %}
                         </td>
-                        <td class="L-list__table-cell permission">
+                        <td data-cell="permission" class="L-list__table-cell permission">
                             {% for perm in user.user_permissions.all %}
                                 {{ perm.name|join:", " }}
                             {% empty %}
@@ -197,9 +195,9 @@
                                 </p>
                             {% endfor %}
                         </td>
-                        <td class="L-list__table-cell group">
+                        <td data-cell="group" class="L-list__table-cell group">
                             {% for group in user.groups.all %}
-                                {{ group.name|join:", " }}
+                                {{ group.name }}
                             {% empty %}
                                 <p>
                                     <i>no value</i>

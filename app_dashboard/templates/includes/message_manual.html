@@ -1,0 +1,3 @@
+{{ form.message.label_tag }}
+{{ form.message }}
+{% for error in form.message.errors %}<p>{{ error }}</p>{% endfor %}

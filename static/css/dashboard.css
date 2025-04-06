@@ -518,12 +518,20 @@ body {
 }
 .L-list__info {
   margin-bottom: 1em;
+  caption-side: top;
+  text-align: left;
 }
 .L-list__table {
   width: 100%;
 }
 .L-list__table-header {
   color: var(--scheme-default);
+  background-color: black;
+  font-size: 0.9rem;
+}
+.L-list__table-header th {
+  padding: 0.5em 0.3em;
+  text-align: left;
 }
 .L-list__table-row {
   padding: 0.3em;
@@ -836,6 +844,9 @@ body {
 .L-emails__form input:focus {
   outline: 1px solid var(--scheme-clr-8);
   cursor: text;
+}
+.L-emails__form__manual textarea {
+  height: 100px;
 }
 .L-emails__form textarea {
   display: block;

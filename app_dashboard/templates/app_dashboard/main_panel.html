@@ -16,7 +16,7 @@
                         <div class="c-count__card__content">
                             <p class="c-count__card__content__info">{{ emp_status.employee_count }}</p>
                         </div>
-                        <p class="c-count-card__name">{{ emp_status.name }}</p>
+                        <p class="c-count-card__name">{{ emp_status.get_name_display }}</p>
                     </a>
                 </li>
             {% empty %}
