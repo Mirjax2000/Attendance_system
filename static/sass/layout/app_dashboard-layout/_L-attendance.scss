@@ -1,0 +1,70 @@
+@use "../../utils/" as *;
+@use "../../base/placeholders" as *;
+
+.L-attendance {
+    padding: 1em;
+    color: var(--scheme-default);
+
+    &__header {
+        margin-bottom: 1em;
+        color: var(--scheme-default);
+
+        h1 {
+            display: inline-block;
+            border-bottom: 1px solid gray;
+        }
+    }
+
+    &__form {
+        width: fit-content;
+    }
+
+    &__select {
+        @extend %border-radius;
+
+        padding: 0.3em;
+        margin-right: 1em;
+        border-color: var(--scheme-clr-4);
+        background-color: var(--scheme-clr-3);
+        outline: darkgreen 1px solid;
+    }
+
+    &__submit {
+        @extend %border-radius;
+
+        border: none;
+        padding: 0.3em 1em;
+        background-color: var(--scheme-accent);
+        cursor: pointer;
+
+        transition: 0.1s all ease-in-out;
+
+        &:hover {
+            background-color: var(--scheme-accent-darker);
+        }
+    }
+
+    &__table {
+        @extend %border-radius;
+
+        border: 1px solid rgb(60, 60, 60);
+        padding: 1em;
+        margin-top: 0.5em;
+        width: fit-content;
+        box-shadow: 1px 1px 5px black;
+    }
+
+    &__caption {
+        caption-side: top;
+        padding-block: 0.3em;
+    }
+
+    &__thead {
+        background-color: black;
+    }
+
+    &__tdata {
+        padding: 0.3em;
+        border: 1px solid gray;
+    }
+}
