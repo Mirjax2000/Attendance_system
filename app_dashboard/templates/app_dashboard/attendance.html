@@ -4,13 +4,61 @@
     attendance
 {% endblock title %}
 {% block content %}
-    <div class="content__container">
-        <h1>system dochazky</h1>
-        <h2>mesic brezen</h2>
-        <p>seznam zamestancu</p>
-        <hr>
-        {% for entry in employee_hours %}
-            <p>{{ entry.employee.name }} {{ entry.employee.surname }} - Odpracované hodiny: {{ entry.worked_hours }}</p>
-        {% endfor %}
-    </div>
+    <section class="L-attendance">
+        <div class="L-attendance__header">
+            <h1>Formulář docházky</h1>
+        </div>
+        <p>Vyber měsíc</p>
+        <form action="{% url "attendance" %}"
+              method="post"
+              class="L-attendance__form">
+            {% csrf_token %}
+            <select name="month" class="L-attendance__select">
+                <option value="1">Leden</option>
+                <option value="2">Únor</option>
+                <option value="3">Březen</option>
+                <option value="4">Duben</option>
+                <option value="5">Květen</option>
+                <option value="6">Červen</option>
+                <option value="7">Červenec</option>
+                <option value="8">Srpen</option>
+                <option value="9">Září</option>
+                <option value="10">Říjen</option>
+                <option value="11">Listopad</option>
+                <option value="12">Prosinec</option>
+            </select>
+            <button type="submit" class="L-attendance__submit">Odeslat</button>
+        </form>
+        <div>
+            <p class="u-mt-small">
+                Zvolený měsíc:
+                {% if result %}
+                    <span class="c-info-highlight u-text-success">{{ result }}</span>
+                {% else %}
+                    <span class="c-info-highlight u-text-success">nezvoleno</span>
+                {% endif %}
+            </p>
+        </div>
+        {% if result %}
+            <div class="L-attendance__table">
+                <table class="c-table">
+                    <caption class="L-attendance__caption">Součet docházky</caption>
+                    <thead>
+                        <tr>
+                            <th class="L-attendance__thead">Zaměstnanec</th>
+                            <th class="L-attendance__thead">Součet hodin</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for employee_hour in employee_hours %}
+                            <tr>
+                                <td class="L-attendance__tdata">{{ employee_hour.employee }}</td>
+                                <td class="L-attendance__tdata u-text-success u-text-center">{{ employee_hour.worked_hours }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+    </section>
 {% endblock content %}

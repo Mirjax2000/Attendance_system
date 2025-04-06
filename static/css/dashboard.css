@@ -219,7 +219,7 @@ body.home {
   user-select: none;
 }
 
-.c-info-highlight, .c-filter, .c-filter__item .form__wrapper, .c-filter__form select, .c-emp-card, .c-count__card, .c-count__card__content, .c-ico-btn, .L-emails__btn, .L-emails__form select, .L-emails__form input, .L-emails__form textarea, .L-emails__form__submit, .L-departments, .L-detail-list__item, .L-take-vector, .L-take-vector__camstream img, .L-take-vector__scan, .L-status__content-box, .L-form, .L-form__form textarea, .L-form__form input,
+.c-info-highlight, .c-filter, .c-filter__item .form__wrapper, .c-filter__form select, .c-emp-card, .c-count__card, .c-count__card__content, .c-ico-btn, .L-attendance__select, .L-attendance__submit, .L-attendance__table, .L-emails__btn, .L-emails__form select, .L-emails__form input, .L-emails__form textarea, .L-emails__form__submit, .L-departments, .L-detail-list__item, .L-take-vector, .L-take-vector__camstream img, .L-take-vector__scan, .L-status__content-box, .L-form, .L-form__form textarea, .L-form__form input,
 .L-form__form select, .L-form__submit, .L-content {
   border-radius: 5px;
 }
@@ -263,6 +263,10 @@ body.home {
 
 .u-mb-big {
   margin-bottom: 5rem;
+}
+
+.u-mt-small {
+  margin-top: 1rem;
 }
 
 .u-mt-medium {
@@ -876,6 +880,57 @@ body {
 }
 .L-emails__form__submit:hover {
   background-color: var(--scheme-accent-darker);
+}
+
+.L-attendance {
+  padding: 1em;
+  color: var(--scheme-default);
+}
+.L-attendance__header {
+  margin-bottom: 1em;
+  color: var(--scheme-default);
+}
+.L-attendance__header h1 {
+  display: inline-block;
+  border-bottom: 1px solid gray;
+}
+.L-attendance__form {
+  width: fit-content;
+}
+.L-attendance__select {
+  padding: 0.3em;
+  margin-right: 1em;
+  border-color: var(--scheme-clr-4);
+  background-color: var(--scheme-clr-3);
+  outline: darkgreen 1px solid;
+}
+.L-attendance__submit {
+  border: none;
+  padding: 0.3em 1em;
+  background-color: var(--scheme-accent);
+  cursor: pointer;
+  transition: 0.1s all ease-in-out;
+}
+.L-attendance__submit:hover {
+  background-color: var(--scheme-accent-darker);
+}
+.L-attendance__table {
+  border: 1px solid rgb(60, 60, 60);
+  padding: 1em;
+  margin-top: 0.5em;
+  width: fit-content;
+  box-shadow: 1px 1px 5px black;
+}
+.L-attendance__caption {
+  caption-side: top;
+  padding-block: 0.3em;
+}
+.L-attendance__thead {
+  background-color: black;
+}
+.L-attendance__tdata {
+  padding: 0.3em;
+  border: 1px solid gray;
 }
 
 .c-ico-btn {
