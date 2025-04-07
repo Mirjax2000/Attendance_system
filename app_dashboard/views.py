@@ -282,6 +282,9 @@ class AttendanceView(LoginRequiredMixin, TemplateView):
     def post(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
         selected_month = request.POST.get("month")
+        if selected_month == "0":
+            messages.error(request, "nejdrive vyber mesic")
+            return self.render_to_response(context)
 
         month_number = int(selected_month)
         year = date.today().year
