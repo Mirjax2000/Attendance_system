@@ -28,7 +28,7 @@ class EmployeeStatusAdmin(admin.ModelAdmin):
 
 class EmployeeStatusHistoryAdmin(admin.ModelAdmin):
     search_fields = ["timestamp"]
-    list_display = ("previous_status", "new_status", "timestamp")
+    list_display = ("employee", "previous_status", "new_status", "timestamp")
 
 
 admin.site.register(Employee, EmployeeAdmin)
