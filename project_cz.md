@@ -58,9 +58,11 @@ Tento projekt je založen na dvou aplikacích:
         - stavy: volno, nemoc, dovolena, v praci, sluzebni cesta
     - FaceVector
         - Obsahuje šifrování face vektorů šifrovacím klíčem
-    - Záznam času v práci
+    - EmployeeStatusHistory
+        - columny potrebne na vypocet delta time mezi zacatkem a koncem stavu
 
-![ER diagram]({A45C5F3B-B5CB-4B0E-A615-2A52276D4780}.png)
+
+![ER diagram](install/erdiagram.png)
 
 
 **pridano restAPI rozhrani:**
