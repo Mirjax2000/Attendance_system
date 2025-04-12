@@ -191,7 +191,7 @@ class SendMailView(LoginRequiredMixin, CommonContextMixin, View):
 class MailManualPartialView(LoginRequiredMixin, View):
     """Partial pro manuální zadání mailových adres"""
 
-    template_name = "includes/message_manual.html"
+    template_name = "includes/mail_manual.html"
 
     def get(self, request):
         form = SendMailForm()
