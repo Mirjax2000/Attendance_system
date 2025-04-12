@@ -19,15 +19,15 @@
             <input type="hidden" name="statusVal" id="statusVal" />
             <input type="hidden" name="name" value="{{ employee.slug }}" />
             <ul class="L-choose__list">
-                <li class="L-choose__item {% if employee.employee_status|lower == "V práci" %}L-choose__hide{% endif %}"
+                <li class="L-choose__item {% if employee.employee_status|lower == "v práci" %}L-choose__hide{% endif %}"
                     data-value="working">
                     <button type="submit">Do práce</button>
                 </li>
-                <li class="L-choose__item {% if employee.employee_status|lower == "Volno" %}L-choose__hide{% endif %}"
+                <li class="L-choose__item {% if employee.employee_status|lower == "volno" %}L-choose__hide{% endif %}"
                     data-value="free">
                     <button type="submit">Z práce</button>
                 </li>
-                <li class="L-choose__item {% if employee.employee_status|lower == "Služební cesta" %}L-choose__hide{% endif %}"
+                <li class="L-choose__item {% if employee.employee_status|lower == "služební cesta" %}L-choose__hide{% endif %}"
                     data-value="business_trip">
                     <button type="submit">Služební cesta</button>
                 </li>
