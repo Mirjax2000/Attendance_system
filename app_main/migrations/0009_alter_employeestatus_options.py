@@ -4,7 +4,6 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("app_main", "0008_alter_employeestatus_name"),
     ]

@@ -1,7 +1,7 @@
 # Create your views here.
 from rest_framework import generics, mixins
 
-from app_main.models import Department, Employee, EmployeeStatus
+from app_main.models import Department, Employee
 
 from .serializers import (
     DepartmentSerializer,

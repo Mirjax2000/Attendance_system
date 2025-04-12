@@ -4,20 +4,23 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('app_main', '0017_alter_department_options'),
+        ("app_main", "0017_alter_department_options"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='employee',
-            name='slug',
-            field=models.SlugField(blank=True, editable=False, unique=True, verbose_name='slug:'),
+            model_name="employee",
+            name="slug",
+            field=models.SlugField(
+                blank=True, editable=False, unique=True, verbose_name="slug:"
+            ),
         ),
         migrations.AlterField(
-            model_name='facevector',
-            name='face_vector',
-            field=models.JSONField(blank=True, editable=False, verbose_name='Face vector:'),
+            model_name="facevector",
+            name="face_vector",
+            field=models.JSONField(
+                blank=True, editable=False, verbose_name="Face vector:"
+            ),
         ),
     ]

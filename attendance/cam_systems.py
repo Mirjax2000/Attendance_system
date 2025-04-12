@@ -79,9 +79,7 @@ class CamSystems:
                 if face_roi.size != 0:
                     # toto jde do neuronove site
                     self.face_rgb = cv2.cvtColor(face_roi, cv2.COLOR_BGR2RGB)
-                    cv2.rectangle(
-                        frame, (x, y), (x + w, y + h), (108, 255, 2), 2
-                    )
+                    cv2.rectangle(frame, (x, y), (x + w, y + h), (108, 255, 2), 2)
                 else:
                     self.face_rgb = None
         else:
@@ -99,9 +97,7 @@ class CamSystems:
                 jpeg_bytes = jpeg_frame.tobytes()
                 yield (
                     b"--frame\r\n"
-                    b"Content-Type: image/jpeg\r\n\r\n"
-                    + jpeg_bytes
-                    + b"\r\n\r\n"
+                    b"Content-Type: image/jpeg\r\n\r\n" + jpeg_bytes + b"\r\n\r\n"
                 )
                 continue
 
@@ -120,9 +116,7 @@ class CamSystems:
             fps = self.utility.set_fps(speed)
             sleep(fps)
 
-    def cam_stream(
-        self, speed: int = 12
-    ) -> HttpResponse | StreamingHttpResponse:
+    def cam_stream(self, speed: int = 12) -> HttpResponse | StreamingHttpResponse:
         """video stream na endpointu"""
         if not self.cap.isOpened():
             if DEBUG:
@@ -233,9 +227,7 @@ class Database:
         """Get vectors from database"""
         try:  # tohle dotaz vyhodi chybu, kdyz je DB prazdna
             face_vectors_from_db = list(
-                FaceVector.objects.values(
-                    "employee__slug", "face_vector_fernet"
-                )
+                FaceVector.objects.values("employee__slug", "face_vector_fernet")
             )
         except OperationalError:
             return {}
@@ -254,9 +246,7 @@ class Database:
         """uloz sejmuty vektor do db k employee"""
         if self.parent.face_rgb is None:
             if DEBUG:
-                cons.log(
-                    "face rgb je None, protoze neni rectangle", style="green"
-                )
+                cons.log("face rgb je None, protoze neni rectangle", style="green")
             return {"message": "no-face-detected", "success": False}
 
         face_encoding: list = face_recognition.face_encodings(
@@ -273,9 +263,7 @@ class Database:
             try:
                 employee = Employee.objects.get(slug=employee_slug)
                 if DEBUG:
-                    cons.log(
-                        f"zamestnanec {employee_slug} nalezen", style="blue"
-                    )
+                    cons.log(f"zamestnanec {employee_slug} nalezen", style="blue")
                 _, created = FaceVector.objects.update_or_create(
                     employee=employee,
                     defaults={"face_vector": new_face_vector.tolist()},

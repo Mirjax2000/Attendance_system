@@ -5,7 +5,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("app_main", "0005_alter_facevector_face_vector"),
     ]

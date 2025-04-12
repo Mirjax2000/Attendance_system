@@ -198,6 +198,7 @@ class UserUpdateFormTests(TestCase):
 
 class EmployeeFormTests(TestCase):
     """Testy pro formulář uživatele."""
+
     def setUp(self):
         """Vytvoření potřebných objektů."""
         self.department = Department.objects.create(name="IT Department")
@@ -264,9 +265,7 @@ class EmployeeFormTests(TestCase):
         form = EmployeeForm(data=form_data)
         self.assertFalse(form.is_valid())
         self.assertIn("pin_code", form.errors)
-        self.assertIn(
-            "PIN musí obsahovat přesně 4 číslice.", form.errors["pin_code"]
-        )
+        self.assertIn("PIN musí obsahovat přesně 4 číslice.", form.errors["pin_code"])
 
     def test_duplicate_email(self):
         """
@@ -291,9 +290,7 @@ class EmployeeFormTests(TestCase):
         form = EmployeeForm(data=form_data)
         self.assertFalse(form.is_valid())
         self.assertIn("email", form.errors)
-        self.assertTrue(
-            any("platnou" in msg.lower() for msg in form.errors["email"])
-        )
+        self.assertTrue(any("platnou" in msg.lower() for msg in form.errors["email"]))
 
     def test_invalid_postal_code(self):
         """
@@ -322,8 +319,7 @@ class EmployeeFormTests(TestCase):
         self.assertIn("phone_number", form.errors)
         self.assertTrue(
             any(
-                "telefonní číslo musí" in msg.lower()
-                and "formátu" in msg.lower()
+                "telefonní číslo musí" in msg.lower() and "formátu" in msg.lower()
                 for msg in form.errors["phone_number"]
             )
         )
@@ -338,9 +334,7 @@ class EmployeeFormTests(TestCase):
         form = EmployeeForm(data=form_data)
         self.assertFalse(form.is_valid())
         self.assertIn("pin_code", form.errors)
-        self.assertIn(
-            "PIN musí obsahovat přesně 4 číslice.", form.errors["pin_code"]
-        )
+        self.assertIn("PIN musí obsahovat přesně 4 číslice.", form.errors["pin_code"])
 
     def test_invalid_date_of_birth(self):
         """
@@ -353,10 +347,7 @@ class EmployeeFormTests(TestCase):
         self.assertFalse(form.is_valid())
         self.assertIn("date_of_birth", form.errors)
         self.assertTrue(
-            any(
-                "budoucnosti" in msg.lower()
-                for msg in form.errors["date_of_birth"]
-            )
+            any("budoucnosti" in msg.lower() for msg in form.errors["date_of_birth"])
         )
 
     def test_name_trimming(self):
@@ -461,6 +452,7 @@ class EmployeeFormTests(TestCase):
 
 class SendMailFormTests(TestCase):
     """Testy pro formulář odesílání mailů."""
+
     def setUp(self):
         """Vytvoření potřebných dat"""
         self.department = Department.objects.create(name="Oddělení testování")
@@ -474,12 +466,12 @@ class SendMailFormTests(TestCase):
     def get_valid_form_data(self):
         """validní data"""
         return {
-            'subject': "Předmět testovacího e-mailu",
-            'message': "Testovací text zprávy.",
-            'delivery_method': "manual",  # změněno na validní hodnotu "manual"
-            'emails': 'test@priklad.cz',
-            'employee_ids': [self.employee.id],
-            'department': self.department.id
+            "subject": "Předmět testovacího e-mailu",
+            "message": "Testovací text zprávy.",
+            "delivery_method": "manual",  # změněno na validní hodnotu "manual"
+            "emails": "test@priklad.cz",
+            "employee_ids": [self.employee.id],
+            "department": self.department.id,
         }
 
     def test_valid_full_form(self):
@@ -490,55 +482,54 @@ class SendMailFormTests(TestCase):
     def test_form_empty_recipients(self):
         """test prázdný adresát"""
         data = self.get_valid_form_data()
-        data['emails'] = ""
-        data['employee_ids'] = []
-        data['department'] = ""
+        data["emails"] = ""
+        data["employee_ids"] = []
+        data["department"] = ""
         form = SendMailForm(data=data)
         self.assertFalse(form.is_valid())
-        self.assertIn('emails', form.errors)
-        self.assertIn('Zadejte prosím e-mailové adresy.',
-                      form.errors['emails'])
+        self.assertIn("emails", form.errors)
+        self.assertIn("Zadejte prosím e-mailové adresy.", form.errors["emails"])
 
     def test_invalid_email_format(self):
         """test neplatný formát zprávy"""
         data = self.get_valid_form_data()
-        data['emails'] = "neplatny-email"
+        data["emails"] = "neplatny-email"
         form = SendMailForm(data=data)
         self.assertFalse(form.is_valid())
-        self.assertIn('emails', form.errors)
+        self.assertIn("emails", form.errors)
 
     def test_only_employees_selected(self):
         """test výběru mailů zaměstnanců"""
         data = self.get_valid_form_data()
-        data['delivery_method'] = 'employee'
-        data['emails'] = ""
-        data['department'] = ""
+        data["delivery_method"] = "employee"
+        data["emails"] = ""
+        data["department"] = ""
         form = SendMailForm(data=data)
         self.assertTrue(form.is_valid())
 
     def test_only_department_selected(self):
         """test výběru mailů oddělení"""
         data = self.get_valid_form_data()
-        data['delivery_method'] = 'department'
-        data['emails'] = ""
-        data['employee_ids'] = []
+        data["delivery_method"] = "department"
+        data["emails"] = ""
+        data["employee_ids"] = []
         form = SendMailForm(data=data)
         self.assertTrue(form.is_valid())
 
     def test_invalid_delivery_method(self):
         """test výběr neplatné metody"""
         data = self.get_valid_form_data()
-        data['delivery_method'] = "neplatna_metoda"  # záměrně neplatná metoda
+        data["delivery_method"] = "neplatna_metoda"  # záměrně neplatná metoda
         form = SendMailForm(data=data)
         self.assertFalse(form.is_valid())
-        self.assertIn('delivery_method', form.errors)
+        self.assertIn("delivery_method", form.errors)
 
     def test_empty_subject_message(self):
         """test prázdný předmět"""
         data = self.get_valid_form_data()
-        data['subject'] = ""
-        data['message'] = ""
+        data["subject"] = ""
+        data["message"] = ""
         form = SendMailForm(data=data)
         self.assertFalse(form.is_valid())
-        self.assertIn('subject', form.errors)
-        self.assertIn('message', form.errors)
+        self.assertIn("subject", form.errors)
+        self.assertIn("message", form.errors)
