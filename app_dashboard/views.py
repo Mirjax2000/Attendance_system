@@ -412,8 +412,8 @@ class DepartmentListView(ListView):
         return context
 
 
-class CreateDepView(CreateView):
-    """Vytvor zamestance"""
+class CreateDepView(LoginRequiredMixin, CreateView):
+    """Vytvor departmant"""
 
     model = Department
     form_class = DepartmentForm
