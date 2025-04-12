@@ -67,11 +67,3 @@ class UserUpdateForm(ModelForm):
             "last_name": "Příjmení",
             "email": "E-mail",
         }
-
-    # kdyz ji zapnes tak neulozis , proste neulozis, ne, nejde to
-    # def clean_email(self):
-    #     """Kontrola emailu"""
-    #     email = self.cleaned_data.get("email")
-    #     if User.objects.filter(email__iexact=email).exists():
-    #         raise ValidationError("Tento e-mail je již používán. Zvolte jiný.")
-    #     return email
