@@ -22,6 +22,7 @@
 ```shell
 git clone https://github.com/Mirjax2000/Attendance_system.git
 ```
+prepnout vetev na develop
 
 2. Nastavení virtuálního prostředí:
 ```shell
@@ -29,23 +30,27 @@ pip install uv
 uv venv
 .venv\Scripts\activate
 ```
-nastavit python interpreter
-spustit visual studio instaler
-![alt text]({6FAA0828-5BE8-45D1-932E-2BF1E71A14C8}.png)
-
-kliknout na spustit
-![alt text]({15936411-BE70-4285-929B-9909C99500D2}.png)
-prikazem CD se dostat do rootu projectu
-![alt text]({8E502C67-B4D3-4138-8491-A72E951758ED}.png)
-spustit sadu prikazu
+- nastavit python interpreter
+- spustit visual studio instaler pred windows start
+- kliknout na spustit
+- otevre se prompt podobny cmd terminalu
+- prikazem CD se dostat do rootu projectu
+- spustit sadu prikazu
 ```shell
 pip install uv
 uv add dlib
 ```
-pokud zde vsechno projde muze se instalovat seznam modulu prikazem
+pokud zde vsechno projde muze se uz ve svem editoru instalovat seznam modulu prikazem
 ```shell
 uv sync
 ```
+## Verifikace
+Kontrola ze dlib je spravne nainstalovan:
+```shell
+python -c "import dlib; print(dlib.__version__)"
+```
+
+If no errors occur, the installation was successful.
 
 
 ## TAJNÝ KLÍČ
@@ -62,29 +67,28 @@ SECRET_KEY = os.getenv("SECRET_KEY", default="")
 python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
 ```
 5. Použijte FERNET klíč z `.env.example`
+6. Pouzijte email klice z `.env.example`
 
 ## Příkazy Projektu
-Spuštění projektu:
-```shell
-django-admin startproject <název_projektu> .
-python manage.py startapp <název_aplikace>
-```
 
 Databázové migrace:
 ```shell
 python manage.py makemigrations
 python manage.py migrate
 ```
-Registrujte aplikaci v nastavení
 
 Vytvoření superuživatele (pouze při počátečním nastavení):
 ```shell
 python manage.py createsuperuser
 ```
 
-
 ## Operace s Databází
+pokud mate fixtures muzete pouzit tyto prikazy
 ```shell
 python manage.py dumpdatautf8 myapp --indent 2 > fixtures.json
 python manage.py loaddatautf8 .\files\fixtures.json
 ```
+
+po spusteni aplikace je treba nastavit databazi.
+jdete do aplikace a zmacknete zaplnit databzi v sekci DB status
+
