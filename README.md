@@ -87,3 +87,62 @@ Za účelem udržení kvality kódu a spolehlivosti realizovaných funkcí je im
 - Kontrolují ošetření vstupů, duplikací a správnou manipulaci s e-mailovými adresami.
 
 Z tohoto pohledu je tato část aplikace připravena jak pro běžné uživatelské použití, tak pro rozvoj budoucího funkcionalit s minimálním rizikem regresí díky existujícím testovacím scénářům.
+
+# Testovací sada projektu
+Testovací sada zajišťuje spolehlivost, stabilitu a správnou funkci celé aplikace. Testy v projektu pokrývají klíčové oblasti aplikace, jako jsou modely, view (pohledy) a formuláře, a zajišťují vysokou kvalitu kódu.
+Níže naleznete popis testovaných oblastí a hlavních variant testů, kterými projekt disponuje.
+## 1. Testy modelů (`tests_models`)
+Tyto testy ověřují správnost implementace databázových modelů. Testování modelů zahrnuje především následující oblasti:
+- **Základní operace s modelem zaměstnance a oddělení**
+    - Ověření správného vytvoření zaměstnanců a oddělení.
+    - Kontrola správného počtu zaměstnanců a jejich přiřazení ke správným oddělením.
+
+- **Správa dat ve vektorových reprezentacích**
+    - Kontrola správného generování a ukládání vektorů tváří.
+
+- **Kontrola stavu databáze**
+    - Testování kompletního procesu inicializace a případného vymazání databáze.
+    - Ověřování existence základních záznamů, které musejí být vždy přítomny (např. výchozí oddělení a statusy zaměstnanců).
+
+## 2. Testy pohledů (views) (`tests_views`)
+Tato skupina testů ověřuje správnost a spolehlivost pohledů a jednotlivých akcí v aplikaci. K testovaným scénářům patří mimo jiné:
+- **Uživatelské pohledy**
+    - Validace detailního pohledu na uživatele, jeho aktualizace a smazání.
+    - Kontrola správného zobrazení seznamů uživatelů.
+
+- **Autentizace a registrace uživatele**
+    - Kompletní testování procesu registrace nového uživatele.
+    - Testy přihlášení uživatele nejen s platnými, ale i neplatnými údaji.
+
+- **Odesílání a zpracování e-mailů**
+    - Ověření zobrazení formulářů pro odeslání e-mailů s různými typy dat (platná a neplatná data).
+    - Testování odeslání emailu jak zaměstnancům, jednotlivým emailům, tak i celému oddělení.
+    - Testy načítání e-mailových šablon a kontroly jejich správného obsahu přes AJAX volání.
+    - Kontrola limitů v délce obsahu e-mailu a správnost přesměrování při chybách.
+
+## 3. Testy formulářů (`tests_forms`)
+Tyto testy validují správnou funkcionalitu formulářů v aplikaci, a to jak ze strany UI, tak i na úrovni samotné validace na backendu.
+- **Formulář registrace a aktualizace uživatele**
+    - Kontrola formulářů registrace nového uživatele (validní data, duplicitní email, chybějící povinná pole, nesoulad hesel).
+    - Formulář pro aktualizaci uživatele s různými typy dat a kontrolou validace.
+
+- **Formulář zaměstnanců**
+    - Testy pro celý životní cyklus zaměstnaneckého formuláře (validace polí jako email, telefon, PSČ, datum narození, PIN kód a kontrola duplicitních údajů).
+
+- **Formulář pro odesílání emailů**
+    - Kontrola validního i nevalidního vyplnění polí formuláře (výběr příjemců, formát e-mailů, kontrola povinných polí předmětu a zprávy, ověření prázdných polí).
+
+## 4. Selenium testování (`tests_selenium`)
+Pro maximální realističnost testování UI aplikace byl vytvořen testy s využitím frameworku Selenium. Je orientován na uživatelský pohled do aplikace a ověřuje:
+- **Autentizační procesy**
+    - Kompletní workflow uživatelského přihlášení a odhlášení s důrazem na uživatelskou interakci s aplikací a reálnou simulaci chování aplikace v prohlížeči.
+
+Použití Selenium testů podporuje rychlé odhalení případných regresí na straně uživatelského rozhraní a uživatelské interakce.
+## Přínos testů pro projekt
+Testová sada byla navržena tak, aby zajišťovala:
+- Maximální pokrytí projektu klíčových funkcionalit.
+- Snadné sledování případných budoucích změn, které by mohly ovlivnit kritické části aplikace.
+- Včasné odhalení chyb a snadnou možnost jejich opravy před nasazením do ostrého provozu.
+- Rychlejší a bezpečnější nasazování nových funkcionalit bez rizika, že dojde k narušení existující funkcionality.
+
+Pravidelná údržba a rozšiřování těchto testů je doporučeno v průběhu dalšího vývoje projektu, jelikož představují nejlepší postupy v oblasti moderního vývoje aplikací.
