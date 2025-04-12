@@ -31,7 +31,8 @@ uv venv
 .venv\Scripts\activate
 ```
 - nastavit python interpreter
-- spustit visual studio instaler pred windows start
+- spustit visual studio instaler pres windows start
+- "Developer Command Prompt for VS 2022"
 - kliknout na spustit
 - otevre se prompt podobny cmd terminalu
 - prikazem CD se dostat do rootu projectu
@@ -55,19 +56,10 @@ If no errors occur, the installation was successful.
 
 ## TAJNÝ KLÍČ
 1. Vytvořte soubor `.env` přejmenováním `.env.example` a přidejte proměnnou SECRET_KEY
-2. Zkopírujte hodnotu z Django attendance `settings.py` (bez uvozovek)
-3. Aktualizujte nastavení pomocí:
-```python
-load_dotenv(override=True)
-SECRET_KEY = os.getenv("SECRET_KEY", default="")
-```
-
 4. V případě potřeby vygenerujte nový SECRET_KEY:
 ```shell
 python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
 ```
-5. Použijte FERNET klíč z `.env.example`
-6. Pouzijte email klice z `.env.example`
 
 ## Příkazy Projektu
 
@@ -89,6 +81,8 @@ python manage.py dumpdatautf8 myapp --indent 2 > fixtures.json
 python manage.py loaddatautf8 .\files\fixtures.json
 ```
 
-po spusteni aplikace je treba nastavit databazi.
-jdete do aplikace a zmacknete zaplnit databzi v sekci DB status
+Po spuštění aplikace je třeba nastavit databázi.
+Jděte do aplikace a zmáčkněte Zaplnit databázi v sekci DB status.
+
+✅ Nyní můžete začít používat aplikaci – databáze byla úspěšně nastavena!
 
