@@ -889,6 +889,9 @@ body {
 .L-emails__form__submit:hover {
   background-color: var(--scheme-accent-darker);
 }
+.L-emails__message {
+  height: clamp(200px, 30dvh, 300px);
+}
 
 .L-attendance {
   padding: 1em;
