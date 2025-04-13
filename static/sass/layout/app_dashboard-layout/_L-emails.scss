@@ -123,4 +123,8 @@
             }
         }
     }
+
+    &__message {
+        height: clamp(200px, 30dvh, 300px);
+    }
 }
