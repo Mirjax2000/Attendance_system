@@ -26,7 +26,9 @@ class Migration(migrations.Migration):
                 (
                     "name",
                     models.CharField(
-                        max_length=50, unique=True, verbose_name="Název oddělení"
+                        max_length=50,
+                        unique=True,
+                        verbose_name="Název oddělení",
                     ),
                 ),
             ],
@@ -46,13 +48,24 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("name", models.CharField(max_length=32, verbose_name="Jméno:")),
-                ("surname", models.CharField(max_length=32, verbose_name="Příjmení:")),
+                (
+                    "name",
+                    models.CharField(max_length=32, verbose_name="Jméno:"),
+                ),
+                (
+                    "surname",
+                    models.CharField(max_length=32, verbose_name="Příjmení:"),
+                ),
                 (
                     "street_number",
-                    models.CharField(max_length=50, verbose_name="Ulice/č.p.:"),
+                    models.CharField(
+                        max_length=50, verbose_name="Ulice/č.p.:"
+                    ),
                 ),
-                ("city", models.CharField(max_length=32, verbose_name="Město:")),
+                (
+                    "city",
+                    models.CharField(max_length=32, verbose_name="Město:"),
+                ),
                 (
                     "postal_code",
                     models.CharField(
@@ -60,7 +73,8 @@ class Migration(migrations.Migration):
                         validators=[
                             django.core.validators.MinLengthValidator(5),
                             django.core.validators.RegexValidator(
-                                message="PSČ musí obsahovat 5 číslic.", regex="^\\d{5}$"
+                                message="PSČ musí obsahovat 5 číslic.",
+                                regex="^\\d{5}$",
                             ),
                         ],
                         verbose_name="PSČ:",
@@ -87,11 +101,16 @@ class Migration(migrations.Migration):
                         max_length=100, unique=True, verbose_name="Email:"
                     ),
                 ),
-                ("date_of_birth", models.DateField(verbose_name="Datum narození:")),
+                (
+                    "date_of_birth",
+                    models.DateField(verbose_name="Datum narození:"),
+                ),
                 (
                     "is_valid",
                     models.BooleanField(
-                        blank=True, default=False, verbose_name="Ucet v poradku?:"
+                        blank=True,
+                        default=False,
+                        verbose_name="Ucet v poradku?:",
                     ),
                 ),
                 (
@@ -117,7 +136,9 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "slug",
-                    models.SlugField(blank=True, unique=True, verbose_name="slug:"),
+                    models.SlugField(
+                        blank=True, unique=True, verbose_name="slug:"
+                    ),
                 ),
                 (
                     "department",

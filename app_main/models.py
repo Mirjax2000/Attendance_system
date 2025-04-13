@@ -183,9 +183,13 @@ class Employee(models.Model):
         """defaultni zaplneni tabulek"""
         # pokud v FK nic neni tak tam dej hodnotu PK klice z default
         if not self.employee_status:
-            self.employee_status = EmployeeStatus.objects.get_or_create(name="free")[0]
+            self.employee_status = EmployeeStatus.objects.get_or_create(
+                name="free"
+            )[0]
         if not self.department:
-            self.department = Department.objects.get_or_create(name="nezarazeno")[0]
+            self.department = Department.objects.get_or_create(
+                name="nezarazeno"
+            )[0]
 
     def save(self, *args, **kwargs) -> None:
         self.set_slug()  # nastav slug

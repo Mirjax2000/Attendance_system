@@ -6,7 +6,10 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("app_main", "0006_alter_employee_city_alter_employee_date_of_birth_and_more"),
+        (
+            "app_main",
+            "0006_alter_employee_city_alter_employee_date_of_birth_and_more",
+        ),
     ]
 
     operations = [

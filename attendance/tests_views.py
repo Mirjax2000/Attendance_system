@@ -317,7 +317,9 @@ class SendMailViewTests(TestCase):
             form.errors["subject"],
             ["Toto pole je vyžadováno.", "Předmět nemůže být prázdný."],
         )
-        self.assertEqual(form.errors["emails"], ["Zadejte prosím e-mailové adresy."])
+        self.assertEqual(
+            form.errors["emails"], ["Zadejte prosím e-mailové adresy."]
+        )
 
     def test_send_mail_unauthenticated_redirect(self):
         """test view odpovědi pro nepřihlášeného uživatele"""
@@ -347,7 +349,9 @@ class SendMailViewTests(TestCase):
         self.assertTemplateUsed(response, "includes/mail_form_partial.html")
 
         form = response.context.get("form")
-        self.assertIsNotNone(form, "Formulář nebyl nalezen v kontextu odpovědi.")
+        self.assertIsNotNone(
+            form, "Formulář nebyl nalezen v kontextu odpovědi."
+        )
 
         non_field_errors = form.non_field_errors()
         expected_error_msg = (
@@ -362,7 +366,8 @@ class SendMailViewTests(TestCase):
 
         email_template = self.template_name
         response = self.client.get(
-            reverse("load_mail_template_content"), {"template_name": email_template}
+            reverse("load_mail_template_content"),
+            {"template_name": email_template},
         )
 
         self.assertEqual(response.status_code, 200)
@@ -374,7 +379,8 @@ class SendMailViewTests(TestCase):
 
         email_template = "invalid_template"
         response = self.client.get(
-            reverse("load_mail_template_content"), {"template_name": email_template}
+            reverse("load_mail_template_content"),
+            {"template_name": email_template},
         )
 
         self.assertEqual(response.status_code, 404)
@@ -386,7 +392,8 @@ class SendMailViewTests(TestCase):
 
         email_template = ""
         response = self.client.get(
-            reverse("load_mail_template_content"), {"template_name": email_template}
+            reverse("load_mail_template_content"),
+            {"template_name": email_template},
         )
 
         self.assertEqual(response.status_code, 400)

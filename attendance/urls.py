@@ -92,7 +92,9 @@ app_dashboard_urls: list = [
         EmployeeUpdateView.as_view(),
         name="update_employee",
     ),
-    path("dashboard/send-mail/", SendMailView.as_view(), name="send_mail_view"),
+    path(
+        "dashboard/send-mail/", SendMailView.as_view(), name="send_mail_view"
+    ),
     path(
         "dashboard/mail-manual-partial/",
         MailManualPartialView.as_view(),
@@ -108,7 +110,9 @@ app_dashboard_urls: list = [
         MailDepartmentPartialView.as_view(),
         name="mail_department_partial",
     ),
-    path("dashboard/send-mail/", SendMailView.as_view(), name="send_mail_view"),
+    path(
+        "dashboard/send-mail/", SendMailView.as_view(), name="send_mail_view"
+    ),
     path(
         "dashboard/mail-manual-partial/",
         MailManualPartialView.as_view(),
@@ -191,7 +195,9 @@ app_accounts_urls: list = [
     path("accounts/logout/", user_logout, name="logout"),
     path("accounts/signup/", SignUpView.as_view(), name="signup"),
     path("accounts/user_list/", UserListView.as_view(), name="user_list"),
-    path("accounts/user/<int:pk>/", UserDetailView.as_view(), name="user_detail"),
+    path(
+        "accounts/user/<int:pk>/", UserDetailView.as_view(), name="user_detail"
+    ),
     path(
         "accounts/delete-user/<int:pk>/",
         UserDeleteView.as_view(),
@@ -202,7 +208,11 @@ app_accounts_urls: list = [
         UserUpdateView.as_view(),
         name="update-user",
     ),
-    path("accounts/no_permission", NoPermisionView.as_view(), name="no_permision"),
+    path(
+        "accounts/no_permission",
+        NoPermisionView.as_view(),
+        name="no_permision",
+    ),
     path("accounts/", include("django.contrib.auth.urls")),
 ]
 

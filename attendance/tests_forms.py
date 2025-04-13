@@ -50,7 +50,8 @@ class SignUpFormTests(TestCase):
         self.assertFalse(form.is_valid())
         self.assertIn("email", form.errors)
         self.assertEqual(
-            form.errors["email"], ["Tento e-mail je již používán. Zvolte jiný."]
+            form.errors["email"],
+            ["Tento e-mail je již používán. Zvolte jiný."],
         )
 
     def test_signup_form_missing_required_field(self):
@@ -265,7 +266,9 @@ class EmployeeFormTests(TestCase):
         form = EmployeeForm(data=form_data)
         self.assertFalse(form.is_valid())
         self.assertIn("pin_code", form.errors)
-        self.assertIn("PIN musí obsahovat přesně 4 číslice.", form.errors["pin_code"])
+        self.assertIn(
+            "PIN musí obsahovat přesně 4 číslice.", form.errors["pin_code"]
+        )
 
     def test_duplicate_email(self):
         """
@@ -278,7 +281,8 @@ class EmployeeFormTests(TestCase):
         self.assertFalse(form.is_valid())
         self.assertIn("email", form.errors)
         self.assertEqual(
-            form.errors["email"], ["Tento e-mail je již používán. Zvolte jiný."]
+            form.errors["email"],
+            ["Tento e-mail je již používán. Zvolte jiný."],
         )
 
     def test_invalid_email_format(self):
@@ -290,7 +294,9 @@ class EmployeeFormTests(TestCase):
         form = EmployeeForm(data=form_data)
         self.assertFalse(form.is_valid())
         self.assertIn("email", form.errors)
-        self.assertTrue(any("platnou" in msg.lower() for msg in form.errors["email"]))
+        self.assertTrue(
+            any("platnou" in msg.lower() for msg in form.errors["email"])
+        )
 
     def test_invalid_postal_code(self):
         """
@@ -319,7 +325,8 @@ class EmployeeFormTests(TestCase):
         self.assertIn("phone_number", form.errors)
         self.assertTrue(
             any(
-                "telefonní číslo musí" in msg.lower() and "formátu" in msg.lower()
+                "telefonní číslo musí" in msg.lower()
+                and "formátu" in msg.lower()
                 for msg in form.errors["phone_number"]
             )
         )
@@ -334,7 +341,9 @@ class EmployeeFormTests(TestCase):
         form = EmployeeForm(data=form_data)
         self.assertFalse(form.is_valid())
         self.assertIn("pin_code", form.errors)
-        self.assertIn("PIN musí obsahovat přesně 4 číslice.", form.errors["pin_code"])
+        self.assertIn(
+            "PIN musí obsahovat přesně 4 číslice.", form.errors["pin_code"]
+        )
 
     def test_invalid_date_of_birth(self):
         """
@@ -347,7 +356,10 @@ class EmployeeFormTests(TestCase):
         self.assertFalse(form.is_valid())
         self.assertIn("date_of_birth", form.errors)
         self.assertTrue(
-            any("budoucnosti" in msg.lower() for msg in form.errors["date_of_birth"])
+            any(
+                "budoucnosti" in msg.lower()
+                for msg in form.errors["date_of_birth"]
+            )
         )
 
     def test_name_trimming(self):
@@ -421,7 +433,8 @@ class EmployeeFormTests(TestCase):
         self.assertFalse(form.is_valid())
         self.assertIn("email", form.errors)
         self.assertEqual(
-            form.errors["email"], ["Tento e-mail je již používán. Zvolte jiný."]
+            form.errors["email"],
+            ["Tento e-mail je již používán. Zvolte jiný."],
         )
 
     def test_update_pin_code(self):
@@ -488,7 +501,9 @@ class SendMailFormTests(TestCase):
         form = SendMailForm(data=data)
         self.assertFalse(form.is_valid())
         self.assertIn("emails", form.errors)
-        self.assertIn("Zadejte prosím e-mailové adresy.", form.errors["emails"])
+        self.assertIn(
+            "Zadejte prosím e-mailové adresy.", form.errors["emails"]
+        )
 
     def test_invalid_email_format(self):
         """test neplatný formát zprávy"""

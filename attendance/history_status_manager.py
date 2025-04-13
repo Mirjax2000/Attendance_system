@@ -38,7 +38,9 @@ class HistoryStatusManager:
                 employee=employee, timestamp__date=day
             ).order_by("timestamp")
 
-            return self.utility.result_by_hours(history=history, status="working")
+            return self.utility.result_by_hours(
+                history=history, status="working"
+            )
 
         except Employee.DoesNotExist:
             return "00:00"
@@ -69,7 +71,10 @@ class HistoryStatusManager:
             return "00:00"
 
     def get_time_in_status_and_range(
-        self, status_name: str, start_date: Union[str, date], end_date: Union[str, date]
+        self,
+        status_name: str,
+        start_date: Union[str, date],
+        end_date: Union[str, date],
     ) -> str:
         """jak dlouho byl ve statusu"""
         try:
@@ -110,9 +115,14 @@ class Utility:
             if record.new_status.name == status:
                 start_time = record.timestamp  # Uložíme začátek práce
 
-            elif record.previous_status and record.previous_status.name == status:
+            elif (
+                record.previous_status
+                and record.previous_status.name == status
+            ):
                 if start_time:
-                    total_seconds: int = (record.timestamp - start_time).seconds
+                    total_seconds: int = (
+                        record.timestamp - start_time
+                    ).seconds
                     time_spent_minutes += total_seconds // 60
                     start_time = None  # Resetujeme začátek
 

@@ -46,7 +46,9 @@ class DatabaseControl:
         if not EmployeeStatus.objects.exists():
             EmployeeStatus.objects.bulk_create(working_statuses)
             if DEBUG:
-                cons.log("Tabulka EmployeeStatus byla naplněna.", style="green")
+                cons.log(
+                    "Tabulka EmployeeStatus byla naplněna.", style="green"
+                )
 
     def run_all_default(self) -> None:
         """spusteni vsech funkci"""
@@ -92,7 +94,9 @@ class DatabaseControl:
 
         if all(db_status):
             if DEBUG:
-                cons.log("Všechny tabulky jsou prázdné.", style="bright_yellow")
+                cons.log(
+                    "Všechny tabulky jsou prázdné.", style="bright_yellow"
+                )
             return True
 
         if DEBUG:

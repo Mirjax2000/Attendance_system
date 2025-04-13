@@ -33,7 +33,8 @@ class Migration(migrations.Migration):
                 validators=[
                     django.core.validators.MinLengthValidator(5),
                     django.core.validators.RegexValidator(
-                        message="PSČ musí obsahovat 5 číslic.", regex="^\\d{5}$"
+                        message="PSČ musí obsahovat 5 číslic.",
+                        regex="^\\d{5}$",
                     ),
                 ],
                 verbose_name="PSČ:",

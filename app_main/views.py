@@ -91,7 +91,9 @@ class ComparePinView(View):
 
             # kontrola pinhash vs form pin
             if employee.check_pin_code(form_pin):
-                messages.success(request, f"zamestnanec potvrzen: {employee.slug}")
+                messages.success(
+                    request, f"zamestnanec potvrzen: {employee.slug}"
+                )
                 return redirect("emp_login", employee.slug)
 
             messages.error(request, "nespravny PIN")
@@ -143,7 +145,9 @@ class SetStatusView(View):
             employee.employee_status = emp_status_instance
             employee.save()
         except Employee.DoesNotExist:
-            messages.error(request, f"Zaměstnanec s jménem {emp_name} nebyl nalezen.")
+            messages.error(
+                request, f"Zaměstnanec s jménem {emp_name} nebyl nalezen."
+            )
             return redirect("mainpage", 15)
 
         if DEBUG:

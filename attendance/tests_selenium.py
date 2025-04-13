@@ -26,7 +26,9 @@ def get_available_driver():
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-dev-shm-usage")
         driver = webdriver.Chrome(options=chrome_options)
-        cons.log("[LOG] Chrome webdriver byl úspěšně inicializován.", style="blue")
+        cons.log(
+            "[LOG] Chrome webdriver byl úspěšně inicializován.", style="blue"
+        )
         return driver
     except Exception as e:
         cons.log("Chrome webdriver není k dispozici:", e, style="red")
@@ -35,14 +37,18 @@ def get_available_driver():
         edge_options = EdgeOptions()
         edge_options.use_chromium = True
         driver = webdriver.Edge(options=edge_options)
-        cons.log("[LOG] Edge webdriver byl úspěšně inicializován.", style="blue")
+        cons.log(
+            "[LOG] Edge webdriver byl úspěšně inicializován.", style="blue"
+        )
         return driver
     except Exception as e:
         cons.log("Edge webdriver není k dispozici:", e, style="red")
 
     try:
         driver = webdriver.Firefox()
-        cons.log("[LOG] Firefox webdriver byl úspěšně inicializován.", style="blue")
+        cons.log(
+            "[LOG] Firefox webdriver byl úspěšně inicializován.", style="blue"
+        )
         return driver
     except Exception as e:
         cons.log("Firefox webdriver není k dispozici:", e, style="red")
@@ -74,7 +80,10 @@ class LoginLogoutSeleniumTest(StaticLiveServerTestCase):
         try:
             if cls.driver:
                 cls.driver.quit()
-                cons.log("[LOG] Webdriver byl úspěšně ukončen.", style="magenta bold")
+                cons.log(
+                    "[LOG] Webdriver byl úspěšně ukončen.",
+                    style="magenta bold",
+                )
         except Exception as e:
             cons.log("[LOG] Chyba při ukončování webdriveru:", e, style="red")
         super().tearDownClass()
@@ -97,7 +106,9 @@ class LoginLogoutSeleniumTest(StaticLiveServerTestCase):
 
         login_url = f"{self.live_server_url}/accounts/login/"
         self.driver.get(login_url)
-        cons.log("[LOG] Otevřena přihlašovací stránka:", login_url, style="green")
+        cons.log(
+            "[LOG] Otevřena přihlašovací stránka:", login_url, style="green"
+        )
         time.sleep(1)
 
         username_input = self.driver.find_element(By.ID, "id_username")

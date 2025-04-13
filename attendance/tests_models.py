@@ -187,7 +187,9 @@ class DatabaseControlTestI(TestCase):
             "free",
         ]
         for status in statuses:
-            self.assertTrue(EmployeeStatus.objects.filter(name=status).exists())
+            self.assertTrue(
+                EmployeeStatus.objects.filter(name=status).exists()
+            )
 
     def test_run_all_default(self):
         """Ověří, že po spuštění run_all_default jsou tabulky správně naplněny."""

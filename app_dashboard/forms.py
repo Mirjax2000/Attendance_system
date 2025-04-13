@@ -56,7 +56,9 @@ class EmployeeForm(forms.ModelForm):
             },
         }
         widgets = {
-            "date_of_birth": forms.DateInput(attrs={"type": "date"}, format="%Y-%m-%d"),
+            "date_of_birth": forms.DateInput(
+                attrs={"type": "date"}, format="%Y-%m-%d"
+            ),
             "pin_code": forms.PasswordInput(attrs={"maxlength": 4}),
         }
 
@@ -68,17 +70,26 @@ class EmployeeForm(forms.ModelForm):
             if self.instance.pk:
                 existing_emails = existing_emails.exclude(pk=self.instance.pk)
             if existing_emails.exists():
-                raise ValidationError("Tento e-mail je již používán. Zvolte jiný.")
+                raise ValidationError(
+                    "Tento e-mail je již používán. Zvolte jiný."
+                )
             return email
         return ""
 
     def clean_postal_code(self) -> str:
         """Kontrola formátu a délky psč, odstranění mezer"""
         if self.cleaned_data.get("postal_code") is not None:
-            postal_code: str = str(self.cleaned_data.get("postal_code", "")).strip()
+            postal_code: str = str(
+                self.cleaned_data.get("postal_code", "")
+            ).strip()
             postal_code_no_spaces = postal_code.replace(" ", "")
-            if len(postal_code_no_spaces) != 5 or not postal_code_no_spaces.isdigit():
-                raise ValidationError("PSČ musí obsahovat přesně 5 číslic bez mezer.")
+            if (
+                len(postal_code_no_spaces) != 5
+                or not postal_code_no_spaces.isdigit()
+            ):
+                raise ValidationError(
+                    "PSČ musí obsahovat přesně 5 číslic bez mezer."
+                )
             return postal_code_no_spaces
         return ""
 
@@ -115,7 +126,9 @@ class EmployeeForm(forms.ModelForm):
             if not date_of_birth:
                 raise ValidationError("Datum narození je povinné.")
             if date_of_birth > date.today():
-                raise ValidationError("Datum narození nemůže být v budoucnosti.")
+                raise ValidationError(
+                    "Datum narození nemůže být v budoucnosti."
+                )
             return date_of_birth
         return None
 
@@ -124,16 +137,22 @@ class EmployeeForm(forms.ModelForm):
         if self.cleaned_data.get("name") is not None:
             name: str = str(self.cleaned_data.get("name")).strip().capitalize()
             if not name.isalpha():
-                raise ValidationError("Jméno smí obsahovat pouze znaky abecedy.")
+                raise ValidationError(
+                    "Jméno smí obsahovat pouze znaky abecedy."
+                )
             return name
         return ""
 
     def clean_surname(self) -> str:
         """Kontrola příjmení (velké písmeno a znaky)"""
         if self.cleaned_data.get("surname") is not None:
-            surname: str = str(self.cleaned_data.get("surname")).strip().capitalize()
+            surname: str = (
+                str(self.cleaned_data.get("surname")).strip().capitalize()
+            )
             if not surname.isalpha():
-                raise ValidationError("Příjmení smí obsahovat pouze znaky abecedy.")
+                raise ValidationError(
+                    "Příjmení smí obsahovat pouze znaky abecedy."
+                )
             return surname
         return ""
 
@@ -236,7 +255,9 @@ class SendMailForm(forms.Form):
         message = cleaned_data.get("message") or ""
 
         if len(subject) > 255:
-            self.add_error("subject", "Předmět překročil maximální délku 255 znaků.")
+            self.add_error(
+                "subject", "Předmět překročil maximální délku 255 znaků."
+            )
 
         if len(message) > 5000:
             self.add_error(
@@ -255,11 +276,14 @@ class SendMailForm(forms.Form):
                     "Vybrali jste použití šablony, ale nezvolili jste žádnou šablonu."
                 )
             # Pokud je použitá šablona, nepotřebujeme message formuláře
-            cleaned_data["message"] = ""  # Zajistíme, že "message" není potřeba
+            cleaned_data["message"] = (
+                ""  # Zajistíme, že "message" není potřeba
+            )
         else:
             if not message.strip():
                 self.add_error(
-                    "message", "Toto pole je povinné, pokud nepoužíváte šablonu!"
+                    "message",
+                    "Toto pole je povinné, pokud nepoužíváte šablonu!",
                 )
 
         method = cleaned_data.get("delivery_method")
@@ -269,7 +293,8 @@ class SendMailForm(forms.Form):
         elif method == "employee":
             if not cleaned_data.get("employee_ids"):
                 self.add_error(
-                    "employee_ids", "Vyberte prosím alespoň jednoho zaměstnance."
+                    "employee_ids",
+                    "Vyberte prosím alespoň jednoho zaměstnance.",
                 )
         elif method == "department":
             if not cleaned_data.get("department"):
