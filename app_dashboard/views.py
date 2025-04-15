@@ -218,6 +218,15 @@ class MailDepartmentPartialView(LoginRequiredMixin, View):
         return render(request, self.template_name, {"form": form})
 
 
+class MessageManualPartialView(LoginRequiredMixin, View):
+    """Partial pro manuální zadání mailových adres"""
+
+    template_name = "includes/message_manual.html"
+
+    def get(self, request):
+        form = SendMailForm()
+        return render(request, self.template_name, {"form": form})
+
 class MailTemplatePartialView(View):
     """Partial pro aktualizaci výběru templates v mailovém klientu"""
 
